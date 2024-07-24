@@ -142,4 +142,18 @@ class SolutionTest {
         int[] p1 = new int[] {3, 0, 6, 1, 5};
         assertEquals(3, solution.hIndex(p1));
     }
+
+    @Test
+    public void testRandomSet() {
+        Solution.RandomizedSet randomizedSet = new Solution.RandomizedSet();
+        assertTrue(randomizedSet.insert(4));
+        assertFalse(randomizedSet.insert(4));
+        assertFalse(randomizedSet.remove(7));
+        assertTrue(randomizedSet.remove(4));
+        assertTrue(randomizedSet.insert(4));
+        for (int i = 1; i <= 10000; i = i + 1) {
+            randomizedSet.insert(i);
+        }
+        assertTrue(randomizedSet.getRandom() >= 1 && randomizedSet.getRandom() <= 10000);
+    }
 }

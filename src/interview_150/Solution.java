@@ -183,4 +183,42 @@ public class Solution {
         }
         return index;
     }
+
+    static class RandomizedSet {
+        public LinkedList<Integer> linkedList;
+        public HashSet<Integer> hashSet;
+
+        public RandomizedSet() {
+            linkedList = new LinkedList<>();
+            hashSet = new HashSet<>(0);
+        }
+
+        public boolean insert(int val) {
+            if (hashSet.contains(val)) {
+                return false;
+            } else {
+                linkedList.add(val);
+                hashSet.add(val);
+                return true;
+            }
+        }
+
+        public boolean remove(int val) {
+            if (hashSet.contains(val)) {
+                int index = linkedList.indexOf(val);
+                linkedList.set(index, linkedList.get(linkedList.size()-1));
+                linkedList.remove(linkedList.size()-1);
+                hashSet.remove(val);
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        public int getRandom() {
+            Random random = new Random();
+            int index = random.nextInt(linkedList.size());
+            return linkedList.get(index);
+        }
+    }
 }
