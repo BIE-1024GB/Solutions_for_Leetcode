@@ -186,7 +186,7 @@ public class Solution {
 
     static class RandomizedSet {
         public LinkedList<Integer> linkedList;
-        public HashSet<Integer> hashSet;
+        public HashSet<Integer> hashSet;    // HashSet<> supports constant operation time in add(), remove(), contains()
 
         public RandomizedSet() {
             linkedList = new LinkedList<>();
