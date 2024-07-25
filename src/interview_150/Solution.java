@@ -222,7 +222,7 @@ public class Solution {
         }
     }
 
-    public int[] productExceptSelf(int[] nums) {
+    public int[] productExceptSelf(int[] nums) {    // Restricted by O(n) time complexity
         int size = nums.length;
         int[] answer = new int[size];
         int[] left = new int[size];
