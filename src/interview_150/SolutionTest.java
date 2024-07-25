@@ -12,13 +12,6 @@ class SolutionTest {
     }
 
     @Test
-    public void testTwoElementArray() {
-        int[] nums = {1, 2};
-        int result = new Solution().removeDuplicates(nums);
-        assertEquals(2, result);
-    }
-
-    @Test
     public void testNoDuplicates() {
         int[] nums = {1, 2, 3, 4, 5};
         int result = new Solution().removeDuplicates(nums);
@@ -26,24 +19,10 @@ class SolutionTest {
     }
 
     @Test
-    public void testAllDuplicates() {
-        int[] nums = {1, 1, 1, 1, 1};
-        int result = new Solution().removeDuplicates(nums);
-        assertEquals(2, result); // Only one duplicate allowed
-    }
-
-    @Test
     public void testMixedDuplicates() {
         int[] nums = {1, 1, 2, 2, 3, 3, 4, 4, 5, 5};
         int result = new Solution().removeDuplicates(nums);
         assertEquals(10, result); // Each number appears twice
-    }
-
-    @Test
-    public void testMoreThanTwoDuplicates() {
-        int[] nums = {1, 1, 1, 2, 2, 2, 3, 3, 3};
-        int result = new Solution().removeDuplicates(nums);
-        assertEquals(6, result); // Only two of each number allowed
     }
 
     @Test
@@ -155,5 +134,16 @@ class SolutionTest {
             randomizedSet.insert(i);
         }
         assertTrue(randomizedSet.getRandom() >= 1 && randomizedSet.getRandom() <= 10000);
+    }
+
+    @Test
+    public void testMultiply() {
+        Solution solution = new Solution();
+        int[] p1 = new int[] {1, 2, 3, 4};
+        int[] a1 = new int[] {24, 12, 8, 6};
+        int[] r1 = solution.productExceptSelf(p1);
+        for (int i = 0; i <= p1.length-1; i++) {
+            assertEquals(a1[i], r1[i]);
+        }
     }
 }

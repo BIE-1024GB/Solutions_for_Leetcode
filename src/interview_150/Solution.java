@@ -221,4 +221,29 @@ public class Solution {
             return linkedList.get(index);
         }
     }
+
+    public int[] productExceptSelf(int[] nums) {
+        int size = nums.length;
+        int[] answer = new int[size];
+        int[] left = new int[size];
+        int[] right = new int[size];
+        for (int i = 0; i <= size-1; i++) {
+            if (i == 0) {
+                left[i] = 1;
+            } else {
+                left[i] = nums[i-1]*left[i-1];
+            }
+        }
+        for (int j = size-1; j >= 0; j--) {
+            if (j == size-1) {
+                right[j] = 1;
+            } else {
+                right[j] = right[j+1]*nums[j+1];
+            }
+        }
+        for (int k = 0; k <= size-1; k++) {
+            answer[k] = left[k] * right[k];
+        }
+        return answer;
+    }
 }
