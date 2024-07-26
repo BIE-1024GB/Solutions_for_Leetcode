@@ -146,4 +146,15 @@ class SolutionTest {
             assertEquals(a1[i], r1[i]);
         }
     }
+
+    @Test
+    public void testGas() {
+        Solution solution = new Solution();
+        int[] g1 = new int[] {1, 2, 3, 4, 5};
+        int[] c1 = new int[] {3, 4, 5, 1, 2};
+        assertEquals(3, solution.canCompleteCircuit(g1, c1));
+        int[] g2 = new int[] {2, 3, 4};
+        int[] c2 = new int[] {3, 4, 3};
+        assertEquals(-1, solution.canCompleteCircuit(g2, c2));
+    }
 }

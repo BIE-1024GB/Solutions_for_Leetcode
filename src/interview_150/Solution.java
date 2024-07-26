@@ -246,4 +246,63 @@ public class Solution {
         }
         return answer;
     }
+
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+//        int index = -1;
+//        int size = gas.length;
+//        int[] deduct = new int[size];
+//        for (int i = 0; i <= size-1; i++) {
+//            deduct[i] = gas[i]-cost[i];
+//        }
+//        int net = 0;
+//        for (int i = 0; i <= size-1; i++) {
+//            net += deduct[i];
+//        }
+//        if (net < 0) {
+//            return -1;
+//        }
+//        for (int i = 0; i <= size-1; i++) {
+//            if (deduct[i] >= 0 && gas[i] > 0) {
+//                int re = 0;
+//                int flag = 1;
+//                for (int j = i; j <= size-1; j++) {
+//                    re += deduct[j];
+//                    if (re < 0) {
+//                        flag = 0;
+//                        break;
+//                    }
+//                    if (j == size-1) {
+//                        for (int k = 0; k <= i-1; k++) {
+//                            re += deduct[k];
+//                            if (re < 0) {
+//                                flag = 0;
+//                                break;
+//                            }
+//                        }
+//                    }
+//                }
+//                if (flag == 0) {
+//                    continue;
+//                } else {
+//                    index = i;
+//                    break;
+//                }
+//            }
+//        }
+//        return index;
+
+        // a more efficient design
+        int total = 0;
+        int curr = 0;
+        int start = 0;
+        for (int i = 0; i <= gas.length-1; i++) {
+            total += (gas[i]-cost[i]);
+            curr += (gas[i]-cost[i]);
+            if (curr < 0) {
+                start = i+1;
+                curr = 0;
+            }
+        }
+        return (total >= 0)?start:-1;
+    }
 }
