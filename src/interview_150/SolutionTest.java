@@ -157,4 +157,15 @@ class SolutionTest {
         int[] c2 = new int[] {3, 4, 3};
         assertEquals(-1, solution.canCompleteCircuit(g2, c2));
     }
+
+    @Test
+    public void testCandy() {
+        Solution solution = new Solution();
+        int[] t1 = new int[] {1, 0, 2};
+        int[] t2 = new int[] {1, 2, 2};
+        int[] t3 = new int[] {1, 3, 2, 2, 1};
+        assertEquals(5, solution.candy(t1));
+        assertEquals(4, solution.candy(t2));
+        assertEquals(7, solution.candy(t3));
+    }
 }

@@ -248,49 +248,6 @@ public class Solution {
     }
 
     public int canCompleteCircuit(int[] gas, int[] cost) {
-//        int index = -1;
-//        int size = gas.length;
-//        int[] deduct = new int[size];
-//        for (int i = 0; i <= size-1; i++) {
-//            deduct[i] = gas[i]-cost[i];
-//        }
-//        int net = 0;
-//        for (int i = 0; i <= size-1; i++) {
-//            net += deduct[i];
-//        }
-//        if (net < 0) {
-//            return -1;
-//        }
-//        for (int i = 0; i <= size-1; i++) {
-//            if (deduct[i] >= 0 && gas[i] > 0) {
-//                int re = 0;
-//                int flag = 1;
-//                for (int j = i; j <= size-1; j++) {
-//                    re += deduct[j];
-//                    if (re < 0) {
-//                        flag = 0;
-//                        break;
-//                    }
-//                    if (j == size-1) {
-//                        for (int k = 0; k <= i-1; k++) {
-//                            re += deduct[k];
-//                            if (re < 0) {
-//                                flag = 0;
-//                                break;
-//                            }
-//                        }
-//                    }
-//                }
-//                if (flag == 0) {
-//                    continue;
-//                } else {
-//                    index = i;
-//                    break;
-//                }
-//            }
-//        }
-//        return index;
-
         // a more efficient design
         int total = 0;
         int curr = 0;
@@ -304,5 +261,33 @@ public class Solution {
             }
         }
         return (total >= 0)?start:-1;
+    }
+
+    public int candy(int[] ratings) {
+        int n = ratings.length;
+        int[] candies = new int[n];
+        Arrays.fill(candies, 1);
+        if (n == 1) {
+            return 1;
+        }
+
+        // Left-to-right pass
+        for (int i = 1; i < n; i++) {
+            if (ratings[i] > ratings[i - 1]) {
+                candies[i] = candies[i - 1] + 1;
+            }
+        }
+        // Right-to-left pass
+        for (int i = n - 2; i >= 0; i--) {
+            if (ratings[i] > ratings[i + 1]) {
+                candies[i] = Math.max(candies[i], candies[i + 1] + 1);
+            }
+        }
+        // Calculate the total number of candies
+        int result = 0;
+        for (int candy : candies) {
+            result += candy;
+        }
+        return result;
     }
 }
