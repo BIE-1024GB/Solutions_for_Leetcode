@@ -270,7 +270,6 @@ public class Solution {
         if (n == 1) {
             return 1;
         }
-
         // Left-to-right pass
         for (int i = 1; i < n; i++) {
             if (ratings[i] > ratings[i - 1]) {
@@ -289,5 +288,48 @@ public class Solution {
             result += candy;
         }
         return result;
+    }
+
+    public int trap(int[] height) {
+        int vol = 0;
+        int ml, lp, mr, rp;
+        ml = 0;
+        lp = -1;
+        mr = 0;
+        rp = height.length;
+        for (int i = 0; i <= height.length-1; i++) {
+            if (height[i] != 0) {
+                ml = height[i];
+                lp = i;
+                break;
+            }
+        }
+        for (int j = height.length-1; j >= 0; j--) {
+            if (height[j] != 0) {
+                mr = height[j];
+                rp = j;
+                break;
+            }
+        }
+        if ((lp == -1) || (rp == height.length) || (lp == rp)) {
+            return 0;
+        } else {
+            while (lp != rp) {
+                if (ml <= mr) {
+                    lp++;
+                    if (height[lp] > ml) {
+                        ml = height[lp];
+                    }
+                    vol += (ml-height[lp]);
+                } else {
+                    rp--;
+                    if (height[rp] > mr) {
+                        mr = height[rp];
+                    }
+                    vol += (mr-height[rp]);
+                }
+            }
+            return vol;
+        }
     }
 }
