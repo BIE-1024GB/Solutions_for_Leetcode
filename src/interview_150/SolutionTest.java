@@ -168,4 +168,26 @@ class SolutionTest {
         assertEquals(4, solution.candy(t2));
         assertEquals(7, solution.candy(t3));
     }
+
+    @Test
+    public void testWater() {
+        Solution sol = new Solution();
+        int[] c0 = new int[] {7, 7};
+        assertEquals(0, sol.trap(c0));
+        int[] c1 = new int[] {5};
+        assertEquals(0, sol.trap(c1));
+        int[] c2 = new int[] {4, 3, 1, 1, 2, 0, 5, 1, 5, 3};
+        assertEquals(17, sol.trap(c2));
+    }
+
+    @Test
+    public void testRoman() {
+        Solution sol = new Solution();
+        String s1 = "III";
+        assertEquals(3, sol.romanToInt(s1));
+        String s2 = "LVIII";
+        assertEquals(58, sol.romanToInt(s2));
+        String s3 = "MCMXCIV";
+        assertEquals(1994, sol.romanToInt(s3));
+    }
 }

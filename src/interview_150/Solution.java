@@ -314,7 +314,7 @@ public class Solution {
         if ((lp == -1) || (rp == height.length) || (lp == rp)) {
             return 0;
         } else {
-            while (lp != rp) {
+            while (lp != rp) {              // "keep track of the maximum heights of left and right"
                 if (ml <= mr) {
                     lp++;
                     if (height[lp] > ml) {
@@ -331,5 +331,82 @@ public class Solution {
             }
             return vol;
         }
+    }
+
+    public int romanToInt(String s) {           // Basic classification problem
+        int pt = 0;
+        int result = 0;
+        while (pt <= s.length()-1) {
+            switch (s.charAt(pt)) {             // 'switch' can be optimized to reduce code length
+                case 'I':
+                    if (pt != s.length()-1) {
+                        if (s.charAt(pt+1) == 'V') {
+                            result += 4;
+                            pt += 2;
+                        } else if (s.charAt(pt+1) == 'X') {
+                            result += 9;
+                            pt += 2;
+                        } else {
+                            result += 1;
+                            pt += 1;
+                        }
+                    } else {
+                        result += 1;
+                        pt += 1;
+                    }
+                    break;
+                case 'V':
+                    result += 5;
+                    pt += 1;
+                    break;
+                case 'X':
+                    if (pt != s.length()-1) {
+                        if (s.charAt(pt+1) == 'L') {
+                            result += 40;
+                            pt += 2;
+                        } else if (s.charAt(pt+1) == 'C') {
+                            result += 90;
+                            pt += 2;
+                        } else {
+                            result += 10;
+                            pt += 1;
+                        }
+                    } else {
+                        result += 10;
+                        pt += 1;
+                    }
+                    break;
+                case 'L':
+                    result += 50;
+                    pt += 1;
+                    break;
+                case 'C':
+                    if (pt != s.length()-1) {
+                        if (s.charAt(pt+1) == 'D') {
+                            result += 400;
+                            pt += 2;
+                        } else if (s.charAt(pt+1) == 'M') {
+                            result += 900;
+                            pt += 2;
+                        } else {
+                            result += 100;
+                            pt += 1;
+                        }
+                    } else {
+                        result += 100;
+                        pt += 1;
+                    }
+                    break;
+                case 'D':
+                    result += 500;
+                    pt += 1;
+                    break;
+                case 'M':
+                    result += 1000;
+                    pt += 1;
+                    break;
+            }
+        }
+        return result;
     }
 }
