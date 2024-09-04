@@ -409,4 +409,85 @@ public class Solution {
         }
         return result;
     }
+
+    public String intToRoman(int num) {
+        StringBuffer stringBuffer = new StringBuffer();
+        int pt;
+        int d4 = num/1000;
+        pt = d4;
+        while (pt >= 1) {
+            stringBuffer.append('M');
+            pt--;
+        }
+        int d3 = (num-d4*1000)/100;
+        pt = d3;
+        if (d3 >= 5) {
+            if (d3 == 9) {
+                stringBuffer.append("CM");
+            } else {
+                stringBuffer.append('D');
+                pt -= 5;
+                while (pt >= 1) {
+                    stringBuffer.append('C');
+                    pt--;
+                }
+            }
+        } else {
+            if (d3 == 4) {
+                stringBuffer.append("CD");
+            } else {
+                while (pt >= 1) {
+                    stringBuffer.append('C');
+                    pt--;
+                }
+            }
+        }
+        int d2 = (num-d4*1000-d3*100)/10;
+        pt = d2;
+        if (d2 >= 5) {
+            if (d2 == 9) {
+                stringBuffer.append("XC");
+            } else {
+                stringBuffer.append('L');
+                pt -= 5;
+                while (pt >= 1) {
+                    stringBuffer.append('X');
+                    pt--;
+                }
+            }
+        } else {
+            if (d2 == 4) {
+                stringBuffer.append("XL");
+            } else {
+                while (pt >= 1) {
+                    stringBuffer.append('X');
+                    pt--;
+                }
+            }
+        }
+        int d1 = num-d4*1000-d3*100-d2*10;
+        pt = d1;
+        if (d1 >= 5) {
+            if (d1 == 9) {
+                stringBuffer.append("IX");
+            } else {
+                stringBuffer.append('V');
+                pt -= 5;
+                while (pt >= 1) {
+                    stringBuffer.append('I');
+                    pt--;
+                }
+            }
+        } else {
+            if (d1 == 4) {
+                stringBuffer.append("IV");
+            } else {
+                while (pt >= 1) {
+                    stringBuffer.append('I');
+                    pt--;
+                }
+            }
+        }
+        return stringBuffer.toString();
+    }
 }

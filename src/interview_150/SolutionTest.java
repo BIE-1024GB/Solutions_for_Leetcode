@@ -190,4 +190,15 @@ class SolutionTest {
         String s3 = "MCMXCIV";
         assertEquals(1994, sol.romanToInt(s3));
     }
+
+    @Test
+    public void testIoR() {
+        Solution solution = new Solution();
+        int t1 = 3749;
+        assertTrue(solution.intToRoman(t1).equals("MMMDCCXLIX"));
+        int t2 = 58;
+        assertTrue(solution.intToRoman(t2).equals("LVIII"));
+        int t3 = 1994;
+        assertTrue(solution.intToRoman(t3).equals("MCMXCIV"));
+    }
 }
