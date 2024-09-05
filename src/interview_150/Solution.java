@@ -490,4 +490,9 @@ public class Solution {
         }
         return stringBuffer.toString();
     }
+
+    public int lengthOfLastWord(String s) {
+        String[] list = s.split(" ");       // regex is String
+        return list[list.length-1].length();
+    }
 }
