@@ -495,4 +495,33 @@ public class Solution {
         String[] list = s.split(" ");       // regex is String
         return list[list.length-1].length();
     }
+
+    public String longestCommonPrefix(String[] strs) {
+        if (strs.length == 1) {
+            return strs[0];
+        }
+        StringBuffer stringBuffer = new StringBuffer("");    // StringBuffer is thread-safe, while StringBuilder is not
+        String shortest = strs[0];
+        for (String s: strs) {
+            if (s.length() < shortest.length()) {
+                shortest = s;
+            }
+        }
+        for (int i = 0; i <= shortest.length()-1; i++) {
+            char tar = shortest.charAt(i);
+            int flag = 1;
+            for (String t: strs) {
+                if (t.charAt(i) != tar) {
+                    flag = 0;
+                    break;
+                }
+            }
+            if (flag == 1) {
+                stringBuffer.append(tar);
+            } else {
+                return stringBuffer.toString();
+            }
+        }
+        return stringBuffer.toString();
+    }
 }
