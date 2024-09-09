@@ -524,4 +524,19 @@ public class Solution {
         }
         return stringBuffer.toString();
     }
+
+    public String reverseWords(String s) {
+        StringBuffer stringBuffer = new StringBuffer();
+        String[] strs = s.split(" +");      // Use + for matching patterns with multiple spaces
+        for (int i = strs.length-1; i >= 0; i--) {
+            stringBuffer.append(strs[i]);
+            if (i != 0) {
+                stringBuffer.append(" ");
+            }
+        }
+        if (stringBuffer.charAt(stringBuffer.length()-1) == ' ') {   // if the original String has space(s) at start
+            stringBuffer.setLength(stringBuffer.length()-1);   // cut off the last character
+        }
+        return stringBuffer.toString();
+    }
 }
