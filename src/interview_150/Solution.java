@@ -534,8 +534,33 @@ public class Solution {
                 stringBuffer.append(" ");
             }
         }
-        if (stringBuffer.charAt(stringBuffer.length()-1) == ' ') {   // if the original String has space(s) at start
+        if (stringBuffer.charAt(stringBuffer.length()-1) == ' ') {   // if the original String has space(s) at the start
             stringBuffer.setLength(stringBuffer.length()-1);   // cut off the last character
+        }
+        return stringBuffer.toString();
+    }
+
+    public String convert(String s, int numRows) {
+        if (numRows == 1) {
+            return s;
+        }
+        StringBuffer stringBuffer = new StringBuffer();
+        for (int i = numRows; i >= 1; i--) {
+            int gap = (numRows-1)*2;
+            int jump;
+            if (i != 1) {
+                jump = (i-1)*2;
+            } else {
+                jump = (numRows-1)*2;
+            }
+            int j = numRows-i;
+            while (j <= s.length()-1) {
+                stringBuffer.append(s.charAt(j));
+                j += jump;
+                if (i != numRows && i != 1) {     // alternating pattern between the corners
+                    jump = gap-jump;
+                }
+            }
         }
         return stringBuffer.toString();
     }

@@ -201,4 +201,11 @@ class SolutionTest {
         int t3 = 1994;
         assertTrue(solution.intToRoman(t3).equals("MCMXCIV"));
     }
+
+    @Test
+    public void testZigZag() {
+        Solution solution = new Solution();
+        assertTrue(solution.convert("PAYPALISHIRING", 4).equals("PINALSIGYAHRPI"));
+        assertTrue(solution.convert("PAYPALISHIRING", 5).equals("PHASIYIRPLIGAN"));
+    }
 }
