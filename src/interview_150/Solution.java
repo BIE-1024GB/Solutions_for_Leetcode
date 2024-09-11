@@ -564,4 +564,12 @@ public class Solution {
         }
         return stringBuffer.toString();
     }
+
+    public int strStr(String haystack, String needle) {
+        if (!haystack.contains(needle)) {
+            return -1;
+        } else {
+            return haystack.indexOf(needle);   // indexOf() can also have a String as input
+        }
+    }
 }

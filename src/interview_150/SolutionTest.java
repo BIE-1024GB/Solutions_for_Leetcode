@@ -208,4 +208,15 @@ class SolutionTest {
         assertTrue(solution.convert("PAYPALISHIRING", 4).equals("PINALSIGYAHRPI"));
         assertTrue(solution.convert("PAYPALISHIRING", 5).equals("PHASIYIRPLIGAN"));
     }
+
+    @Test
+    public void testStr() {
+        Solution solution = new Solution();
+        String h1 = "sadbutsad";
+        String n1 = "sad";
+        assertEquals(0, solution.strStr(h1, n1));
+        String h2 = "leetcode";
+        String n2 = "leeto";
+        assertEquals(-1, solution.strStr(h2, n2));
+    }
 }
