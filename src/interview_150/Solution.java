@@ -618,10 +618,7 @@ public class Solution {
                         for (String s: map.get(i)) {
                             whites -= s.length();
                         }
-                        int[] counts = new int[spaces];
-                        for (int j = 0; j <= counts.length-1; j++) {
-                            counts[j] = 0;
-                        }
+                        int[] counts = new int[spaces];  // default initialization to 0 for int[]
                         int iti = 0;
                         while (whites > 0) {
                             counts[iti%spaces] += 1;
