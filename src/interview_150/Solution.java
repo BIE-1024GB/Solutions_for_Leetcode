@@ -572,4 +572,93 @@ public class Solution {
             return haystack.indexOf(needle);   // indexOf() can also have a String as input
         }
     }
+
+    public List<String> fullJustify(String[] words, int maxWidth) {
+        // General idea: first find out which words belong to each row,
+        //               then find out how spaces are distributed between words in each row and build the string.
+        List<String> list = new ArrayList<>();
+        if (words.length == 1) {
+            StringBuffer stringBuffer = new StringBuffer(words[0]);
+            int pad = maxWidth-words[0].length();
+            while (pad > 0) {
+                stringBuffer.append(' ');
+                pad--;
+            }
+            list.add(stringBuffer.toString());
+        } else {
+            // Find out the mapping from rows to words.
+            Map<Integer, List<String>> map = new HashMap<>();
+            int row = 0;
+            map.put(row, new ArrayList<>());
+            for (String s: words) {
+                if (map.get(row).isEmpty()) {
+                    map.get(row).add(s);
+                } else {
+                    int accu = 0;
+                    for (String s1: map.get(row)) {
+                        accu += s1.length();
+                        accu += 1;
+                    }
+                    if (maxWidth-accu >= s.length()) {
+                        map.get(row).add(s);
+                    } else {
+                        row += 1;
+                        map.put(row, new ArrayList<>());
+                        map.get(row).add(s);
+                    }
+                }
+            }
+            for (int i = 0; i <= row; i++) {
+                StringBuffer stringBuffer = new StringBuffer();
+                if (i != row) {
+                    if (map.get(i).size() != 1) {
+                        // Find out how spaces are distributed.
+                        int spaces = map.get(i).size()-1;
+                        int whites = maxWidth;
+                        for (String s: map.get(i)) {
+                            whites -= s.length();
+                        }
+                        int[] counts = new int[spaces];
+                        for (int j = 0; j <= counts.length-1; j++) {
+                            counts[j] = 0;
+                        }
+                        int iti = 0;
+                        while (whites > 0) {
+                            counts[iti%spaces] += 1;
+                            whites -= 1;
+                            iti += 1;
+                        }
+                        // Build the string.
+                        for (int k = 0; k <= map.get(i).size()-1; k++) {
+                            stringBuffer.append(map.get(i).get(k));
+                            if (k != map.get(i).size()-1) {
+                                int c = counts[k];
+                                while (c > 0) {
+                                    stringBuffer.append(' ');
+                                    c--;
+                                }
+                            }
+                        }
+                    } else {
+                        stringBuffer.append(map.get(i).get(0));
+                        while (stringBuffer.length() < maxWidth) {
+                            stringBuffer.append(' ');
+                        }
+                    }
+                } else {
+                    for (int j = 0; j <= map.get(i).size()-1; j++) {
+                        stringBuffer.append(map.get(i).get(j));
+                        if (j != map.get(i).size()-1) {
+                            stringBuffer.append(' ');
+                        }
+                    }
+                    while (stringBuffer.length() < maxWidth) {
+                        stringBuffer.append(' ');
+                    }
+                }
+                list.add(stringBuffer.toString());
+            }
+        }
+        return list;
+    }
 }

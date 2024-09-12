@@ -1,6 +1,8 @@
 package interview_150;
 
 import org.junit.jupiter.api.Test;
+import java.util.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class SolutionTest {
@@ -218,5 +220,21 @@ class SolutionTest {
         String h2 = "leetcode";
         String n2 = "leeto";
         assertEquals(-1, solution.strStr(h2, n2));
+    }
+
+    @Test
+    public void testJustify() {
+        Solution solution = new Solution();
+        String[] w1 = new String[] {"This", "is", "an", "example", "of", "text", "justification."};
+        int m1 = 16;
+        List<String> l1 = new ArrayList<>();
+        l1.add("This    is    an");
+        l1.add("example  of text");
+        l1.add("justification.  ");
+        List<String> t1 = solution.fullJustify(w1, m1);
+        assertEquals(l1.size(), t1.size());
+        for (int i = 0; i <= l1.size()-1; i++) {
+            assertTrue(l1.get(i).equals(t1.get(i)));
+        }
     }
 }
