@@ -236,5 +236,16 @@ class SolutionTest {
         for (int i = 0; i <= l1.size()-1; i++) {
             assertTrue(l1.get(i).equals(t1.get(i)));
         }
+        String[] w2 = new String[] {"What","must","be","acknowledgment","shall","be"};
+        int m2 = 16;
+        List<String> l2 = new ArrayList<>();
+        l2.add("What   must   be");
+        l2.add("acknowledgment  ");
+        l2.add("shall be        ");
+        List<String> t2 = solution.fullJustify(w2, m2);
+        assertEquals(l2.size(), t2.size());
+        for (int j = 0; j <= l2.size()-1; j++) {
+            assertTrue(l2.get(j).equals(t2.get(j)));
+        }
     }
 }
