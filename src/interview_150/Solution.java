@@ -658,4 +658,31 @@ public class Solution {
         }
         return list;
     }
+
+    public boolean isPalindrome(String s) {
+        StringBuffer stringBuffer = new StringBuffer();
+        for (int i = 0; i <= s.length()-1; i++) {
+            char c = s.charAt(i);
+            if (Character.isAlphabetic(c) || Character.isDigit(c)) {
+                if (Character.isAlphabetic(c)) {
+                    if (Character.isUpperCase(c)) {
+                        stringBuffer.append(Character.toLowerCase(c));
+                    } else {
+                        stringBuffer.append(c);
+                    }
+                } else {
+                    stringBuffer.append(c);
+                }
+            }
+        }
+        if (stringBuffer.isEmpty() || stringBuffer.length() == 1) {
+            return true;
+        }
+        for (int j = 0; j <= stringBuffer.length()/2-1; j++) {
+            if (stringBuffer.charAt(j) != stringBuffer.charAt(stringBuffer.length()-1-j)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

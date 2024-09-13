@@ -248,4 +248,13 @@ class SolutionTest {
             assertTrue(l2.get(j).equals(t2.get(j)));
         }
     }
+
+    @Test
+    public void testPalindrome() {
+        Solution solution = new Solution();
+        String s1 = " ";
+        assertTrue(solution.isPalindrome(s1));
+        String s2 = "A man, a plan, a canal: Panama";
+        assertTrue(solution.isPalindrome(s2));
+    }
 }
