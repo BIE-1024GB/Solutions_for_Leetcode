@@ -659,7 +659,7 @@ public class Solution {
         return list;
     }
 
-    public boolean isPalindrome(String s) {
+    public boolean isPalindrome(String s) {           // demonstration of the Character class
         StringBuffer stringBuffer = new StringBuffer();
         for (int i = 0; i <= s.length()-1; i++) {
             char c = s.charAt(i);
