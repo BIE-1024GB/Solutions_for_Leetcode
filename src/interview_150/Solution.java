@@ -685,4 +685,22 @@ public class Solution {
         }
         return true;
     }
+
+    public boolean isSubsequence(String s, String t) {     // time complexity: O(|s|*|t|)
+        if (s.isEmpty()) {
+            return true;
+        }
+        if (t.length() < s.length()) {
+            return false;
+        }
+        int st = 0;
+        for (int i = 0; i <= s.length()-1; i++) {
+            if (t.substring(st, t.length()).indexOf(s.charAt(i)) != -1) {  // repetitive substring() is inefficient
+                st = t.substring(st, t.length()).indexOf(s.charAt(i))+st+1;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
 }
