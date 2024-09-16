@@ -257,4 +257,13 @@ class SolutionTest {
         String s2 = "A man, a plan, a canal: Panama";
         assertTrue(solution.isPalindrome(s2));
     }
+
+    @Test
+    public void testArea() {
+        Solution solution = new Solution();
+        int[] h1 = new int[] {1,8,6,2,5,4,8,3,7};
+        assertEquals(49, solution.maxArea(h1));
+        int[] h2 = new int[] {1,1};
+        assertEquals(1, solution.maxArea(h2));
+    }
 }

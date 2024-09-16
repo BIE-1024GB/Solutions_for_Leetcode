@@ -722,4 +722,24 @@ public class Solution {
         answer[1] = rp+1;
         return answer;
     }
+
+    public int maxArea(int[] height) {
+        int lp = 0;
+        int rp = height.length-1;
+        int area = 0;
+        while (lp <= rp-1) {
+            int low = (height[lp]<height[rp]?height[lp]:height[rp]);
+            int curr = low*(rp-lp);
+            area = (curr>area?curr:area);
+            if (lp == rp-1) {
+                break;
+            }
+            if (height[lp] <= height[rp]) {
+                lp += 1;
+            } else {
+                rp -= 1;
+            }
+        }
+        return area;
+    }
 }
