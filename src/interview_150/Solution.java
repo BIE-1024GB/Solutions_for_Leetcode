@@ -742,4 +742,55 @@ public class Solution {
         }
         return area;
     }
+
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> container = new ArrayList<>(0);
+        Set<String> unique = new HashSet<>(0);
+        Arrays.sort(nums);
+        ArrayList<Integer> third = new ArrayList<>();
+        for (int i = 0; i <= nums.length-1; i++) {
+            if (third.contains(nums[i])) {
+                continue;
+            } else {
+                third.add(nums[i]);
+                int lp = (i==0? 1: 0);
+                int rp = (i==nums.length-1? nums.length-2: nums.length-1);
+                int lv = nums[lp];
+                int rv = nums[rp];
+                while (lp < rp) {
+                    if (nums[lp]+nums[rp]+nums[i] == 0) {
+                        List<Integer> list = new ArrayList<>();
+                        list.add(nums[i]);
+                        list.add(nums[lp]);
+                        list.add(nums[rp]);
+                        Collections.sort(list);
+                        String contents = list.toString();
+                        if (!unique.contains(contents)) {
+                            container.add(list);
+                            unique.add(contents);
+                        }
+                        lv = nums[lp];
+                        rv = nums[rp];
+                        lp++;
+                        while ((nums[lp] == lv || lp == i) && lp < rp) {
+                            lp++;
+                        }
+                    } else {
+                        if (nums[lp]+nums[rp]+nums[i] > 0) {
+                            rp--;
+                            if (rp == i) {
+                                rp--;
+                            }
+                        } else {
+                            lp++;
+                            if (lp == i) {
+                                lp++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return container;
+    }
 }
