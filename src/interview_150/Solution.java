@@ -793,4 +793,25 @@ public class Solution {
         }
         return container;
     }
+
+    public int minSubArrayLen(int target, int[] nums) {
+        // Idea: maintain 2 pointers, right and left, both starting at 0;
+        //       increment the right pointer, when the target is met, update the length;
+        //       then shrink the length by incrementing the left pointer until target is missed again.
+        //   Time complexity: O(N)
+        int n = nums.length;
+        int minLen = Integer.MAX_VALUE;
+        int left = 0;
+        int sum = 0;
+        for (int right = 0; right < n; right++) {
+            sum += nums[right];
+
+            while (sum >= target) {
+                minLen = Math.min(minLen, right - left + 1);
+                sum -= nums[left];
+                left++;
+            }
+        }
+        return minLen == Integer.MAX_VALUE ? 0 : minLen;
+    }
 }
