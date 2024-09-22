@@ -814,4 +814,33 @@ public class Solution {
         }
         return minLen == Integer.MAX_VALUE ? 0 : minLen;
     }
+
+    public int lengthOfLongestSubstring(String s) {
+        if (s.length() == 0) {
+            return 0;
+        } else if (s.length() == 1) {
+            return 1;
+        } else {
+            int length = 0;
+            int start = 0;
+            while (start <= s.length()-1) {
+                StringBuffer stringBuffer = new StringBuffer();
+                stringBuffer.append(s.charAt(start));
+                int right = start+1;
+                while (right <= s.length()-1) {
+                    if (stringBuffer.toString().indexOf(s.charAt(right)) == -1) {
+                        stringBuffer.append(s.charAt(right));
+                        right++;
+                    } else {
+                        break;
+                    }
+                }
+                if (stringBuffer.length() > length) {
+                    length = stringBuffer.length();
+                }
+                start++;
+            }
+            return length;
+        }
+    }
 }

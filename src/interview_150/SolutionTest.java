@@ -266,4 +266,19 @@ class SolutionTest {
         int[] h2 = new int[] {1,1};
         assertEquals(1, solution.maxArea(h2));
     }
+
+    @Test
+    public void testSub() {
+        Solution solution = new Solution();
+        String s1 = "abcabcbb";
+        assertEquals(3, solution.lengthOfLongestSubstring(s1));
+        String s2 = "bbbbb";
+        assertEquals(1, solution.lengthOfLongestSubstring(s2));
+        String s3 = "pwwkew";
+        assertEquals(3, solution.lengthOfLongestSubstring(s3));
+        String s4 = "au";
+        assertEquals(2, solution.lengthOfLongestSubstring(s4));
+        String s5 = "dvdf";
+        assertEquals(3, solution.lengthOfLongestSubstring(s5));
+    }
 }
