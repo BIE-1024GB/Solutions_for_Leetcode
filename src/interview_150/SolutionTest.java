@@ -290,4 +290,12 @@ class SolutionTest {
         assertEquals(1, solution.findSubstring(s1, w1).size());
         assertEquals(0, solution.findSubstring(s1, w1).getFirst());
     }
+
+    @Test
+    public void testMinSub() {
+        Solution solution = new Solution();
+        String s1 = "ADOBECODEBANC";
+        String t1 = "ABC";
+        assertEquals("BANC", solution.minWindow(s1, t1));
+    }
 }

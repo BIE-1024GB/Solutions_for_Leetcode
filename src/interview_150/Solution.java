@@ -873,4 +873,45 @@ public class Solution {
         }
         return ans;
     }
+
+    public String minWindow(String s, String t) {
+        if (s.length() < t.length()) {
+            return "";
+        }
+        int lp = 0;
+        int rp = t.length()-1;
+        StringBuffer stringBuffer = new StringBuffer(s.substring(lp, rp+1));
+        HashMap<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i <= t.length()-1; i++) {
+            map.put(t.charAt(i), map.getOrDefault(t.charAt(i), 0)+1);
+        }
+        int ml = s.length()+1;
+        String ms = new String();
+        while (rp <= s.length()-1) {
+            HashMap<Character, Integer> cm = new HashMap<>();
+            for (int i = 0; i <= stringBuffer.length()-1; i++) {
+                cm.put(stringBuffer.charAt(i), cm.getOrDefault(stringBuffer.charAt(i), 0)+1);
+            }
+            int f1 = 1;
+            for (char k: map.keySet()) {
+                if (!cm.keySet().contains(k) || cm.get(k) < map.get(k)) {
+                    f1 = 0;
+                    break;
+                }
+            }
+            if (f1 == 1) {
+                if (stringBuffer.length() < ml) {
+                    ml = stringBuffer.length();
+                    ms = stringBuffer.toString();
+                }
+                stringBuffer = stringBuffer.deleteCharAt(0);
+            } else {
+                rp++;
+                if (rp <= s.length()-1) {
+                    stringBuffer.append(s.charAt(rp));
+                }
+            }
+        }
+        return ms;
+    }
 }
