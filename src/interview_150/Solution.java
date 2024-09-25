@@ -875,43 +875,75 @@ public class Solution {
     }
 
     public String minWindow(String s, String t) {
-        if (s.length() < t.length()) {
-            return "";
-        }
-        int lp = 0;
-        int rp = t.length()-1;
-        StringBuffer stringBuffer = new StringBuffer(s.substring(lp, rp+1));
+//        if (s.length() < t.length()) {
+//            return "";
+//        }
+//        int lp = 0;
+//        int rp = t.length()-1;
+//        StringBuffer stringBuffer = new StringBuffer(s.substring(lp, rp+1));
+//        HashMap<Character, Integer> map = new HashMap<>();
+//        for (int i = 0; i <= t.length()-1; i++) {
+//            map.put(t.charAt(i), map.getOrDefault(t.charAt(i), 0)+1);
+//        }
+//        int ml = s.length()+1;
+//        String ms = new String();
+//        while (rp <= s.length()-1) {
+//            HashMap<Character, Integer> cm = new HashMap<>();
+//            for (int i = 0; i <= stringBuffer.length()-1; i++) {
+//                cm.put(stringBuffer.charAt(i), cm.getOrDefault(stringBuffer.charAt(i), 0)+1);
+//            }
+//            int f1 = 1;
+//            for (char k: map.keySet()) {
+//                if (!cm.keySet().contains(k) || cm.get(k) < map.get(k)) {
+//                    f1 = 0;
+//                    break;
+//                }
+//            }
+//            if (f1 == 1) {
+//                if (stringBuffer.length() < ml) {
+//                    ml = stringBuffer.length();
+//                    ms = stringBuffer.toString();
+//                }
+//                stringBuffer = stringBuffer.deleteCharAt(0);
+//            } else {
+//                rp++;
+//                if (rp <= s.length()-1) {
+//                    stringBuffer.append(s.charAt(rp));
+//                }
+//            }
+//        }
+//        return ms;
+
+        // A more efficient solution.
         HashMap<Character, Integer> map = new HashMap<>();
-        for (int i = 0; i <= t.length()-1; i++) {
-            map.put(t.charAt(i), map.getOrDefault(t.charAt(i), 0)+1);
+        for (char c : t.toCharArray()) {
+            map.put(c, map.getOrDefault(c, 0) + 1);
         }
-        int ml = s.length()+1;
-        String ms = new String();
-        while (rp <= s.length()-1) {
-            HashMap<Character, Integer> cm = new HashMap<>();
-            for (int i = 0; i <= stringBuffer.length()-1; i++) {
-                cm.put(stringBuffer.charAt(i), cm.getOrDefault(stringBuffer.charAt(i), 0)+1);
-            }
-            int f1 = 1;
-            for (char k: map.keySet()) {
-                if (!cm.keySet().contains(k) || cm.get(k) < map.get(k)) {
-                    f1 = 0;
-                    break;
+        int left = 0, right = 0, minLen = Integer.MAX_VALUE, minStart = 0, count = 0;
+        while (right < s.length()) {
+            char c = s.charAt(right);
+            if (map.containsKey(c)) {
+                map.put(c, map.get(c) - 1);
+                if (map.get(c) >= 0) {
+                    count++;
                 }
             }
-            if (f1 == 1) {
-                if (stringBuffer.length() < ml) {
-                    ml = stringBuffer.length();
-                    ms = stringBuffer.toString();
+            right++;
+            while (count == t.length()) {
+                if (right - left < minLen) {
+                    minLen = right - left;
+                    minStart = left;
                 }
-                stringBuffer = stringBuffer.deleteCharAt(0);
-            } else {
-                rp++;
-                if (rp <= s.length()-1) {
-                    stringBuffer.append(s.charAt(rp));
+                char c2 = s.charAt(left);
+                if (map.containsKey(c2)) {
+                    map.put(c2, map.get(c2) + 1);
+                    if (map.get(c2) > 0) {
+                        count--;
+                    }
                 }
+                left++;
             }
         }
-        return ms;
+        return minLen == Integer.MAX_VALUE ? "" : s.substring(minStart, minStart + minLen);
     }
 }
