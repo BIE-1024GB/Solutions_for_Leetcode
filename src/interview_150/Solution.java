@@ -946,4 +946,49 @@ public class Solution {
         }
         return minLen == Integer.MAX_VALUE ? "" : s.substring(minStart, minStart + minLen);
     }
+
+    public boolean isValidSudoku(char[][] board) {
+        ArrayList<Character> arrayList = new ArrayList<>();
+        for (int i = 0; i <= board.length-1; i++) {
+            for (int j = 0; j <= board[0].length-1; j++) {
+                if (board[i][j] != '.') {
+                    if (!arrayList.contains(board[i][j])) {
+                        arrayList.add(board[i][j]);
+                    } else {
+                        return false;
+                    }
+                }
+            }
+            arrayList.clear();
+        }
+        for (int m = 0; m <= board[0].length-1; m++) {
+            for (int n = 0; n <= board.length-1; n++) {
+                if (board[n][m] != '.') {
+                    if (!arrayList.contains(board[n][m])) {
+                        arrayList.add(board[n][m]);
+                    } else {
+                        return false;
+                    }
+                }
+            }
+            arrayList.clear();
+        }
+        for (int o = 0; o <= 8; o++) {
+            int r = o/3;
+            int c = o%3;
+            for (int p = r*3; p <= r*3+2; p++) {
+                for (int q = c*3; q <= c*3+2; q++) {
+                    if (board[p][q] != '.') {
+                        if (!arrayList.contains(board[p][q])) {
+                            arrayList.add(board[p][q]);
+                        } else {
+                            return false;
+                        }
+                    }
+                }
+            }
+            arrayList.clear();
+        }
+        return true;
+    }
 }
