@@ -991,4 +991,85 @@ public class Solution {
         }
         return true;
     }
+
+    public List<Integer> spiralOrder(int[][] matrix) {
+        int rows = matrix.length;
+        int columns = matrix[0].length;
+        int total = rows*columns;
+        List<Integer> list = new ArrayList<>();
+        boolean horizontal = true;
+        boolean vertical = true;
+        int r = 0;
+        int c = 0;
+        ArrayList<Integer> rt = new ArrayList<>();
+        ArrayList<Integer> ct = new ArrayList<>();
+        while (total > 0) {
+            if (horizontal == true && vertical == true) {
+                while (!ct.contains(c) && c <= columns-1) {
+                    list.add(matrix[r][c]);
+                    total--;
+                    c++;
+                }
+                c--;
+                rt.add(r);
+                r++;
+                horizontal = false;
+            } else if (horizontal == false && vertical == true) {
+                while (!rt.contains(r) && r <= rows-1) {
+                    list.add(matrix[r][c]);
+                    total--;
+                    r++;
+                }
+                r--;
+                ct.add(c);
+                c--;
+                vertical = false;
+            } else if (horizontal == false && vertical == false) {
+                while (!ct.contains(c) && c >= 0) {
+                    list.add(matrix[r][c]);
+                    total--;
+                    c--;
+                }
+                c++;
+                rt.add(r);
+                r--;
+                horizontal = true;
+            } else {
+                while (!rt.contains(r) && r >= 0) {
+                    list.add(matrix[r][c]);
+                    total--;
+                    r--;
+                }
+                r++;
+                ct.add(c);
+                c++;
+                vertical = true;
+            }
+        }
+        return list;
+    }
+
+    public void rotate(int[][] matrix) {
+        if (matrix.length != 1) {
+            int mid = (matrix.length-1)/2;
+            for (int i = 0; i <= mid; i++) {
+                for (int j = i; j <= matrix[0].length-2-i; j++) {
+                    int step = 1;
+                    int curr_row = i;
+                    int curr_col = j;
+                    int replacer = matrix[i][j];
+                    while (step <= 4) {
+                        int new_col = matrix.length-1-curr_row;
+                        int new_row = curr_col;
+                        int temp = matrix[new_row][new_col];
+                        matrix[new_row][new_col] = replacer;
+                        replacer = temp;
+                        curr_row = new_row;
+                        curr_col = new_col;
+                        step++;
+                    }
+                }
+            }
+        }
+    }
 }
