@@ -1072,4 +1072,32 @@ public class Solution {
             }
         }
     }
+
+    public void setZeroes(int[][] matrix) {
+        if (matrix.length != 1 || matrix[0].length != 1) {
+            ArrayList<Integer> rows = new ArrayList<>();
+            ArrayList<Integer> cols = new ArrayList<>();
+            for (int i = 0; i <= matrix.length-1; i++) {
+                for (int j = 0; j <= matrix[0].length-1; j++) {
+                    if (matrix[i][j] == 0) {
+                        rows.add(i);
+                        cols.add(j);
+                    }
+                }
+            }
+            for (int p = 0; p <= matrix.length-1; p++) {
+                if (rows.contains(p)) {
+                    for (int p1 = 0; p1 <= matrix[0].length-1; p1++) {
+                        matrix[p][p1] = 0;
+                    }
+                } else {
+                    for (int q = 0; q <= matrix[0].length-1; q++) {
+                        if (cols.contains(q)) {
+                            matrix[p][q] = 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
