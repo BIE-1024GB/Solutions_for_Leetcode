@@ -1100,4 +1100,45 @@ public class Solution {
             }
         }
     }
+
+    public void gameOfLife(int[][] board) {
+        if (board.length == 1 && board[0].length == 1) {
+            board[0][0] = 0;
+        } else {
+            ArrayList<Integer> next = new ArrayList<>();
+            for (int i = 0; i <= board.length-1; i++) {
+                for (int j = 0; j <= board[0].length-1; j++) {
+                    int live = 0;
+                    for (int m = i-1; m <= i+1; m++) {
+                        if (m < 0 || m > board.length-1)
+                            continue;
+                        for (int n = j-1; n <= j+1; n++) {
+                            if (n < 0 || n > board[0].length-1 || (m == i && n == j))
+                                continue;
+                            if (board[m][n] == 1)
+                                live++;
+                        }
+                    }
+                    if (board[i][j] == 1) {
+                        if (live < 2 || live > 3)
+                            next.add(0);
+                        else
+                            next.add(1);
+                    } else {
+                        if (live == 3)
+                            next.add(1);
+                        else
+                            next.add(0);
+                    }
+                }
+            }
+            int pt = 0;
+            for (int i = 0; i <= board.length-1; i++) {
+                for (int j = 0; j <= board[0].length-1; j++) {
+                    board[i][j] = next.get(pt);
+                    pt++;
+                }
+            }
+        }
+    }
 }
