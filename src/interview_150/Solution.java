@@ -3,6 +3,68 @@ package interview_150;
 import java.util.*;
 
 public class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        if (m == 0) {                         // need to check edge cases
+            for (int i = 0; i <= n-1; i++) {
+                nums1[i] = nums2[i];
+            }
+            return;
+        } else if (n == 0) {
+            return;
+        }
+        ArrayList<Integer> elements = new ArrayList<>();
+        int lp = 0;
+        int rp = 0;
+        while (elements.size() < m+n) {       // time complexity: O(m+n)
+            if (lp == m) {
+                elements.add(nums2[rp]);
+                rp++;
+            } else if (rp == n) {
+                elements.add(nums1[lp]);
+                lp++;
+            } else {
+                int cl = nums1[lp];
+                int cr = nums2[rp];
+                if (cl <= cr) {
+                    elements.add(cl);
+                    lp++;
+                } else {
+                    elements.add(cr);
+                    rp++;
+                }
+            }
+        }
+        for (int i = 0; i <= elements.size()-1; i++) {
+            nums1[i] = elements.get(i);
+        }
+    }
+
+    public int removeElement(int[] nums, int val) {
+        ArrayList<Integer> unique = new ArrayList<>();
+        for (int i = 0; i <= nums.length-1; i++) {
+            if (nums[i] != val) {
+                unique.add(nums[i]);
+            }
+        }
+        for (int j = 0; j <= unique.size()-1; j++) {
+            nums[j] = unique.get(j);
+        }
+        return unique.size();
+    }
+
+    public int removeDuplicates_I(int[] nums) {
+        ArrayList<Integer> unique = new ArrayList<>();
+        for (int i = 0; i <= nums.length-1; i++) {
+            if (!unique.contains(nums[i])) {
+                unique.add(nums[i]);
+            }
+        }
+        for (int j = 0; j <= unique.size()-1; j++) {
+            nums[j] = unique.get(j);
+        }
+        return unique.size();
+    }
+
     public int removeDuplicates(int[] nums) {
         int re = 0;
         if (nums.length == 1 || nums.length == 2) {
@@ -1140,5 +1202,30 @@ public class Solution {
                 }
             }
         }
+    }
+
+    public boolean canConstruct(String ransomNote, String magazine) {
+        if (ransomNote.length() > magazine.length()) {
+            return false;
+        }
+        HashMap<Character, Integer> ran = new HashMap<>();
+        for (int i = 0; i <= ransomNote.length()-1; i++) {
+            char curr = ransomNote.charAt(i);
+            ran.put(curr, ran.getOrDefault(curr, 0)+1);
+        }
+        HashMap<Character, Integer> maga = new HashMap<>();
+        for (int i = 0; i <= magazine.length()-1; i++) {
+            char curr = magazine.charAt(i);
+            maga.put(curr, maga.getOrDefault(curr, 0)+1);
+        }
+        for (Character key: ran.keySet()) {
+            if (!maga.containsKey(key)) {
+                return false;
+            }
+            if (ran.get(key) > maga.get(key)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
