@@ -298,4 +298,15 @@ class SolutionTest {
         String t1 = "ABC";
         assertEquals("BANC", solution.minWindow(s1, t1));
     }
+
+    @Test
+    public void testIso() {
+        Solution solution = new Solution();
+        String s1 = "egg";
+        String t1 = "add";
+        assertTrue(solution.isIsomorphic(s1, t1));
+        String s2 = "paper";
+        String t2 = "title";
+        assertTrue(solution.isIsomorphic(s2, t2));
+    }
 }

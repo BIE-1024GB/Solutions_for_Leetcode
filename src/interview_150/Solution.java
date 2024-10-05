@@ -1228,4 +1228,28 @@ public class Solution {
         }
         return true;
     }
+
+    public boolean isIsomorphic(String s, String t) {
+        HashSet<Character> ss = new HashSet<>();     // HashSet<>: every item inside is unique
+        HashSet<Character> ts = new HashSet<>();
+        HashMap<Character, Character> stt = new HashMap<>();
+        for (int i = 0; i <= s.length()-1; i++) {
+            char cs = s.charAt(i);
+            char ct = t.charAt(i);
+            if ((!ss.contains(cs)&&ts.contains(ct)) || (ss.contains(cs)&&!ts.contains(ct))) {
+                return false;
+            }
+            if (!ss.contains(cs)&&!ts.contains(ct)) {
+                ss.add(cs);
+                ts.add(ct);
+                stt.put(cs, ct);
+            } else {
+                char exp = stt.get(cs);
+                if (exp != ct) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }
