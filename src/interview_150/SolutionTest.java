@@ -309,4 +309,12 @@ class SolutionTest {
         String t2 = "title";
         assertTrue(solution.isIsomorphic(s2, t2));
     }
+
+    @Test
+    public void testPattern() {
+        Solution solution = new Solution();
+        String p1 = "abba";
+        String s1 = "dog cat cat dog";
+        assertTrue(solution.wordPattern(p1, s1));
+    }
 }

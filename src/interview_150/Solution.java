@@ -1252,4 +1252,27 @@ public class Solution {
         }
         return true;
     }
+
+    public boolean wordPattern(String pattern, String s) {
+        String[] words = s.split(" ");
+        if (pattern.length() != words.length) {
+            return false;
+        }
+        HashMap<Character, String> ps = new HashMap<>();
+        for (int i = 0; i <= pattern.length()-1; i++) {
+            char cc = pattern.charAt(i);
+            String cs = words[i];
+            if (!ps.containsKey(cc)&&ps.containsValue(cs) || ps.containsKey(cc)&&!ps.containsValue(cs)) {
+                return false;
+            } else if (ps.containsKey(cc)&&ps.containsValue(cs)) {
+                String exp = ps.get(cc);
+                if (!cs.equals(exp)) {
+                    return false;
+                }
+            } else {
+                ps.put(cc, cs);
+            }
+        }
+        return true;
+    }
 }
