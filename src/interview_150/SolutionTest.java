@@ -317,4 +317,12 @@ class SolutionTest {
         String s1 = "dog cat cat dog";
         assertTrue(solution.wordPattern(p1, s1));
     }
+
+    @Test
+    public void testAna() {
+        Solution solution = new Solution();
+        String s1 = "anagram";
+        String t1 = "nagaram";
+        assertTrue(solution.isAnagram(s1, t1));
+    }
 }
