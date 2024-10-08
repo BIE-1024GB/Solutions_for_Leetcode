@@ -5,9 +5,8 @@ import java.util.*;
 public class Solution {
     public void merge(int[] nums1, int m, int[] nums2, int n) {
         if (m == 0) {                         // need to check edge cases
-            for (int i = 0; i <= n-1; i++) {
-                nums1[i] = nums2[i];
-            }
+            if (n >= 0)
+                System.arraycopy(nums2, 0, nums1, 0, n);
             return;
         } else if (n == 0) {
             return;
@@ -268,8 +267,8 @@ public class Solution {
         public boolean remove(int val) {
             if (hashSet.contains(val)) {
                 int index = linkedList.indexOf(val);
-                linkedList.set(index, linkedList.get(linkedList.size()-1));
-                linkedList.remove(linkedList.size()-1);
+                linkedList.set(index, linkedList.getLast());
+                linkedList.removeLast();
                 hashSet.remove(val);
                 return true;
             } else {
@@ -473,7 +472,7 @@ public class Solution {
     }
 
     public String intToRoman(int num) {
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuffer = new StringBuilder();
         int pt;
         int d4 = num/1000;
         pt = d4;
@@ -562,7 +561,8 @@ public class Solution {
         if (strs.length == 1) {
             return strs[0];
         }
-        StringBuffer stringBuffer = new StringBuffer("");    // StringBuffer is thread-safe, while StringBuilder is not
+        StringBuilder stringBuffer = new StringBuilder();    // StringBuffer is thread-safe, while StringBuilder is not.
+                                                             // However, StringBuilder is more efficient.
         String shortest = strs[0];
         for (String s: strs) {
             if (s.length() < shortest.length()) {
@@ -588,7 +588,7 @@ public class Solution {
     }
 
     public String reverseWords(String s) {
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuffer = new StringBuilder();
         String[] strs = s.split(" +");      // Use + for matching patterns with multiple spaces
         for (int i = strs.length-1; i >= 0; i--) {
             stringBuffer.append(strs[i]);
@@ -606,7 +606,7 @@ public class Solution {
         if (numRows == 1) {
             return s;
         }
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuffer = new StringBuilder();
         for (int i = numRows; i >= 1; i--) {
             int gap = (numRows-1)*2;
             int jump;
@@ -640,7 +640,7 @@ public class Solution {
         //               then find out how spaces are distributed between words in each row and build the string.
         List<String> list = new ArrayList<>();
         if (words.length == 1) {
-            StringBuffer stringBuffer = new StringBuffer(words[0]);
+            StringBuilder stringBuffer = new StringBuilder(words[0]);
             int pad = maxWidth-words[0].length();
             while (pad > 0) {
                 stringBuffer.append(' ');
@@ -671,7 +671,7 @@ public class Solution {
                 }
             }
             for (int i = 0; i <= row; i++) {
-                StringBuffer stringBuffer = new StringBuffer();
+                StringBuilder stringBuffer = new StringBuilder();
                 if (i != row) {
                     if (map.get(i).size() != 1) {
                         // Find out how spaces are distributed.
@@ -699,7 +699,7 @@ public class Solution {
                             }
                         }
                     } else {
-                        stringBuffer.append(map.get(i).get(0));
+                        stringBuffer.append(map.get(i).getFirst());
                         while (stringBuffer.length() < maxWidth) {
                             stringBuffer.append(' ');
                         }
@@ -722,7 +722,7 @@ public class Solution {
     }
 
     public boolean isPalindrome(String s) {           // demonstration of the Character class
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuffer = new StringBuilder();
         for (int i = 0; i <= s.length()-1; i++) {
             char c = s.charAt(i);
             if (Character.isAlphabetic(c) || Character.isDigit(c)) {
@@ -757,8 +757,8 @@ public class Solution {
         }
         int st = 0;
         for (int i = 0; i <= s.length()-1; i++) {
-            if (t.substring(st, t.length()).indexOf(s.charAt(i)) != -1) {  // repetitive substring() is inefficient
-                st = t.substring(st, t.length()).indexOf(s.charAt(i))+st+1;
+            if (t.substring(st).indexOf(s.charAt(i)) != -1) {  // repetitive substring() is inefficient
+                st = t.substring(st).indexOf(s.charAt(i))+st+1;
             } else {
                 return false;
             }
@@ -790,9 +790,9 @@ public class Solution {
         int rp = height.length-1;
         int area = 0;
         while (lp <= rp-1) {
-            int low = (height[lp]<height[rp]?height[lp]:height[rp]);
+            int low = (Math.min(height[lp], height[rp]));
             int curr = low*(rp-lp);
-            area = (curr>area?curr:area);
+            area = (Math.max(curr, area));
             if (lp == rp-1) {
                 break;
             }
@@ -811,14 +811,11 @@ public class Solution {
         Arrays.sort(nums);
         ArrayList<Integer> third = new ArrayList<>();
         for (int i = 0; i <= nums.length-1; i++) {
-            if (third.contains(nums[i])) {
-                continue;
-            } else {
+            if (!third.contains(nums[i])) {
                 third.add(nums[i]);
                 int lp = (i==0? 1: 0);
                 int rp = (i==nums.length-1? nums.length-2: nums.length-1);
-                int lv = nums[lp];
-                int rv = nums[rp];
+                int lv;
                 while (lp < rp) {
                     if (nums[lp]+nums[rp]+nums[i] == 0) {
                         List<Integer> list = new ArrayList<>();
@@ -832,11 +829,9 @@ public class Solution {
                             unique.add(contents);
                         }
                         lv = nums[lp];
-                        rv = nums[rp];
-                        lp++;
-                        while ((nums[lp] == lv || lp == i) && lp < rp) {
+                        do {
                             lp++;
-                        }
+                        } while ((nums[lp] == lv || lp == i) && lp < rp);
                     } else {
                         if (nums[lp]+nums[rp]+nums[i] > 0) {
                             rp--;
@@ -878,7 +873,7 @@ public class Solution {
     }
 
     public int lengthOfLongestSubstring(String s) {
-        if (s.length() == 0) {
+        if (s.isEmpty()) {
             return 0;
         } else if (s.length() == 1) {
             return 1;
@@ -886,7 +881,7 @@ public class Solution {
             int length = 0;
             int start = 0;
             while (start <= s.length()-1) {
-                StringBuffer stringBuffer = new StringBuffer();
+                StringBuilder stringBuffer = new StringBuilder();
                 stringBuffer.append(s.charAt(start));
                 int right = start+1;
                 while (right <= s.length()-1) {
@@ -937,45 +932,6 @@ public class Solution {
     }
 
     public String minWindow(String s, String t) {
-//        if (s.length() < t.length()) {
-//            return "";
-//        }
-//        int lp = 0;
-//        int rp = t.length()-1;
-//        StringBuffer stringBuffer = new StringBuffer(s.substring(lp, rp+1));
-//        HashMap<Character, Integer> map = new HashMap<>();
-//        for (int i = 0; i <= t.length()-1; i++) {
-//            map.put(t.charAt(i), map.getOrDefault(t.charAt(i), 0)+1);
-//        }
-//        int ml = s.length()+1;
-//        String ms = new String();
-//        while (rp <= s.length()-1) {
-//            HashMap<Character, Integer> cm = new HashMap<>();
-//            for (int i = 0; i <= stringBuffer.length()-1; i++) {
-//                cm.put(stringBuffer.charAt(i), cm.getOrDefault(stringBuffer.charAt(i), 0)+1);
-//            }
-//            int f1 = 1;
-//            for (char k: map.keySet()) {
-//                if (!cm.keySet().contains(k) || cm.get(k) < map.get(k)) {
-//                    f1 = 0;
-//                    break;
-//                }
-//            }
-//            if (f1 == 1) {
-//                if (stringBuffer.length() < ml) {
-//                    ml = stringBuffer.length();
-//                    ms = stringBuffer.toString();
-//                }
-//                stringBuffer = stringBuffer.deleteCharAt(0);
-//            } else {
-//                rp++;
-//                if (rp <= s.length()-1) {
-//                    stringBuffer.append(s.charAt(rp));
-//                }
-//            }
-//        }
-//        return ms;
-
         // A more efficient solution.
         HashMap<Character, Integer> map = new HashMap<>();
         for (char c : t.toCharArray()) {
@@ -1066,7 +1022,7 @@ public class Solution {
         ArrayList<Integer> rt = new ArrayList<>();
         ArrayList<Integer> ct = new ArrayList<>();
         while (total > 0) {
-            if (horizontal == true && vertical == true) {
+            if (horizontal && vertical) {
                 while (!ct.contains(c) && c <= columns-1) {
                     list.add(matrix[r][c]);
                     total--;
@@ -1076,7 +1032,7 @@ public class Solution {
                 rt.add(r);
                 r++;
                 horizontal = false;
-            } else if (horizontal == false && vertical == true) {
+            } else if (!horizontal && vertical) {
                 while (!rt.contains(r) && r <= rows-1) {
                     list.add(matrix[r][c]);
                     total--;
@@ -1086,7 +1042,7 @@ public class Solution {
                 ct.add(c);
                 c--;
                 vertical = false;
-            } else if (horizontal == false && vertical == false) {
+            } else if (!horizontal) {
                 while (!ct.contains(c) && c >= 0) {
                     list.add(matrix[r][c]);
                     total--;
@@ -1296,5 +1252,29 @@ public class Solution {
             }
         }
         return true;
+    }
+
+    public List<List<String>> groupAnagrams(String[] strs) {
+        // A more efficient approach.
+        // Time complexity: O(n*k*log(k))
+        List<List<String>> list = new ArrayList<>();
+        if (strs.length == 1) {
+            List<String> self = new ArrayList<>();
+            self.add(strs[0]);
+            list.add(self);
+            return list;
+        }
+        HashMap<String, List<String>> map = new HashMap<>();
+        for (int i = 0; i <= strs.length-1; i++) {
+            char[] pattern = strs[i].toCharArray();
+            Arrays.sort(pattern);          // Arrays.sort() uses 2-pivot quicksort, time complexity: O(n*log(n))
+            String ana = new String(pattern);
+            if (!map.containsKey(ana)) {
+                map.put(ana, new ArrayList<>());
+            }
+            map.get(ana).add(strs[i]);
+        }
+        list.addAll(map.values());
+        return list;
     }
 }
