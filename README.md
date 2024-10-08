@@ -1,6 +1,6 @@
 
 # About this repository:
 
-This is a repository mainly created for personal learning on LeetCode problems.
+This is a repository created for personal learning and review on LeetCode problems.
 
-Solutions are written in Java, using Oracle Open JDK 21. Some tests are also added for testing behaviors, built with JUnit 5.
+Solutions are written in Java, using Oracle JDK 21. Some tests are also added for testing the methods, built with JUnit 5.
