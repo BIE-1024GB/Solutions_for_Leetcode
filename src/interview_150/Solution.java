@@ -766,7 +766,7 @@ public class Solution {
         return true;
     }
 
-    public int[] twoSum(int[] numbers, int target) {
+    public int[] twoSum_II(int[] numbers, int target) {
         // A more efficient approach
         // Use 2 pointers, moving towards each other.
         // Time complexity: O(N)
@@ -1276,5 +1276,23 @@ public class Solution {
         }
         list.addAll(map.values());
         return list;
+    }
+
+    public int[] twoSum(int[] nums, int target) {
+        // O(n) time and space complexity using HashMap<>.
+        int[] result = new int[2];
+        HashMap<Integer, Integer> add = new HashMap<>();
+        HashMap<Integer, Integer> rev = new HashMap<>();
+        for (int i = 0; i <= nums.length-1; i++) {
+            if (add.containsValue(nums[i])) {
+                result[0] = rev.get(nums[i]);
+                result[1] = i;
+                break;
+            }
+            int residue = target-nums[i];
+            add.put(i, residue);
+            rev.put(residue, i);
+        }
+        return result;
     }
 }
