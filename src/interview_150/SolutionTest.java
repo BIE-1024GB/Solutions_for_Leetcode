@@ -5,6 +5,11 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * @author Jiarui BIE
+ * @version 1.0
+ * @since 2024/7/24
+ */
 class SolutionTest {
     @Test
     public void testSingleElementArray() {
@@ -324,5 +329,14 @@ class SolutionTest {
         String s1 = "anagram";
         String t1 = "nagaram";
         assertTrue(solution.isAnagram(s1, t1));
+    }
+
+    @Test
+    public void testHappy() {
+        Solution solution = new Solution();
+        int n1 = 19;
+        assertTrue(solution.isHappy(n1));
+        int n2 = 2;
+        assertFalse(solution.isHappy(n2));
     }
 }

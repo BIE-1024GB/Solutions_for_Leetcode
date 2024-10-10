@@ -2,6 +2,11 @@ package interview_150;
 
 import java.util.*;
 
+/**
+ * @author Jiarui BIE
+ * @version 1.1
+ * @since 2024/7/24
+ */
 public class Solution {
     public void merge(int[] nums1, int m, int[] nums2, int n) {
         if (m == 0) {                         // need to check edge cases
@@ -1294,5 +1299,26 @@ public class Solution {
             rev.put(residue, i);
         }
         return result;
+    }
+
+    public boolean isHappy(int n) {
+        // Time complexity: O(log(n)), space complexity: O(1)
+        HashSet<Integer> hashSet = new HashSet<>();
+        // This while loop will be bounded by a CONSTANT time, thus O(1) complexity
+        // Explanation: for 1<=n<=2^31-1(2147483647), the maximum possible sum of squares of digits
+        // will come from: 1999999999, the sum is 730.
+        // Therefore, the number of loops, and space for the HashSet<>, are bounded by this constant integer.
+        while (n != 1 && !hashSet.contains(n)) {
+            hashSet.add(n);
+            int sum = 0;
+            // This while loop will have O(log(n)) time to separate each digit
+            while (n > 0) {
+                int dig = n%10;
+                sum += dig*dig;
+                n /= 10;
+            }
+            n = sum;
+        }
+        return n == 1;
     }
 }
