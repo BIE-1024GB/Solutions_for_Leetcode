@@ -1321,4 +1321,25 @@ public class Solution {
         }
         return n == 1;
     }
+
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+        if (nums.length == 1 || k == 0) {
+            return false;
+        }
+        HashMap<Integer, ArrayList<Integer>> map = new HashMap<>();
+        for (int i = 0; i <= nums.length-1; i++) {
+            if (!map.containsKey(nums[i])) {
+                map.put(nums[i], new ArrayList<>());
+                map.get(nums[i]).add(i);
+            } else {
+                int near = map.get(nums[i]).getLast();
+                if (i-near <= k) {
+                    return true;
+                } else {
+                    map.get(nums[i]).add(i);
+                }
+            }
+        }
+        return false;
+    }
 }

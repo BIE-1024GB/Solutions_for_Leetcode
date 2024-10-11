@@ -339,4 +339,12 @@ class SolutionTest {
         int n2 = 2;
         assertFalse(solution.isHappy(n2));
     }
+
+    @Test
+    public void testNear() {
+        Solution solution = new Solution();
+        int[] n1 = new int[] {1, 2, 3, 1};
+        int k1 = 3;
+        assertTrue(solution.containsNearbyDuplicate(n1, k1));
+    }
 }
