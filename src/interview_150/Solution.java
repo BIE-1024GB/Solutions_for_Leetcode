@@ -1342,4 +1342,28 @@ public class Solution {
         }
         return false;
     }
+
+    public int longestConsecutive(int[] nums) {
+        if (nums.length <= 1) {
+            return nums.length;
+        }
+        HashSet<Integer> numSet = new HashSet<>();
+        for (int num : nums) {
+            numSet.add(num);
+        }
+        int longestStreak = 0;
+        for (int num : numSet) {
+            // Check if num is the start of a sequence
+            if (!numSet.contains(num - 1)) {
+                int currentNum = num;
+                int currentStreak = 1;
+                while (numSet.contains(currentNum + 1)) {
+                    currentNum++;
+                    currentStreak++;
+                }
+                longestStreak = Math.max(longestStreak, currentStreak);
+            }
+        }
+        return longestStreak;
+    }
 }

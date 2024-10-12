@@ -347,4 +347,11 @@ class SolutionTest {
         int k1 = 3;
         assertTrue(solution.containsNearbyDuplicate(n1, k1));
     }
+
+    @Test
+    public void testConsecutive() {
+        Solution solution = new Solution();
+        int[] n1 = new int[] {100, 4, 200, 3, 1, 2};
+        assertEquals(4, solution.longestConsecutive(n1));
+    }
 }
