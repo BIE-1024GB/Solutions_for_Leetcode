@@ -1366,4 +1366,29 @@ public class Solution {
         }
         return longestStreak;
     }
+
+    public List<String> summaryRanges(int[] nums) {
+        List<String> list = new ArrayList<>();
+        if (nums.length == 0) {
+            return list;
+        }
+        for (int i = 0; i <= nums.length-1; i++) {
+            int curr = nums[i];
+            if (i == nums.length-1) {
+                list.add(String.valueOf(nums[i]));
+            } else {
+                while (i <= nums.length-2 && nums[i+1]-nums[i] == 1) {
+                    i++;
+                }
+                if (nums[i] != curr) {
+                    String pre = String.valueOf(curr);
+                    String post = String.valueOf(nums[i]);
+                    list.add(pre.concat("->").concat(post));
+                } else {
+                    list.add(String.valueOf(curr));
+                }
+            }
+        }
+        return list;
+    }
 }
