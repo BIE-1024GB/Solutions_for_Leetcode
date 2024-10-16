@@ -1408,4 +1408,24 @@ public class Solution {
         }
         return merged.toArray(new int[merged.size()][]);
     }
+
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        LinkedList<int[]> merged = new LinkedList<>();
+        if (intervals.length == 0) {
+            merged.add(newInterval);
+        } else {
+            // Use another List<> to avoid creating arrays.
+            LinkedList<int[]> full = new LinkedList<>(Arrays.asList(intervals));
+            full.add(newInterval);
+            full.sort(Comparator.comparingInt(value -> value[0]));
+            for (int[] f: full) {
+                if (merged.isEmpty() || merged.getLast()[1] < f[0]) {
+                    merged.add(f);
+                } else {
+                    merged.getLast()[1] = Math.max(merged.getLast()[1], f[1]);
+                }
+            }
+        }
+        return merged.toArray(new int[merged.size()][]);
+    }
 }
