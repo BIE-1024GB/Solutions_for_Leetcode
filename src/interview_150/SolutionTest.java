@@ -354,4 +354,13 @@ class SolutionTest {
         int[] n1 = new int[] {100, 4, 200, 3, 1, 2};
         assertEquals(4, solution.longestConsecutive(n1));
     }
+
+    @Test
+    public void testArrows() {
+        Solution solution = new Solution();
+        int[][] p1 = new int[][] {{10, 16}, {2, 8}, {1, 6}, {7, 12}};
+        assertEquals(2, solution.findMinArrowShots(p1));
+        int[][] p2 = {{1, 2}, {2, 3}, {3, 4}, {4, 5}};
+        assertEquals(2, solution.findMinArrowShots(p2));
+    }
 }

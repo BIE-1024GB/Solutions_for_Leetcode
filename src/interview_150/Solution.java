@@ -1428,4 +1428,21 @@ public class Solution {
         }
         return merged.toArray(new int[merged.size()][]);
     }
+
+    public int findMinArrowShots(int[][] points) {
+        // Greedy approach: first sort the array by the ending points, then iterate;
+        //                  keep track of the "end" variable: update when a new arrow is needed(no overlapping).
+        if (points.length == 1)
+            return 1;
+        Arrays.sort(points, (a, b) -> Integer.compare(a[1], b[1]));
+        int arrows = 1;
+        int end = points[0][1];
+        for (int i = 1; i <= points.length-1; i++) {
+            if (points[i][0] > end) {
+                arrows++;
+                end = points[i][1];
+            }
+        }
+        return arrows;
+    }
 }
