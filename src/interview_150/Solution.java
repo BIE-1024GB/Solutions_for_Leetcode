@@ -1445,4 +1445,35 @@ public class Solution {
         }
         return arrows;
     }
+
+    public boolean isValid(String s) {
+        if (s.length()%2 == 1)
+            return false;
+        Stack<Character> st = new Stack<>();    // explicit Stack<> class in Java
+        for (int i = 0; i <= s.length()-1; i++) {
+            char curr = s.charAt(i);
+            if (curr == '(' || curr == '{' || curr == '[') {
+                st.push(curr);
+            } else {
+                if (st.isEmpty()) {
+                    return false;
+                } else {
+                    char pp = st.pop();
+                    if (curr == ')') {
+                        if (pp != '(')
+                            return false;
+                    } else if (curr == '}') {
+                        if (pp != '{')
+                            return false;
+                    } else {
+                        if (pp != '[')
+                            return false;
+                    }
+                }
+            }
+        }
+        if (!st.isEmpty())
+            return false;
+        return true;
+    }
 }

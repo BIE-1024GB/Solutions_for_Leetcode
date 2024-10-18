@@ -363,4 +363,15 @@ class SolutionTest {
         int[][] p2 = {{1, 2}, {2, 3}, {3, 4}, {4, 5}};
         assertEquals(2, solution.findMinArrowShots(p2));
     }
+
+    @Test
+    public void testParentheses() {
+        Solution solution = new Solution();
+        String s1 = "()";
+        assertTrue(solution.isValid(s1));
+        String s2 = "(]";
+        assertFalse(solution.isValid(s2));
+        String s3 = "([)]";
+        assertFalse(solution.isValid(s3));
+    }
 }
