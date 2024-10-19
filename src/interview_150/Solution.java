@@ -1476,4 +1476,35 @@ public class Solution {
             return false;
         return true;
     }
+
+    public String simplifyPath(String path) {
+        if (path.length() == 1) {
+            return "/";
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append('/');
+        LinkedList<String> list = new LinkedList<>();
+        String[] contexts = path.split("/+");
+        if (contexts.length >= 1) {
+            for (int i = 0; i <= contexts.length-1; i++) {
+                String curr = contexts[i];
+                if (!curr.isEmpty() && !curr.equals(".")) {
+                    if (curr.equals("..")) {
+                        if (!list.isEmpty()) {
+                            list.removeLast();
+                        }
+                    } else {
+                        list.add(curr);
+                    }
+                }
+            }
+            for (int j = 0; j <= list.size()-1; j++) {
+                stringBuilder.append(list.get(j));
+                if (j != list.size()-1) {
+                    stringBuilder.append('/');
+                }
+            }
+        }
+        return stringBuilder.toString();
+    }
 }
