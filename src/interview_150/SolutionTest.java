@@ -374,4 +374,16 @@ class SolutionTest {
         String s3 = "([)]";
         assertFalse(solution.isValid(s3));
     }
+
+    @Test
+    public void testStack() {
+        Solution.MinStack minStack = new Solution.MinStack();
+        minStack.push(1);
+        minStack.push(0);
+        minStack.push(1);
+        assertEquals(1, minStack.top());
+        minStack.pop();
+        assertEquals(0, minStack.top());
+        assertEquals(0, minStack.getMin());
+    }
 }
