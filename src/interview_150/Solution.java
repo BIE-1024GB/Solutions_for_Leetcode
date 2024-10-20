@@ -1472,9 +1472,7 @@ public class Solution {
                 }
             }
         }
-        if (!st.isEmpty())
-            return false;
-        return true;
+        return st.isEmpty();
     }
 
     public String simplifyPath(String path) {
@@ -1506,5 +1504,38 @@ public class Solution {
             }
         }
         return stringBuilder.toString();
+    }
+
+    static class MinStack {
+        // Requirement: O(1) for all methods.
+        private final Stack<Integer> st;
+        private final Stack<Integer> mst;
+
+        public MinStack() {
+            st = new Stack<>();
+            mst = new Stack<>();
+        }
+
+        public void push(int val) {
+            st.push(val);
+            if (mst.isEmpty() || val <= mst.peek()) {
+                mst.push(val);
+            }
+        }
+
+        public void pop() {
+            if (st.peek().equals(mst.peek())) {
+                mst.pop();
+            }
+            st.pop();
+        }
+
+        public int top() {
+            return st.peek();
+        }
+
+        public int getMin() {
+            return mst.peek();
+        }
     }
 }
