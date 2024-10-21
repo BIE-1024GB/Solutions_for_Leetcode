@@ -386,4 +386,13 @@ class SolutionTest {
         assertEquals(0, minStack.top());
         assertEquals(0, minStack.getMin());
     }
+
+    @Test
+    public void testRPN() {
+        Solution solution = new Solution();
+        String[] s1 = new String[] {"2","1","+","3","*"};
+        assertEquals(9, solution.evalRPN(s1));
+        String[] s2 = new String[] {"4","13","5","/","+"};
+        assertEquals(6, solution.evalRPN(s2));
+    }
 }

@@ -1538,4 +1538,23 @@ public class Solution {
             return mst.peek();
         }
     }
+
+    public int evalRPN(String[] tokens) {
+        Stack<Integer> stack = new Stack<>();
+        for (String str: tokens) {
+            if (str.equals("+") || str.equals("-") || str.equals("*") || str.equals("/")) {
+                int op2 = stack.pop();
+                int op1 = stack.pop();
+                switch (str) {
+                    case "+" -> stack.push(op1 + op2);
+                    case "-" -> stack.push(op1 - op2);
+                    case "*" -> stack.push(op1 * op2);
+                    default -> stack.push(op1 / op2);
+                }
+            } else {
+                stack.push(Integer.parseInt(str));
+            }
+        }
+        return stack.peek();
+    }
 }
