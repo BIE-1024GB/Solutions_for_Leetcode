@@ -395,4 +395,15 @@ class SolutionTest {
         String[] s2 = new String[] {"4","13","5","/","+"};
         assertEquals(6, solution.evalRPN(s2));
     }
+
+    @Test
+    public void testCal() {
+        Solution solution = new Solution();
+        String s1 = " 2-1 + 2 ";
+        assertEquals(3, solution.calculate(s1));
+        String s2 = "(1+(4+5+2)-3)+(6+8)";
+        assertEquals(23, solution.calculate(s2));
+        String s3 = "1-(   -2)";
+        assertEquals(3, solution.calculate(s3));
+    }
 }

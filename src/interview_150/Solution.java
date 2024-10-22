@@ -1557,4 +1557,89 @@ public class Solution {
         }
         return stack.peek();
     }
+
+    public int calculate(String s) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i <= s.length()-1; i++) {
+            char curr = s.charAt(i);
+            if (curr != ' ') {
+                // A variation: unary '-' is permitted
+                if (curr == '-') {
+                    if (stringBuilder.isEmpty() || stringBuilder.charAt(stringBuilder.length()-1) == '(') {
+                        stringBuilder.append('0');
+                    }
+                }
+                stringBuilder.append(curr);
+            }
+        }
+        Stack<Character> ops = new Stack<>();    // a stack for (, ), +, -, *, /
+        ArrayList<String> out = new ArrayList<>();
+        // The shunting yard algorithm by Dijkstra
+        for (int i = 0; i <= stringBuilder.length()-1; i++) {
+            char token = stringBuilder.charAt(i);
+            // Add the number to the output directly
+            if (Character.isDigit(token)) {
+                StringBuilder number = new StringBuilder();
+                while (i <= stringBuilder.length()-1 && Character.isDigit(stringBuilder.charAt(i))) {
+                    number.append(stringBuilder.charAt(i));
+                    i++;
+                }
+                i--;
+                out.add(number.toString());
+            } else if (token == '(') {
+                // Add '(' to the stack directly
+                ops.push(token);
+            } else if (token == ')') {
+                // Add the contents within a "()"
+                // '(' and ')' won't appear in the output
+                while (ops.peek() != '(') {
+                    out.add(String.valueOf(ops.pop()));
+                }
+                ops.pop();
+            } else {
+                // Handle operators
+                // Precedence: "*, /" > "+, -" > "(, )"
+                // Keep popping elements from the stack to the output,
+                // until the top element's precedence is LOWER than the current,
+                // push the current operator at last.
+                int pre = switch (token) {
+                    case '+', '-' -> 1;
+                    default -> 2;
+                };
+                while (!ops.isEmpty()) {
+                    int top = switch (ops.peek()) {
+                        case '(', ')' -> 0;
+                        case '+', '-' -> 1;
+                        default -> 2;
+                    };
+                    if (top >= pre) {
+                        out.add(String.valueOf(ops.pop()));
+                    } else {
+                        break;
+                    }
+                }
+                ops.push(token);
+            }
+        }
+        while (!ops.isEmpty()) {
+            out.add(String.valueOf(ops.pop()));
+        }
+        // Conversion complete, now start evaluation
+        Stack<Integer> stack = new Stack<>();
+        for (String str: out) {
+            if (str.equals("+") || str.equals("-") || str.equals("*") || str.equals("/")) {
+                int op2 = stack.pop();
+                int op1 = stack.pop();
+                switch (str) {
+                    case "+" -> stack.push(op1 + op2);
+                    case "-" -> stack.push(op1 - op2);
+                    case "*" -> stack.push(op1 * op2);
+                    default -> stack.push(op1 / op2);
+                }
+            } else {
+                stack.push(Integer.parseInt(str));
+            }
+        }
+        return stack.peek();
+    }
 }
