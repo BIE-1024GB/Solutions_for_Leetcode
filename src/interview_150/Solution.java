@@ -1642,4 +1642,31 @@ public class Solution {
         }
         return stack.peek();
     }
+
+    static class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode(int x) {
+            val = x;
+            next = null;
+        }
+
+        public boolean hasCycle(ListNode head) {
+            if (head == null || head.next == null) {
+                return false;
+            }
+            HashSet<ListNode> set = new HashSet<>();
+            ListNode curr = head;
+            while (curr.next != null) {
+                if (set.contains(curr)) {
+                    return true;
+                } else {
+                    set.add(curr);
+                    curr = curr.next;
+                }
+            }
+            return false;
+        }
+    }
 }

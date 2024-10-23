@@ -406,4 +406,17 @@ class SolutionTest {
         String s3 = "1-(   -2)";
         assertEquals(3, solution.calculate(s3));
     }
+
+    @Test
+    public void testLink() {
+        Solution.ListNode l1 = new Solution.ListNode(3);
+        Solution.ListNode l2 = new Solution.ListNode(2);
+        Solution.ListNode l3 = new Solution.ListNode(0);
+        Solution.ListNode l4 = new Solution.ListNode(-4);
+        l1.next = l2;
+        l2.next = l3;
+        l3.next = l4;
+        l4.next = l2;
+        assertTrue(l1.hasCycle(l1));
+    }
 }
