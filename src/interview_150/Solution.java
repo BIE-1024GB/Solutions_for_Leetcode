@@ -1652,6 +1652,11 @@ public class Solution {
             next = null;
         }
 
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
+
         public boolean hasCycle(ListNode head) {
             if (head == null || head.next == null) {
                 return false;
@@ -1667,6 +1672,34 @@ public class Solution {
                 }
             }
             return false;
+        }
+
+        public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+            ListNode head = (l1.val+l2.val>=10?new ListNode(l1.val+l2.val-10):new ListNode(l1.val+l2.val));
+            int carry = (l1.val+l2.val>=10?1:0);
+            ListNode pre = head;
+            while (l1.next != null && l2.next != null) {
+                l1 = l1.next;
+                l2 = l2.next;
+                ListNode nx = (l1.val+l2.val+carry>=10?new ListNode(l1.val+l2.val+carry-10):new ListNode(l1.val+l2.val+carry));
+                pre.next = nx;
+                carry = (l1.val+l2.val+carry>=10?1:0);
+                pre = nx;
+            }
+            if (l1.next != null || l2.next != null) {
+                ListNode sl = (l1.next == null?l2:l1);
+                while (sl.next != null) {
+                    sl = sl.next;
+                    ListNode nx = (sl.val+carry>=10?new ListNode(sl.val+carry-10):new ListNode(sl.val+carry));
+                    pre.next = nx;
+                    carry = (sl.val+carry>=10?1:0);
+                    pre = nx;
+                }
+            }
+            if (carry == 1) {
+                pre.next = new ListNode(1);
+            }
+            return head;
         }
     }
 }
