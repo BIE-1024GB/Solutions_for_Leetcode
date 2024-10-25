@@ -1701,5 +1701,42 @@ public class Solution {
             }
             return head;
         }
+
+        public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+            if (list1 == null && list2 == null) {
+                return null;
+            } else if (list1 == null) {
+                return list2;
+            } else if (list2 == null) {
+                return list1;
+            } else {
+                ListNode head, curr;
+                if (list1.val > list2.val) {
+                    head = list2;
+                    list2 = list2.next;
+                } else {
+                    head = list1;
+                    list1 = list1.next;
+                }
+                curr = head;
+                while (list1 != null && list2 != null) {
+                    if (list1.val > list2.val) {
+                        curr.next = list2;
+                        list2 = list2.next;
+                    } else {
+                        curr.next = list1;
+                        list1 = list1.next;
+                    }
+                    curr = curr.next;
+                }
+                ListNode reside = (list1 == null? list2: list1);
+                while (reside != null) {
+                    curr.next = reside;
+                    reside = reside.next;
+                    curr = curr.next;
+                }
+                return head;
+            }
+        }
     }
 }
