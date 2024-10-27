@@ -1739,4 +1739,46 @@ public class Solution {
             }
         }
     }
+
+    static class Node {
+        int val;
+        Node next;
+        Node random;
+
+        public Node(int val) {
+            this.val = val;
+            this.next = null;
+            this.random = null;
+        }
+
+        public Node copyRandomList(Node head) {
+            if (head == null) {
+                return null;
+            }
+            Node hc = new Node(head.val);
+            Node hcc = hc;
+            Node hc2 = hc;
+            ArrayList<Node> arrayList = new ArrayList<>();   // note: there's another solution that achieves O(1) in space
+            arrayList.add(head);
+            ArrayList<Node> arrayList2 = new ArrayList<>();
+            arrayList2.add(hc);
+            Node h2 = head;
+            head = head.next;
+            while (head != null) {
+                arrayList.add(head);
+                hc.next = new Node(head.val);
+                hc = hc.next;
+                arrayList2.add(hc);
+                head = head.next;
+            }
+            while (h2 != null) {
+                if (h2.random != null) {
+                    hcc.random = arrayList2.get(arrayList.indexOf(h2.random));
+                }
+                h2 = h2.next;
+                hcc = hcc.next;
+            }
+            return hc2;
+        }
+    }
 }
