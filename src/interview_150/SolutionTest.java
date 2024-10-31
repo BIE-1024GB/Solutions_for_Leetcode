@@ -419,4 +419,12 @@ class SolutionTest {
         l4.next = l2;
         assertTrue(l1.hasCycle(l1));
     }
+
+    @Test
+    public void testReveLink() {
+        Solution.ListNode listNode1 = new Solution.ListNode(3);
+        Solution.ListNode listNode2 = new Solution.ListNode(5);
+        listNode1.next = listNode2;
+        assertEquals(listNode2, listNode1.reverseBetween(listNode1, 1, 2));
+    }
 }

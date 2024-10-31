@@ -1738,6 +1738,47 @@ public class Solution {
                 return head;
             }
         }
+
+        public ListNode reverseBetween(ListNode head, int left, int right) {
+            if (head.next == null || left == right) {
+                return head;
+            }
+            ArrayList<ListNode> trans = new ArrayList<>();
+            ListNode curr = head;
+            int st = 1;
+            while (st < left-1) {
+                curr = curr.next;
+                st++;
+            }
+            ListNode lp = curr;
+            ListNode rp = curr;
+            while (st < right+1) {
+                rp = rp.next;
+                st++;
+            }
+            if (left == 1) {
+                trans.add(curr);
+            }
+            while (trans.size() < right-left+1) {
+                curr = curr.next;
+                trans.add(curr);
+            }
+            for (int i = trans.size()-1; i >= 0; i--) {
+                ListNode c = trans.get(i);
+                if (i != 0) {
+                    c.next = trans.get(i-1);
+                }
+                else {
+                    c.next = rp;
+                }
+            }
+            if (left != 1) {
+                lp.next = trans.getLast();
+            } else {
+                head = trans.getLast();
+            }
+            return head;
+        }
     }
 
     static class Node {
