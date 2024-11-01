@@ -10,36 +10,30 @@ import java.util.*;
 public class Solution {
     public void merge(int[] nums1, int m, int[] nums2, int n) {
         if (m == 0) {                         // need to check edge cases
-            if (n >= 0)
+            if (n >= 0) {
                 System.arraycopy(nums2, 0, nums1, 0, n);
+            }
             return;
         } else if (n == 0) {
             return;
         }
-        ArrayList<Integer> elements = new ArrayList<>();
-        int lp = 0;
-        int rp = 0;
-        while (elements.size() < m+n) {       // time complexity: O(m+n)
-            if (lp == m) {
-                elements.add(nums2[rp]);
-                rp++;
-            } else if (rp == n) {
-                elements.add(nums1[lp]);
-                lp++;
+        int p1 = m-1;
+        int p2 = n-1;
+        int pm = m+n-1;
+        while (p1 >= 0 && p2 >= 0) {
+            if (nums1[p1] > nums2[p2]) {
+                nums1[pm] = nums1[p1];
+                p1--;
             } else {
-                int cl = nums1[lp];
-                int cr = nums2[rp];
-                if (cl <= cr) {
-                    elements.add(cl);
-                    lp++;
-                } else {
-                    elements.add(cr);
-                    rp++;
-                }
+                nums1[pm] = nums2[p2];
+                p2--;
             }
+            pm--;
         }
-        for (int i = 0; i <= elements.size()-1; i++) {
-            nums1[i] = elements.get(i);
+        while (p2 >= 0) {
+            nums1[pm] = nums2[p2];
+            p2--;
+            pm--;
         }
     }
 
