@@ -427,4 +427,23 @@ class SolutionTest {
         listNode1.next = listNode2;
         assertEquals(listNode2, listNode1.reverseBetween(listNode1, 1, 2));
     }
+
+    @Test
+    public void testKRev() {
+        Solution.ListNode ln1 = new Solution.ListNode(1);
+        Solution.ListNode ln2 = new Solution.ListNode(2);
+        Solution.ListNode ln3 = new Solution.ListNode(3);
+        Solution.ListNode ln4 = new Solution.ListNode(4);
+        Solution.ListNode ln5 = new Solution.ListNode(5);
+        ln1.next = ln2;
+        ln2.next = ln3;
+        ln3.next = ln4;
+        ln4.next = ln5;
+        assertEquals(ln2, ln1.reverseKGroup(ln1, 2));
+        assertEquals(ln1, ln2.next);
+        assertEquals(ln4, ln1.next);
+        assertEquals(ln3, ln4.next);
+        assertEquals(ln5, ln3.next);
+        assertNull(ln5.next);
+    }
 }

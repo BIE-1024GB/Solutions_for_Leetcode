@@ -1779,6 +1779,45 @@ public class Solution {
             }
             return head;
         }
+
+        public ListNode reverseKGroup(ListNode head, int k) {
+            if (head.next == null || k == 1) {
+                return head;
+            }
+            ListNode curr = head;
+            ArrayList<ListNode> nodes = new ArrayList<>();
+            while (curr.next != null) {
+                nodes.add(curr);
+                curr = curr.next;
+            }
+            nodes.add(curr);    // "curr" now points to the last node
+            int rounds = nodes.size()/k;
+            int cr = 1;
+            head = nodes.get(k-1);
+            ListNode ed = nodes.getFirst();
+            while (cr <= rounds) {
+                int si = cr*k-1;
+                int ei = (cr-1)*k;
+                for (int i = si; i >= ei; i--) {
+                    ListNode c = nodes.get(i);
+                    if (i != ei) {
+                        c.next = nodes.get(i-1);
+                    } else {
+                        c.next = null;
+                    }
+                }
+                if (cr != 1) {
+                    ed.next = nodes.get(si);
+                    ed = nodes.get(ei);
+                }
+                cr++;
+            }
+            // "ed" now points to the last node in the reversed set
+            if (nodes.size()%k != 0) {
+                ed.next = nodes.get((cr-1)*k);
+            }
+            return head;
+        }
     }
 
     static class Node {
