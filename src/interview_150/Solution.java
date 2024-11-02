@@ -1812,6 +1812,27 @@ public class Solution {
             }
             return head;
         }
+
+        public ListNode removeNthFromEnd(ListNode head, int n) {
+            if (head.next == null) {
+                return null;
+            }
+            ArrayList<ListNode> listNodes = new ArrayList<>();
+            ListNode curr = head;
+            while (curr != null) {
+                listNodes.add(curr);
+                curr = curr.next;
+            }
+            int di = listNodes.size()-n;
+            if (di == 0) {
+                head = head.next;
+            } else if (di == listNodes.size()-1) {
+                listNodes.get(listNodes.size()-2).next = null;
+            } else {
+                listNodes.get(di-1).next = listNodes.get(di+1);
+            }
+            return head;
+        }
     }
 
     static class Node {
