@@ -446,4 +446,23 @@ class SolutionTest {
         assertEquals(ln5, ln3.next);
         assertNull(ln5.next);
     }
+
+    @Test
+    public void testDup() {
+        Solution.ListNode l1 = new Solution.ListNode(1);
+        Solution.ListNode l2 = new Solution.ListNode(1);
+        Solution.ListNode l3 = new Solution.ListNode(1);
+        Solution.ListNode l4 = new Solution.ListNode(2);
+        Solution.ListNode l5 = new Solution.ListNode(3);
+        l1.next = l2;
+        l2.next = l3;
+        l3.next = l4;
+        l4.next = l5;
+        assertEquals(l4, l1.deleteDuplicates(l1));
+        assertEquals(l5, l4.next);
+        Solution.ListNode e1 = new Solution.ListNode(1);
+        Solution.ListNode e2 = new Solution.ListNode(1);
+        e1.next = e2;
+        assertNull(e1.deleteDuplicates(e1));
+    }
 }

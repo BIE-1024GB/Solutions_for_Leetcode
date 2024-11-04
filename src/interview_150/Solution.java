@@ -1833,6 +1833,48 @@ public class Solution {
             }
             return head;
         }
+
+        public ListNode deleteDuplicates(ListNode head) {
+            if (head == null || head.next == null) {
+                return head;
+            }
+            ListNode curr = head;
+            ArrayList<ListNode> nodes = new ArrayList<>();
+            while (curr != null) {
+                if (!nodes.isEmpty()) {
+                    if (curr.val == nodes.getLast().val) {
+                        while (curr != null) {
+                            if (curr.val != nodes.getLast().val) {
+                                break;
+                            } else {
+                                curr = curr.next;
+                            }
+                        }
+                        nodes.removeLast();
+                        if (!nodes.isEmpty()) {
+                            nodes.getLast().next = curr;
+                            if (curr == null) {
+                                break;
+                            } else {
+                                nodes.add(curr);
+                            }
+                        } else {
+                            if (curr == null) {
+                                return null;
+                            } else {
+                                nodes.add(curr);
+                            }
+                        }
+                    } else {
+                        nodes.add(curr);
+                    }
+                } else {
+                    nodes.add(curr);
+                }
+                curr = curr.next;
+            }
+            return nodes.getFirst();
+        }
     }
 
     static class Node {
