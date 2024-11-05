@@ -465,4 +465,18 @@ class SolutionTest {
         e1.next = e2;
         assertNull(e1.deleteDuplicates(e1));
     }
+
+    @Test
+    public void testRevLink() {
+        Solution.ListNode l1 = new Solution.ListNode(0);
+        Solution.ListNode l2 = new Solution.ListNode(1);
+        Solution.ListNode l3 = new Solution.ListNode(2);
+        l1.next = l2;
+        l2.next = l3;
+        int k1 = 4;
+        assertEquals(l3, l1.rotateRight(l1, k1));
+        assertEquals(l1, l3.next);
+        assertEquals(l2, l1.next);
+        assertNull(l2.next);
+    }
 }

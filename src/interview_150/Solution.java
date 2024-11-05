@@ -1875,6 +1875,26 @@ public class Solution {
             }
             return nodes.getFirst();
         }
+
+        public ListNode rotateRight(ListNode head, int k) {
+            if (head == null || head.next == null || k == 0) {
+                return head;
+            }
+            ArrayList<ListNode> nodes = new ArrayList<>();
+            ListNode curr = head;
+            while (curr != null) {
+                nodes.add(curr);
+                curr = curr.next;
+            }
+            if (k%nodes.size() == 0) {
+                return head;
+            }
+            int rk = k%nodes.size();
+            int hi = nodes.size()-rk;
+            nodes.getLast().next = head;
+            nodes.get(hi-1).next = null;
+            return nodes.get(hi);
+        }
     }
 
     static class Node {
