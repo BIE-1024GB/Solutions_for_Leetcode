@@ -1895,6 +1895,41 @@ public class Solution {
             nodes.get(hi-1).next = null;
             return nodes.get(hi);
         }
+
+        public ListNode partition(ListNode head, int x) {
+            if (head == null || head.next == null) {
+                return head;
+            }
+            ListNode curr = head;
+            ArrayList<ListNode> nodes = new ArrayList<>();
+            while (curr != null) {
+                nodes.add(curr);
+                curr = curr.next;
+            }
+            ListNode s1 = null;
+            for (ListNode listNode: nodes) {
+                if (listNode.val < x) {
+                    if (s1 == null) {
+                        s1 = listNode;
+                        head = s1;
+                    } else {
+                        s1.next = listNode;
+                        s1 = listNode;
+                    }
+                }
+            }
+            if (s1 == null) {
+                return head;
+            }
+            for (ListNode listNode: nodes) {
+                if (listNode.val >= x) {
+                    s1.next = listNode;
+                    s1 = listNode;
+                }
+            }
+            s1.next = null;
+            return head;
+        }
     }
 
     static class Node {

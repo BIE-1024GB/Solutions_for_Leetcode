@@ -479,4 +479,24 @@ class SolutionTest {
         assertEquals(l2, l1.next);
         assertNull(l2.next);
     }
+
+    @Test
+    public void testPart() {
+        Solution.ListNode l1 = new Solution.ListNode(1);
+        Solution.ListNode l2 = new Solution.ListNode(2);
+        Solution.ListNode l3 = new Solution.ListNode(4);
+        Solution.ListNode l4 = new Solution.ListNode(2);
+        Solution.ListNode l5 = new Solution.ListNode(3);
+        l1.next = l2;
+        l2.next = l3;
+        l3.next = l4;
+        l4.next = l5;
+        int x1 = 3;
+        assertEquals(l1, l1.partition(l1, x1));
+        assertEquals(l2, l1.next);
+        assertEquals(l4, l2.next);
+        assertEquals(l3, l4.next);
+        assertEquals(l5, l3.next);
+        assertNull(l5.next);
+    }
 }
