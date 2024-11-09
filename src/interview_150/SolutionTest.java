@@ -499,4 +499,14 @@ class SolutionTest {
         assertEquals(l5, l3.next);
         assertNull(l5.next);
     }
+
+    @Test
+    public void testLRU() {
+        Solution.LRUCache cache = new Solution.LRUCache(2);
+        cache.put(1, 1);
+        cache.put(2, 2);
+        assertEquals(1, cache.get(1));
+        cache.put(3, 3);
+        assertEquals(-1, cache.get(2));
+    }
 }
