@@ -1975,6 +1975,8 @@ public class Solution {
     }
 
     static class LRUCache {
+        // O(1) time requirements
+        // Doubly linked list approach
         private static class Node {
             int key;
             int value;
@@ -2035,6 +2037,28 @@ public class Solution {
             node.prev = head;
             head.next.prev = node;
             head.next = node;
+        }
+    }
+
+    static class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode(int val) {
+            this.val = val;
+        }
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+
+        public int maxDepth(TreeNode root) {
+            if (root == null) {
+                return 0;
+            }
+            return Math.max(maxDepth(root.left), maxDepth(root.right))+1;
         }
     }
 }

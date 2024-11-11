@@ -509,4 +509,12 @@ class SolutionTest {
         cache.put(3, 3);
         assertEquals(-1, cache.get(2));
     }
+
+    @Test
+    public void testTreeDepth() {
+        Solution.TreeNode t1 = new Solution.TreeNode(3, new Solution.TreeNode(9, null, null),
+                new Solution.TreeNode(20, new Solution.TreeNode(15, null, null),
+                        new Solution.TreeNode(7, null, null)));
+        assertEquals(3, t1.maxDepth(t1));
+    }
 }
