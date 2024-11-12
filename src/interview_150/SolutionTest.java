@@ -517,4 +517,13 @@ class SolutionTest {
                         new Solution.TreeNode(7, null, null)));
         assertEquals(3, t1.maxDepth(t1));
     }
+
+    @Test
+    public void testSame() {
+        Solution.TreeNode t1 = new Solution.TreeNode(1, new Solution.TreeNode(2, null, null),
+                new Solution.TreeNode(3, null, null));
+        Solution.TreeNode t2 = new Solution.TreeNode(1, new Solution.TreeNode(2, null, null),
+                new Solution.TreeNode(3, null, null));
+        assertTrue(t1.isSameTree(t1, t2));
+    }
 }
