@@ -526,4 +526,11 @@ class SolutionTest {
                 new Solution.TreeNode(3, null, null));
         assertTrue(t1.isSameTree(t1, t2));
     }
+
+    @Test
+    public void testMirror() {
+        Solution.TreeNode t1 = new Solution.TreeNode(1, new Solution.TreeNode(2, new Solution.TreeNode(3), new Solution.TreeNode(4)),
+                new Solution.TreeNode(2, new Solution.TreeNode(4), new Solution.TreeNode(3)));
+        assertTrue(t1.isSymmetric(t1));
+    }
 }
