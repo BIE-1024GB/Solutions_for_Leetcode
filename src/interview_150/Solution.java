@@ -2098,5 +2098,33 @@ public class Solution {
         public boolean isSymmetric(TreeNode root) {
             return mirror(root.left, root.right);
         }
+
+        private TreeNode buildTreeHelper(int[] preorder, int preStart, int preEnd, int[] inorder, int inStart, int inEnd, Map<Integer, Integer> inorderIndexMap) {
+            if (preStart > preEnd || inStart > inEnd) {
+                return null;
+            }
+            // The first element in the preorder range is the root
+            int rootVal = preorder[preStart];
+            TreeNode root = new TreeNode(rootVal);
+            // Find the index of the root in the inorder array
+            int inorderRootIndex = inorderIndexMap.get(rootVal);
+            // Number of elements in the left subtree
+            int leftSubtreeSize = inorderRootIndex - inStart;
+            // Recursively build the left and right subtrees
+            root.left = buildTreeHelper(preorder, preStart + 1, preStart + leftSubtreeSize, inorder, inStart, inorderRootIndex - 1, inorderIndexMap);
+            root.right = buildTreeHelper(preorder, preStart + leftSubtreeSize + 1, preEnd, inorder, inorderRootIndex + 1, inEnd, inorderIndexMap);
+            return root;
+        }
+
+        public TreeNode buildTree(int[] preorder, int[] inorder) {
+            // Preorder: root->left->right  Inorder: left->root->right
+            // Create a map to store the index of each value in the inorder array
+            Map<Integer, Integer> inorderIndexMap = new HashMap<>();
+            for (int i = 0; i < inorder.length; i++) {
+                inorderIndexMap.put(inorder[i], i);
+            }
+            // Helper function to build the tree recursively
+            return buildTreeHelper(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, inorderIndexMap);
+        }
     }
 }
