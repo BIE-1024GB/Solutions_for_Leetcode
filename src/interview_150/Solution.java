@@ -2111,8 +2111,8 @@ public class Solution {
             // Number of elements in the left subtree
             int leftSubtreeSize = inorderRootIndex - inStart;
             // Recursively build the left and right subtrees
-            root.left = buildTreeHelper(preorder, preStart + 1, preStart + leftSubtreeSize, inorder, inStart, inorderRootIndex - 1, inorderIndexMap);
-            root.right = buildTreeHelper(preorder, preStart + leftSubtreeSize + 1, preEnd, inorder, inorderRootIndex + 1, inEnd, inorderIndexMap);
+            root.left = buildTreeHelper(preorder, preStart+1, preStart+leftSubtreeSize, inorder, inStart, inorderRootIndex-1, inorderIndexMap);
+            root.right = buildTreeHelper(preorder, preStart+leftSubtreeSize+1, preEnd, inorder, inorderRootIndex+1, inEnd, inorderIndexMap);
             return root;
         }
 
@@ -2124,7 +2124,30 @@ public class Solution {
                 inorderIndexMap.put(inorder[i], i);
             }
             // Helper function to build the tree recursively
-            return buildTreeHelper(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, inorderIndexMap);
+            return buildTreeHelper(preorder, 0, preorder.length-1, inorder, 0, inorder.length-1, inorderIndexMap);
+        }
+
+        private TreeNode buildTreeHelper_II(int[] postorder, int postStart, int postEnd, int[] inorder, int inStart, int inEnd, Map<Integer, Integer> inorderIndexMap) {
+            if (postStart > postEnd || inStart > inEnd) {
+                return null;
+            }
+            // The last element in the postorder range is the root
+            int rootVal = postorder[postEnd];
+            TreeNode root = new TreeNode(rootVal);
+            int inorderRootIndex = inorderIndexMap.get(rootVal);
+            int leftSubtreeSize = inorderRootIndex - inStart;
+            root.left = buildTreeHelper_II(postorder, postStart, postStart+leftSubtreeSize-1, inorder, inStart, inorderRootIndex-1, inorderIndexMap);
+            root.right = buildTreeHelper_II(postorder, postStart+leftSubtreeSize, postEnd-1, inorder, inorderRootIndex+1, inEnd, inorderIndexMap);
+            return root;
+        }
+
+        public TreeNode buildTree_II(int[] inorder, int[] postorder) {
+            // Postorder: left->right->root
+            Map<Integer, Integer> inorderIndexMap = new HashMap<>();
+            for (int i = 0; i < inorder.length; i++) {
+                inorderIndexMap.put(inorder[i], i);
+            }
+            return buildTreeHelper_II(postorder, 0, postorder.length-1, inorder, 0, inorder.length-1, inorderIndexMap);
         }
     }
 }
