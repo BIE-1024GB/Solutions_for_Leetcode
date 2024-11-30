@@ -1645,7 +1645,6 @@ public class Solution {
             val = x;
             next = null;
         }
-
         ListNode(int val, ListNode next) {
             this.val = val;
             this.next = next;
@@ -2148,6 +2147,51 @@ public class Solution {
                 inorderIndexMap.put(inorder[i], i);
             }
             return buildTreeHelper_II(postorder, 0, postorder.length-1, inorder, 0, inorder.length-1, inorderIndexMap);
+        }
+    }
+
+    static class TNode {
+        public int val;
+        public TNode left;
+        public TNode right;
+        public TNode next;
+
+        public TNode(int _val) {
+            val = _val;
+        }
+        public TNode(int _val, TNode _left, TNode _right, TNode _next) {
+            val = _val;
+            left = _left;
+            right = _right;
+            next = _next;
+        }
+
+        public TNode connect(TNode root) {
+            if (root == null) {
+                return null;
+            }
+            Queue<TNode> queue = new LinkedList<>();
+            queue.add(root);
+            while (!queue.isEmpty()) {
+                int size = queue.size();
+                TNode prev = null;
+                for (int i = 0; i < size; i++) {
+                    TNode current = queue.poll();
+                    if (prev != null) {
+                        prev.next = current;
+                    }
+                    prev = current;
+                    assert current != null;
+                    if (current.left != null) {
+                        queue.add(current.left);
+                    }
+                    if (current.right != null) {
+                        queue.add(current.right);
+                    }
+                }
+                prev.next = null;
+            }
+            return root;
         }
     }
 }
