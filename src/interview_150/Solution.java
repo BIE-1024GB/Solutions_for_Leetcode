@@ -2148,6 +2148,35 @@ public class Solution {
             }
             return buildTreeHelper_II(postorder, 0, postorder.length-1, inorder, 0, inorder.length-1, inorderIndexMap);
         }
+
+        public void flatten(TreeNode root) {
+            if (root == null) {
+                return;
+            }
+            LinkedList<TreeNode> queue = new LinkedList<>();
+            queue.push(root);
+            TreeNode prev = root;
+            while (!queue.isEmpty()) {
+                TreeNode curr = queue.poll();
+                int lf = 0;
+                if (curr.left != null) {
+                    queue.push(curr.left);
+                    lf = 1;
+                }
+                if (curr.right != null) {
+                    if (lf == 1) {
+                        queue.add(1, curr.right);
+                    } else {
+                        queue.push(curr.right);
+                    }
+                }
+                if (curr != prev) {
+                    prev.left = null;
+                    prev.right = curr;
+                    prev = curr;
+                }
+            }
+        }
     }
 
     static class TNode {
