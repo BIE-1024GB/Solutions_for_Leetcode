@@ -533,4 +533,12 @@ class SolutionTest {
                 new Solution.TreeNode(2, new Solution.TreeNode(4), new Solution.TreeNode(3)));
         assertTrue(t1.isSymmetric(t1));
     }
+
+    @Test
+    public void testSum() {
+        Solution.TreeNode n1 = new Solution.TreeNode(1, new Solution.TreeNode(2), new Solution.TreeNode(3));
+        assertFalse(n1.hasPathSum(n1, 5));
+        Solution.TreeNode n2 = new Solution.TreeNode(1, new Solution.TreeNode(2), null);
+        assertFalse(n2.hasPathSum(n2, 1));
+    }
 }
