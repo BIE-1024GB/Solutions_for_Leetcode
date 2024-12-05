@@ -2188,6 +2188,26 @@ public class Solution {
             return hasPathSum(root.left, targetSum - root.val)
                     || hasPathSum(root.right, targetSum - root.val);
         }
+
+        private int dfs(TreeNode node, int currentNumber) {
+            if (node == null) {
+                return 0;
+            }
+            // Update the current number by shifting the previous number to the left and adding the current node's value
+            currentNumber = currentNumber * 10 + node.val;
+            // If it is a leaf node, return the current number
+            if (node.left == null && node.right == null) {
+                return currentNumber;
+            }
+            // Recursively calculate the sum for left and right subtrees
+            int leftSum = dfs(node.left, currentNumber);
+            int rightSum = dfs(node.right, currentNumber);
+            // Return the sum of the left and right subtrees
+            return leftSum + rightSum;
+        }
+        public int sumNumbers(TreeNode root) {
+            return dfs(root, 0);
+        }
     }
 
     static class TNode {

@@ -541,4 +541,10 @@ class SolutionTest {
         Solution.TreeNode n2 = new Solution.TreeNode(1, new Solution.TreeNode(2), null);
         assertFalse(n2.hasPathSum(n2, 1));
     }
+
+    @Test
+    public void testAllSum() {
+        Solution.TreeNode n1 = new Solution.TreeNode(1, new Solution.TreeNode(2), new Solution.TreeNode(3));
+        assertEquals(25, n1.sumNumbers(n1));
+    }
 }
