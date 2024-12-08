@@ -547,4 +547,11 @@ class SolutionTest {
         Solution.TreeNode n1 = new Solution.TreeNode(1, new Solution.TreeNode(2), new Solution.TreeNode(3));
         assertEquals(25, n1.sumNumbers(n1));
     }
+
+    @Test
+    public void testMAXSum() {
+        Solution.TreeNode n1 = new Solution.TreeNode(-10, new Solution.TreeNode(9),
+                new Solution.TreeNode(20, new Solution.TreeNode(15), new Solution.TreeNode(7)));
+        assertEquals(42, n1.maxPathSum(n1));
+    }
 }

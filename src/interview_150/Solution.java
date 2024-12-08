@@ -2208,6 +2208,26 @@ public class Solution {
         public int sumNumbers(TreeNode root) {
             return dfs(root, 0);
         }
+
+        private int maxSum = Integer.MIN_VALUE;
+        private int maxPathSumHelper(TreeNode node) {
+            if (node == null) {
+                return 0;
+            }
+            // Calculate the maximum path sum of the left and right subtrees
+            int leftMax = Math.max(0, maxPathSumHelper(node.left));
+            int rightMax = Math.max(0, maxPathSumHelper(node.right));
+            // Calculate the maximum path sum through the current node
+            int currentMax = node.val+leftMax+rightMax;
+            // Update the global maximum path sum
+            maxSum = Math.max(maxSum, currentMax);
+            // Return the maximum path sum that can be extended to the parent node
+            return node.val+Math.max(leftMax, rightMax);
+        }
+        public int maxPathSum(TreeNode root) {
+            maxPathSumHelper(root);
+            return maxSum;
+        }
     }
 
     static class TNode {
