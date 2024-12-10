@@ -2228,6 +2228,35 @@ public class Solution {
             maxPathSumHelper(root);
             return maxSum;
         }
+
+        static class BSTIterator {
+            ArrayList<TreeNode> iter;
+            int pt = -1;
+
+            private void traverse(TreeNode node) {
+                if (node != null) {
+                    traverse(node.left);
+                    iter.add(node);
+                    traverse(node.right);
+                }
+            }
+            public BSTIterator(TreeNode root) {
+                iter = new ArrayList<>();
+                traverse(root);
+            }
+
+            public int next() {
+                pt += 1;
+                return iter.get(pt).val;
+            }
+
+            public boolean hasNext() {
+                if (pt < iter.size()-1) {
+                    return true;
+                }
+                return false;
+            }
+        }
     }
 
     static class TNode {
