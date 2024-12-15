@@ -2257,6 +2257,30 @@ public class Solution {
                 return false;
             }
         }
+
+        private int getHeight(TreeNode curr, int flag) {
+            int h = 0;
+            while (curr != null) {
+                h += 1;
+                if (flag == 1) {
+                    curr = curr.left;
+                } else {
+                    curr = curr.right;
+                }
+            }
+            return h;
+        }
+        public int countNodes(TreeNode root) {
+            if (root == null) {
+                return 0;
+            }
+            int lh = getHeight(root, 1);          // Time complexity: O(log(n)*log(n))
+            int rh = getHeight(root, 0);
+            if (lh == rh) {
+                return (1<<lh)-1;
+            }
+            return 1+countNodes(root.left)+countNodes(root.right);
+        }
     }
 
     static class TNode {

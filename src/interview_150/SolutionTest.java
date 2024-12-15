@@ -554,4 +554,11 @@ class SolutionTest {
                 new Solution.TreeNode(20, new Solution.TreeNode(15), new Solution.TreeNode(7)));
         assertEquals(42, n1.maxPathSum(n1));
     }
+
+    @Test
+    public void testCount() {
+        Solution.TreeNode n1 = new Solution.TreeNode(1, new Solution.TreeNode(2, new Solution.TreeNode(4),
+                new Solution.TreeNode(5)), new Solution.TreeNode(3, new Solution.TreeNode(6), null));
+        assertEquals(6, n1.countNodes(n1));
+    }
 }
