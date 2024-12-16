@@ -2281,6 +2281,18 @@ public class Solution {
             }
             return 1+countNodes(root.left)+countNodes(root.right);
         }
+
+        public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+            if (root == null || root == p || root == q) {
+                return root;
+            }
+            TreeNode lr = lowestCommonAncestor(root.left, p, q);
+            TreeNode rr = lowestCommonAncestor(root.right, p, q);
+            if (lr != null && rr != null) {
+                return root;
+            }
+            return (lr == null)?rr:lr;
+        }
     }
 
     static class TNode {

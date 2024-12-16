@@ -561,4 +561,26 @@ class SolutionTest {
                 new Solution.TreeNode(5)), new Solution.TreeNode(3, new Solution.TreeNode(6), null));
         assertEquals(6, n1.countNodes(n1));
     }
+
+    @Test
+    public void testLCA() {
+        Solution.TreeNode n1 = new Solution.TreeNode(3);
+        Solution.TreeNode n2 = new Solution.TreeNode(5);
+        Solution.TreeNode n3 = new Solution.TreeNode(1);
+        Solution.TreeNode n4 = new Solution.TreeNode(6);
+        Solution.TreeNode n5 = new Solution.TreeNode(2);
+        Solution.TreeNode n6 = new Solution.TreeNode(0);
+        Solution.TreeNode n7 = new Solution.TreeNode(8);
+        Solution.TreeNode n8 = new Solution.TreeNode(7);
+        Solution.TreeNode n9 = new Solution.TreeNode(4);
+        n1.left = n2;
+        n1.right = n3;
+        n2.left = n4;
+        n2.right = n5;
+        n3.left = n6;
+        n3.right = n7;
+        n5.left = n8;
+        n5.right = n9;
+        assertEquals(n2, n1.lowestCommonAncestor(n1, n2, n9));
+    }
 }
