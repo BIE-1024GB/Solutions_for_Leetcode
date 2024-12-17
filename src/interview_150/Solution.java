@@ -2293,6 +2293,33 @@ public class Solution {
             }
             return (lr == null)?rr:lr;
         }
+
+        public List<Integer> rightSideView(TreeNode root) {
+            if (root == null) {
+                return new ArrayList<>(0);
+            }
+            List<Integer> results = new ArrayList<>();
+            results.add(root.val);
+            List<TreeNode> bst = new ArrayList<>();
+            bst.add(root);
+            while (!bst.isEmpty()) {
+                List<TreeNode> lvl = new ArrayList<>(0);
+                for (TreeNode tn: bst) {
+                    if (tn.left != null) {
+                        lvl.add(tn.left);
+                    }
+                    if (tn.right != null) {
+                        lvl.add(tn.right);
+                    }
+                }
+                bst.clear();
+                if (!lvl.isEmpty()) {
+                    results.add(lvl.getLast().val);
+                    bst.addAll(lvl);
+                }
+            }
+            return results;
+        }
     }
 
     static class TNode {

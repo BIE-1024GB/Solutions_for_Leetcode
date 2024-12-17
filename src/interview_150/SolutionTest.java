@@ -1,6 +1,8 @@
 package interview_150;
 
 import org.junit.jupiter.api.Test;
+
+import javax.print.attribute.IntegerSyntax;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -582,5 +584,19 @@ class SolutionTest {
         n5.left = n8;
         n5.right = n9;
         assertEquals(n2, n1.lowestCommonAncestor(n1, n2, n9));
+    }
+
+    @Test
+    public void testRight() {
+        Solution.TreeNode n1 = new Solution.TreeNode(1, new Solution.TreeNode(2, null, new Solution.TreeNode(5)),
+                new Solution.TreeNode(3, null, new Solution.TreeNode(4)));
+        List<Integer> re = n1.rightSideView(n1);
+        List<Integer> tr = new ArrayList<>();
+        tr.add(1);
+        tr.add(3);
+        tr.add(4);
+        for (int i = 0; i <= tr.size()-1; i++) {
+            assertEquals(tr.get(i).intValue(), re.get(i).intValue());
+        }
     }
 }
