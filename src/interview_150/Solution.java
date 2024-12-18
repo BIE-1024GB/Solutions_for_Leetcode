@@ -2320,6 +2320,35 @@ public class Solution {
             }
             return results;
         }
+
+        public List<Double> averageOfLevels(TreeNode root) {
+            List<Double> results = new ArrayList<>();
+            results.add((double) root.val);
+            List<TreeNode> bst = new ArrayList<>();
+            bst.add(root);
+            while (!bst.isEmpty()) {
+                List<TreeNode> lvl = new ArrayList<>(0);
+                for (TreeNode tn: bst) {
+                    if (tn.left != null) {
+                        lvl.add(tn.left);
+                    }
+                    if (tn.right != null) {
+                        lvl.add(tn.right);
+                    }
+                }
+                bst.clear();
+                if (!lvl.isEmpty()) {
+                    double sum = 0;
+                    for (TreeNode node: lvl) {
+                        sum += node.val;
+                    }
+                    sum /= lvl.size();
+                    results.add(sum);
+                    bst.addAll(lvl);
+                }
+            }
+            return results;
+        }
     }
 
     static class TNode {

@@ -599,4 +599,18 @@ class SolutionTest {
             assertEquals(tr.get(i).intValue(), re.get(i).intValue());
         }
     }
+
+    @Test
+    public void testAvg() {
+        Solution.TreeNode n1 = new Solution.TreeNode(3, new Solution.TreeNode(9,
+                new Solution.TreeNode(15), new Solution.TreeNode(7)), new Solution.TreeNode(20));
+        List<Double> exp = new ArrayList<>();
+        exp.add(3.00000);
+        exp.add(14.50000);
+        exp.add(11.00000);
+        List<Double> re = n1.averageOfLevels(n1);
+        for (int i = 0; i <= exp.size()-1; i++) {
+            assertEquals(exp.get(i).doubleValue(), re.get(i).doubleValue());
+        }
+    }
 }
