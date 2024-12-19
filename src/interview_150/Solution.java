@@ -2349,6 +2349,39 @@ public class Solution {
             }
             return results;
         }
+
+        public List<List<Integer>> levelOrder(TreeNode root) {
+            if (root == null) {
+                return new ArrayList<>(0);
+            }
+            List<List<Integer>> results = new ArrayList<>();
+            List<Integer> l0 = new ArrayList<>();
+            l0.add(root.val);
+            results.add(l0);
+            List<TreeNode> bst = new ArrayList<>();
+            bst.add(root);
+            while (!bst.isEmpty()) {
+                List<TreeNode> lvl = new ArrayList<>();
+                for (TreeNode treeNode: bst) {
+                    if (treeNode.left != null) {
+                        lvl.add(treeNode.left);
+                    }
+                    if (treeNode.right != null) {
+                        lvl.add(treeNode.right);
+                    }
+                }
+                bst.clear();
+                if (!lvl.isEmpty()) {
+                    List<Integer> li = new ArrayList<>();
+                    for (TreeNode treeNode: lvl) {
+                        li.add(treeNode.val);
+                    }
+                    results.add(li);
+                    bst.addAll(lvl);
+                }
+            }
+            return results;
+        }
     }
 
     static class TNode {
