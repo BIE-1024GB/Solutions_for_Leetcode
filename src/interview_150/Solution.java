@@ -1,5 +1,7 @@
 package interview_150;
 
+import com.sun.source.tree.Tree;
+
 import java.util.*;
 
 /**
@@ -2351,36 +2353,69 @@ public class Solution {
         }
 
         public List<List<Integer>> levelOrder(TreeNode root) {
+            // More clarity
+            List<List<Integer>> result = new ArrayList<>();
             if (root == null) {
-                return new ArrayList<>(0);
+                return result;
             }
-            List<List<Integer>> results = new ArrayList<>();
-            List<Integer> l0 = new ArrayList<>();
-            l0.add(root.val);
-            results.add(l0);
-            List<TreeNode> bst = new ArrayList<>();
-            bst.add(root);
-            while (!bst.isEmpty()) {
-                List<TreeNode> lvl = new ArrayList<>();
-                for (TreeNode treeNode: bst) {
-                    if (treeNode.left != null) {
-                        lvl.add(treeNode.left);
+            Queue<TreeNode> queue = new LinkedList<>();
+            queue.offer(root);
+            while (!queue.isEmpty()) {
+                int levelSize = queue.size();
+                List<Integer> currentLevel = new ArrayList<>();
+                for (int i = 0; i < levelSize; i++) {
+                    TreeNode currentNode = queue.poll();
+                    currentLevel.add(currentNode.val);
+                    if (currentNode.left != null) {
+                        queue.offer(currentNode.left);
                     }
-                    if (treeNode.right != null) {
-                        lvl.add(treeNode.right);
+                    if (currentNode.right != null) {
+                        queue.offer(currentNode.right);
                     }
                 }
-                bst.clear();
-                if (!lvl.isEmpty()) {
-                    List<Integer> li = new ArrayList<>();
-                    for (TreeNode treeNode: lvl) {
-                        li.add(treeNode.val);
-                    }
-                    results.add(li);
-                    bst.addAll(lvl);
-                }
+                result.add(currentLevel);
             }
-            return results;
+            return result;
+        }
+
+        public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+            List<List<Integer>> result = new ArrayList<>();
+            if (root == null) {
+                return result;
+            }
+            LinkedList<TreeNode> lvl = new LinkedList<>();
+            lvl.offer(root);
+            int dir = 1;
+            while (!lvl.isEmpty()) {
+                int level_size = lvl.size();
+                List<Integer> lv = new ArrayList<>();
+                if (dir == 1) {
+                    for (int i = 0; i <= level_size-1; i++) {
+                        TreeNode curr = lvl.poll();
+                        lv.add(Integer.valueOf(curr.val));
+                        if (curr.left != null) {
+                            lvl.offer(curr.left);
+                        }
+                        if (curr.right != null) {
+                            lvl.offer(curr.right);
+                        }
+                    }
+                } else {
+                    for (int i = level_size-1; i >= 0; i--) {
+                        TreeNode curr = lvl.removeLast();
+                        lv.add(Integer.valueOf(curr.val));
+                        if (curr.right != null) {
+                            lvl.push(curr.right);
+                        }
+                        if (curr.left != null) {
+                            lvl.push(curr.left);
+                        }
+                    }
+                }
+                result.add(lv);
+                dir *= -1;
+            }
+            return result;
         }
     }
 
