@@ -1,7 +1,5 @@
 package interview_150;
 
-import com.sun.source.tree.Tree;
-
 import java.util.*;
 
 /**
@@ -2253,10 +2251,7 @@ public class Solution {
             }
 
             public boolean hasNext() {
-                if (pt < iter.size()-1) {
-                    return true;
-                }
-                return false;
+                return pt < iter.size() - 1;
             }
         }
 
@@ -2365,6 +2360,7 @@ public class Solution {
                 List<Integer> currentLevel = new ArrayList<>();
                 for (int i = 0; i < levelSize; i++) {
                     TreeNode currentNode = queue.poll();
+                    assert currentNode != null;
                     currentLevel.add(currentNode.val);
                     if (currentNode.left != null) {
                         queue.offer(currentNode.left);
@@ -2392,7 +2388,8 @@ public class Solution {
                 if (dir == 1) {
                     for (int i = 0; i <= level_size-1; i++) {
                         TreeNode curr = lvl.poll();
-                        lv.add(Integer.valueOf(curr.val));
+                        assert curr != null;
+                        lv.add(curr.val);
                         if (curr.left != null) {
                             lvl.offer(curr.left);
                         }
@@ -2403,7 +2400,7 @@ public class Solution {
                 } else {
                     for (int i = level_size-1; i >= 0; i--) {
                         TreeNode curr = lvl.removeLast();
-                        lv.add(Integer.valueOf(curr.val));
+                        lv.add(curr.val);
                         if (curr.right != null) {
                             lvl.push(curr.right);
                         }

@@ -2,7 +2,6 @@ package interview_150;
 
 import org.junit.jupiter.api.Test;
 
-import javax.print.attribute.IntegerSyntax;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -463,8 +462,7 @@ class SolutionTest {
         assertEquals(l4, l1.deleteDuplicates(l1));
         assertEquals(l5, l4.next);
         Solution.ListNode e1 = new Solution.ListNode(1);
-        Solution.ListNode e2 = new Solution.ListNode(1);
-        e1.next = e2;
+        e1.next = new Solution.ListNode(1);
         assertNull(e1.deleteDuplicates(e1));
     }
 
