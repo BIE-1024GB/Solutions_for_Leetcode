@@ -2414,6 +2414,24 @@ public class Solution {
             }
             return result;
         }
+
+        private int minDifference = Integer.MAX_VALUE;
+        private TreeNode prev = null;
+        public int getMinimumDifference(TreeNode root) {
+            inOrderTraversal(root);
+            return minDifference;
+        }
+        private void inOrderTraversal(TreeNode node) {
+            if (node == null) {
+                return;
+            }
+            inOrderTraversal(node.left);
+            if (prev != null) {
+                minDifference = Math.min(minDifference, node.val-prev.val);
+            }
+            prev = node;
+            inOrderTraversal(node.right);
+        }
     }
 
     static class TNode {

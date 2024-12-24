@@ -611,4 +611,11 @@ class SolutionTest {
             assertEquals(exp.get(i).doubleValue(), re.get(i).doubleValue());
         }
     }
+
+    @Test
+    public void testMinDiff() {
+        Solution.TreeNode n1 = new Solution.TreeNode(4, new Solution.TreeNode(2, new Solution.TreeNode(1),
+                new Solution.TreeNode(3)), new Solution.TreeNode(6));
+        assertEquals(1, n1.getMinimumDifference(n1));
+    }
 }
