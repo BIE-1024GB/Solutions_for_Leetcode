@@ -618,4 +618,11 @@ class SolutionTest {
                 new Solution.TreeNode(3)), new Solution.TreeNode(6));
         assertEquals(1, n1.getMinimumDifference(n1));
     }
+
+    @Test
+    public void testKmin() {
+        Solution.TreeNode n1 = new Solution.TreeNode(5, new Solution.TreeNode(3, new Solution.TreeNode(2,
+                new Solution.TreeNode(1), null), new Solution.TreeNode(4)), new Solution.TreeNode(6));
+        assertEquals(3, n1.kthSmallest(n1, 3));
+    }
 }

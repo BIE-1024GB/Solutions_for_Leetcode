@@ -2432,6 +2432,28 @@ public class Solution {
             prev = node;
             inOrderTraversal(node.right);
         }
+
+        private int count = 0;
+        private int result = 0;
+        public int kthSmallest(TreeNode root, int k) {
+            inOrderTraversal(root, k);
+            return result;
+        }
+        private void inOrderTraversal(TreeNode node, int k) {
+            if (node == null) {
+                return;
+            }
+            // Traverse the left subtree
+            inOrderTraversal(node.left, k);
+            // Process the current node
+            count++;
+            if (count == k) {
+                result = node.val;
+                return; // Early termination once the kth smallest is found
+            }
+            // Traverse the right subtree
+            inOrderTraversal(node.right, k);
+        }
     }
 
     static class TNode {
