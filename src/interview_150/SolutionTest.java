@@ -625,4 +625,11 @@ class SolutionTest {
                 new Solution.TreeNode(1), null), new Solution.TreeNode(4)), new Solution.TreeNode(6));
         assertEquals(3, n1.kthSmallest(n1, 3));
     }
+
+    @Test
+    public void testBST() {
+        Solution.TreeNode n1 = new Solution.TreeNode(2, new Solution.TreeNode(1, new Solution.TreeNode(0),
+                new Solution.TreeNode(4)), new Solution.TreeNode(3));
+        assertFalse(n1.isValidBST(n1));
+    }
 }

@@ -2454,6 +2454,29 @@ public class Solution {
             // Traverse the right subtree
             inOrderTraversal(node.right, k);
         }
+
+        private boolean isValidBSTHelper(TreeNode node, TreeNode[] prev) {
+            if (node == null) {
+                return true;
+            }
+            // Check the left subtree
+            if (!isValidBSTHelper(node.left, prev)) {
+                return false;
+            }
+            // Check the current node
+            if (prev[0] != null && node.val <= prev[0].val) {
+                return false;
+            }
+            // Update the previous node
+            prev[0] = node;
+            // Check the right subtree
+            return isValidBSTHelper(node.right, prev);
+        }
+        public boolean isValidBST(TreeNode root) {
+            // Use an array to hold the previous node during in-order traversal
+            TreeNode[] prev = new TreeNode[1];
+            return isValidBSTHelper(root, prev);
+        }
     }
 
     static class TNode {
