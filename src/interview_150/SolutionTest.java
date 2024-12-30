@@ -632,4 +632,14 @@ class SolutionTest {
                 new Solution.TreeNode(4)), new Solution.TreeNode(3));
         assertFalse(n1.isValidBST(n1));
     }
+
+    @Test
+    public void testIsland() {
+        Solution solution = new Solution();
+        char[][] grid = {{'1', '1', '0', '0', '0'},
+                            {'1', '1', '0', '0', '0'},
+                            {'0', '0', '1', '0', '0'},
+                            {'0', '0', '0', '1', '1'}};
+        assertEquals(3, solution.numIslands(grid));
+    }
 }

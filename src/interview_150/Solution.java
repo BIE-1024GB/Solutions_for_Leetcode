@@ -2523,4 +2523,27 @@ public class Solution {
             return root;
         }
     }
+
+    public void dfs(char[][] grid, int cr, int cc) {
+        if (cr < 0 || cc < 0 || cr >= grid.length || cc >= grid[0].length || grid[cr][cc] == '0') {
+            return;
+        }
+        grid[cr][cc] = '0';
+        dfs(grid, cr, cc+1);
+        dfs(grid, cr+1, cc);
+        dfs(grid, cr, cc-1);
+        dfs(grid, cr-1, cc);
+    }
+    public int numIslands(char[][] grid) {
+        int islands = 0;
+        for (int r = 0; r < grid.length; r++) {
+            for (int c = 0; c < grid[0].length; c++) {
+                if (grid[r][c] == '1') {
+                    islands += 1;
+                    dfs(grid, r, c);
+                }
+            }
+        }
+        return islands;
+    }
 }
