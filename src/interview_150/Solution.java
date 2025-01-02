@@ -2546,4 +2546,48 @@ public class Solution {
         }
         return islands;
     }
+
+    private void dfs2(char[][] board, int row, int col) {
+        if (row < 0 || row >= board.length || col < 0 || col >= board[0].length || board[row][col] != 'O') {
+            return;
+        }
+        board[row][col] = '#'; // Mark this cell as visited
+        dfs2(board, row + 1, col);
+        dfs2(board, row - 1, col);
+        dfs2(board, row, col + 1);
+        dfs2(board, row, col - 1);
+    }
+    public void solve(char[][] board) {
+        int rows = board.length;
+        int cols = board[0].length;
+
+        // Step 1: Mark all 'O's connected to the border
+        for (int i = 0; i < rows; i++) {
+            if (board[i][0] == 'O') {
+                dfs2(board, i, 0);
+            }
+            if (board[i][cols - 1] == 'O') {
+                dfs2(board, i, cols - 1);
+            }
+        }
+        for (int j = 0; j < cols; j++) {
+            if (board[0][j] == 'O') {
+                dfs2(board, 0, j);
+            }
+            if (board[rows - 1][j] == 'O') {
+                dfs2(board, rows - 1, j);
+            }
+        }
+
+        // Step 2: Capture surrounded regions
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (board[i][j] == 'O') {
+                    board[i][j] = 'X';
+                } else if (board[i][j] == '#') {
+                    board[i][j] = 'O';
+                }
+            }
+        }
+    }
 }
