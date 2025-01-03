@@ -2590,4 +2590,30 @@ public class Solution {
             }
         }
     }
+
+    static class GNode {
+        public int val;
+        public List<GNode> neighbors;
+
+        public GNode(int val) {
+            this.val = val;
+            this.neighbors = new ArrayList<>();
+        }
+
+        private HashMap<GNode, GNode> map = new HashMap<>();
+        public GNode cloneGraph(GNode node) {
+            if (node == null) {
+                return null;
+            }
+            if (map.containsKey(node)) {
+                return map.get(node);
+            }
+            GNode copy = new GNode(node.val);
+            map.put(node, copy);
+            for (GNode n: node.neighbors) {
+                copy.neighbors.add(cloneGraph(n));
+            }
+            return copy;
+        }
+    }
 }
