@@ -642,4 +642,45 @@ class SolutionTest {
                             {'0', '0', '0', '1', '1'}};
         assertEquals(3, solution.numIslands(grid));
     }
+
+    @Test
+    public void testCalDiv() {
+        Solution solution = new Solution();
+        List<String> e1 = new ArrayList<>();
+        e1.add("a");
+        e1.add("b");
+        List<String> e2 = new ArrayList<>();
+        e2.add("b");
+        e2.add("c");
+        List<List<String>> equations = new ArrayList<>();
+        equations.add(e1);
+        equations.add(e2);
+        double[] vals = {2.0, 3.0};
+        List<String> q1 = new ArrayList<>();
+        q1.add("a");
+        q1.add("c");
+        List<String> q2 = new ArrayList<>();
+        q2.add("b");
+        q2.add("a");
+        List<String> q3 = new ArrayList<>();
+        q3.add("a");
+        q3.add("e");
+        List<String> q4 = new ArrayList<>();
+        q4.add("a");
+        q4.add("a");
+        List<String> q5 = new ArrayList<>();
+        q5.add("x");
+        q5.add("x");
+        List<List<String>> queries = new ArrayList<>();
+        queries.add(q1);
+        queries.add(q2);
+        queries.add(q3);
+        queries.add(q4);
+        queries.add(q5);
+        double[] exp = {6.00000, 0.50000, -1.00000, 1.00000, -1.00000};
+        double[] res = solution.calcEquation(equations, vals, queries);
+        for (int i = 0; i <= exp.length-1; i++) {
+            assertEquals(exp[i], res[i]);
+        }
+    }
 }

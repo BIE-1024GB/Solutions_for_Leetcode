@@ -2600,7 +2600,7 @@ public class Solution {
             this.neighbors = new ArrayList<>();
         }
 
-        private HashMap<GNode, GNode> map = new HashMap<>();
+        private final HashMap<GNode, GNode> map = new HashMap<>();
         public GNode cloneGraph(GNode node) {
             if (node == null) {
                 return null;
@@ -2615,5 +2615,49 @@ public class Solution {
             }
             return copy;
         }
+    }
+
+    private double dfs(String start, String end, Map<String, Map<String, Double>> graph, Set<String> visited, double product) {
+        if (start.equals(end)) {
+            return product;
+        }
+        visited.add(start);
+        for (Map.Entry<String, Double> entry : graph.get(start).entrySet()) {
+            String next = entry.getKey();
+            double value = entry.getValue();
+            if (!visited.contains(next)) {
+                double result = dfs(next, end, graph, visited, product * value);
+                if (result != -1.0) {
+                    return result;
+                }
+            }
+        }
+        return -1.0;
+    }
+    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
+        // Create a graph to store the equations
+        Map<String, Map<String, Double>> graph = new HashMap<>();
+        // Build the graph
+        for (int i = 0; i < equations.size(); i++) {
+            String A = equations.get(i).get(0);
+            String B = equations.get(i).get(1);
+            double value = values[i];
+            graph.putIfAbsent(A, new HashMap<>());
+            graph.putIfAbsent(B, new HashMap<>());
+            graph.get(A).put(B, value);
+            graph.get(B).put(A, 1.0 / value);
+        }
+        // Process each query
+        double[] results = new double[queries.size()];
+        for (int i = 0; i < queries.size(); i++) {
+            String C = queries.get(i).get(0);
+            String D = queries.get(i).get(1);
+            if (!graph.containsKey(C) || !graph.containsKey(D)) {
+                results[i] = -1.0;
+            } else {
+                results[i] = dfs(C, D, graph, new HashSet<>(), 1.0);
+            }
+        }
+        return results;
     }
 }
