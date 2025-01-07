@@ -2660,4 +2660,43 @@ public class Solution {
         }
         return results;
     }
+
+    private boolean isCyclic(int node, List<List<Integer>> adjList, int[] visited) {
+        if (visited[node] == 1) {   // If the node is being visited (part of the recursion stack)
+            return true;
+        }
+        if (visited[node] == 2) {   // If the node has been fully visited
+            return false;
+        }
+        visited[node] = 1;   // Mark the node as being visited
+        for (int neighbor : adjList.get(node)) {
+            if (isCyclic(neighbor, adjList, visited)) {
+                return true;
+            }
+        }
+        visited[node] = 2;   // Mark the node as fully visited
+        return false;
+    }
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        // Create an adjacency list to represent the graph
+        List<List<Integer>> adjList = new ArrayList<>();
+        for (int i = 0; i < numCourses; i++) {
+            adjList.add(new ArrayList<>());
+        }
+        // Build the graph
+        for (int[] prerequisite : prerequisites) {
+            adjList.get(prerequisite[1]).add(prerequisite[0]);
+        }
+        // Visited array to keep track of visited nodes
+        int[] visited = new int[numCourses];
+        // DFS to detect cycle
+        for (int i = 0; i < numCourses; i++) {
+            if (visited[i] == 0) { // If the node has not been visited
+                if (isCyclic(i, adjList, visited)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }

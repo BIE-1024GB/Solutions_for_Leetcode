@@ -683,4 +683,14 @@ class SolutionTest {
             assertEquals(exp[i], res[i]);
         }
     }
+
+    @Test
+    public void testCourse() {
+        Solution solution = new Solution();
+        int numCourses = 2;
+        int[][] prerequisites = {{1, 0}};
+        assertTrue(solution.canFinish(numCourses, prerequisites));
+        prerequisites = new int[][]{{1, 0}, {0, 1}};
+        assertFalse(solution.canFinish(numCourses, prerequisites));
+    }
 }
