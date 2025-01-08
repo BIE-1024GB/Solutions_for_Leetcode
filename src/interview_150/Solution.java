@@ -2699,4 +2699,43 @@ public class Solution {
         }
         return true;
     }
+
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        // Kahn's algorithm
+        List<List<Integer>> adjList = new ArrayList<>();
+        for (int i = 0; i <= numCourses-1; i++) {
+            adjList.add(new ArrayList<>());
+        }
+        int[] inDegree = new int[numCourses];
+        for (int[] preq: prerequisites) {
+            adjList.get(preq[1]).add(preq[0]);
+            inDegree[preq[0]] += 1;
+        }
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 0; i <= numCourses-1; i++) {
+            if (inDegree[i] == 0) {
+                queue.offer(i);
+            }
+        }
+        List<Integer> topo = new ArrayList<>();
+        while (!queue.isEmpty()) {
+            int course = queue.poll();
+            topo.add(course);
+            for (int neighbor: adjList.get(course)) {
+                inDegree[neighbor] -= 1;
+                if (inDegree[neighbor] == 0) {
+                    queue.offer(neighbor);
+                }
+            }
+        }
+        if (topo.size() == numCourses) {
+            int[] order = new int[numCourses];
+            for (int i = 0; i <= numCourses-1; i++) {
+                order[i] = topo.get(i);
+            }
+            return order;
+        } else {
+            return new int[0];
+        }
+    }
 }
