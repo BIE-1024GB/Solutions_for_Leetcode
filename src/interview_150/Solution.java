@@ -2702,14 +2702,15 @@ public class Solution {
 
     public int[] findOrder(int numCourses, int[][] prerequisites) {
         // Kahn's algorithm
-        List<List<Integer>> adjList = new ArrayList<>();
+        // Useful for scheduling tasks where certain tasks must be completed before others can begin
+        List<List<Integer>> adjList = new ArrayList<>();      // construct an adjacency list to represent the graph
         for (int i = 0; i <= numCourses-1; i++) {
             adjList.add(new ArrayList<>());
         }
         int[] inDegree = new int[numCourses];
         for (int[] preq: prerequisites) {
-            adjList.get(preq[1]).add(preq[0]);
-            inDegree[preq[0]] += 1;
+            adjList.get(preq[1]).add(preq[0]);          // get the 'higher' topological neighbor
+            inDegree[preq[0]] += 1;                     // get the in-degree of each vertex
         }
         Queue<Integer> queue = new LinkedList<>();
         for (int i = 0; i <= numCourses-1; i++) {
@@ -2721,7 +2722,7 @@ public class Solution {
         while (!queue.isEmpty()) {
             int course = queue.poll();
             topo.add(course);
-            for (int neighbor: adjList.get(course)) {
+            for (int neighbor: adjList.get(course)) {   // no error even if the returned ArrayList is empty
                 inDegree[neighbor] -= 1;
                 if (inDegree[neighbor] == 0) {
                     queue.offer(neighbor);
@@ -2734,7 +2735,7 @@ public class Solution {
                 order[i] = topo.get(i);
             }
             return order;
-        } else {
+        } else {                        // there exists a cycle
             return new int[0];
         }
     }
