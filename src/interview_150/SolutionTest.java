@@ -693,4 +693,18 @@ class SolutionTest {
         prerequisites = new int[][]{{1, 0}, {0, 1}};
         assertFalse(solution.canFinish(numCourses, prerequisites));
     }
+
+    @Test
+    public void testSaL() {
+        Solution solution = new Solution();
+        int[][] board = {
+                {-1, -1, -1, -1, -1, -1},
+                {-1, -1, -1, -1, -1, -1},
+                {-1, -1, -1, -1, -1, -1},
+                {-1, 35, -1, -1, 13, -1},
+                {-1, -1, -1, -1, -1, -1},
+                {-1, 15, -1, -1, -1, -1}
+        };
+        assertEquals(4, solution.snakesAndLadders(board));
+    }
 }

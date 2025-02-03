@@ -2739,4 +2739,44 @@ public class Solution {
             return new int[0];
         }
     }
+
+    private int[] getCoordinate(int square, int size) {
+        int[] coordinate = new int[2];
+        int r = size-1-(square-1)/size;
+        int c;
+        if (size%2 != r%2) {
+            c = (square-1)%size;
+        } else {
+            c = size-1-(square-1)%size;
+        }
+        coordinate[0] = r;
+        coordinate[1] = c;
+        return coordinate;
+    }
+    public int snakesAndLadders(int[][] board) {
+        int n = board.length;
+        Queue<int[]> queue = new LinkedList<>();
+        Set<Integer> visit = new HashSet<>();
+        queue.offer(new int[]{1, 0});
+        visit.add(1);
+        while (!queue.isEmpty()) {
+            int[] curr = queue.poll();
+            int sq = curr[0];
+            int move = curr[1];
+            for (int i = 1; i <= 6; i++) {
+                int next = sq+i;
+                if (next > n*n) break;
+                int[] nc = getCoordinate(next, n);
+                int r = nc[0];
+                int c = nc[1];
+                if (board[r][c] != -1) next = board[r][c];
+                if (next == n*n) return move+1;
+                if (!visit.contains(next)) {
+                    queue.offer(new int[]{next, move+1});
+                    visit.add(next);
+                }
+            }
+        }
+        return -1;
+    }
 }
