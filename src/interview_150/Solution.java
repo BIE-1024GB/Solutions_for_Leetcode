@@ -2741,12 +2741,13 @@ public class Solution {
     }
 
     private int[] getCoordinate(int square, int size) {
+        // Helper method that converts the number of a square to its coordinate.
         int[] coordinate = new int[2];
         int r = size-1-(square-1)/size;
         int c;
-        if (size%2 != r%2) {
+        if (size%2 != r%2) {           // from left to right
             c = (square-1)%size;
-        } else {
+        } else {                       // from right to left
             c = size-1-(square-1)%size;
         }
         coordinate[0] = r;
@@ -2774,6 +2775,38 @@ public class Solution {
                 if (!visit.contains(next)) {
                     queue.offer(new int[]{next, move+1});
                     visit.add(next);
+                }
+            }
+        }
+        return -1;
+    }
+
+    public int minMutation(String startGene, String endGene, String[] bank) {
+        if (bank.length == 0) return -1;
+        Set<String> bankset = new HashSet<>(Arrays.asList(bank));
+        if (!bankset.contains(endGene)) return -1;
+        if (startGene.equals(endGene)) return 0;
+        Queue<String> queue = new LinkedList<>();
+        Map<String, Integer> map = new HashMap<>();
+        Set<String> set = new HashSet<>();
+        queue.offer(startGene);
+        map.put(startGene, 0);
+        set.add(startGene);
+        char[] genes = new char[] {'A', 'C', 'G', 'T'};
+        while (!queue.isEmpty()) {
+            String curr = queue.poll();
+            for (int i = 0; i <= startGene.length()-1; i++) {
+                char[] chars = curr.toCharArray();
+                for (char g: genes) {
+                    chars[i] = g;
+                    String newString = new String(chars);
+                    if (newString.equals(endGene)) return map.get(curr)+1;
+                    if (!bankset.contains(newString)) continue;
+                    if (!set.contains(newString)) {
+                        queue.offer(newString);
+                        map.put(newString, map.get(curr)+1);
+                        set.add(newString);
+                    }
                 }
             }
         }

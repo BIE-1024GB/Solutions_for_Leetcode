@@ -707,4 +707,13 @@ class SolutionTest {
         };
         assertEquals(4, solution.snakesAndLadders(board));
     }
+
+    @Test
+    public void testGene() {
+        Solution solution = new Solution();
+        String s1 = "AACCGGTT";
+        String e1 = "AACCGGTA";
+        String[] b1 = new String[] {"AACCGGTA"};
+        assertEquals(1, solution.minMutation(s1, e1, b1));
+    }
 }
