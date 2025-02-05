@@ -1,3 +1,17 @@
 Default constructor in Java initializes member data variable to default values (numeric values are initialized as 0, booleans are initialized as false and references are initialized as null).
 
 Unlike C++, static local variables are not allowed in Java.
+
+Java garbage collection(mark and sweep):
+  When an object is created, it's marked 'false'
+    Mark: search from a root(can be DFS) for reachable objects, which are then marked 'true'
+    Sweep: go through the heap, discard objects marked 'false'(unreachable), mark others to 'false'
+  Advantages: simple, complete
+  Disadvantages: application threads need to be paused for it
+
+Java serialization:
+    In Java, serialization refers to the process of converting an object's state into a byte stream, which can then be
+    saved to a file, sent over a network, or stored in a database. This byte stream can later be deserialized to recreate
+    the original object. Serialization is a mechanism that allows objects to be persisted and transferred between
+    different environments, enabling features like remote method invocation (RMI), object persistence, and distributed
+    computing.
