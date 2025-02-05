@@ -2812,4 +2812,35 @@ public class Solution {
         }
         return -1;
     }
+
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        // Note: convert the List<> to the HashSet<> first in case of large input.
+        // Difference in time complexity of the .contains() method: List<>: O(n), HashSet<>: O(1)
+        Set<String> wordSet = new HashSet<>(wordList);
+        if (!wordSet.contains(endWord)) return 0;
+        Queue<String> queue = new LinkedList<>();
+        Map<String, Integer> map = new HashMap<>();
+        Set<String> visit = new HashSet<>();
+        queue.offer(beginWord);
+        map.put(beginWord, 1);
+        visit.add(beginWord);
+        while (!queue.isEmpty()) {
+            String curr = queue.poll();
+            for (int i = 0; i <= curr.length()-1; i++) {
+                char[] chars = curr.toCharArray();
+                for (int j = 1; j <= 25; j++) {
+                    chars[i] = (char) ((chars[i]>121) ? chars[i]-25 : chars[i]+1);
+                    String newWord = new String(chars);
+                    if (!wordSet.contains(newWord)) continue;
+                    if (newWord.equals(endWord)) return map.get(curr)+1;
+                    if (!visit.contains(newWord)) {
+                        queue.offer(newWord);
+                        map.put(newWord, map.get(curr)+1);
+                        visit.add(newWord);
+                    }
+                }
+            }
+        }
+        return 0;
+    }
 }

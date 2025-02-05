@@ -1,0 +1,3 @@
+Default constructor in Java initializes member data variable to default values (numeric values are initialized as 0, booleans are initialized as false and references are initialized as null).
+
+Unlike C++, static local variables are not allowed in Java.

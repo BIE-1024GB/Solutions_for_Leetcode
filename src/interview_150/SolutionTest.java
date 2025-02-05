@@ -716,4 +716,14 @@ class SolutionTest {
         String[] b1 = new String[] {"AACCGGTA"};
         assertEquals(1, solution.minMutation(s1, e1, b1));
     }
+
+    @Test
+    public void testWord() {
+        Solution solution = new Solution();
+        String s1 = "hit";
+        String e1 = "cog";
+        String[] d1 = new String[] {"hot", "dot", "dog", "lot", "log", "cog"};
+        List<String> l1 = Arrays.asList(d1);
+        assertEquals(5, solution.ladderLength(s1, e1, l1));
+    }
 }
