@@ -15,3 +15,10 @@ Java serialization:
     the original object. Serialization is a mechanism that allows objects to be persisted and transferred between
     different environments, enabling features like remote method invocation (RMI), object persistence, and distributed
     computing.
+
+Java access modifiers:
+  1, private: members are only accessible within the same class
+  2, (default): members are only accessible within the same package
+  3, protected: members are accessible within the same package and by subclasses, even if they are in different packages
+  4, public: members are accessible from any other class
+        Note: A overriding member's modifier in the derived class CANNOT be changed to more restrictive ones.

@@ -2843,4 +2843,49 @@ public class Solution {
         }
         return 0;
     }
+
+    // A more time-efficient approach: O(n) for 'insert()', 'search()', and 'startsWith()'.
+    static class TrieNode {
+        TrieNode[] children;
+        boolean EOW;
+
+        public TrieNode() {
+            children = new TrieNode[26];
+            EOW = false;
+        }
+    }
+    static class Trie {
+        TrieNode root;
+
+        public Trie() {
+            root = new TrieNode();
+        }
+        public void insert(String word) {
+            TrieNode curr = root;
+            for (char c: word.toCharArray()) {
+                int index = c-'a';
+                if (curr.children[index] == null) curr.children[index] = new TrieNode();
+                curr = curr.children[index];
+            }
+            curr.EOW = true;
+        }
+        public boolean search(String word) {
+            TrieNode curr = root;
+            for (char c: word.toCharArray()) {
+                int index = c-'a';
+                if (curr.children[index] == null) return false;
+                curr = curr.children[index];
+            }
+            return curr.EOW;
+        }
+        public boolean startsWith(String prefix) {
+            TrieNode curr = root;
+            for (char c: prefix.toCharArray()) {
+                int index = c-'a';
+                if (curr.children[index] == null) return false;
+                curr = curr.children[index];
+            }
+            return true;
+        }
+    }
 }
