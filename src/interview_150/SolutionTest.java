@@ -726,4 +726,15 @@ class SolutionTest {
         List<String> l1 = Arrays.asList(d1);
         assertEquals(5, solution.ladderLength(s1, e1, l1));
     }
+
+    @Test
+    public void testWordDict() {
+        Solution.WordDictionary wordDictionary = new Solution.WordDictionary();
+        wordDictionary.addWord("aid");
+        wordDictionary.addWord("mad");
+        wordDictionary.addWord("misao");
+        assertTrue(wordDictionary.search("a.."));
+        assertFalse(wordDictionary.search("m.p"));
+        assertTrue(wordDictionary.search("m.s.o"));
+    }
 }

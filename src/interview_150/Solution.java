@@ -2844,7 +2844,6 @@ public class Solution {
         return 0;
     }
 
-    // A more time-efficient approach: O(n) for 'insert()', 'search()', and 'startsWith()'.
     static class TrieNode {
         TrieNode[] children;
         boolean EOW;
@@ -2855,6 +2854,7 @@ public class Solution {
         }
     }
     static class Trie {
+        // A more time-efficient approach: O(n) for 'insert()', 'search()', and 'startsWith()'.
         TrieNode root;
 
         public Trie() {
@@ -2886,6 +2886,41 @@ public class Solution {
                 curr = curr.children[index];
             }
             return true;
+        }
+    }
+    static class WordDictionary {
+        TrieNode root;
+
+        public WordDictionary() {
+            root = new TrieNode();
+        }
+
+        public void addWord(String word) {
+            TrieNode curr = root;
+            for (char c: word.toCharArray()) {
+                int index = c-'a';
+                if (curr.children[index] == null) curr.children[index] = new TrieNode();
+                curr = curr.children[index];
+            }
+            curr.EOW = true;
+        }
+
+        private boolean wildcard(String word, TrieNode node, int index) {
+            if (index == word.length()) return node.EOW;
+            char c = word.charAt(index);
+            if (c == '.') {
+                for (TrieNode trieNode: node.children) {
+                    if (trieNode != null && wildcard(word, trieNode, index+1)) return true;
+                }
+                return false;
+            } else {
+                int pos = c-'a';
+                if (node.children[pos] == null) return false;
+                return wildcard(word, node.children[pos], index+1);
+            }
+        }
+        public boolean search(String word) {
+            return wildcard(word, root, 0);
         }
     }
 }

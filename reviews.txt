@@ -1,4 +1,5 @@
-Default constructor in Java initializes member data variable to default values (numeric values are initialized as 0, booleans are initialized as false and references are initialized as null).
+Default constructor in Java initializes member data variable to default values (numeric values are initialized as 0,
+booleans are initialized as false and references are initialized as null).
 
 Unlike C++, static local variables are not allowed in Java.
 
@@ -22,3 +23,12 @@ Java access modifiers:
   3, protected: members are accessible within the same package and by subclasses, even if they are in different packages
   4, public: members are accessible from any other class
         Note: A overriding member's modifier in the derived class CANNOT be changed to more restrictive ones.
+
+Java compiler will choose the most specific method in case of overloading. If more than one can be chosen, the compiler
+will give an error.
+
+Integer prefix: "0": base 8;
+                "0x": base 16;
+                "0b": base 2.
+
+A thread can be started at most once. In particular, a thread can not be restarted after it has terminated.
