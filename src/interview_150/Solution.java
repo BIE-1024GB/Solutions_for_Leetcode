@@ -2923,4 +2923,51 @@ public class Solution {
             return wildcard(word, root, 0);
         }
     }
+
+    static class WordTrie {
+        String word;
+        WordTrie[] wordTries;
+
+        WordTrie() {
+            wordTries = new WordTrie[26];
+        }
+    }
+    private WordTrie buildWT(String[] words) {
+        WordTrie wordTrie = new WordTrie();
+        for (String word: words) {
+            WordTrie node = wordTrie;
+            for (char c: word.toCharArray()) {
+                int index = c-'a';
+                if (node.wordTries[index] == null) node.wordTries[index] = new WordTrie();
+                node = node.wordTries[index];
+            }
+            node.word = word;
+        }
+        return wordTrie;
+    }
+    private void DFS(char[][] board, int row, int col, WordTrie trie, List<String> result) {
+        char c = board[row][col];
+        if (c == '#' || trie.wordTries[c-'a'] == null) return;
+        trie = trie.wordTries[c-'a'];
+        if (trie.word != null) {
+            result.add(trie.word);
+            trie.word = null;
+        }
+        board[row][col] = '#';
+        if (row > 0) DFS(board, row-1, col, trie, result);
+        if (col > 0) DFS(board, row, col-1, trie, result);
+        if (row < board.length-1) DFS(board, row+1, col, trie, result);
+        if (col < board[0].length-1) DFS(board, row, col+1, trie, result);
+        board[row][col] = c;
+    }
+    public List<String> findWords(char[][] board, String[] words) {
+        WordTrie root = buildWT(words);
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i <= board.length-1; i++) {
+            for (int j = 0; j <= board[0].length-1; j++) {
+                DFS(board, i, j, root, list);
+            }
+        }
+        return list;
+    }
 }
