@@ -2970,4 +2970,51 @@ public class Solution {
         }
         return list;
     }
+
+    private char[] getLetters(char d) {
+        return switch (d) {
+            case '2' -> new char[]{'a', 'b', 'c'};
+            case '3' -> new char[]{'d', 'e', 'f'};
+            case '4' -> new char[]{'g', 'h', 'i'};
+            case '5' -> new char[]{'j', 'k', 'l'};
+            case '6' -> new char[]{'m', 'n', 'o'};
+            case '7' -> new char[]{'p', 'q', 'r', 's'};
+            case '8' -> new char[]{'t', 'u', 'v'};
+            default -> new char[]{'w', 'x', 'y', 'z'};
+        };
+    }
+    public List<String> letterCombinations(String digits) {
+        List<String> list = new ArrayList<>(0);
+        if (digits.isEmpty()) return list;
+        List<char[]> letters = new ArrayList<>();
+        int n = 1;
+        for (char d: digits.toCharArray()) {
+            char[] ds = getLetters(d);
+            letters.add(ds);
+            n *= ds.length;
+        }
+        int[] pos = new int[letters.size()];
+        int i = 1;
+        while (i <= n) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int k = 0; k <= letters.size()-1; k++) stringBuilder.append(letters.get(k)[pos[k]]);
+            list.add(stringBuilder.toString());
+            int addon = 0;
+            for (int p = letters.size()-1; p >= 0; p--) {
+                if (p == letters.size()-1) {
+                    pos[p] += 1;
+                } else {
+                    if (addon == 0) break;
+                    pos[p] += 1;
+                    addon = 0;
+                }
+                if (pos[p] == letters.get(p).length) {
+                    pos[p] = 0;
+                    addon = 1;
+                }
+            }
+            i++;
+        }
+        return list;
+    }
 }
