@@ -737,4 +737,11 @@ class SolutionTest {
         assertFalse(wordDictionary.search("m.p"));
         assertTrue(wordDictionary.search("m.s.o"));
     }
+
+    @Test
+    public void testComb() {
+        Solution solution = new Solution();
+        List<List<Integer>> l1 = solution.combine(4, 2);
+        for (List<Integer> li: l1) System.out.println(li.toString());
+    }
 }

@@ -3017,4 +3017,21 @@ public class Solution {
         }
         return list;
     }
+
+    private void backtrack(List<List<Integer>> res, List<Integer> curr, int s, int e, int u) {
+        if (curr.size() == u) {
+            res.add(new ArrayList<>(curr));        // create a deep copy
+        } else {
+            for (int i = s; i <= e; i++) {
+                curr.add(i);
+                backtrack(res, curr, i+1, e, u);
+                curr.removeLast();
+            }
+        }
+    }
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> lists = new ArrayList<>();
+        backtrack(lists, new ArrayList<>(), 1, n, k);
+        return lists;
+    }
 }

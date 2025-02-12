@@ -32,3 +32,8 @@ Integer prefix: "0": base 8;
                 "0b": base 2.
 
 A thread can be started at most once. In particular, a thread can not be restarted after it has terminated.
+
+Java maintains an Integer cache -> when creating multiple Integer by directly giving a value in [-128, 127], only ONE object
+is actually created.
+
+Java strictly observes "pass by value".
