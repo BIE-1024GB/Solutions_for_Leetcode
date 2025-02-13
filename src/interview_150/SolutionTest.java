@@ -744,4 +744,12 @@ class SolutionTest {
         List<List<Integer>> l1 = solution.combine(4, 2);
         for (List<Integer> li: l1) System.out.println(li.toString());
     }
+
+    @Test
+    public void testPerm() {
+        Solution solution = new Solution();
+        int[] n1 = new int[] {1, 2, 3};
+        List<List<Integer>> lists = solution.permute(n1);
+        for (List<Integer> list: lists) System.out.println(list.toString());
+    }
 }

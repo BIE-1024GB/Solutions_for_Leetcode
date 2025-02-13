@@ -3034,4 +3034,23 @@ public class Solution {
         backtrack(lists, new ArrayList<>(), 1, n, k);
         return lists;
     }
+
+    private void backtrack(List<List<Integer>> res, List<Integer> curr, int[] ints) {
+        if (curr.size() == ints.length) {
+            res.add(new ArrayList<>(curr));
+        } else {
+            for (int i = 0; i <= ints.length-1; i++) {
+                if (!curr.contains(ints[i])) {
+                    curr.add(ints[i]);
+                    backtrack(res, curr, ints);
+                    curr.removeLast();
+                }
+            }
+        }
+    }
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> lists = new ArrayList<>();
+        backtrack(lists, new ArrayList<>(), nums);
+        return lists;
+    }
 }
