@@ -3053,4 +3053,24 @@ public class Solution {
         backtrack(lists, new ArrayList<>(), nums);
         return lists;
     }
+
+    private void backtrack(List<List<Integer>> res, List<Integer> curr, int[] cands, int resid, int s) {
+        if (resid == 0) {
+            res.add(new ArrayList<>(curr));
+        } else {
+            for (int i = s; i <= cands.length-1; i++) {
+                int candidate = cands[i];
+                if (resid >= candidate){
+                    curr.add(candidate);
+                    backtrack(res, curr, cands, resid-candidate, i);
+                    curr.removeLast();
+                }
+            }
+        }
+    }
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> lists = new ArrayList<>();
+        backtrack(lists, new ArrayList<>(), candidates, target, 0);
+        return lists;
+    }
 }
