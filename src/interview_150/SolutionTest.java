@@ -752,4 +752,12 @@ class SolutionTest {
         List<List<Integer>> lists = solution.permute(n1);
         for (List<Integer> list: lists) System.out.println(list.toString());
     }
+
+    @Test
+    public void testQueen() {
+        Solution solution = new Solution();
+        assertEquals(2, solution.totalNQueens(4));
+        assertEquals(1, solution.totalNQueens(1));
+        assertEquals(0, solution.totalNQueens(2));
+    }
 }

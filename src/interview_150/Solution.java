@@ -3073,4 +3073,24 @@ public class Solution {
         backtrack(lists, new ArrayList<>(), candidates, target, 0);
         return lists;
     }
+
+    private int countNQueens(int n, int row, int column, int diagonal, int anti_diagonal) {
+        if (n == row) return 1;          // found a solution
+        int avails = ((1<<n)-1)&(~(column|diagonal|anti_diagonal));  // (1<<n)-1: all positions in a row(n-bit 1),
+                                                                     // column|diagonal|anti_diagonal: all positions being attacked(marked as bit 1)
+        int sols = 0;
+        while (avails != 0) {
+            int pos = avails&(-avails);    // extracts the least significant bit -> the right most available position
+            avails = avails&(avails-1);    // removes this available position
+            sols += countNQueens(n,
+                    row+1,
+                    column|pos,
+                    (diagonal|pos)>>1,
+                    (anti_diagonal|pos)<<1);
+        }   // move to the next row, update the columns, diagonals, and antidiagonals being attacked
+        return sols;
+    }
+    public int totalNQueens(int n) {
+        return countNQueens(n, 0, 0, 0, 0);
+    }
 }
