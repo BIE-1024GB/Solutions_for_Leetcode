@@ -3087,10 +3087,40 @@ public class Solution {
                     column|pos,
                     (diagonal|pos)>>1,
                     (anti_diagonal|pos)<<1);
-        }   // move to the next row, update the columns, diagonals, and antidiagonals being attacked
+        }   // move to the next row, update the columns, diagonals, and anti diagonals being attacked
         return sols;
     }
     public int totalNQueens(int n) {
         return countNQueens(n, 0, 0, 0, 0);
+    }
+
+    private void backtrack(List<String> res, StringBuilder builder, int l, int r) {
+        if (l == 0 && r == 0) {
+            res.add(String.valueOf(builder));
+            return;
+        }
+        if (l == r) {
+            builder.append('(');
+            backtrack(res, builder, l-1, r);
+        } else {
+            if (l != 0) {
+                StringBuilder stringBuilder = new StringBuilder(builder);
+                builder.append('(');
+                backtrack(res, builder, l - 1, r);
+                builder = stringBuilder;
+            }
+            builder.append(')');
+            backtrack(res, builder, l, r-1);
+        }
+    }
+    public List<String> generateParenthesis(int n) {
+        List<String> result = new ArrayList<>();
+        if (n == 1) {
+            result.add("()");
+        } else {
+            StringBuilder stringBuilder = new StringBuilder();
+            backtrack(result, stringBuilder, n, n);
+        }
+        return result;
     }
 }

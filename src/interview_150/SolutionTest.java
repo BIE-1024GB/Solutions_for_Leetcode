@@ -656,6 +656,14 @@ class SolutionTest {
         equations.add(e1);
         equations.add(e2);
         double[] vals = {2.0, 3.0};
+        List<List<String>> queries = getLists();
+        double[] exp = {6.00000, 0.50000, -1.00000, 1.00000, -1.00000};
+        double[] res = solution.calcEquation(equations, vals, queries);
+        for (int i = 0; i <= exp.length-1; i++) {
+            assertEquals(exp[i], res[i]);
+        }
+    }
+    private static List<List<String>> getLists() {
         List<String> q1 = new ArrayList<>();
         q1.add("a");
         q1.add("c");
@@ -677,11 +685,7 @@ class SolutionTest {
         queries.add(q3);
         queries.add(q4);
         queries.add(q5);
-        double[] exp = {6.00000, 0.50000, -1.00000, 1.00000, -1.00000};
-        double[] res = solution.calcEquation(equations, vals, queries);
-        for (int i = 0; i <= exp.length-1; i++) {
-            assertEquals(exp[i], res[i]);
-        }
+        return queries;
     }
 
     @Test
