@@ -764,4 +764,14 @@ class SolutionTest {
         assertEquals(1, solution.totalNQueens(1));
         assertEquals(0, solution.totalNQueens(2));
     }
+
+    @Test
+    public void testWS() {
+        Solution solution = new Solution();
+        char[][] b1 = new char[][] {{'A', 'B', 'C', 'E'},
+                {'S', 'F', 'C', 'S'},
+                {'A', 'D', 'E', 'E'}};
+        String w1 = "ABCCED";
+        assertTrue(solution.exist(b1, w1));
+    }
 }

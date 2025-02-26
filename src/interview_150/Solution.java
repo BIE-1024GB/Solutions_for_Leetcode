@@ -3123,4 +3123,57 @@ public class Solution {
         }
         return result;
     }
+
+    private boolean backtrack(int pos, int r, int c, String w, char[][] b, int[][] m) {
+        if (r >= 1 && m[r-1][c] != 1) {
+            if (b[r-1][c] == w.charAt(pos)) {
+                m[r-1][c] = 1;
+                if (pos == w.length()-1) return true;
+                if (backtrack(pos+1, r-1, c, w, b, m)) return true;
+                m[r-1][c] = 0;
+            }
+        }
+        if (c <= b[0].length-2 && m[r][c+1] != 1) {
+            if (b[r][c+1] == w.charAt(pos)) {
+                m[r][c+1] = 1;
+                if (pos == w.length()-1) return true;
+                if (backtrack(pos+1, r, c+1, w, b, m)) return true;
+                m[r][c+1] = 0;
+            }
+        }
+        if (r <= b.length-2 && m[r+1][c] != 1) {
+            if (b[r+1][c] == w.charAt(pos)) {
+                m[r+1][c] = 1;
+                if (pos == w.length()-1) return true;
+                if (backtrack(pos+1, r+1, c, w, b, m)) return true;
+                m[r+1][c] = 0;
+            }
+        }
+        if (c >= 1 && m[r][c-1] != 1) {
+            if (b[r][c-1] == w.charAt(pos)) {
+                m[r][c-1] = 1;
+                if (pos == w.length()-1) return true;
+                if (backtrack(pos+1, r, c-1, w, b, m)) return true;
+                m[r][c-1] = 0;
+            }
+        }
+        return false;
+    }
+    public boolean exist(char[][] board, String word) {
+        int m = board.length;
+        int n = board[0].length;
+        if (m*n < word.length()) return false;
+        int[][] visit = new int[m][n];
+        for (int i = 0; i <= m-1; i++) {
+            for (int j = 0; j <= n-1; j++) {
+                if (board[i][j] == word.charAt(0)) {
+                    if (word.length() == 1) return true;
+                    visit[i][j] = 1;
+                    if (backtrack(1, i, j, word, board, visit)) return true;
+                    visit[i][j] = 0;
+                }
+            }
+        }
+        return false;
+    }
 }
