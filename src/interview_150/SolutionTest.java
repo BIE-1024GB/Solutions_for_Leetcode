@@ -743,21 +743,6 @@ class SolutionTest {
     }
 
     @Test
-    public void testComb() {
-        Solution solution = new Solution();
-        List<List<Integer>> l1 = solution.combine(4, 2);
-        for (List<Integer> li: l1) System.out.println(li.toString());
-    }
-
-    @Test
-    public void testPerm() {
-        Solution solution = new Solution();
-        int[] n1 = new int[] {1, 2, 3};
-        List<List<Integer>> lists = solution.permute(n1);
-        for (List<Integer> list: lists) System.out.println(list.toString());
-    }
-
-    @Test
     public void testQueen() {
         Solution solution = new Solution();
         assertEquals(2, solution.totalNQueens(4));
@@ -773,5 +758,21 @@ class SolutionTest {
                 {'A', 'D', 'E', 'E'}};
         String w1 = "ABCCED";
         assertTrue(solution.exist(b1, w1));
+    }
+
+    @Test
+    public void testSort() {
+        Solution.ListNode l1 = new Solution.ListNode(4);
+        Solution.ListNode l2 = new Solution.ListNode(2);
+        Solution.ListNode l3 = new Solution.ListNode(1);
+        Solution.ListNode l4 = new Solution.ListNode(3);
+        l1.next = l2;
+        l2.next = l3;
+        l3.next = l4;
+        Solution.ListNode rl = l1.sortList(l1);
+        assertEquals(1, rl.val);
+        assertEquals(2, rl.next.val);
+        assertEquals(3, rl.next.next.val);
+        assertEquals(4, rl.next.next.next.val);
     }
 }

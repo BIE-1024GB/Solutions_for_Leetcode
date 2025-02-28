@@ -42,3 +42,5 @@ Java strictly observes "pass by value".
 Java allows variable length of arguments(varargs):
     eg.: int... n
         note: at most one varargs is allowed, which should be put at the back of arguments list
+
+In multi-level inheritance, a child can only access its direct parent("super.super" is not allowed).

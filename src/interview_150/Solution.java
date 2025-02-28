@@ -1641,6 +1641,9 @@ public class Solution {
         int val;
         ListNode next;
 
+        ListNode() {
+
+        }
         ListNode(int x) {
             val = x;
             next = null;
@@ -1928,6 +1931,35 @@ public class Solution {
             }
             s1.next = null;
             return head;
+        }
+
+        public ListNode sortList(ListNode head) {
+            if (head == null || head.next == null) return head;
+            ListNode f = head;
+            ListNode s = head;
+            while (f.next != null && f.next.next != null) {
+                f = f.next.next;
+                s = s.next;
+            }
+            ListNode mid = s.next;
+            s.next = null;
+            ListNode l = sortList(head);
+            ListNode r = sortList(mid);
+            ListNode eh = new ListNode();
+            ListNode th = eh;
+            while (l != null && r != null) {
+                if (l.val < r.val) {
+                    th.next = l;
+                    th = th.next;
+                    l = l.next;
+                } else {
+                    th.next = r;
+                    th = th.next;
+                    r = r.next;
+                }
+            }
+            th.next = (l == null) ? r : l;
+            return eh.next;
         }
     }
 
@@ -2476,6 +2508,17 @@ public class Solution {
             // Use an array to hold the previous node during in-order traversal
             TreeNode[] prev = new TreeNode[1];
             return isValidBSTHelper(root, prev);
+        }
+
+        public TreeNode sortedArrayToBST(int[] nums) {
+            if (nums.length == 1) return new TreeNode(nums[0]);
+            int top = nums.length/2;
+            int[] left = new int[top];
+            System.arraycopy(nums, 0, left, 0, top);  // System.arraycopy(): built-in method, generally lower overhead than using a 'for' loop
+            if (nums.length == 2) return new TreeNode(nums[top], sortedArrayToBST(left), null);
+            int[] right = new int[nums.length-top-1];
+            System.arraycopy(nums, top+1, right, 0, nums.length-top-1);
+            return new TreeNode(nums[top], sortedArrayToBST(left), sortedArrayToBST(right));
         }
     }
 
