@@ -3219,4 +3219,59 @@ public class Solution {
         }
         return false;
     }
+
+    static class QNode {
+        public boolean val;
+        public boolean isLeaf;
+        public QNode topLeft;
+        public QNode topRight;
+        public QNode bottomLeft;
+        public QNode bottomRight;
+
+        public QNode(boolean val, boolean isLeaf) {
+            this.val = val;
+            this.isLeaf = isLeaf;
+            this.topLeft = null;
+            this.topRight = null;
+            this.bottomLeft = null;
+            this.bottomRight = null;
+        }
+        public QNode(boolean val, boolean isLeaf, QNode topLeft, QNode topRight, QNode bottomLeft, QNode bottomRight) {
+            this.val = val;
+            this.isLeaf = isLeaf;
+            this.topLeft = topLeft;
+            this.topRight = topRight;
+            this.bottomLeft = bottomLeft;
+            this.bottomRight = bottomRight;
+        }
+
+        public QNode construct(int[][] grid) {
+            if (grid.length == 1) return new QNode(grid[0][0] == 1, true);
+            int flag = grid[0][0];
+            boolean ini = true;
+            for (int i = 0; i <= grid.length - 1; i++) {
+                for (int j = 0; j <= grid[0].length - 1; j++) {
+                    if (grid[i][j] != flag) {
+                        ini = false;
+                        break;
+                    }
+                }
+            }
+            if (ini) return new QNode(grid[0][0] == 1, true);
+            int nl = grid.length / 2;
+            int[][] tl = new int[nl][nl];
+            int[][] tr = new int[nl][nl];
+            int[][] bl = new int[nl][nl];
+            int[][] br = new int[nl][nl];
+            for (int m = 0; m <= nl - 1; m++) {
+                for (int n = 0; n <= nl - 1; n++) {
+                    tl[m][n] = grid[m][n];
+                    tr[m][n] = grid[m][n + nl];
+                    bl[m][n] = grid[m + nl][n];
+                    br[m][n] = grid[m + nl][n + nl];
+                }
+            }
+            return new QNode(true, false, construct(tl), construct(tr), construct(bl), construct(br));
+        }
+    }
 }

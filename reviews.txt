@@ -26,7 +26,7 @@ Java access modifiers:
         Note: A overriding member's modifier in the derived class CANNOT be changed to more restrictive ones.
 
 Java compiler will choose the most specific method in case of overloading. If more than one can be chosen, the compiler
-will give an error.
+will give an error. The signatures must be different. Exception type does not count in the signature.
 
 Integer prefix: "0": base 8;
                 "0x": base 16;
@@ -44,3 +44,5 @@ Java allows variable length of arguments(varargs):
         note: at most one varargs is allowed, which should be put at the back of arguments list
 
 In multi-level inheritance, a child can only access its direct parent("super.super" is not allowed).
+
+Converting from a bigger data type to a smaller data type is not allowed in java, eg: double->int. Compilation error will be raised.
