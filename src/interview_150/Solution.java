@@ -1961,6 +1961,33 @@ public class Solution {
             th.next = (l == null) ? r : l;
             return eh.next;
         }
+
+        public ListNode mergeKLists(ListNode[] lists) {
+            if (lists.length == 0) return null;
+            if (lists.length == 1) return lists[0];
+            int ll = lists.length/2;
+            ListNode[] lp = new ListNode[ll];
+            ListNode[] rp = new ListNode[lists.length-ll];
+            System.arraycopy(lists, 0, lp, 0, ll);
+            System.arraycopy(lists, ll, rp, 0, lists.length-ll);
+            ListNode ln = mergeKLists(lp);
+            ListNode rn = mergeKLists(rp);
+            if (ln == null || rn == null) return (ln == null) ? rn : ln;
+            ListNode head = new ListNode();
+            ListNode curr = head;
+            while (ln != null && rn != null) {
+                if (ln.val <= rn.val) {
+                    curr.next = ln;
+                    ln = ln.next;
+                } else {
+                    curr.next = rn;
+                    rn = rn.next;
+                }
+                curr = curr.next;
+            }
+            curr.next = (ln == null) ? rn : ln;
+            return head.next;
+        }
     }
 
     static class Node {
