@@ -1963,6 +1963,7 @@ public class Solution {
         }
 
         public ListNode mergeKLists(ListNode[] lists) {
+            // Time complexity: O(N*log(k))  N: total number of nodes  k: number of linked lists
             if (lists.length == 0) return null;
             if (lists.length == 1) return lists[0];
             int ll = lists.length/2;
@@ -3300,5 +3301,56 @@ public class Solution {
             }
             return new QNode(true, false, construct(tl), construct(tr), construct(bl), construct(br));
         }
+    }
+
+    public int maxSubArray(int[] nums) {
+        // Kadane's algorithm
+        // Time complexity: O(n)
+        if (nums.length == 1)
+            return nums[0];
+        int ms = nums[0];
+        int cm = ms;
+        for (int i = 1; i <= nums.length - 1; i++) {
+            cm = Math.max(cm + nums[i], nums[i]);
+            if (cm > ms)
+                ms = cm;
+        }
+        return ms;
+    }
+
+    private int msKadane(int[] n) {
+        int ms = n[0];
+        int cm = ms;
+        for (int i = 1; i <= n.length-1; i++) {
+            cm = Math.max(cm+n[i], n[i]);
+            if (cm > ms) ms = cm;
+        }
+        return ms;
+    }
+    public int maxSubarraySumCircular(int[] nums) {
+        if (nums.length == 1) return nums[0];
+        // Edge case: all elements are negative
+        boolean allnega = true;
+        for (int n: nums) {
+            if (n >= 0) {
+                allnega = false;
+                break;
+            }
+        }
+        if (allnega) {
+            int mn = nums[0];
+            for (int n: nums) mn = Math.max(mn, n);
+            return mn;
+        }
+        // Kadane's algorithm in a circular array
+        int mcs = msKadane(nums);
+        int[] inv = new int[nums.length];
+        for (int i = 0; i <= nums.length-1; i++) inv[i] = -nums[i];
+        int mins = -msKadane(inv);    // minimum sum of a subarray = negative of the maximum sum in the inverted array
+        int total = 0;
+        for (int i = 0; i <= nums.length-1; i++) total += nums[i];
+        // If the maximum is obtained in a circular subarray, its sum will be (total sum of the array-minimum sum of a subarray).
+        mcs = Math.max(mcs, total-mins);
+        return mcs;
     }
 }

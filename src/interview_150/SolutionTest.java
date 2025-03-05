@@ -775,4 +775,15 @@ class SolutionTest {
         assertEquals(3, rl.next.next.val);
         assertEquals(4, rl.next.next.next.val);
     }
+
+    @Test
+    public void testCircKadane() {
+        Solution solution = new Solution();
+        int[] n1 = new int[]{5, 5, 3};
+        assertEquals(13, solution.maxSubarraySumCircular(n1));
+        int[] n2 = new int[]{5, -3, 5};
+        assertEquals(10, solution.maxSubarraySumCircular(n2));
+        int[] n3 = new int[]{-3, -9, -6};
+        assertEquals(-3, solution.maxSubarraySumCircular(n3));
+    }
 }
