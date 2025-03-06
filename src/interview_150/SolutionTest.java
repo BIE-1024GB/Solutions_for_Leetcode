@@ -786,4 +786,20 @@ class SolutionTest {
         int[] n3 = new int[]{-3, -9, -6};
         assertEquals(-3, solution.maxSubarraySumCircular(n3));
     }
+
+    @Test
+    public void testBS() {
+        Solution solution = new Solution();
+        int[] n1 = new int[] {1, 3, 5, 6};
+        int t1 = 5;
+        int t2 = 2;
+        int t3 = 7;
+        int t4 = 1;
+        int t5 = 6;
+        assertEquals(2, solution.searchInsert(n1, t1));
+        assertEquals(1, solution.searchInsert(n1, t2));
+        assertEquals(4, solution.searchInsert(n1, t3));
+        assertEquals(0, solution.searchInsert(n1, t4));
+        assertEquals(3, solution.searchInsert(n1, t5));
+    }
 }

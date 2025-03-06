@@ -3353,4 +3353,41 @@ public class Solution {
         mcs = Math.max(mcs, total-mins);
         return mcs;
     }
+
+    public int searchInsert(int[] nums, int target) {
+        // Standard binary search
+        int lp = 0;
+        int rp = nums.length-1;
+        while (lp <= rp) {
+            int mid = (lp+rp)/2;
+            if (nums[mid] == target) {
+                return mid;
+            } else if (target > nums[mid]) {
+                lp = mid+1;
+            } else {
+                rp = mid-1;
+            }
+        }
+        return lp;
+    }
+
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int lp = 0;
+        int rp = m*n-1;
+        while (lp <= rp) {
+            int mid = (lp+rp)/2;
+            int r = mid/n;
+            int c = mid%n;
+            if (matrix[r][c] == target) {
+                return true;
+            } else if (target > matrix[r][c]) {
+                lp = mid+1;
+            } else {
+                rp = mid-1;
+            }
+        }
+        return false;
+    }
 }
