@@ -3390,4 +3390,50 @@ public class Solution {
         }
         return false;
     }
+
+    public int findPeakElement(int[] nums) {
+        int lp = 0;
+        int rp = nums.length-1;
+        while (lp < rp) {
+            int mid = (lp+rp)/2;
+            if (nums[mid] > nums[mid+1]) {
+                rp = mid;
+            } else {
+                lp = mid+1;
+            }
+        }
+        return lp;
+    }
+
+    public int search(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            // Check if mid is the target
+            if (nums[mid] == target) {
+                return mid;
+            }
+            // Determine which part is sorted
+            if (nums[left] <= nums[mid]) { // Left part is sorted
+                if (nums[left] <= target && target < nums[mid]) {
+                    // Target is in the left sorted part
+                    right = mid - 1;
+                } else {
+                    // Target is in the right part
+                    left = mid + 1;
+                }
+            } else { // Right part is sorted
+                if (nums[mid] < target && target <= nums[right]) {
+                    // Target is in the right sorted part
+                    left = mid + 1;
+                } else {
+                    // Target is in the left part
+                    right = mid - 1;
+                }
+            }
+        }
+        // Target is not found
+        return -1;
+    }
 }
