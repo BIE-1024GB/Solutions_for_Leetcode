@@ -802,4 +802,11 @@ class SolutionTest {
         assertEquals(0, solution.searchInsert(n1, t4));
         assertEquals(3, solution.searchInsert(n1, t5));
     }
+
+    @Test
+    public void testMin() {
+        Solution solution = new Solution();
+        int[] n1 = new int[] {5, 1, 2, 3, 4};
+        assertEquals(1, solution.findMin(n1));
+    }
 }
