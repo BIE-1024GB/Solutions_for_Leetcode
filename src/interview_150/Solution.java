@@ -3512,4 +3512,58 @@ public class Solution {
         }
         return Math.min(nums[lp], nums[rp]);
     }
+
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        if (nums1.length == 0 || nums2.length == 0) {
+            if (nums1.length == 0) {
+                if (nums2.length % 2 == 0) {
+                    return ((double) nums2[(nums2.length - 1) / 2] + nums2[(nums2.length - 1) / 2 + 1]) / 2;
+                } else {
+                    return nums2[(nums2.length - 1) / 2];
+                }
+            } else {
+                if (nums1.length % 2 == 0) {
+                    return ((double) nums1[(nums1.length - 1) / 2] + nums1[(nums1.length - 1) / 2 + 1]) / 2;
+                } else {
+                    return nums1[(nums1.length - 1) / 2];
+                }
+            }
+        }
+        if (nums1.length > nums2.length) {
+            return findMedianSortedArrays(nums2, nums1);
+        }
+        int lp = 0;
+        int rp = nums1.length;
+        while (lp <= rp) {
+            int p1 = (lp + rp) / 2;
+            int p2 = (nums1.length + nums2.length + 1) / 2 - p1;
+            int lmax1 = (p1 == 0) ? Integer.MIN_VALUE : nums1[p1 - 1];
+            int rmin1 = (p1 == nums1.length) ? Integer.MAX_VALUE : nums1[p1];
+            int lmax2 = (p2 == 0) ? Integer.MIN_VALUE : nums2[p2 - 1];
+            int rmin2 = (p2 == nums2.length) ? Integer.MAX_VALUE : nums2[p2];
+            if (lmax1 <= rmin2 && lmax2 <= rmin1) {
+                if ((nums1.length + nums2.length) % 2 == 0) {
+                    return ((double) Math.max(lmax1, lmax2) + Math.min(rmin1, rmin2)) / 2;
+                } else {
+                    return Math.max(lmax1, lmax2);
+                }
+            } else if (lmax1 > rmin2) {
+                rp = p1 - 1;
+            } else {
+                lp = p1 + 1;
+            }
+        }
+        return -1;
+    }
+
+    public int findKthLargest(int[] nums, int k) {
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+        for (int n : nums) {
+            minHeap.add(n);
+            if (minHeap.size() > k) {
+                minHeap.poll();
+            }
+        }
+        return minHeap.peek();
+    }
 }

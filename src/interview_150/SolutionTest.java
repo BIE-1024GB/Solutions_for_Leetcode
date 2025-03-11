@@ -809,4 +809,22 @@ class SolutionTest {
         int[] n1 = new int[] {5, 1, 2, 3, 4};
         assertEquals(1, solution.findMin(n1));
     }
+
+    @Test
+    public void testMedian() {
+        Solution solution = new Solution();
+        int[] n1 = new int[]{1, 3};
+        int[] n2 = new int[]{2};
+        assertEquals(2.00000, solution.findMedianSortedArrays(n1, n2));
+        int[] n3 = new int[]{1, 3};
+        int[] n4 = new int[]{2, 4};
+        assertEquals(2.50000, solution.findMedianSortedArrays(n3, n4));
+    }
+
+    @Test
+    public void testMinHeap() {
+        Solution solution = new Solution();
+        int[] n1 = new int[]{3, 2, 1, 5, 6, 4};
+        assertEquals(5, solution.findKthLargest(n1, 2));
+    }
 }
