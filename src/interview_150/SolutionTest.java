@@ -827,4 +827,12 @@ class SolutionTest {
         int[] n1 = new int[]{3, 2, 1, 5, 6, 4};
         assertEquals(5, solution.findKthLargest(n1, 2));
     }
+
+    @Test
+    public void testIPO() {
+        Solution solution = new Solution();
+        int[] p1 = new int[]{1, 2, 3};
+        int[] c1 = new int[]{0, 1, 2};
+        assertEquals(6, solution.findMaximizedCapital(3, 0, p1, c1));
+    }
 }

@@ -3559,11 +3559,47 @@ public class Solution {
     public int findKthLargest(int[] nums, int k) {
         PriorityQueue<Integer> minHeap = new PriorityQueue<>();
         for (int n : nums) {
-            minHeap.add(n);
+            minHeap.offer(n);
             if (minHeap.size() > k) {
                 minHeap.poll();
             }
         }
         return minHeap.peek();
+    }
+
+    static class Project {
+        int profit;
+        int capital;
+
+        Project(int profit, int capital) {
+            this.profit = profit;
+            this.capital = capital;
+        }
+    }
+    public int findMaximizedCapital(int k, int w, int[] profits, int[] capital) {
+        Project[] projects = new Project[profits.length];
+        for (int i = 0; i < profits.length; i++) {
+            projects[i] = new Project(profits[i], capital[i]);
+        }
+        // Sort projects(min to max) by capital required
+        Arrays.sort(projects, (a, b) -> a.capital - b.capital);
+        // Max-heap to store profits of projects that can be done with current capital
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>((a, b) -> b - a);
+        int currentIndex = 0;
+        for (int i = 0; i < k; i++) {
+            // Add all projects that can be done with current capital to the max-heap
+            while (currentIndex < projects.length && projects[currentIndex].capital <= w) {
+                maxHeap.offer(projects[currentIndex].profit);
+                currentIndex++;
+            }
+            // If there are projects that can be done, pick the one with the highest profit
+            if (!maxHeap.isEmpty()) {
+                w += maxHeap.poll();
+            } else {
+                // If no projects can be done, break the loop
+                break;
+            }
+        }
+        return w;
     }
 }
