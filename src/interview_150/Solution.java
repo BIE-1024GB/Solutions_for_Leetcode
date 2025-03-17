@@ -3622,4 +3622,37 @@ public class Solution {
         }
         return result;
     }
+
+    static class MedianFinder {
+        private final PriorityQueue<Integer> maxHeap; // Max-heap for the smaller half
+        private final PriorityQueue<Integer> minHeap; // Min-heap for the larger half
+
+        public MedianFinder() {
+            maxHeap = new PriorityQueue<>((a, b) -> b - a);
+            minHeap = new PriorityQueue<>();
+        }
+
+        public void addNum(int num) {
+            // Add to max-heap first
+            maxHeap.offer(num);
+
+            // Move the largest element from max-heap to min-heap
+            minHeap.offer(maxHeap.poll());
+
+            // Balance the heaps if necessary
+            if (maxHeap.size() < minHeap.size()) {
+                maxHeap.offer(minHeap.poll());
+            }
+        }
+
+        public double findMedian() {
+            if (maxHeap.size() > minHeap.size()) {
+                // If the size of max-heap is greater, return the top of max-heap
+                return maxHeap.peek();
+            } else {
+                // If the sizes are equal, return the average of the tops of both heaps
+                return (maxHeap.peek() + minHeap.peek()) / 2.0;
+            }
+        }
+    }
 }

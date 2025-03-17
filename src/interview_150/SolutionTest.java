@@ -835,4 +835,17 @@ class SolutionTest {
         int[] c1 = new int[]{0, 1, 2};
         assertEquals(6, solution.findMaximizedCapital(3, 0, p1, c1));
     }
+
+    @Test
+    public void testMed() {
+        Solution.MedianFinder medianFinder = new Solution.MedianFinder();
+        medianFinder.addNum(-1);
+        medianFinder.addNum(-2);
+        medianFinder.addNum(-3);
+        assertEquals(-2.00000, medianFinder.findMedian());
+        medianFinder.addNum(-4);
+        assertEquals(-2.50000, medianFinder.findMedian());
+        medianFinder.addNum(-5);
+        assertEquals(-3.00000, medianFinder.findMedian());
+    }
 }
