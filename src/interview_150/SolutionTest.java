@@ -848,4 +848,16 @@ class SolutionTest {
         medianFinder.addNum(-5);
         assertEquals(-3.00000, medianFinder.findMedian());
     }
+
+    @Test
+    public void testBA() {
+        Solution solution = new Solution();
+        String a1 = "11";
+        String b1 = "1";
+        if (solution.addBinary(a1, b1).equals("100")) {
+            assertTrue(true);
+        } else {
+            assertTrue(false);
+        }
+    }
 }
