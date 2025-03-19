@@ -3679,4 +3679,27 @@ public class Solution {
         }
         return res;
     }
+
+    public int reverseBits(int n) {
+        int res = 0;
+        for (int i = 1; i <= 32; i++) {
+            int ls = n&1;    // extract the least significant bit
+            res = res<<1;
+            res = res|ls;
+            n = n>>1;
+        }
+        return res;
+    }
+
+    public int hammingWeight(int n) {
+        int sb = 0;
+        for (int i = 1; i <= 32; i++) {
+            int ls = n&1;
+            if (ls == 1) {
+                sb++;
+            }
+            n = n>>1;
+        }
+        return sb;
+    }
 }

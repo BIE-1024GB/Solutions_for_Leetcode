@@ -860,4 +860,18 @@ class SolutionTest {
             assertTrue(false);
         }
     }
+
+    @Test
+    public void testBR() {
+        Solution solution = new Solution();
+        int n1 = 0b00000010100101000001111010011100;
+        assertEquals(964176192, solution.reverseBits(n1));
+    }
+
+    @Test
+    public void testHW() {
+        Solution solution = new Solution();
+        int n1 = 128;
+        assertEquals(1, solution.hammingWeight(n1));
+    }
 }
