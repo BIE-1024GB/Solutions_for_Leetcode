@@ -3702,4 +3702,15 @@ public class Solution {
         }
         return sb;
     }
+
+    public int singleNumber(int[] nums) {
+        if (nums.length == 1) {
+            return nums[0];
+        }
+        int res = 0;
+        for (int n: nums) {
+            res = res^n;    // ^: bitwise XOR, a^a=0, a^0=a, both commutative and associative
+        }
+        return res;
+    }
 }

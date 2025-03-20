@@ -874,4 +874,13 @@ class SolutionTest {
         int n1 = 128;
         assertEquals(1, solution.hammingWeight(n1));
     }
+
+    @Test
+    public void testSN() {
+        Solution solution = new Solution();
+        int[] n1 = new int[]{4};
+        assertEquals(4, solution.singleNumber(n1));
+        int[] n2 = new int[]{3, 4, 7, 4, 3};
+        assertEquals(7, solution.singleNumber(n2));
+    }
 }
