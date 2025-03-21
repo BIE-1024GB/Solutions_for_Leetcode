@@ -3713,4 +3713,14 @@ public class Solution {
         }
         return res;
     }
+
+    public int singleNumber2(int[] nums) {
+        int p1 = 0;
+        int p2 = 0;
+        for (int n: nums) {
+            p1 = (p1^n)&(~p2);
+            p2 = (p2^n)&(~p1);
+        }
+        return p1;
+    }
 }
