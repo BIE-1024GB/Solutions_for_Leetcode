@@ -3723,4 +3723,15 @@ public class Solution {
         }
         return p1;
     }
+
+    public int rangeBitwiseAnd(int left, int right) {
+        if (left == right) {
+            return left;
+        }
+        int res = right;
+        while (res > left) {
+            res = res&(res-1);
+        }
+        return res;
+    }
 }

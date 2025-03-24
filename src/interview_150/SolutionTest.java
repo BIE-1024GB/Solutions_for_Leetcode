@@ -890,4 +890,12 @@ class SolutionTest {
         int[] n1 = new int[]{2, 2, 3, 2};
         assertEquals(3, solution.singleNumber2(n1));
     }
+
+    @Test
+    public void testAR() {
+        Solution solution = new Solution();
+        int l1 = 1;
+        int r1 = 2147483647;
+        assertEquals(0, solution.rangeBitwiseAnd(l1, r1));
+    }
 }
