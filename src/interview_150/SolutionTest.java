@@ -898,4 +898,11 @@ class SolutionTest {
         int r1 = 2147483647;
         assertEquals(0, solution.rangeBitwiseAnd(l1, r1));
     }
+
+    @Test
+    public void testPalinInt() {
+        Solution solution = new Solution();
+        assertFalse(solution.isPalindrome(-55));
+        assertTrue(solution.isPalindrome(1001));
+    }
 }

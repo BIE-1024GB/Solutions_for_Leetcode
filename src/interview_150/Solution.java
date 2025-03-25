@@ -3734,4 +3734,45 @@ public class Solution {
         }
         return res;
     }
+
+    public boolean isPalindrome(int x) {
+        if (x < 0) {
+            return false;
+        }
+        int origin = x;
+        int rev = 0;
+        while (x > 0) {
+            int d = x%10;
+            rev = rev*10+d;
+            x /= 10;
+        }
+        return origin == rev;
+    }
+
+    public int[] plusOne(int[] digits) {
+        ArrayList<Integer> pd = new ArrayList<>();
+        int carry = 0;
+        for (int i = digits.length-1; i >= 0; i--) {
+            int add = digits[i];
+            if (i == digits.length-1) {
+                add += 1;
+            }
+            add += carry;
+            if (add >= 10) {
+                pd.addFirst(add-10);
+                carry = 1;
+            } else {
+                pd.addFirst(add);
+                carry = 0;
+            }
+        }
+        if (carry == 1) {
+            pd.addFirst(1);
+        }
+        int[] res = new int[pd.size()];
+        for (int j = 0; j <= pd.size()-1; j++) {
+            res[j] = pd.get(j);
+        }
+        return res;
+    }
 }
