@@ -3741,7 +3741,7 @@ public class Solution {
         }
         int origin = x;
         int rev = 0;
-        while (x > 0) {
+        while (x > 0) {           // reverse the number and compare
             int d = x%10;
             rev = rev*10+d;
             x /= 10;
@@ -3774,5 +3774,23 @@ public class Solution {
             res[j] = pd.get(j);
         }
         return res;
+    }
+
+    public int trailingZeroes(int n) {
+        // number of trailing zeroes = number of factors of 10=2*5, thresholded by the number of factors of 5
+        int z = 0;
+        while (n >= 5) {    // count the total number of factors of 5 from 1 to n
+            n /= 5;
+            z += n;
+        }
+        return z;
+    }
+
+    public int mySqrt(int x) {
+        int s = 1;
+        while (s <= (x/s)) {
+            s++;
+        }
+        return s-1;
     }
 }

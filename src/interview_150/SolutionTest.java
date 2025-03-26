@@ -905,4 +905,16 @@ class SolutionTest {
         assertFalse(solution.isPalindrome(-55));
         assertTrue(solution.isPalindrome(1001));
     }
+
+    @Test
+    public void testFactZero() {
+        Solution solution = new Solution();
+        assertEquals(7, solution.trailingZeroes(30));
+    }
+
+    @Test
+    public void testSQRT() {
+        Solution solution = new Solution();
+        assertEquals(46340, solution.mySqrt(2147395600));
+    }
 }
