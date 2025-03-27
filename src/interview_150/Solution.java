@@ -3793,4 +3793,33 @@ public class Solution {
         }
         return s-1;
     }
+
+    public double myPow(double x, int n) {
+        if (x == 0.00000) {
+            return 0.00000;
+        }
+        if (n == 0 || x == 1.00000) {
+            return 1.00000;
+        }
+        if (n == 1) {
+            return x;
+        }
+        if (n == -1) {
+            return 1/x;
+        }
+        double medi = myPow(x, n/2);
+        if (n > 0) {
+            if (n%2 == 0) {
+                return medi*medi;
+            } else {
+                return medi*medi*x;
+            }
+        } else {
+            if (n%2 == 0) {
+                return medi*medi;
+            } else {
+                return medi*medi*(1/x);
+            }
+        }
+    }
 }

@@ -917,4 +917,10 @@ class SolutionTest {
         Solution solution = new Solution();
         assertEquals(46340, solution.mySqrt(2147395600));
     }
+
+    @Test
+    public void testPOW() {
+        Solution solution = new Solution();
+        assertEquals(Math.pow(2.0, -2147483647.0), solution.myPow(2.0, -2147483647));
+    }
 }
