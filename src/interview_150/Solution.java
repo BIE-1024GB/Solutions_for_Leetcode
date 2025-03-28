@@ -3822,4 +3822,38 @@ public class Solution {
             }
         }
     }
+
+    public int maxPoints(int[][] points) {
+        // Note: can be optimized to O(N^2) time complexity, 'double' may not be appliable
+        if (points.length <= 2)
+            return points.length;
+        int ba = 0;
+        for (int i = 0; i <= points.length - 2; i++) {
+            for (int j = i + 1; j <= points.length - 1; j++) {
+                int add = 0;
+                int[] p1 = points[i];
+                int[] p2 = points[j];
+                if (p1[0] != p2[0]) {
+                    double slope = ((double) p2[1] - (double) p1[1]) / ((double) p2[0] - (double) p1[0]);
+                    for (int n = 0; n <= points.length - 1; n++) {
+                        if (n != i && n != j && points[n][0] != p1[0]) {
+                            double s = ((double) points[n][1] - (double) p1[1]) / ((double) points[n][0] - (double) p1[0]);
+                            if (s == slope)
+                                add += 1;
+                        }
+                    }
+                } else {
+                    for (int n = 0; n <= points.length - 1; n++) {
+                        if (n != i && n != j) {
+                            if (points[n][0] == p1[0])
+                                add += 1;
+                        }
+                    }
+                }
+                if (add > ba)
+                    ba = add;
+            }
+        }
+        return ba + 2;
+    }
 }

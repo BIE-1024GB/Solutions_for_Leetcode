@@ -923,4 +923,18 @@ class SolutionTest {
         Solution solution = new Solution();
         assertEquals(Math.pow(2.0, -2147483647.0), solution.myPow(2.0, -2147483647));
     }
+
+    @Test
+    public void testLinePoints() {
+        Solution solution = new Solution();
+        int[][] p1 = new int[][]{
+                {1, 1},
+                {3, 2},
+                {5, 3},
+                {4, 1},
+                {2, 3},
+                {1, 4}
+        };
+        assertEquals(4, solution.maxPoints(p1));
+    }
 }
