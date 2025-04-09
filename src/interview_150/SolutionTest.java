@@ -937,4 +937,17 @@ class SolutionTest {
         };
         assertEquals(4, solution.maxPoints(p1));
     }
+
+    @Test
+    public void testStair() {
+        Solution solution = new Solution();
+        assertEquals(3, solution.climbStairs(3));
+    }
+
+    @Test
+    public void testRob() {
+        Solution solution = new Solution();
+        int[] h1 = new int[] {2, 7, 9, 3, 1};
+        assertEquals(12, solution.rob(h1));
+    }
 }
