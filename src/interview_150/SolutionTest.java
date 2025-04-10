@@ -950,4 +950,17 @@ class SolutionTest {
         int[] h1 = new int[] {2, 7, 9, 3, 1};
         assertEquals(12, solution.rob(h1));
     }
+
+    @Test
+    public void testSeg() {
+        Solution solution = new Solution();
+        String s1 = "catsandog";
+        List<String> d1 = new ArrayList<>();
+        d1.add("cats");
+        d1.add("dog");
+        d1.add("sand");
+        d1.add("and");
+        d1.add("cat");
+        assertFalse(solution.wordBreak(s1, d1));
+    }
 }

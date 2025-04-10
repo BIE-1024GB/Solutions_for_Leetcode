@@ -3882,4 +3882,21 @@ public class Solution {
         }
         return dp[dp.length-1];
     }
+
+    public boolean wordBreak(String s, List<String> wordDict) {
+        HashSet<String> set = new HashSet<>(wordDict);
+        boolean[] dp = new boolean[s.length()+1];
+        dp[0] = true;
+        for (int i = 1; i <= dp.length-1; i++) {
+            for (int j = 0; j <= i-1; j++) {
+                if (dp[j]) {
+                    if (set.contains(s.substring(j, i))) {
+                        dp[i] = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return dp[dp.length-1];
+    }
 }
