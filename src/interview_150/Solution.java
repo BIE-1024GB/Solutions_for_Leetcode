@@ -3921,6 +3921,7 @@ public class Solution {
     }
 
     public int lengthOfLIS(int[] nums) {
+        // Note: optimal solution available: dynamic programming+binary search -> O(nlog(n)) time complexity
         if (nums.length == 1) return 1;
         int[] dp = new int[nums.length];
         dp[0] = 1;
