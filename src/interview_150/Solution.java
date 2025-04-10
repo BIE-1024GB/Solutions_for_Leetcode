@@ -3899,4 +3899,47 @@ public class Solution {
         }
         return dp[dp.length-1];
     }
+
+    public int coinChange(int[] coins, int amount) {
+        if (amount == 0) return 0;
+        int[] dp = new int[amount+1];
+        for (int i = 1; i <= dp.length-1; i++) {
+            int mc = Integer.MAX_VALUE;
+            dp[i] = -1;
+            for (int c: coins) {
+                if (i-c >= 0) {
+                    if (dp[i-c] != -1) {
+                        if (dp[i-c]+1 < mc) {
+                            dp[i] = dp[i-c]+1;
+                            mc = dp[i-c]+1;
+                        }
+                    }
+                }
+            }
+        }
+        return dp[dp.length-1];
+    }
+
+    public int lengthOfLIS(int[] nums) {
+        if (nums.length == 1) return 1;
+        int[] dp = new int[nums.length];
+        dp[0] = 1;
+        int mlis = 1;
+        for (int i = 1; i <= dp.length-1; i++) {
+            int cv = nums[i];
+            int lis = 1;
+            for (int j = 0; j <= i-1; j++) {
+                if (nums[j] < cv) {
+                    if (dp[j]+1 > lis) {
+                        lis = dp[j]+1;
+                    }
+                }
+            }
+            dp[i] = lis;
+            if (lis > mlis) {
+                mlis = lis;
+            }
+        }
+        return mlis;
+    }
 }

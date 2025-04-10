@@ -963,4 +963,22 @@ class SolutionTest {
         d1.add("cat");
         assertFalse(solution.wordBreak(s1, d1));
     }
+
+    @Test
+    public void testCoins() {
+        Solution solution = new Solution();
+        int[] c1= new int[] {1, 2, 5};
+        int a1 = 11;
+        assertEquals(3, solution.coinChange(c1, a1));
+        int[] c2 = new int[] {1};
+        int a2 = 0;
+        assertEquals(0, solution.coinChange(c2, a2));
+    }
+
+    @Test
+    public void testLIS() {
+        Solution solution = new Solution();
+        int[] n1 = new int[] {10, 9, 2, 5, 3, 7, 101, 18};
+        assertEquals(4, solution.lengthOfLIS(n1));
+    }
 }
