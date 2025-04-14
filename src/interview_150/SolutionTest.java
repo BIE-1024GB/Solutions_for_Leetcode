@@ -854,11 +854,7 @@ class SolutionTest {
         Solution solution = new Solution();
         String a1 = "11";
         String b1 = "1";
-        if (solution.addBinary(a1, b1).equals("100")) {
-            assertTrue(true);
-        } else {
-            assertTrue(false);
-        }
+        assertEquals("100", solution.addBinary(a1, b1));
     }
 
     @Test

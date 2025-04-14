@@ -3946,10 +3946,10 @@ public class Solution {
 
     public int minimumTotal(List<List<Integer>> triangle) {
         // Standard 2D dynamic programming approach
-        if (triangle.size() == 1) return triangle.get(0).get(0);
+        if (triangle.size() == 1) return triangle.getFirst().getFirst();
         int s = triangle.size();
         int[][] dp = new int[s][s];
-        dp[0][0] = triangle.get(0).get(0);
+        dp[0][0] = triangle.getFirst().getFirst();
         int mps = Integer.MAX_VALUE;
         for (int i = 1; i <= s-1; i++) {
             for (int j = 0; j <= i; j++) {
