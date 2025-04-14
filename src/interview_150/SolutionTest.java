@@ -981,4 +981,34 @@ class SolutionTest {
         int[] n1 = new int[] {10, 9, 2, 5, 3, 7, 101, 18};
         assertEquals(4, solution.lengthOfLIS(n1));
     }
+
+    @Test
+    public void testTMPS() {
+        Solution solution = new Solution();
+        List<List<Integer>> lists = new ArrayList<>();
+        List<Integer> l10 = new ArrayList<>();
+        l10.add(2);
+        List<Integer> l11 = new ArrayList<>();
+        l11.add(3);
+        l11.add(4);
+        List<Integer> l12 = new ArrayList<>();
+        l12.add(6);
+        l12.add(5);
+        l12.add(7);
+        List<Integer> l13 = new ArrayList<>();
+        l13.add(4);
+        l13.add(1);
+        l13.add(8);
+        l13.add(3);
+        lists.add(l10);
+        lists.add(l11);
+        lists.add(l12);
+        lists.add(l13);
+        assertEquals(11, solution.minimumTotal(lists));
+        lists.clear();
+        List<Integer> l20 = new ArrayList<>();
+        l20.add(-10);
+        lists.add(l20);
+        assertEquals(-10, solution.minimumTotal(lists));
+    }
 }
