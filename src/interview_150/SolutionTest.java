@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Jiarui BIE
- * @version 1.0
+ * @version 1.1
  * @since 2024/6/25
  */
 class SolutionTest {
@@ -48,7 +48,7 @@ class SolutionTest {
     }
 
     @Test
-    void majorTest() {
+    void testMajor() {
         int[] sequence = new int[] {2, 2, 1, 1, 1, 2, 2};
         Solution solution = new Solution();
         assertEquals(2, solution.majorityElement(sequence));
@@ -57,7 +57,7 @@ class SolutionTest {
     }
 
     @Test
-    void rotateTest() {
+    void testRotate() {
         int[] sequence = new int[] {1,2,3,4,5,6,7};
         int[] result = new int[] {5,6,7,1,2,3,4};
         Solution solution = new Solution();
@@ -1017,5 +1017,20 @@ class SolutionTest {
                 {4, 2, 1}
         };
         assertEquals(7, solution.minPathSum(g1));
+    }
+
+    @Test
+    public void testUPwoO() {
+        Solution solution = new Solution();
+        int[][] g1 = new int[][] {
+                {0, 0, 0},
+                {0, 1, 0},
+                {0, 0, 0}
+        };
+        assertEquals(2, solution.uniquePathsWithObstacles(g1));
+        int[][] g2 = new int[][] {
+                {1, 0}
+        };
+        assertEquals(0, solution.uniquePathsWithObstacles(g2));
     }
 }

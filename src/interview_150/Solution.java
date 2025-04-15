@@ -3991,4 +3991,36 @@ public class Solution {
         }
         return dp[rows-1][columns-1];
     }
+
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        int rows = obstacleGrid.length;
+        int columns = obstacleGrid[0].length;
+        if (obstacleGrid[0][0] == 1 || obstacleGrid[rows-1][columns-1] == 1) return 0;
+        int[][] dp = new int[rows][columns];
+        dp[0][0] = 1;
+        for (int i = 0; i <= rows-1; i++) {
+            if (i == 0) {
+                for (int j = 1; j <= columns-1; j++) {
+                    if (obstacleGrid[i][j] == 1) {
+                        dp[i][j] = 0;
+                    } else {
+                        dp[i][j] = dp[i][j-1];
+                    }
+                }
+            } else {
+                for (int j = 0; j <= columns-1; j++) {
+                    if (obstacleGrid[i][j] == 1) {
+                        dp[i][j] = 0;
+                    } else {
+                        if (j == 0) {
+                            dp[i][j] = dp[i-1][j];
+                        } else {
+                            dp[i][j] = dp[i-1][j]+dp[i][j-1];
+                        }
+                    }
+                }
+            }
+        }
+        return dp[rows-1][columns-1];
+    }
 }
