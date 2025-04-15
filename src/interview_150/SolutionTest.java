@@ -1007,4 +1007,15 @@ class SolutionTest {
         lists.add(l20);
         assertEquals(-10, solution.minimumTotal(lists));
     }
+
+    @Test
+    public void testMPS() {
+        Solution solution = new Solution();
+        int[][] g1 = new int[][] {
+                {1, 3, 1},
+                {1, 5, 1},
+                {4, 2, 1}
+        };
+        assertEquals(7, solution.minPathSum(g1));
+    }
 }

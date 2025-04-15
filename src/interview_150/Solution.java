@@ -3969,4 +3969,26 @@ public class Solution {
         }
         return mps;
     }
+
+    public int minPathSum(int[][] grid) {
+        int rows = grid.length;
+        int columns = grid[0].length;
+        if (rows == 1 && columns == 1) return grid[0][0];
+        int[][] dp = new int[rows][columns];    // note: can also implement it in-place
+        dp[0][0] = grid[0][0];
+        for (int i = 0; i <= rows-1; i++) {
+            if (i == 0) {
+                for (int j = 1; j <= columns-1; j++) dp[i][j] = dp[i][j-1]+grid[i][j];
+            } else {
+                for (int j = 0; j <= columns-1; j++) {
+                    if (j == 0) {
+                        dp[i][j] = dp[i-1][j]+grid[i][j];
+                    } else {
+                        dp[i][j] = Math.min(dp[i-1][j], dp[i][j-1])+grid[i][j];
+                    }
+                }
+            }
+        }
+        return dp[rows-1][columns-1];
+    }
 }
