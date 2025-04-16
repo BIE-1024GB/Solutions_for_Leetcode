@@ -1033,4 +1033,22 @@ class SolutionTest {
         };
         assertEquals(0, solution.uniquePathsWithObstacles(g2));
     }
+
+    @Test
+    public void testLPL() {
+        Solution solution = new Solution();
+        String s1 = "aaaa";
+        assertEquals("aaaa", solution.longestPalindrome(s1));
+    }
+
+    @Test
+    public void testInterleave() {
+        Solution solution = new Solution();
+        String s1 = "aabcc";
+        String s2 = "dbbca";
+        String s3 = "aadbbcbcac";
+        assertTrue(solution.isInterleave(s1, s2, s3));
+        String s4 = "aadbbbaccc";
+        assertFalse(solution.isInterleave(s1, s2, s4));
+    }
 }

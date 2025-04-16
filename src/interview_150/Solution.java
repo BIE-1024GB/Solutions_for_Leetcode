@@ -4023,4 +4023,55 @@ public class Solution {
         }
         return dp[rows-1][columns-1];
     }
+
+    public String longestPalindrome(String s) {
+        int l = s.length();
+        if (l == 1) return s;
+        boolean[][] dp = new boolean[l][l];
+        for (int i = 0; i <= l-1; i++) dp[i][i] = true;
+        int lpl = 1;
+        String lp = s.substring(0, 1);
+        for (int i = 0; i <= l-2; i++) {
+            if (s.charAt(i) == s.charAt(i+1)) {
+                dp[i][i+1] = true;
+                if (2 > lpl) {
+                    lpl = 2;
+                    lp = s.substring(i, i+2);
+                }
+            }
+        }
+        for (int sl = 3; sl <= l; sl++) {
+            for (int i = 0; i <= l-sl; i++) {
+                if (s.charAt(i) == s.charAt(i+sl-1) && dp[i+1][i+sl-2]) {
+                    dp[i][i+sl-1] = true;
+                    if (sl > lpl) {
+                        lpl = sl;
+                        lp = s.substring(i, i+sl);
+                    }
+                }
+            }
+        }
+        return lp;
+    }
+
+    public boolean isInterleave(String s1, String s2, String s3) {
+        int len1 = s1.length(), len2 = s2.length(), len3 = s3.length();
+        // If the length of s3 is not equal to the sum of lengths of s1 and s2, return false
+        if (len1 + len2 != len3) return false;
+        boolean[][] dp = new boolean[len1 + 1][len2 + 1];
+        // Base case: both s1 and s2 are empty, s3 is also empty
+        dp[0][0] = true;
+        // Fill the first row (s1 is empty)
+        for (int j = 1; j <= len2; j++) dp[0][j] = dp[0][j - 1] && (s2.charAt(j - 1) == s3.charAt(j - 1));
+        // Fill the first column (s2 is empty)
+        for (int i = 1; i <= len1; i++) dp[i][0] = dp[i - 1][0] && (s1.charAt(i - 1) == s3.charAt(i - 1));
+        // Fill the rest of the DP table
+        for (int i = 1; i <= len1; i++) {
+            for (int j = 1; j <= len2; j++) {
+                dp[i][j] = (dp[i - 1][j] && (s1.charAt(i - 1) == s3.charAt(i + j - 1))) ||
+                        (dp[i][j - 1] && (s2.charAt(j - 1) == s3.charAt(i + j - 1)));
+            }
+        }
+        return dp[len1][len2];
+    }
 }
