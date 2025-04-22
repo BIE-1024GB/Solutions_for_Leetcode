@@ -1051,4 +1051,12 @@ class SolutionTest {
         String s4 = "aadbbbaccc";
         assertFalse(solution.isInterleave(s1, s2, s4));
     }
+
+    @Test
+    public void testED() {
+        Solution solution = new Solution();
+        String w1 = "intention";
+        String w2 = "execution";
+        assertEquals(5, solution.minDistance(w1, w2));
+    }
 }
