@@ -4091,4 +4091,20 @@ public class Solution {
         }
         return dp[word1.length()][word2.length()];
     }
+
+    public int maxProfit3(int[] prices) {
+        // Standard DP approach, may not be efficient(O(n) solution available)
+        if (prices.length == 1) return 0;
+        int[][] dp = new int[prices.length][3];
+        for (int i = 1; i <= prices.length-1; i++) {
+            for (int j = 1; j <= 2; j++) {
+                int mp = 0;
+                for (int k = 0; k <= i-1; k++) {
+                    mp = Math.max(mp, prices[i]-prices[k]+dp[k][j-1]);
+                }
+                dp[i][j] = Math.max(mp, dp[i-1][j]);
+            }
+        }
+        return dp[prices.length-1][2];
+    }
 }

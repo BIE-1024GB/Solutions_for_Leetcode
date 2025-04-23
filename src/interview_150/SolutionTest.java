@@ -1059,4 +1059,11 @@ class SolutionTest {
         String w2 = "execution";
         assertEquals(5, solution.minDistance(w1, w2));
     }
+
+    @Test
+    public void testStock() {
+        Solution solution = new Solution();
+        int[] p1 = new int[] {3, 3, 5, 0, 0, 3, 1, 4};
+        assertEquals(6, solution.maxProfit3(p1));
+    }
 }
