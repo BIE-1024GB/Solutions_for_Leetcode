@@ -1073,4 +1073,24 @@ class SolutionTest {
         int[] p1 = new int[] {3, 2, 6, 5, 0, 3};
         assertEquals(7, solution.maxProfit4(2, p1));
     }
+
+    @Test
+    public void testMaxSquare() {
+        Solution solution = new Solution();
+        char[][] m1 = new char[][] {
+                {'1', '1', '1', '1', '0'},
+                {'1', '1', '1', '1', '0'},
+                {'1', '1', '1', '1', '1'},
+                {'1', '1', '1', '1', '1'},
+                {'0', '0', '1', '1', '1'}
+        };
+        assertEquals(16, solution.maximalSquare(m1));
+        char[][] m2 = new char[][] {
+                {'0', '0', '0', '0', '0'},
+                {'0', '0', '0', '0', '0'},
+                {'0', '0', '0', '0', '1'},
+                {'0', '0', '0', '0', '0'}
+        };
+        assertEquals(1, solution.maximalSquare(m2));
+    }
 }

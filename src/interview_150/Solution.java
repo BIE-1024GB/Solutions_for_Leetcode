@@ -4120,4 +4120,38 @@ public class Solution {
         }
         return dp[prices.length-1][k];
     }
+
+    public int maximalSquare(char[][] matrix) {
+        int r = matrix.length;
+        int c = matrix[0].length;
+        int ms = 0;
+        int[][] dp = new int[r][c];
+        for (int j = 0; j <= c-1; j++) {
+            dp[0][j] = (matrix[0][j] == '1' ? 1 : 0);
+            if (dp[0][j] > ms) ms = dp[0][j];
+        }
+        for (int i = 0; i <= r-1; i++) {
+            dp[i][0] = (matrix[i][0] == '1' ? 1 : 0);
+            if (dp[i][0] > ms) ms = dp[i][0];
+        }
+        for (int i = 1; i <= r-1; i++) {
+            for (int j = 1; j <= c-1; j++) {
+                if (matrix[i][j] == '0') {
+                    dp[i][j] = 0;
+                } else {
+                    if (dp[i-1][j] == 0 || dp[i][j-1] == 0) {
+                        dp[i][j] = 1;
+                    } else {
+                        if (dp[i-1][j-1] == dp[i-1][j] && dp[i-1][j] == dp[i][j-1]) {
+                            dp[i][j] = dp[i-1][j-1]+1;
+                        } else {
+                            dp[i][j] = Math.min(dp[i-1][j-1], Math.min(dp[i-1][j], dp[i][j-1]))+1;
+                        }
+                    }
+                }
+                if (dp[i][j] > ms) ms = dp[i][j];
+            }
+        }
+        return ms*ms;
+    }
 }
