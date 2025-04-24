@@ -8,8 +8,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Jiarui BIE
- * @version 1.1
- * @since 2024/6/25
+ * @version 1.11
+ * @since 2024/06/25
  */
 class SolutionTest {
     @Test
