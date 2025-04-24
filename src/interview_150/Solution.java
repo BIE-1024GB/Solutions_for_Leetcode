@@ -907,23 +907,23 @@ public class Solution {
         int m = words.length;
         int w = words[0].length();
         HashMap<String, Integer> map = new HashMap<>();
-        for(String x: words)
-            map.put(x, map.getOrDefault(x, 0)+1);
-        for(int i=0; i<w; i++){
+        for (String x : words)
+            map.put(x, map.getOrDefault(x, 0) + 1);
+        for (int i = 0; i < w; i++) {
             HashMap<String, Integer> temp = new HashMap<>();
             int count = 0;
-            for(int j=i, k=i; j+w<=n; j=j+w){
-                String word = s.substring(j, j+w);
-                temp.put(word, temp.getOrDefault(word, 0)+1);
+            for (int j = i, k = i; j + w <= n; j = j + w) {
+                String word = s.substring(j, j + w);
+                temp.put(word, temp.getOrDefault(word, 0) + 1);
                 count++;
-                if(count==m){
-                    if(map.equals(temp)){
+                if (count == m) {
+                    if (map.equals(temp)) {
                         ans.add(k);
                     }
-                    String remove = s.substring(k, k+w);
+                    String remove = s.substring(k, k + w);
                     temp.computeIfPresent(remove, (a, b) -> (b > 1) ? b - 1 : null);
                     count--;
-                    k=k+w;
+                    k = k + w;
                 }
             }
         }
@@ -2174,7 +2174,6 @@ public class Solution {
             root.right = buildTreeHelper(preorder, preStart+leftSubtreeSize+1, preEnd, inorder, inorderRootIndex+1, inEnd, inorderIndexMap);
             return root;
         }
-
         public TreeNode buildTree(int[] preorder, int[] inorder) {
             // Preorder: root->left->right  Inorder: left->root->right
             // Create a map to store the index of each value in the inorder array
@@ -2199,7 +2198,6 @@ public class Solution {
             root.right = buildTreeHelper_II(postorder, postStart+leftSubtreeSize, postEnd-1, inorder, inorderRootIndex+1, inEnd, inorderIndexMap);
             return root;
         }
-
         public TreeNode buildTree_II(int[] inorder, int[] postorder) {
             // Postorder: left->right->root
             Map<Integer, Integer> inorderIndexMap = new HashMap<>();
@@ -4106,5 +4104,20 @@ public class Solution {
             }
         }
         return dp[prices.length-1][2];
+    }
+
+    public int maxProfit4(int k, int[] prices) {
+        if (prices.length == 1) return 0;
+        int[][] dp = new int[prices.length][k+1];
+        for (int i = 1; i <= prices.length-1; i++) {
+            for (int j = 1; j <= k; j++) {
+                int mp = 0;
+                for (int p = 0; p <= i-1; p++) {
+                    mp = Math.max(prices[i]-prices[p]+dp[p][j-1], mp);
+                }
+                dp[i][j] = Math.max(mp, dp[i-1][j]);
+            }
+        }
+        return dp[prices.length-1][k];
     }
 }
