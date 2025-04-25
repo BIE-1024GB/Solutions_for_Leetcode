@@ -25,4 +25,28 @@ public class Solution {
         }
         return sb.toString();
     }
+
+    private boolean isDivisor(String div, String str) {
+        if (str.length()%div.length() != 0) {
+            return false;
+        } else {
+            if (str.length() == div.length()) {
+                return str.equals(div);
+            } else {
+                return (div.equals(str.substring(0, div.length()))) && isDivisor(div, str.substring(div.length()));
+            }
+        }
+    }
+    public String gcdOfStrings(String str1, String str2) {
+        if (str1.length() > str2.length()) {
+            return gcdOfStrings(str2, str1);
+        } else {
+            String gcd = "";
+            for (int i = 1; i <= str1.length(); i++) {
+                String d = str1.substring(0, i);
+                if (isDivisor(d, str1) && isDivisor(d, str2)) gcd = d;
+            }
+            return gcd;
+        }
+    }
 }

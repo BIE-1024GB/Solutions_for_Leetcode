@@ -19,4 +19,12 @@ public class SolutionTest {
         String w2 = "pqr";
         assertEquals("apbqcr", solution.mergeAlternately(w1, w2));
     }
+
+    @Test
+    public void testStringGCD() {
+        Solution solution = new Solution();
+        String s1 = "ABCABC";
+        String s2 = "ABC";
+        assertEquals("ABC", solution.gcdOfStrings(s1, s2));
+    }
 }
