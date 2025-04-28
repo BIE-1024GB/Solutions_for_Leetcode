@@ -49,4 +49,56 @@ public class Solution {
             return gcd;
         }
     }
+
+    public List<Boolean> kidsWithCandies(int[] candies, int extraCandies) {
+        int mc = Integer.MIN_VALUE;
+        for (int c: candies) {
+            if (c > mc) {
+                mc = c;
+            }
+        }
+        List<Boolean> extra = new ArrayList<>();
+        for (int i = 0; i <= candies.length-1; i++) {
+            if (candies[i]+extraCandies >= mc) {
+                extra.add(true);
+            } else {
+                extra.add(false);
+            }
+        }
+        return extra;
+    }
+
+    public boolean canPlaceFlowers(int[] flowerbed, int n) {
+        if (n == 0) return true;
+        if (flowerbed.length == 1) {
+            if (flowerbed[0] == 0) {
+                return 1 >= n;
+            } else {
+                return 0 >= n;
+            }
+        }
+        int ap = 0;
+        for (int i = 0; i <= flowerbed.length-1; i++) {
+            if (flowerbed[i] == 0) {
+                if (i == 0) {
+                    if (flowerbed[1] == 0) {
+                        ap += 1;
+                        flowerbed[i] = 1;
+                    }
+                } else if (i == flowerbed.length-1) {
+                    if (flowerbed[flowerbed.length-2] == 0) {
+                        ap += 1;
+                        flowerbed[i] = 1;
+                    }
+                } else {
+                    if (flowerbed[i-1] == 0 && flowerbed[i+1] == 0) {
+                        ap += 1;
+                        flowerbed[i] = 1;
+                    }
+                }
+            }
+            if (ap >= n) return true;
+        }
+        return false;
+    }
 }

@@ -27,4 +27,13 @@ public class SolutionTest {
         String s2 = "ABC";
         assertEquals("ABC", solution.gcdOfStrings(s1, s2));
     }
+
+    @Test
+    public void testFlower() {
+        Solution solution = new Solution();
+        int[] f1 = new int[] {0};
+        assertTrue(solution.canPlaceFlowers(f1, 1));
+        int[] f2 = new int[] {1, 0, 0, 0, 1};
+        assertFalse(solution.canPlaceFlowers(f2, 2));
+    }
 }
