@@ -101,4 +101,28 @@ public class Solution {
         }
         return false;
     }
+
+    public String reverseVowels(String s) {
+        if (s.length() == 1) {
+            return s;
+        }
+        String vowels = "AEIOUaeiou";
+        int lp = 0;
+        int rp = s.length()-1;
+        char[] sc = s.toCharArray();
+        while (lp < rp) {
+            if (vowels.indexOf(s.charAt(lp)) == -1) {
+                lp++;
+            } else if (vowels.indexOf(s.charAt(rp)) == -1) {
+                rp--;
+            } else {
+                char temp = sc[lp];
+                sc[lp] = sc[rp];
+                sc[rp] = temp;
+                lp++;
+                rp--;
+            }
+        }
+        return new String(sc);
+    }
 }
