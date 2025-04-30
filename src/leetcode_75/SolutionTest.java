@@ -36,4 +36,11 @@ public class SolutionTest {
         int[] f2 = new int[] {1, 0, 0, 0, 1};
         assertFalse(solution.canPlaceFlowers(f2, 2));
     }
+
+    @Test
+    public void testRW() {
+        Solution solution = new Solution();
+        String s1 = "a good   example";
+        assertEquals("example good a", solution.reverseWords(s1));
+    }
 }
