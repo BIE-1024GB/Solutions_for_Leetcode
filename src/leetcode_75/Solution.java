@@ -132,4 +132,28 @@ public class Solution {
         for (int i = words.length-2; i >= 0; i--) res = res.concat(" ").concat(words[i]);
         return res;
     }
+
+    public int[] productExceptSelf(int[] nums) {
+        int[] answer = new int[nums.length];
+        int[] lv = new int[nums.length];
+        int[] rv = new int[nums.length];
+        for (int i = 0; i <= lv.length-1; i++) {
+            if (i == 0) {
+                lv[i] = 1;
+            } else {
+                lv[i] = nums[i-1]*lv[i-1];
+            }
+        }
+        for (int i = rv.length-1; i >= 0; i--) {
+            if (i == rv.length-1) {
+                rv[i] = 1;
+            } else {
+                rv[i] = nums[i+1]*rv[i+1];
+            }
+        }
+        for (int i = 0; i <= answer.length-1; i++) {
+            answer[i] = lv[i]*rv[i];
+        }
+        return answer;
+    }
 }
