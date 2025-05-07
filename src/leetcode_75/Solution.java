@@ -156,4 +156,20 @@ public class Solution {
         }
         return answer;
     }
+
+    public boolean increasingTriplet(int[] nums) {
+        if (nums.length < 3) return false;
+        int fv = Integer.MAX_VALUE;
+        int sv = Integer.MAX_VALUE;
+        for (int n: nums) {
+            if (n > sv) {
+                return true;
+            } else if (n > fv && n < sv) {
+                sv = n;
+            } else if (n < fv) {
+                fv = n;
+            }
+        }
+        return false;
+    }
 }

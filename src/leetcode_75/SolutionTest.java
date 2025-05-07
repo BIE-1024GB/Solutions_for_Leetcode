@@ -43,4 +43,13 @@ public class SolutionTest {
         String s1 = "a good   example";
         assertEquals("example good a", solution.reverseWords(s1));
     }
+
+    @Test
+    public void testIT() {
+        Solution solution = new Solution();
+        int[] n1 = new int[] {1, 2, 3, 4, 5};
+        assertTrue(solution.increasingTriplet(n1));
+        int[] n2 = new int[] {5, 4, 3, 1, 2};
+        assertFalse(solution.increasingTriplet(n2));
+    }
 }
