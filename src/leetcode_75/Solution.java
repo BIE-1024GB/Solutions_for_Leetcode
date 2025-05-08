@@ -172,4 +172,67 @@ public class Solution {
         }
         return false;
     }
+
+    public int compress(char[] chars) {
+        if (chars.length == 1)
+            return 1;
+        int cl = 1;
+        char cc = chars[0];
+        int cp = 0;
+        for (int i = 1; i <= chars.length - 1; i++) {
+            if (chars[i] == cc) {
+                cl += 1;
+            } else {
+                if (cl == 1) {
+                    chars[cp] = cc;
+                    cp += 1;
+                } else {
+                    String len = Integer.toString(cl);
+                    chars[cp] = cc;
+                    cp += 1;
+                    for (char c : len.toCharArray()) {
+                        chars[cp] = c;
+                        cp += 1;
+                    }
+                }
+                cl = 1;
+                cc = chars[i];
+            }
+        }
+        String len = Integer.toString(cl);
+        chars[cp] = cc;
+        cp += 1;
+        if (cl > 1) {
+            for (char c : len.toCharArray()) {
+                chars[cp] = c;
+                cp += 1;
+            }
+        }
+        return cp;
+    }
+
+    public void moveZeroes(int[] nums) {
+        // Expected approach: use 2-pointer
+        if (nums.length != 1) {
+            int zn = 0;
+            for (int n : nums) {
+                if (n == 0) {
+                    zn += 1;
+                }
+            }
+            if (zn != 0) {
+                for (int i = 0; i <= nums.length-1-zn; i++) {
+                    if (nums[i] == 0) {
+                        int c = i;
+                        for (int j = i+1; j <= nums.length-1; j++) {
+                            nums[c] = nums[j];
+                            nums[j] = 0;
+                            c += 1;
+                        }
+                        i -= 1;
+                    }
+                }
+            }
+        }
+    }
 }

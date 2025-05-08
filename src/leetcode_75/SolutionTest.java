@@ -52,4 +52,19 @@ public class SolutionTest {
         int[] n2 = new int[] {5, 4, 3, 1, 2};
         assertFalse(solution.increasingTriplet(n2));
     }
+
+    @Test
+    public void testCompress() {
+        Solution solution = new Solution();
+        char[] c1 = new char[] {'a', 'b', 'c'};
+        assertEquals(3, solution.compress(c1));
+        char[] c2 = new char[] {'a', 'a', 'b', 'b', 'c', 'c', 'c'};
+        assertEquals(6, solution.compress(c2));
+        assertEquals('a', c2[0]);
+        assertEquals('2', c2[1]);
+        assertEquals('b', c2[2]);
+        assertEquals('2', c2[3]);
+        assertEquals('c', c2[4]);
+        assertEquals('3', c2[5]);
+    }
 }
