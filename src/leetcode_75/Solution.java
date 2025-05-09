@@ -235,4 +235,50 @@ public class Solution {
             }
         }
     }
+
+    public boolean isSubsequence(String s, String t) {
+        if (s.isEmpty()) {
+            return true;
+        }
+        if (t.isEmpty() || s.length() > t.length()) {
+            return false;
+        }
+        int sp = 0;
+        int tp = 0;
+        while (sp <= s.length() - 1) {
+            if (s.charAt(sp) == t.charAt(tp)) {
+                if (sp == s.length() - 1) {
+                    return true;
+                } else {
+                    sp++;
+                    tp++;
+
+                }
+            } else {
+                tp++;
+            }
+            if (tp > t.length() - 1) {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    public int maxArea(int[] height) {
+        int lb = 0;
+        int rb = height.length-1;
+        int water = (height.length-1)*Math.min(height[lb], height[rb]);
+        while (lb < rb) {
+            if (height[lb] < height[rb]) {
+                lb++;
+            } else {
+                rb--;
+            }
+            int nw = (rb-lb)*Math.min(height[lb], height[rb]);
+            if (nw > water) {
+                water = nw;
+            }
+        }
+        return water;
+    }
 }

@@ -67,4 +67,19 @@ public class SolutionTest {
         assertEquals('c', c2[4]);
         assertEquals('3', c2[5]);
     }
+
+    @Test
+    public void testSub() {
+        Solution solution = new Solution();
+        String s = "axc";
+        String t = "ahbgdc";
+        assertFalse(solution.isSubsequence(s, t));
+    }
+
+    @Test
+    public void testArea() {
+        Solution solution = new Solution();
+        int[] height = new int[] {1,8,6,2,5,4,8,3,7};
+        assertEquals(49, solution.maxArea(height));
+    }
 }
