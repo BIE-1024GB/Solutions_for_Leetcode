@@ -82,4 +82,18 @@ public class SolutionTest {
         int[] height = new int[] {1,8,6,2,5,4,8,3,7};
         assertEquals(49, solution.maxArea(height));
     }
+
+    @Test
+    public void testOperation() {
+        Solution solution = new Solution();
+        int[] n1 = new int[] {4,4,1,3,1,3,2,2,5,5,1,5,2,1,2,3,5,4};
+        assertEquals(2, solution.maxOperations(n1, 2));
+    }
+
+    @Test
+    public void testMaxAvg() {
+        Solution solution = new Solution();
+        int[] n1 = new int[] {1,12,-5,-6,50,3};
+        assertEquals(12.75000, solution.findMaxAverage(n1, 4));
+    }
 }

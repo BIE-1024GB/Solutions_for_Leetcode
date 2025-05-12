@@ -281,4 +281,52 @@ public class Solution {
         }
         return water;
     }
+
+    public int maxOperations(int[] nums, int k) {
+        if (nums.length == 1) {
+            return 0;
+        }
+        Arrays.sort(nums);
+        int count = 0;
+        int lp = 0;
+        int rp = nums.length-1;
+        while (lp < rp) {
+            if (nums[lp]+nums[rp] == k) {
+                count += 1;
+                lp += 1;
+                rp -= 1;
+            } else {
+                if (nums[lp]+nums[rp] > k) {
+                    rp -= 1;
+                } else {
+                    lp += 1;
+                }
+            }
+        }
+        return count;
+    }
+
+    public double findMaxAverage(int[] nums, int k) {
+        double mv = Double.NEGATIVE_INFINITY;
+        int lp = 0;
+        int rp = k-1;
+        int sum = 0;
+        for (int i = 0; i <= k-1; i++) {
+            sum += nums[i];
+        }
+        while (rp <= nums.length-1) {
+            double avg = ((double) sum)/((double) k);
+            if (avg > mv) {
+                mv = avg;
+            }
+            sum -= nums[lp];
+            lp += 1;
+            rp += 1;
+            if (rp > nums.length-1) {
+                break;
+            }
+            sum += nums[rp];
+        }
+        return mv;
+    }
 }
