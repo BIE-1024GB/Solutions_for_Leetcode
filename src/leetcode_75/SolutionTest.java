@@ -96,4 +96,11 @@ public class SolutionTest {
         int[] n1 = new int[] {1,12,-5,-6,50,3};
         assertEquals(12.75000, solution.findMaxAverage(n1, 4));
     }
+
+    @Test
+    public void testMaxVowel() {
+        Solution solution = new Solution();
+        String s = "abciiidef";
+        assertEquals(3, solution.maxVowels(s, 3));
+    }
 }

@@ -329,4 +329,42 @@ public class Solution {
         }
         return mv;
     }
+
+    private boolean isVowel(char c) {
+        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public int maxVowels(String s, int k) {
+        int mv = 0;
+        String start = s.substring(0, k);
+        int sv = 0;
+        for (int i = 0; i <= start.length()-1; i++) {
+            char cc = start.charAt(i);
+            if (isVowel(cc)) {
+                sv += 1;
+            }
+        }
+        if (sv > mv) {
+            mv = sv;
+        }
+        int lp = 0;
+        int rp = k-1;
+        while (rp < s.length()-1) {
+            rp += 1;
+            if (isVowel(s.charAt(rp))) {
+                sv += 1;
+            }
+            if (isVowel(s.charAt(lp))) {
+                sv -= 1;
+            }
+            lp += 1;
+            if (sv > mv) {
+                mv = sv;
+            }
+        }
+        return mv;
+    }
 }
