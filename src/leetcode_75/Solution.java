@@ -367,4 +367,31 @@ public class Solution {
         }
         return mv;
     }
+
+    public int longestOnes(int[] nums, int k) {
+        int ml = -1;
+        for (int i = 0; i <= nums.length-1; i++) {
+            int cl = 0;
+            int rf = k;
+            int ci = i;
+            while (ci <= nums.length-1) {
+                if (nums[ci] == 1) {
+                    cl += 1;
+                    ci += 1;
+                } else {
+                    if (rf > 0) {
+                        cl += 1;
+                        ci += 1;
+                        rf -= 1;
+                    } else {
+                        break;
+                    }
+                }
+            }
+            if (cl > ml) {
+                ml = cl;
+            }
+        }
+        return ml;
+    }
 }

@@ -103,4 +103,11 @@ public class SolutionTest {
         String s = "abciiidef";
         assertEquals(3, solution.maxVowels(s, 3));
     }
+
+    @Test
+    public void testLO() {
+        Solution solution = new Solution();
+        int[] n = new int[] {1,1,1,0,0,0,1,1,1,1,0};
+        assertEquals(6, solution.longestOnes(n, 2));
+    }
 }
