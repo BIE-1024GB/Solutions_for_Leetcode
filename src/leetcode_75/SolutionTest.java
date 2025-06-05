@@ -110,4 +110,18 @@ public class SolutionTest {
         int[] n = new int[] {1,1,1,0,0,0,1,1,1,1,0};
         assertEquals(6, solution.longestOnes(n, 2));
     }
+
+    @Test
+    public void testDO() {
+        Solution solution = new Solution();
+        int[] n = new int[] {0,1,1,1,0,1,1,0,1};
+        assertEquals(5, solution.longestSubarray(n));
+    }
+
+    @Test
+    public void testAlti() {
+        Solution solution = new Solution();
+        int[] g = new int[] {-4,-3,-2,-1,4,3,2};
+        assertEquals(0, solution.largestAltitude(g));
+    }
 }

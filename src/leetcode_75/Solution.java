@@ -394,4 +394,51 @@ public class Solution {
         }
         return ml;
     }
+
+    public int longestSubarray(int[] nums) {
+        int flag = 0;
+        for (int n: nums) {
+            if (n == 1) {
+                flag = 1;
+                break;
+            }
+        }
+        if (flag == 0) {
+            return 0;
+        }
+        int lp = 0;
+        int rp = 0;
+        int d = 1;
+        int ml = -1;
+        while (rp <= nums.length-1) {
+            if (nums[rp] == 1) {
+                rp += 1;
+            } else {
+                if (d == 1) {
+                    rp += 1;
+                    d = 0;
+                } else {
+                    if (rp-lp-1 > ml) {
+                        ml = rp-lp-1;
+                    }
+                    while (nums[lp] != 0) {
+                        lp += 1;
+                    }
+                    lp += 1;
+                    d = 1;
+                }
+            }
+        }
+        return Math.max(rp-lp-1, ml);
+    }
+
+    public int largestAltitude(int[] gain) {
+        int ma = 0;
+        int ca = 0;
+        for (int g : gain) {
+            ca += g;
+            ma = Math.max(ca, ma);
+        }
+        return ma;
+    }
 }
