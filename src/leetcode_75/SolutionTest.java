@@ -124,4 +124,11 @@ public class SolutionTest {
         int[] g = new int[] {-4,-3,-2,-1,4,3,2};
         assertEquals(0, solution.largestAltitude(g));
     }
+
+    @Test
+    public void testPivot() {
+        Solution solution = new Solution();
+        int[] n = new int[] {2,1,-1};
+        assertEquals(0, solution.pivotIndex(n));
+    }
 }

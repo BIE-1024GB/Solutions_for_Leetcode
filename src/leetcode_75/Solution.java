@@ -331,11 +331,7 @@ public class Solution {
     }
 
     private boolean isVowel(char c) {
-        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {
-            return true;
-        } else {
-            return false;
-        }
+        return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';
     }
     public int maxVowels(String s, int k) {
         int mv = 0;
@@ -440,5 +436,53 @@ public class Solution {
             ma = Math.max(ca, ma);
         }
         return ma;
+    }
+
+    public int pivotIndex(int[] nums) {
+        int total = 0;
+        for (int n : nums) {
+            total += n;
+        }
+        int ls = 0;
+        int rs = total-nums[0];
+        if (ls == rs) {
+            return 0;
+        }
+        for (int i = 1; i <= nums.length-1; i++) {
+            ls += nums[i-1];
+            rs -= nums[i];
+            if (ls == rs) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public List<List<Integer>> findDifference(int[] nums1, int[] nums2) {
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> ll = new ArrayList<>();
+        for (int l : nums1) {
+            ll.add(l);
+        }
+        List<Integer> rl = new ArrayList<>();
+        for (int r : nums2) {
+            rl.add(r);
+        }
+        HashSet<Integer> sl = new HashSet<>();
+        sl.addAll(ll);
+        sl.addAll(rl);
+        for (int n : sl) {
+            if (ll.contains(n) && rl.contains(n)) {
+                ll.removeIf(i -> i == n);
+                rl.removeIf(i -> i == n);
+            }
+        }
+        HashSet<Integer> ls = new HashSet<>(ll);
+        ll = new ArrayList<>(ls);
+        HashSet<Integer> rs = new HashSet<>(rl);
+        rl = new ArrayList<>(rs);
+        res.add(ll);
+        res.add(rl);
+        return res;
     }
 }
