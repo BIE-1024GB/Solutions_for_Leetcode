@@ -131,4 +131,19 @@ public class SolutionTest {
         int[] n = new int[] {2,1,-1};
         assertEquals(0, solution.pivotIndex(n));
     }
+
+    @Test
+    public void testOccur() {
+        Solution solution = new Solution();
+        int[] arr = new int[] {-3,0,1,-3,1,1,1,-3,10,0};
+        assertTrue(solution.uniqueOccurrences(arr));
+    }
+
+    @Test
+    public void testClose() {
+        Solution solution = new Solution();
+        String w1 = "cabbba";
+        String w2 = "abbccc";
+        assertTrue(solution.closeStrings(w1, w2));
+    }
 }

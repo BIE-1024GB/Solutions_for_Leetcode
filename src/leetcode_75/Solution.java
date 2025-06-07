@@ -1,6 +1,7 @@
 package leetcode_75;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Jiarui BIE
@@ -484,5 +485,46 @@ public class Solution {
         res.add(ll);
         res.add(rl);
         return res;
+    }
+
+    public boolean uniqueOccurrences(int[] arr) {
+        if (arr.length == 1) {
+            return true;
+        }
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int n : arr) {
+            map.put(n, map.getOrDefault(n, 0)+1);
+        }
+        ArrayList<Integer> occur = new ArrayList<>();
+        for (int v : map.values()) {
+            if (occur.contains(v)) {
+                return false;
+            } else {
+                occur.add(v);
+            }
+        }
+        return true;
+    }
+
+    public boolean closeStrings(String word1, String word2) {
+        if (word1.length() != word2.length()) {
+            return false;
+        }
+        HashMap<Character, Integer> m1 = new HashMap<>();
+        for (int i = 0; i <= word1.length()-1; i++) {
+            m1.put(word1.charAt(i), m1.getOrDefault(word1.charAt(i), 0)+1);
+        }
+        HashMap<Character, Integer> m2 = new HashMap<>();
+        for (int i = 0; i <= word2.length()-1; i++) {
+            m2.put(word2.charAt(i), m2.getOrDefault(word2.charAt(i), 0)+1);
+        }
+        for (char c : m1.keySet()) {
+            if (!m2.keySet().contains(c)) {
+                return false;
+            }
+        }
+        return m1.values().stream().sorted().collect(Collectors.toList()).equals(
+                m2.values().stream().sorted().collect(Collectors.toList())
+        );
     }
 }
