@@ -146,4 +146,23 @@ public class SolutionTest {
         String w2 = "abbccc";
         assertTrue(solution.closeStrings(w1, w2));
     }
+
+    @Test
+    public void testEP() {
+        Solution solution = new Solution();
+        int[][] grid = new int[][] {
+                {3,1,2,2},
+                {1,4,4,5},
+                {2,4,2,2},
+                {2,4,2,2}
+        };
+        assertEquals(3, solution.equalPairs(grid));
+    }
+
+    @Test
+    public void testRS() {
+        Solution solution = new Solution();
+        String s = "leet**cod*e";
+        assertEquals("lecoe", solution.removeStars(s));
+    }
 }

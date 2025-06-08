@@ -527,4 +527,41 @@ public class Solution {
                 m2.values().stream().sorted().collect(Collectors.toList())
         );
     }
+
+    public int equalPairs(int[][] grid) {
+        int n = grid.length;
+        if (n == 1) {
+            return 1;
+        }
+        int cnt = 0;
+        for (int i = 0; i <= n-1; i++) {
+            ArrayList<Integer> row = new ArrayList<>();
+            for (int r : grid[i]) {
+                row.add(r);
+            }
+            for (int j = 0; j <= n-1; j++) {
+                ArrayList<Integer> col = new ArrayList<>();
+                for (int k = 0; k <= n-1; k++) {
+                    col.add(grid[k][j]);
+                }
+                if (row.equals(col)) {
+                    cnt += 1;
+                }
+            }
+        }
+        return cnt;
+    }
+
+    public String removeStars(String s) {
+        StringBuffer stringBuffer = new StringBuffer(s);
+        for (int i = 0; i <= stringBuffer.length()-1; i++) {
+            char c = stringBuffer.charAt(i);
+            if (c == '*') {
+                stringBuffer.deleteCharAt(i);
+                stringBuffer.deleteCharAt(i-1);
+                i = i-2;
+            }
+        }
+        return stringBuffer.toString();
+    }
 }
