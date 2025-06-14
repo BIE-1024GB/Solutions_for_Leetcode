@@ -564,4 +564,35 @@ public class Solution {
         }
         return stringBuffer.toString();
     }
+
+    public int[] asteroidCollision(int[] asteroids) {
+        Stack<Integer> stack = new Stack<>();
+        for (int a : asteroids) {
+            if (a > 0) {
+                stack.push(a);
+            } else {
+                int size = -a;
+                int flag = 1;
+                while (!stack.isEmpty() && stack.peek() > 0 && size >= stack.peek()) {
+                    if (size == stack.peek()) {
+                        stack.pop();
+                        flag = 0;
+                        break;
+                    } else {
+                        stack.pop();
+                    }
+                }
+                if (flag == 1) {
+                    if (stack.isEmpty() || stack.peek() < 0) {
+                        stack.push(a);
+                    }
+                }
+            }
+        }
+        int[] array = new int[stack.size()];
+        for (int i = 0; i < array.length; i++) {
+            array[i] = stack.get(i);
+        }
+        return array;
+    }
 }

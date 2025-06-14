@@ -872,31 +872,26 @@ public class Solution {
     }
 
     public int lengthOfLongestSubstring(String s) {
-        if (s.isEmpty()) {
-            return 0;
-        } else if (s.length() == 1) {
-            return 1;
+        if (s.length() <= 1) {
+            return s.length();
         } else {
-            int length = 0;
-            int start = 0;
-            while (start <= s.length()-1) {
-                StringBuilder stringBuffer = new StringBuilder();
-                stringBuffer.append(s.charAt(start));
-                int right = start+1;
-                while (right <= s.length()-1) {
-                    if (stringBuffer.toString().indexOf(s.charAt(right)) == -1) {
-                        stringBuffer.append(s.charAt(right));
-                        right++;
-                    } else {
-                        break;
+            int ml = 1;
+            int lp = 0;
+            int rp = 1;
+            HashMap<Character, Integer> map = new HashMap<>();
+            map.put(s.charAt(0), 0);
+            while (rp <= s.length()-1) {
+                char c = s.charAt(rp);
+                if (map.containsKey(c)) {
+                    ml = Math.max(ml, rp-lp);
+                    if (lp <= map.get(c)) {
+                        lp = map.get(c)+1;
                     }
                 }
-                if (stringBuffer.length() > length) {
-                    length = stringBuffer.length();
-                }
-                start++;
+                map.put(c, rp);
+                rp += 1;
             }
-            return length;
+            return Math.max(ml, rp-lp);
         }
     }
 
