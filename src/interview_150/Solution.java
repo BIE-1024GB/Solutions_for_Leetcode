@@ -51,16 +51,19 @@ public class Solution {
     }
 
     public int removeDuplicates_I(int[] nums) {
-        ArrayList<Integer> unique = new ArrayList<>();
-        for (int i = 0; i <= nums.length-1; i++) {
-            if (!unique.contains(nums[i])) {
-                unique.add(nums[i]);
+        if (nums.length == 1) {
+            return 1;
+        }
+        int lp = 0;
+        int rp = 1;
+        while (rp <= nums.length-1) {
+            if (nums[lp] != nums[rp]) {
+                lp += 1;
+                nums[lp] = nums[rp];
             }
+            rp += 1;
         }
-        for (int j = 0; j <= unique.size()-1; j++) {
-            nums[j] = unique.get(j);
-        }
-        return unique.size();
+        return lp+1;
     }
 
     public int removeDuplicates(int[] nums) {
