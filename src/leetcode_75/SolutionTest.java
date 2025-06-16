@@ -165,4 +165,20 @@ public class SolutionTest {
         String s = "leet**cod*e";
         assertEquals("lecoe", solution.removeStars(s));
     }
+
+    @Test
+    public void testDecode() {
+        Solution solution = new Solution();
+        String s = "3[a2[c]]";
+        assertEquals("accaccacc", solution.decodeString(s));
+    }
+
+    @Test
+    public void testRecent() {
+        Solution.RecentCounter recentCounter = new Solution.RecentCounter();
+        assertEquals(1, recentCounter.ping(1));
+        assertEquals(2, recentCounter.ping(100));
+        assertEquals(3, recentCounter.ping(3001));
+        assertEquals(3, recentCounter.ping(3002));
+    }
 }

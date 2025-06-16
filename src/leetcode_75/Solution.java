@@ -519,12 +519,12 @@ public class Solution {
             m2.put(word2.charAt(i), m2.getOrDefault(word2.charAt(i), 0)+1);
         }
         for (char c : m1.keySet()) {
-            if (!m2.keySet().contains(c)) {
+            if (!m2.containsKey(c)) {
                 return false;
             }
         }
-        return m1.values().stream().sorted().collect(Collectors.toList()).equals(
-                m2.values().stream().sorted().collect(Collectors.toList())
+        return m1.values().stream().sorted().toList().equals(
+                m2.values().stream().sorted().toList()
         );
     }
 
@@ -553,7 +553,7 @@ public class Solution {
     }
 
     public String removeStars(String s) {
-        StringBuffer stringBuffer = new StringBuffer(s);
+        StringBuilder stringBuffer = new StringBuilder(s);
         for (int i = 0; i <= stringBuffer.length()-1; i++) {
             char c = stringBuffer.charAt(i);
             if (c == '*') {
@@ -594,5 +594,74 @@ public class Solution {
             array[i] = stack.get(i);
         }
         return array;
+    }
+
+    public String decodeString(String s) {
+        if (s.length() <= 3) {
+            return s;
+        }
+        Stack<Character> stack = new Stack<>();
+        for (char c : s.toCharArray()) {
+            if (c != ']') {
+                stack.push(c);
+            } else {
+                ArrayList<Character> list = new ArrayList<>();
+                while (stack.peek() != '[') {
+                    list.addFirst(stack.peek());
+                    stack.pop();
+                }
+                stack.pop();
+                int p1 = stack.peek()-'0';
+                stack.pop();
+                int p2 = 0;
+                if (!stack.isEmpty() && Character.isDigit(stack.peek())) {
+                    p2 = stack.peek()-'0';
+                    stack.pop();
+                }
+                int p3 = 0;
+                if (!stack.isEmpty() && Character.isDigit(stack.peek())) {
+                    p3 = stack.peek()-'0';
+                    stack.pop();
+                }
+                int rep = p3*100+p2*10+p1;
+                while (rep > 0) {
+                    for (Character cc : list) {
+                        stack.push(cc);
+                    }
+                    rep -= 1;
+                }
+            }
+        }
+        ArrayList<Character> full = new ArrayList<>();
+        while (!stack.isEmpty()) {
+            full.addFirst(stack.peek());
+            stack.pop();
+        }
+        StringBuilder buffer = new StringBuilder();
+        for (Character c : full) {
+            buffer.append(c);
+        }
+        return buffer.toString();
+    }
+
+    static class RecentCounter {
+        private final ArrayList<Integer> list;
+
+        public RecentCounter() {
+            list = new ArrayList<>();
+        }
+
+        public int ping(int t) {
+            int cnt = 0;
+            for (int i = list.size()-1; i >= 0; i--) {
+                if (list.get(i) >= t-3000) {
+                    cnt += 1;
+                } else {
+                    break;
+                }
+            }
+            list.add(t);
+            return cnt+1;
+        }
     }
 }
