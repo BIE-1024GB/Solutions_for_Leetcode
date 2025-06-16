@@ -664,4 +664,39 @@ public class Solution {
             return cnt+1;
         }
     }
+
+    public String predictPartyVictory(String senate) {
+        if (senate.length() == 1) {
+            if (senate.charAt(0) == 'R') {
+                return "Radiant";
+            } else {
+                return "Dire";
+            }
+        }
+        Queue<Integer> qr = new LinkedList<>();
+        Queue<Integer> qd = new LinkedList<>();
+        int id = 0;
+        for (int i = 0; i <= senate.length()-1; i++) {
+            char c = senate.charAt(i);
+            if (c == 'R') {
+                qr.offer(id);
+            } else {
+                qd.offer(id);
+            }
+            id += 1;
+        }
+        while (!qr.isEmpty() && !qd.isEmpty()) {
+            int rf = qr.peek();
+            int df = qd.peek();
+            qd.poll();
+            qr.poll();
+            if (rf < df) {
+                qr.offer(id);
+            } else {
+                qd.offer(id);
+            }
+            id += 1;
+        }
+        return qr.isEmpty() ? "Dire" : "Radiant";
+    }
 }

@@ -181,4 +181,10 @@ public class SolutionTest {
         assertEquals(3, recentCounter.ping(3001));
         assertEquals(3, recentCounter.ping(3002));
     }
+
+    @Test
+    public void testDota() {
+        Solution solution = new Solution();
+        assertEquals("Dire", solution.predictPartyVictory("RDD"));
+    }
 }
