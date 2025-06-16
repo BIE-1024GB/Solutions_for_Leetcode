@@ -1439,32 +1439,27 @@ public class Solution {
     }
 
     public boolean isValid(String s) {
-        if (s.length()%2 == 1)
+        if (s.length()%2 != 0) {
             return false;
-        Stack<Character> st = new Stack<>();    // explicit Stack<> class in Java
-        for (int i = 0; i <= s.length()-1; i++) {
-            char curr = s.charAt(i);
-            if (curr == '(' || curr == '{' || curr == '[') {
-                st.push(curr);
+        }
+        Stack<Character> stack = new Stack<>();
+        for (char c : s.toCharArray()) {
+            if (c == '(' || c == '[' || c == '{') {
+                stack.push(c);
             } else {
-                if (st.isEmpty()) {
+                if (stack.isEmpty()) {
                     return false;
                 } else {
-                    char pp = st.pop();
-                    if (curr == ')') {
-                        if (pp != '(')
-                            return false;
-                    } else if (curr == '}') {
-                        if (pp != '{')
-                            return false;
+                    char t = stack.peek();
+                    if ((t=='('&&c==')') || (t=='['&&c==']') || (t=='{'&&c=='}')) {
+                        stack.pop();
                     } else {
-                        if (pp != '[')
-                            return false;
+                        return false;
                     }
                 }
             }
         }
-        return st.isEmpty();
+        return stack.isEmpty();
     }
 
     public String simplifyPath(String path) {

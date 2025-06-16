@@ -637,11 +637,11 @@ public class Solution {
             full.addFirst(stack.peek());
             stack.pop();
         }
-        StringBuilder buffer = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
         for (Character c : full) {
-            buffer.append(c);
+            builder.append(c);
         }
-        return buffer.toString();
+        return builder.toString();
     }
 
     static class RecentCounter {
