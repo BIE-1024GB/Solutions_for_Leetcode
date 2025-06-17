@@ -187,4 +187,16 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertEquals("Dire", solution.predictPartyVictory("RDD"));
     }
+
+    @Test
+    public void testPairSum() {
+        Solution.ListNode n1 = new Solution.ListNode(5);
+        Solution.ListNode n2 = new Solution.ListNode(4);
+        Solution.ListNode n3 = new Solution.ListNode(2);
+        Solution.ListNode n4 = new Solution.ListNode(1);
+        n1.next = n2;
+        n2.next = n3;
+        n3.next = n4;
+        assertEquals(6, n1.pairSum(n1));
+    }
 }

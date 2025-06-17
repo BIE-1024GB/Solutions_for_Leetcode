@@ -1464,33 +1464,26 @@ public class Solution {
 
     public String simplifyPath(String path) {
         if (path.length() == 1) {
-            return "/";
+            return path;
         }
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append('/');
-        LinkedList<String> list = new LinkedList<>();
-        String[] contexts = path.split("/+");
-        if (contexts.length >= 1) {
-            for (int i = 0; i <= contexts.length-1; i++) {
-                String curr = contexts[i];
-                if (!curr.isEmpty() && !curr.equals(".")) {
-                    if (curr.equals("..")) {
-                        if (!list.isEmpty()) {
-                            list.removeLast();
-                        }
-                    } else {
-                        list.add(curr);
+        String[] parts = path.split("/");
+        Stack<String> stack = new Stack<>();
+        for (String s : parts) {
+            if (!s.isEmpty() && !s.equals(".")) {
+                if (s.equals("..")) {
+                    if (!stack.isEmpty()) {
+                        stack.pop();
                     }
-                }
-            }
-            for (int j = 0; j <= list.size()-1; j++) {
-                stringBuilder.append(list.get(j));
-                if (j != list.size()-1) {
-                    stringBuilder.append('/');
+                } else {
+                    stack.push(s);
                 }
             }
         }
-        return stringBuilder.toString();
+        StringBuilder builder = new StringBuilder();
+        while (!stack.isEmpty()) {
+            builder.insert(0, "/"+stack.pop());
+        }
+        return builder.isEmpty() ? "/" : builder.toString();
     }
 
     static class MinStack {

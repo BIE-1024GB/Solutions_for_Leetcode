@@ -699,4 +699,98 @@ public class Solution {
         }
         return qr.isEmpty() ? "Dire" : "Radiant";
     }
+
+    static class ListNode {
+        int val;
+        ListNode next;
+        ListNode(int val) {
+            this.val = val;
+        }
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
+
+        public ListNode deleteMiddle(ListNode head) {
+            if (head.next == null) {
+                return null;
+            }
+            ListNode fr = head;
+            int num = 0;
+            while (fr != null) {
+                num += 1;
+                fr = fr.next;
+            }
+            ListNode sr = head;
+            int fw = num/2-1;
+            while (fw > 0) {
+                sr = sr.next;
+                fw -= 1;
+            }
+            sr.next = sr.next.next;
+            return head;
+        }
+
+        public ListNode oddEvenList(ListNode head) {
+            if (head == null || head.next == null || head.next.next == null) {
+                return head;
+            }
+            ListNode oc = head;
+            ListNode eh = head.next;
+            ListNode ec = head.next;
+            ListNode tra = head.next.next;
+            int nn = 3;
+            while (tra != null) {
+                if (nn%2 == 0) {
+                    ec.next = tra;
+                    ec = ec.next;
+                } else {
+                    oc.next = tra;
+                    oc = oc.next;
+                }
+                tra = tra.next;
+                nn += 1;
+            }
+            oc.next = eh;
+            ec.next = null;
+            return head;
+        }
+
+        public ListNode reverseList(ListNode head) {
+            // iteration approach (see LeetCode for recursion approach)
+            if (head == null || head.next == null) {
+                return head;
+            }
+            ListNode prev = head;
+            ListNode curr = head.next;
+            prev.next = null;
+            while (curr != null) {
+                ListNode temp = curr.next;
+                curr.next = prev;
+                prev = curr;
+                curr = temp;
+            }
+            return prev;
+        }
+
+        public int pairSum(ListNode head) {
+            if (head.next.next == null) {
+                return head.val+head.next.val;
+            }
+            ArrayList<ListNode> nodes = new ArrayList<>();
+            ListNode curr = head;
+            while (curr != null) {
+                nodes.add(curr);
+                curr = curr.next;
+            }
+            int ms = Integer.MIN_VALUE;
+            for (int i = 0; i <= nodes.size()/2-1; i++) {
+                int cs = nodes.get(i).val+nodes.get(nodes.size()-1-i).val;
+                if (cs > ms) {
+                    ms = cs;
+                }
+            }
+            return ms;
+        }
+    }
 }

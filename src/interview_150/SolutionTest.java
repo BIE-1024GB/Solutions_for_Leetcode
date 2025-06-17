@@ -377,6 +377,12 @@ class SolutionTest {
     }
 
     @Test
+    public void testPath() {
+        Solution solution = new Solution();
+        assertEquals("/home/user/Pictures", solution.simplifyPath("/home/user/Documents/../Pictures"));
+    }
+
+    @Test
     public void testStack() {
         Solution.MinStack minStack = new Solution.MinStack();
         minStack.push(1);
