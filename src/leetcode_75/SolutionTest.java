@@ -199,4 +199,12 @@ public class SolutionTest {
         n3.next = n4;
         assertEquals(6, n1.pairSum(n1));
     }
+
+    @Test
+    public void testMD() {
+        Solution.TreeNode n1 = new Solution.TreeNode(1);
+        Solution.TreeNode n2 = new Solution.TreeNode(2);
+        n1.right = n2;
+        assertEquals(2, n1.maxDepth(n1));
+    }
 }

@@ -793,4 +793,55 @@ public class Solution {
             return ms;
         }
     }
+
+    static class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode(int val) {
+            this.val = val;
+        }
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+
+        public int maxDepth(TreeNode root) {
+            if (root == null) {
+                return 0;
+            }
+            return 1+Math.max(maxDepth(root.left), maxDepth(root.right));
+        }
+
+        private void dfs(TreeNode node, List<Integer> leaves) {
+            if (node == null) {
+                return;
+            }
+            if (node.left == null && node.right == null) {
+                leaves.add(node.val);
+                return;
+            }
+            dfs(node.left, leaves);
+            dfs(node.right, leaves);
+        }
+        private List<Integer> findLeaf(TreeNode root) {
+            List<Integer> lv = new ArrayList<>();
+            dfs(root, lv);
+            return lv;
+        }
+        public boolean leafSimilar(TreeNode root1, TreeNode root2) {
+            List<Integer> v1 = findLeaf(root1);
+            List<Integer> v2 = findLeaf(root2);
+            if (v1.size() != v2.size()) {
+                return false;
+            }
+            for (int i = 0; i <= v1.size()-1; i++) {
+                if (!v1.get(i).equals(v2.get(i))) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
 }
