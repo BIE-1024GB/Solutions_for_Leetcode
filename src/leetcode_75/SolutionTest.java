@@ -207,4 +207,38 @@ public class SolutionTest {
         n1.right = n2;
         assertEquals(2, n1.maxDepth(n1));
     }
+
+    @Test
+    public void testGN() {
+        Solution.TreeNode n1 = new Solution.TreeNode(3);
+        Solution.TreeNode n2 = new Solution.TreeNode(3);
+        Solution.TreeNode n3 = new Solution.TreeNode(4);
+        Solution.TreeNode n4 = new Solution.TreeNode(2);
+        n1.left = n2;
+        n2.left = n3;
+        n2.right = n4;
+        assertEquals(3, n1.goodNodes(n1));
+    }
+
+    @Test
+    public void testPS() {
+        Solution.TreeNode n1 = new Solution.TreeNode(10);
+        Solution.TreeNode n2 = new Solution.TreeNode(5);
+        Solution.TreeNode n3 = new Solution.TreeNode(-3);
+        Solution.TreeNode n4 = new Solution.TreeNode(3);
+        Solution.TreeNode n5 = new Solution.TreeNode(2);
+        Solution.TreeNode n6 = new Solution.TreeNode(11);
+        Solution.TreeNode n7 = new Solution.TreeNode(3);
+        Solution.TreeNode n8 = new Solution.TreeNode(-2);
+        Solution.TreeNode n9 = new Solution.TreeNode(1);
+        n1.left = n2;
+        n1.right = n3;
+        n2.left = n4;
+        n2.right = n5;
+        n3.right = n6;
+        n4.left = n7;
+        n4.right = n8;
+        n5.right = n9;
+        assertEquals(3, n1.pathSum(n1, 8));
+    }
 }

@@ -843,5 +843,71 @@ public class Solution {
             }
             return true;
         }
+
+        private int GNdfs(TreeNode r, int mv) {
+            if (r == null) {
+                return 0;
+            }
+            int flag = 0;
+            if (r.val >= mv) {
+                flag = 1;
+                flag += GNdfs(r.left, r.val);
+                flag += GNdfs(r.right, r.val);
+            } else {
+                flag += GNdfs(r.left, mv);
+                flag += GNdfs(r.right, mv);
+            }
+            return flag;
+        }
+        public int goodNodes(TreeNode root) {
+            if (root.left == null && root.right == null) {
+                return 1;
+            }
+            return 1+GNdfs(root.left, root.val)+GNdfs(root.right, root.val);
+        }
+
+        private int PSdfs(TreeNode r, int cs, int ts) {
+            if (r == null) {
+                return 0;
+            }
+            if (r.val >= 0) {
+                if (cs > Integer.MAX_VALUE-r.val) {
+                    return 0;
+                }
+            } else {
+                if (cs < Integer.MIN_VALUE-r.val) {
+                    return 0;
+                }
+            }
+            int cnt = 0;
+            if (r.val + cs == ts) {
+                cnt += 1;
+            }
+            cnt = cnt+PSdfs(r.left, cs+r.val, ts)+PSdfs(r.right, cs+r.val, ts);
+            return cnt;
+        }
+        public int pathSum(TreeNode root, int targetSum) {
+            if (root == null) {
+                return 0;
+            }
+            Queue<TreeNode> queue = new LinkedList<>();
+            queue.offer(root);
+            ArrayList<TreeNode> list = new ArrayList<>();
+            while (!queue.isEmpty()) {
+                TreeNode curr = queue.poll();
+                list.add(curr);
+                if (curr.left != null) {
+                    queue.offer(curr.left);
+                }
+                if (curr.right != null) {
+                    queue.offer(curr.right);
+                }
+            }
+            int ttl = 0;
+            for (TreeNode tn : list) {
+                ttl += PSdfs(tn, 0, targetSum);
+            }
+            return ttl;
+        }
     }
 }
