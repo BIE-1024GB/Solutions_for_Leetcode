@@ -909,5 +909,44 @@ public class Solution {
             }
             return ttl;
         }
+
+        private int zzl = 0;
+        private void ZZdfs(TreeNode r, int dir, int cl) {
+            if (r == null) {
+                return;
+            }
+            zzl = Math.max(zzl, cl);
+            if (dir == 0) {
+                ZZdfs(r.right, 1, cl+1);
+                ZZdfs(r.left, 0, 1);
+            } else {
+                ZZdfs(r.left, 0, cl+1);
+                ZZdfs(r.right, 1, 1);
+            }
+        }
+        public int longestZigZag(TreeNode root) {
+            if (root.left == null && root.right == null) {
+                return 0;
+            }
+            ZZdfs(root, 0, 0);
+            ZZdfs(root, 1, 0);
+            return zzl;
+        }
+
+        public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+            // Base case: if root is null or matches either p or q
+            if (root == null || root == p || root == q) {
+                return root;
+            }
+            // Recursively search left and right subtrees
+            TreeNode left = lowestCommonAncestor(root.left, p, q);
+            TreeNode right = lowestCommonAncestor(root.right, p, q);
+            // If both left and right are non-null, current root is LCA
+            if (left != null && right != null) {
+                return root;
+            }
+            // Otherwise return the non-null child (if only one is found)
+            return left != null ? left : right;
+        }
     }
 }
