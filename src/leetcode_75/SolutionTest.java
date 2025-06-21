@@ -241,4 +241,18 @@ public class SolutionTest {
         n5.right = n9;
         assertEquals(3, n1.pathSum(n1, 8));
     }
+
+    @Test
+    public void testMLS() {
+        Solution.TreeNode n1 = new Solution.TreeNode(1);
+        Solution.TreeNode n2 = new Solution.TreeNode(7);
+        Solution.TreeNode n3 = new Solution.TreeNode(0);
+        Solution.TreeNode n4 = new Solution.TreeNode(7);
+        Solution.TreeNode n5 = new Solution.TreeNode(-8);
+        n1.left = n2;
+        n1.right = n3;
+        n2.left = n4;
+        n2.right = n5;
+        assertEquals(2, n1.maxLevelSum(n1));
+    }
 }

@@ -1,7 +1,6 @@
 package leetcode_75;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author Jiarui BIE
@@ -947,6 +946,62 @@ public class Solution {
             }
             // Otherwise return the non-null child (if only one is found)
             return left != null ? left : right;
+        }
+
+        public List<Integer> rightSideView(TreeNode root) {
+            if (root == null) {
+                return new ArrayList<>();
+            }
+            List<Integer> res = new ArrayList<>();
+            Queue<TreeNode> queue = new LinkedList<>();
+            queue.offer(root);
+            int ls;
+            while (!queue.isEmpty()) {
+                ls = queue.size();
+                for (int i = 1; i <= ls; i++) {
+                    TreeNode curr = queue.poll();
+                    assert curr != null;
+                    if (curr.left != null) {
+                        queue.offer(curr.left);
+                    }
+                    if (curr.right != null) {
+                        queue.offer(curr.right);
+                    }
+                    if (i == ls) {
+                        res.add(curr.val);
+                    }
+                }
+            }
+            return res;
+        }
+
+        public int maxLevelSum(TreeNode root) {
+            Queue<TreeNode> queue = new LinkedList<>();
+            queue.offer(root);
+            int lvl = 1;
+            int ms = Integer.MIN_VALUE;
+            int ml = 1;
+            while (!queue.isEmpty()) {
+                int ls = queue.size();
+                int sum = 0;
+                for (int i = 1; i <= ls; i++) {
+                    TreeNode curr = queue.poll();
+                    assert curr != null;
+                    sum += curr.val;
+                    if (curr.left != null) {
+                        queue.offer(curr.left);
+                    }
+                    if (curr.right != null) {
+                        queue.offer(curr.right);
+                    }
+                }
+                if (sum > ms) {
+                    ms = sum;
+                    ml = lvl;
+                }
+                lvl += 1;
+            }
+            return ml;
         }
     }
 }
