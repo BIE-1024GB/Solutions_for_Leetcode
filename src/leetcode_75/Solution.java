@@ -1003,5 +1003,97 @@ public class Solution {
             }
             return ml;
         }
+
+        public TreeNode searchBST(TreeNode root, int val) {
+            TreeNode curr = root;
+            while (curr != null) {
+                if (val == curr.val) {
+                    return curr;
+                } else {
+                    if (val > curr.val) {
+                        curr = curr.right;
+                    } else {
+                        curr = curr.left;
+                    }
+                }
+            }
+            return null;
+        }
+
+        private TreeNode findMin(TreeNode node) {
+            while (node.left != null) {
+                node = node.left;
+            }
+            return node;
+        }
+        public TreeNode deleteNode(TreeNode root, int key) {
+            if (root == null) {
+                return null;
+            }
+            if (key < root.val) {
+                root.left = deleteNode(root.left, key);
+            } else if (key > root.val) {
+                root.right = deleteNode(root.right, key);
+            } else {
+                if (root.left == null) {
+                    return root.right;
+                } else if (root.right == null) {
+                    return root.left;
+                } else {
+                    TreeNode minr = findMin(root.right);
+                    root.val = minr.val;
+                    root.right = deleteNode(root.right, minr.val);
+                }
+            }
+            return root;
+        }
+    }
+
+    public boolean canVisitAllRooms(List<List<Integer>> rooms) {
+        HashSet<Integer> set = new HashSet<>();
+        set.add(0);
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i : rooms.get(0)) {
+            queue.offer(i);
+        }
+        ArrayList<Integer> visit = new ArrayList<>();
+        visit.add(0);
+        while (!queue.isEmpty()) {
+            int curr = queue.poll();
+            set.add(curr);
+            if (set.size() == rooms.size()) {
+                return true;
+            }
+            if (!visit.contains(curr)) {
+                for (int i : rooms.get(curr)) {
+                    queue.offer(i);
+                }
+                visit.add(curr);
+            }
+        }
+        return false;
+    }
+
+    private void CCdfs(int[][] ic, boolean[] v, int i) {
+        for (int j = 0; j <= ic.length-1; j++) {
+            if (ic[i][j] == 1 && !v[j]) {
+                v[j] = true;
+                CCdfs(ic, v, j);
+            }
+        }
+    }
+    public int findCircleNum(int[][] isConnected) {
+        if (isConnected.length == 1) {
+            return 1;
+        }
+        int cc = 0;
+        boolean[] visit = new boolean[isConnected.length];
+        for (int i = 0; i <= isConnected.length-1; i++) {
+            if (!visit[i]) {
+                CCdfs(isConnected, visit, i);
+                cc += 1;
+            }
+        }
+        return cc;
     }
 }

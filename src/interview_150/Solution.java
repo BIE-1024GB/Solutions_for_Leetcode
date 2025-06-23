@@ -3290,16 +3290,19 @@ public class Solution {
     public int maxSubArray(int[] nums) {
         // Kadane's algorithm
         // Time complexity: O(n)
-        if (nums.length == 1)
+        if (nums.length == 1) {
             return nums[0];
-        int ms = nums[0];
-        int cm = ms;
-        for (int i = 1; i <= nums.length - 1; i++) {
-            cm = Math.max(cm + nums[i], nums[i]);
-            if (cm > ms)
-                ms = cm;
+        } else {
+            int ms = Integer.MIN_VALUE;
+            int cs = 0;
+            for (int n : nums) {
+                cs = Math.max(cs+n, n);
+                if (cs > ms) {
+                    ms = cs;
+                }
+            }
+            return ms;
         }
-        return ms;
     }
 
     private int msKadane(int[] n) {

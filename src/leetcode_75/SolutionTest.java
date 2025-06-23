@@ -255,4 +255,37 @@ public class SolutionTest {
         n2.right = n5;
         assertEquals(2, n1.maxLevelSum(n1));
     }
+
+    @Test
+    public void testKeys() {
+        Solution solution = new Solution();
+        List<List<Integer>> lists = new ArrayList<>();
+        List<Integer> l1 = new ArrayList<>();
+        l1.add(1);
+        l1.add(3);
+        List<Integer> l2 = new ArrayList<>();
+        l2.add(3);
+        l2.add(0);
+        l2.add(1);
+        List<Integer> l3 = new ArrayList<>();
+        l3.add(2);
+        List<Integer> l4 = new ArrayList<>();
+        l4.add(0);
+        lists.add(l1);
+        lists.add(l2);
+        lists.add(l3);
+        lists.add(l4);
+        assertFalse(solution.canVisitAllRooms(lists));
+    }
+
+    @Test
+    public void testCC() {
+        Solution solution = new Solution();
+        int[][] nodes = new int[][] {
+                {1, 1, 0},
+                {1, 1, 0},
+                {0, 0, 1}
+        };
+        assertEquals(2, solution.findCircleNum(nodes));
+    }
 }
