@@ -1096,4 +1096,77 @@ public class Solution {
         }
         return cc;
     }
+
+    public int minReorder(int n, int[][] connections) {
+        // Build the graph: adjacency list with direction information
+        List<List<int[]>> graph = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            graph.add(new ArrayList<>());
+        }
+        for (int[] connection : connections) {
+            int from = connection[0];
+            int to = connection[1];
+            // Add original edge with direction marker (1 = needs reversal)
+            graph.get(from).add(new int[]{to, 1});
+            // Add reverse edge with direction marker (0 = no reversal needed)
+            graph.get(to).add(new int[]{from, 0});
+        }
+
+        boolean[] visited = new boolean[n];
+        Queue<Integer> queue = new LinkedList<>();
+        queue.offer(0);
+        visited[0] = true;
+        int result = 0;
+        while (!queue.isEmpty()) {
+            int city = queue.poll();
+            for (int[] neighbor : graph.get(city)) {
+                int nextCity = neighbor[0];
+                int direction = neighbor[1];
+                if (!visited[nextCity]) {
+                    visited[nextCity] = true;
+                    result += direction; // only count if the edge was originally away from 0
+                    queue.offer(nextCity);
+                }
+            }
+        }
+        return result;
+    }
+
+    private double dfs(String start, String end, HashMap<String, HashMap<String, Double>> graph, Set<String> visited, double product) {
+        if (start.equals(end))
+            return product;
+        visited.add(start);
+        for (Map.Entry<String, Double> entry : graph.get(start).entrySet()) {
+            String next = entry.getKey();
+            double value = entry.getValue();
+            if (!visited.contains(next)) {
+                double result = dfs(next, end, graph, visited, product * value);
+                if (result != -1.0)
+                    return result;
+            }
+        }
+        return -1.0;
+    }
+    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
+        HashMap<String, HashMap<String, Double>> graph = new HashMap<>();
+        for (int i = 0; i < equations.size(); i++) {
+            String A = equations.get(i).get(0);
+            String B = equations.get(i).get(1);
+            double value = values[i];
+            graph.putIfAbsent(A, new HashMap<>());
+            graph.putIfAbsent(B, new HashMap<>());
+            graph.get(A).put(B, value);
+            graph.get(B).put(A, 1.0 / value);
+        }
+        double[] results = new double[queries.size()];
+        for (int i = 0; i < queries.size(); i++) {
+            String C = queries.get(i).get(0);
+            String D = queries.get(i).get(1);
+            if (!graph.containsKey(C) || !graph.containsKey(D))
+                results[i] = -1.0;
+            else
+                results[i] = dfs(C, D, graph, new HashSet<>(), 1.0);
+        }
+        return results;
+    }
 }

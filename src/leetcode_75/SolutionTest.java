@@ -288,4 +288,17 @@ public class SolutionTest {
         };
         assertEquals(2, solution.findCircleNum(nodes));
     }
+
+    @Test
+    public void testminR() {
+        Solution solution = new Solution();
+        int[][] roads = new int[][] {
+                {0, 1},
+                {1, 3},
+                {2, 3},
+                {4, 0},
+                {4, 5}
+        };
+        assertEquals(3, solution.minReorder(6, roads));
+    }
 }
