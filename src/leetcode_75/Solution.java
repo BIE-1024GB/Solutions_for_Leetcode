@@ -1169,4 +1169,103 @@ public class Solution {
         }
         return results;
     }
+
+    public int nearestExit(char[][] maze, int[] entrance) {
+        int m = maze.length;
+        int n = maze[0].length;
+        if (m == 1 && n == 1) {
+            return -1;
+        }
+        Queue<int[]> queue = new LinkedList<>();
+        HashSet<Integer> visit = new HashSet<>();
+        queue.offer(entrance);
+        visit.add(entrance[0]*n+entrance[1]);
+        int hop = 0;
+        while (!queue.isEmpty()) {
+            int ls = queue.size();
+            for (int i = 1; i <= ls; i++) {
+                int[] curr = queue.poll();
+                assert curr != null;
+                if ((curr[0] == 0 || curr[0] == m - 1 || curr[1] == 0 || curr[1] == n - 1)
+                        && (curr[0] != entrance[0] || curr[1] != entrance[1])) {
+                    return hop;
+                } else {
+                    if (curr[0] >= 1 && maze[curr[0] - 1][curr[1]] != '+'
+                            && !visit.contains((curr[0] - 1) * n + curr[1])) {
+                        queue.offer(new int[] { curr[0] - 1, curr[1] });
+                        visit.add((curr[0] - 1) * n + curr[1]);
+                    }
+                    if (curr[0] <= m - 2 && maze[curr[0] + 1][curr[1]] != '+'
+                            && !visit.contains((curr[0] + 1) * n + curr[1])) {
+                        queue.offer(new int[] { curr[0] + 1, curr[1] });
+                        visit.add((curr[0] + 1) * n + curr[1]);
+                    }
+                    if (curr[1] >= 1 && maze[curr[0]][curr[1] - 1] != '+'
+                            && !visit.contains(curr[0] * n + curr[1] - 1)) {
+                        queue.offer(new int[] { curr[0], curr[1] - 1 });
+                        visit.add(curr[0] * n + curr[1] - 1);
+                    }
+                    if (curr[1] <= n - 2 && maze[curr[0]][curr[1] + 1] != '+'
+                            && !visit.contains(curr[0] * n + curr[1] + 1)) {
+                        queue.offer(new int[] { curr[0], curr[1] + 1 });
+                        visit.add(curr[0] * n + curr[1] + 1);
+                    }
+                }
+            }
+            hop += 1;
+        }
+        return -1;
+    }
+
+    public int orangesRotting(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        Queue<int[]> queue = new LinkedList<>();
+        boolean[][] visit = new boolean[m][n];
+        int fresh = 0;
+        for (int i = 0; i <= m-1; i++) {
+            for (int j = 0; j <= n-1; j++) {
+                if (grid[i][j] == 2) {
+                    queue.offer(new int[] {i, j});
+                    visit[i][j] = true;
+                } else if (grid[i][j] == 1) {
+                    fresh += 1;
+                }
+            }
+        }
+        if (fresh == 0) {
+            return 0;
+        }
+        int[][] dir = new int[][] {
+                {-1, 0},
+                {1, 0},
+                {0, -1},
+                {0, 1}
+        };
+        int minute = 1;
+        while (!queue.isEmpty()) {
+            int ls = queue.size();
+            for (int o = 1; o <= ls; o++) {
+                int[] q = queue.poll();
+                for (int[] d : dir) {
+                    assert q != null;
+                    int nr = q[0]+d[0];
+                    int nc = q[1]+d[1];
+                    if (nr >= 0 && nr <= m-1 && nc >= 0 && nc <= n-1) {
+                        if (grid[nr][nc] == 1 && !visit[nr][nc]) {
+                            grid[nr][nc] = 2;
+                            queue.offer(new int[] {nr, nc});
+                            visit[nr][nc] = true;
+                            fresh -= 1;
+                            if (fresh == 0) {
+                                return minute;
+                            }
+                        }
+                    }
+                }
+            }
+            minute += 1;
+        }
+        return -1;
+    }
 }

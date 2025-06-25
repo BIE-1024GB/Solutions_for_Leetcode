@@ -301,4 +301,27 @@ public class SolutionTest {
         };
         assertEquals(3, solution.minReorder(6, roads));
     }
+
+    @Test
+    public void testMaze() {
+        Solution solution = new Solution();
+        char[][] maze = new char[][] {
+                {'+', '+', '.', '+'},
+                {'.', '.', '.', '+'},
+                {'+', '+', '+', '.'}
+        };
+        int[] entrance = new int[] {1, 2};
+        assertEquals(1, solution.nearestExit(maze, entrance));
+    }
+
+    @Test
+    public void testOrange() {
+        Solution solution = new Solution();
+        int[][] grid = new int[][] {
+                {2, 1, 1},
+                {1, 1, 0},
+                {0, 1, 1}
+        };
+        assertEquals(4, solution.orangesRotting(grid));
+    }
 }
