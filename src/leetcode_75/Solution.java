@@ -1053,7 +1053,7 @@ public class Solution {
         HashSet<Integer> set = new HashSet<>();
         set.add(0);
         Queue<Integer> queue = new LinkedList<>();
-        for (int i : rooms.get(0)) {
+        for (int i : rooms.getFirst()) {
             queue.offer(i);
         }
         ArrayList<Integer> visit = new ArrayList<>();
@@ -1267,5 +1267,49 @@ public class Solution {
             minute += 1;
         }
         return -1;
+    }
+
+    public int findKthLargest(int[] nums, int k) {
+        PriorityQueue<Integer> minh = new PriorityQueue<>();
+        for (int n : nums) {
+            if (minh.size() < k) {
+                minh.add(n);
+            } else {
+                if (n > minh.peek()) {
+                    minh.poll();
+                    minh.add(n);
+                }
+            }
+        }
+        return minh.peek();
+    }
+
+    static class SmallestInfiniteSet {
+        private final PriorityQueue<Integer> addedBack;
+        private final HashSet<Integer> isPresent;
+        private int currentSmallest;
+
+        public SmallestInfiniteSet() {
+            addedBack = new PriorityQueue<>();
+            isPresent = new HashSet<>();
+            currentSmallest = 1;
+        }
+
+        public int popSmallest() {
+            if (!addedBack.isEmpty()) {
+                int num = addedBack.poll();
+                isPresent.remove(num);
+                return num;
+            }
+            return currentSmallest++;
+        }
+
+        public void addBack(int num) {
+            // Only add back numbers that have been popped (smaller than currentSmallest) and aren't already in the set
+            if (num < currentSmallest && !isPresent.contains(num)) {
+                addedBack.add(num);
+                isPresent.add(num);
+            }
+        }
     }
 }

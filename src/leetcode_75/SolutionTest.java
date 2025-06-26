@@ -203,8 +203,7 @@ public class SolutionTest {
     @Test
     public void testMD() {
         Solution.TreeNode n1 = new Solution.TreeNode(1);
-        Solution.TreeNode n2 = new Solution.TreeNode(2);
-        n1.right = n2;
+        n1.right = new Solution.TreeNode(2);
         assertEquals(2, n1.maxDepth(n1));
     }
 
@@ -323,5 +322,25 @@ public class SolutionTest {
                 {0, 1, 1}
         };
         assertEquals(4, solution.orangesRotting(grid));
+    }
+
+    @Test
+    public void testKth() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {3, 2, 1, 5, 6, 4};
+        assertEquals(5, solution.findKthLargest(nums, 2));
+    }
+
+    @Test
+    public void testInfSmall() {
+        Solution.SmallestInfiniteSet infiniteSet = new Solution.SmallestInfiniteSet();
+        infiniteSet.addBack(2);
+        assertEquals(1, infiniteSet.popSmallest());
+        assertEquals(2, infiniteSet.popSmallest());
+        assertEquals(3, infiniteSet.popSmallest());
+        infiniteSet.addBack(1);
+        assertEquals(1, infiniteSet.popSmallest());
+        assertEquals(4, infiniteSet.popSmallest());
+        assertEquals(5, infiniteSet.popSmallest());
     }
 }
