@@ -1312,4 +1312,56 @@ public class Solution {
             }
         }
     }
+
+    public long maxScore(int[] nums1, int[] nums2, int k) {
+        int[][] pair = new int[nums1.length][2];
+        for (int i = 0; i <= nums1.length-1; i++) {
+            pair[i][0] = nums1[i];
+            pair[i][1] = nums2[i];
+        }
+        Arrays.sort(pair, (a, b)->b[1]-a[1]);
+        PriorityQueue<Integer> minh = new PriorityQueue<>();
+        long sum = 0;
+        long res = 0;
+        for (int[] p : pair) {
+            sum += p[0];
+            minh.offer(p[0]);
+            if (minh.size() > k) {
+                sum -= minh.poll();
+            }
+            if (minh.size() == k) {
+                res = Math.max(res, sum*p[1]);
+            }
+        }
+        return res;
+    }
+
+    public long totalCost(int[] costs, int k, int candidates) {
+        PriorityQueue<Integer> leftHeap = new PriorityQueue<>();
+        PriorityQueue<Integer> rightHeap = new PriorityQueue<>();
+        int left = 0;
+        int right = costs.length - 1;
+        long res = 0;
+        while (k > 0) {
+            // Fill the left heap if there are candidates left to consider
+            while (leftHeap.size() < candidates && left <= right) {
+                leftHeap.offer(costs[left++]);
+            }
+            // Fill the right heap if there are candidates left to consider
+            while (rightHeap.size() < candidates && left <= right) {
+                rightHeap.offer(costs[right--]);
+            }
+            // Get the minimum from both heaps, treating empty heaps as having infinity
+            int leftMin = leftHeap.isEmpty() ? Integer.MAX_VALUE : leftHeap.peek();
+            int rightMin = rightHeap.isEmpty() ? Integer.MAX_VALUE : rightHeap.peek();
+            // Choose the worker with the lowest cost
+            if (leftMin <= rightMin) {
+                res += leftHeap.poll();
+            } else {
+                res += rightHeap.poll();
+            }
+            k--;
+        }
+        return res;
+    }
 }

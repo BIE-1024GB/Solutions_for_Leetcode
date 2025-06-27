@@ -343,4 +343,19 @@ public class SolutionTest {
         assertEquals(4, infiniteSet.popSmallest());
         assertEquals(5, infiniteSet.popSmallest());
     }
+
+    @Test
+    public void testMaxScore() {
+        Solution solution = new Solution();
+        int[] n1 = new int[] {1,3,3,2};
+        int[] n2 = new int[] {2,1,3,4};
+        assertEquals(12, solution.maxScore(n1, n2, 3));
+    }
+
+    @Test
+    public void testTC() {
+        Solution solution = new Solution();
+        int[] c = new int[] {17,12,10,2,7,2,11,20,8};
+        assertEquals(11, solution.totalCost(c, 3, 4));
+    }
 }
