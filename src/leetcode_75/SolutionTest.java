@@ -358,4 +358,10 @@ public class SolutionTest {
         int[] c = new int[] {17,12,10,2,7,2,11,20,8};
         assertEquals(11, solution.totalCost(c, 3, 4));
     }
+
+    @Test
+    public void testGuess() {
+        Solution solution = new Solution();
+        assertEquals(1702766719, solution.guessNumber(2126753390));
+    }
 }

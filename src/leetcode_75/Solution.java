@@ -1364,4 +1364,70 @@ public class Solution {
         }
         return res;
     }
+
+    private int guess(int n) {
+        int pick = 1702766719;
+        if (n == pick) {
+            return 0;
+        } else if (n > pick) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
+    public int guessNumber(int n) {
+        if (n == 1) {
+            return 1;
+        }
+        int lp = 1;
+        int rp = n;
+        int mid = (rp-lp)/2+lp;    // get the midpoint by subtraction to avoid overflow
+        while (lp <= rp) {
+            mid = (rp-lp)/2+lp;
+            int g = guess(mid);
+            if (g == 0) {
+                return mid;
+            } else if (g == -1) {
+                rp = mid-1;
+            } else {
+                lp = mid+1;
+            }
+        }
+        return mid;
+    }
+
+    private int BS(int[] nums, long target) {
+        int left = 0;
+        int right = nums.length - 1;
+        int firstGreaterOrEqual = nums.length;
+        // Binary search to find the first element >= target
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] >= target) {
+                firstGreaterOrEqual = mid;
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return nums.length - firstGreaterOrEqual;
+    }
+    public int[] successfulPairs(int[] spells, int[] potions, long success) {
+        Arrays.sort(potions);
+        int[] res = new int[spells.length];
+        for (int i = 0; i <= res.length - 1; i++) {
+            long thres = success / spells[i];
+            if (success % spells[i] != 0) {
+                thres += 1;
+            }
+            if (thres > potions[potions.length - 1]) {
+                res[i] = 0;
+            } else if (thres < potions[0]) {
+                res[i] = potions.length;
+            } else {
+                res[i] = BS(potions, thres);
+            }
+        }
+        return res;
+    }
 }
