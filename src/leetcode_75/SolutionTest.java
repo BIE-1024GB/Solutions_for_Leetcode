@@ -364,4 +364,19 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertEquals(1702766719, solution.guessNumber(2126753390));
     }
+
+    @Test
+    public void testPeak() {
+        Solution solution = new Solution();
+        int[] ints = new int[] {3, 4, 3, 2, 1};
+        assertEquals(1, solution.findPeakElement(ints));
+    }
+
+    @Test
+    public void testBanana() {
+        Solution solution = new Solution();
+        int[] piles = new int[] {805306368, 805306368, 805306368};
+        int h = 1000000000;
+        assertEquals(3, solution.minEatingSpeed(piles, h));
+    }
 }

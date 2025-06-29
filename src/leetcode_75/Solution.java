@@ -1367,13 +1367,7 @@ public class Solution {
 
     private int guess(int n) {
         int pick = 1702766719;
-        if (n == pick) {
-            return 0;
-        } else if (n > pick) {
-            return -1;
-        } else {
-            return 1;
-        }
+        return Integer.compare(pick, n);
     }
     public int guessNumber(int n) {
         if (n == 1) {
@@ -1426,6 +1420,60 @@ public class Solution {
                 res[i] = potions.length;
             } else {
                 res[i] = BS(potions, thres);
+            }
+        }
+        return res;
+    }
+
+    public int findPeakElement(int[] nums) {
+        if (nums.length == 1) {
+            return 0;
+        }
+        if (nums[0] > nums[1]) {
+            return 0;
+        }
+        if (nums[nums.length-1] > nums[nums.length-2]) {
+            return nums.length-1;
+        }
+        int lp = 0;
+        int rp = nums.length-1;
+        while (lp < rp) {
+            int mid = (lp+rp)/2;
+            if (nums[mid] > nums[mid+1]) {
+                rp = mid;
+            } else {
+                lp = mid+1;
+            }
+        }
+        return lp;
+    }
+
+    public int minEatingSpeed(int[] piles, int h) {
+        Arrays.sort(piles);
+        if (piles.length == h) {
+            return piles[piles.length-1];
+        }
+        int mins = 1;
+        int maxs = piles[piles.length-1];
+        int res = maxs;
+        while (mins <= maxs) {
+            int mids = (maxs-mins)/2+mins;
+            int t = 0;
+            for (int p : piles) {
+                if (p%mids == 0) {
+                    t += (p/mids);
+                } else {
+                    t += (p/mids+1);
+                }
+                if (t > h) {
+                    break;    // early termination to prevent overflow
+                }
+            }
+            if (t <= h) {
+                res = mids;
+                maxs = mids-1;
+            } else {
+                mins = mids+1;
             }
         }
         return res;
