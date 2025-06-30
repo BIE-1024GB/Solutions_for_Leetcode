@@ -379,4 +379,17 @@ public class SolutionTest {
         int h = 1000000000;
         assertEquals(3, solution.minEatingSpeed(piles, h));
     }
+
+    @Test
+    public void testTribo() {
+        Solution solution = new Solution();
+        assertEquals(4, solution.tribonacci(4));
+    }
+
+    @Test
+    public void testMCCS() {
+        Solution solution = new Solution();
+        int[] cost = new int[] {1,100,1,1,1,100,1,1,100,1};
+        assertEquals(6, solution.minCostClimbingStairs(cost));
+    }
 }

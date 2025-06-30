@@ -1478,4 +1478,95 @@ public class Solution {
         }
         return res;
     }
+
+    private void PNdfs(List<String> res, StringBuilder sb, String digits) {
+        if (sb.length() == digits.length()) {
+            res.add(sb.toString());
+        } else {
+            char nc = digits.charAt(sb.length());
+            char[] d;
+            switch (nc) {
+                case '2' -> d = new char[]{'a', 'b', 'c'};
+                case '3' -> d = new char[]{'d', 'e', 'f'};
+                case '4' -> d = new char[]{'g', 'h', 'i'};
+                case '5' -> d = new char[]{'j', 'k', 'l'};
+                case '6' -> d = new char[]{'m', 'n', 'o'};
+                case '7' -> d = new char[]{'p', 'q', 'r', 's'};
+                case '8' -> d = new char[]{'t', 'u', 'v'};
+                default -> d = new char[]{'w', 'x', 'y', 'z'};
+            }
+            for (char c : d) {
+                sb.append(c);
+                PNdfs(res, sb, digits);
+                sb.deleteCharAt(sb.length() - 1);
+            }
+        }
+    }
+    public List<String> letterCombinations(String digits) {
+        List<String> res = new ArrayList<>();
+        if (!digits.isEmpty()) {
+            StringBuilder sb = new StringBuilder();
+            PNdfs(res, sb, digits);
+        }
+        return res;
+    }
+
+    private void CSdfs(List<List<Integer>> res, List<Integer> list, int sum, int k, int n) {
+        if (list.size() == k && sum == n) {
+            List<Integer> rl = new ArrayList<>(list);
+            res.add(rl);
+        } else {
+            if (list.size() != k && sum != n) {
+                if (list.isEmpty() || list.getLast() < 9) {
+                    for (int s = (list.isEmpty() ? 1 : list.getLast()+1); s <= 9; s++) {
+                        list.add(s);
+                        CSdfs(res, list, sum + s, k, n);
+                        list.removeLast();
+                    }
+                }
+            }
+        }
+    }
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        int min = 0;
+        int incre = k;
+        while (incre > 0) {
+            min += incre;
+            incre -= 1;
+        }
+        List<List<Integer>> res = new ArrayList<>();
+        if (min <= n) {
+            CSdfs(res, new ArrayList<>(), 0, k, n);
+        }
+        return res;
+    }
+
+    public int tribonacci(int n) {
+        if (n == 0) {
+            return 0;
+        } else if (n == 1) {
+            return 1;
+        } else if (n == 2) {
+            return 1;
+        } else {
+            int[] dp = new int[n+1];
+            dp[0] = 0;
+            dp[1] = 1;
+            dp[2] = 1;
+            for (int i = 3; i <= n; i++) {
+                dp[i] = dp[i-3]+dp[i-2]+dp[i-1];
+            }
+            return dp[n];
+        }
+    }
+
+    public int minCostClimbingStairs(int[] cost) {
+        int[] dp = new int[cost.length+1];
+        dp[0] = 0;
+        dp[1] = 0;
+        for (int i = 2; i <= dp.length-1; i++) {
+            dp[i] = Math.min(dp[i-2]+cost[i-2], dp[i-1]+cost[i-1]);
+        }
+        return dp[dp.length-1];
+    }
 }
