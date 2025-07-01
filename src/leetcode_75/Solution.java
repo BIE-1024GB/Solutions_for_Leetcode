@@ -1569,4 +1569,75 @@ public class Solution {
         }
         return dp[dp.length-1];
     }
+
+    public int rob(int[] nums) {
+        if (nums.length == 1) {
+            return nums[0];
+        } else if (nums.length == 2) {
+            return Math.max(nums[0], nums[1]);
+        } else {
+            int[] dp = new int[nums.length];
+            dp[0] = nums[0];
+            dp[1] = Math.max(nums[0], nums[1]);
+            for (int i = 2; i <= dp.length-1; i++) {
+                dp[i] = Math.max(dp[i-2]+nums[i], dp[i-1]);
+            }
+            return dp[dp.length-1];
+        }
+    }
+
+    public int numTilings(int n) {
+        if (n == 1)
+            return 1;
+        if (n == 2)
+            return 2;
+        if (n == 3)
+            return 5;
+        int mod = 1000000007;
+        long[] dp = new long[n + 1];
+        dp[0] = 1;
+        dp[1] = 1;
+        dp[2] = 2;
+        dp[3] = 5;
+        for (int i = 4; i <= n; i++) {
+            dp[i] = (2 * dp[i - 1] + dp[i - 3]) % mod;
+        }
+        return (int) dp[n];
+    }
+
+    public int uniquePaths(int m, int n) {
+        if (m == 1 || n == 1) {
+            return 1;
+        }
+        int[][] dp = new int[m][n];
+        for (int i = 0; i <= n-1; i++) {
+            dp[0][i] = 1;
+        }
+        for (int j = 0; j <= m-1; j++) {
+            dp[j][0] = 1;
+        }
+        for (int p = 1; p <= m-1; p++) {
+            for (int q = 1; q <= n-1; q++) {
+                dp[p][q] = dp[p-1][q]+dp[p][q-1];
+            }
+        }
+        return dp[m-1][n-1];
+    }
+
+    public int longestCommonSubsequence(String text1, String text2) {
+        int m = text1.length();
+        int n = text2.length();
+        int[][] dp = new int[m + 1][n + 1];
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (text1.charAt(i - 1) == text2.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                }
+                else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+        return dp[m][n];
+    }
 }

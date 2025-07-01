@@ -392,4 +392,29 @@ public class SolutionTest {
         int[] cost = new int[] {1,100,1,1,1,100,1,1,100,1};
         assertEquals(6, solution.minCostClimbingStairs(cost));
     }
+
+    @Test
+    public void testRob() {
+        Solution solution = new Solution();
+        int[] num = new int[] {2,7,9,3,1};
+        assertEquals(12, solution.rob(num));
+    }
+
+    @Test
+    public void testTile() {
+        Solution solution = new Solution();
+        assertEquals(11, solution.numTilings(4));
+    }
+
+    @Test
+    public void testUP() {
+        Solution solution = new Solution();
+        assertEquals(28, solution.uniquePaths(3, 7));
+    }
+
+    @Test
+    public void testLCS() {
+        Solution solution = new Solution();
+        assertEquals(3, solution.longestCommonSubsequence("abcde", "ace"));
+    }
 }
