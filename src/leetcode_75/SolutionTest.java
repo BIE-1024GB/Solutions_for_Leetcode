@@ -417,4 +417,19 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertEquals(3, solution.longestCommonSubsequence("abcde", "ace"));
     }
+
+    @Test
+    public void testProfitFee() {
+        Solution solution = new Solution();
+        int[] prices = new int[] {1,3,2,8,4,9};
+        assertEquals(8, solution.maxProfit_fee(prices, 2));
+    }
+
+    @Test
+    public void testEdit() {
+        Solution solution = new Solution();
+        String w1 = "intention";
+        String w2 = "execution";
+        assertEquals(5, solution.minDistance(w1, w2));
+    }
 }

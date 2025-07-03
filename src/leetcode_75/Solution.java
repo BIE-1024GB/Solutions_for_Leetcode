@@ -1640,4 +1640,44 @@ public class Solution {
         }
         return dp[m][n];
     }
+
+    public int maxProfit_fee(int[] prices, int fee) {
+        if (prices.length == 1) {
+            return 0;
+        }
+        int n = prices.length;
+        int[] buy = new int[n];
+        int[] sell = new int[n];
+        buy[0] = -prices[0];
+        sell[0] = 0;
+        for (int i = 1; i < n; i++) {
+            // On day i, if we buy, it means we either just bought on day i or carried over from day i-1
+            buy[i] = Math.max(buy[i - 1], sell[i - 1] - prices[i]);
+            // On day i, if we sell, it means we either just sold on day i (paying the fee) or carried over from day i-1
+            sell[i] = Math.max(sell[i - 1], buy[i - 1] + prices[i] - fee);
+        }
+        // The maximum profit will be in the sell array since we can't end with an open transaction
+        return sell[n - 1];
+    }
+
+    public int minDistance(String word1, String word2) {
+        int[][] dp = new int[word1.length()+1][word2.length()+1];
+        dp[0][0] = 0;
+        for (int i = 1; i <= word2.length(); i++) {
+            dp[0][i] = i;
+        }
+        for (int i = 1; i <= word1.length(); i++) {
+            dp[i][0] = i;
+        }
+        for (int i = 1; i <= word1.length(); i++) {
+            for (int j = 1; j <= word2.length(); j++) {
+                if (word1.charAt(i-1) == word2.charAt(j-1)) {
+                    dp[i][j] = dp[i-1][j-1];
+                } else {
+                    dp[i][j] = Math.min(dp[i-1][j]+1, Math.min(dp[i][j-1]+1, dp[i-1][j-1]+1));
+                }
+            }
+        }
+        return dp[word1.length()][word2.length()];
+    }
 }
