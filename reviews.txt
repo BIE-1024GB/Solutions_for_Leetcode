@@ -46,3 +46,9 @@ Java allows variable length of arguments(varargs):
 In multi-level inheritance, a child can only access its direct parent("super.super" is not allowed).
 
 Converting from a bigger data type to a smaller data type is not allowed in java, eg: double->int. Compilation error will be raised.
+
+Minimum value (lowest): -2,147,483,648 (Integer.MIN_VALUE or -2³¹)
+Maximum value (highest): 2,147,483,647 (Integer.MAX_VALUE or 2³¹ - 1)
+The most significant bit (MSB) is the sign bit, the remaining 31 bits represent the magnitude of the number:
+    0 for positive numbers (including zero).
+    1 for negative numbers.

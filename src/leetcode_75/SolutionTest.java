@@ -432,4 +432,17 @@ public class SolutionTest {
         String w2 = "execution";
         assertEquals(5, solution.minDistance(w1, w2));
     }
+
+    @Test
+    public void testSingle() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {4,1,2,1,2};
+        assertEquals(4, solution.singleNumber(nums));
+    }
+
+    @Test
+    public void testFlip() {
+        Solution solution = new Solution();
+        assertEquals(3, solution.minFlips(2, 6, 5));
+    }
 }

@@ -1680,4 +1680,117 @@ public class Solution {
         }
         return dp[word1.length()][word2.length()];
     }
+
+    public int[] countBits(int n) {
+        int[] res = new int[n+1];
+        if (n == 0) {
+            return res;
+        } else if (n == 1) {
+            res[1] = 1;
+            return res;
+        } else {
+            res[1] = 1;
+            int curr = 2;
+            int forward = 2;
+            for (int i = 2; i <= n; i++) {
+                if (i%curr == 0) {
+                    res[i] = 1;
+                } else {
+                    res[i] = 1+res[i%curr];
+                }
+                forward -= 1;
+                if (forward == 0) {
+                    curr *= 2;
+                    forward = curr;
+                }
+            }
+            return res;
+        }
+    }
+
+    public int singleNumber(int[] nums) {
+        if (nums.length == 1) {
+            return nums[0];
+        } else {
+            int res = 0;
+            for (int n : nums) {
+                res = res^n;
+            }
+            return res;
+        }
+    }
+
+    public int minFlips(int a, int b, int c) {
+        int flip = 0;
+        for (int i = 1; i <= 31; i++) {
+            int digit = c&1;
+            int da = a&1;
+            int db = b&1;
+            if (digit == 1) {
+                if (da == 0 && db == 0) {
+                    flip += 1;
+                }
+            } else {
+                if (da == 1 && db == 1) {
+                    flip += 2;
+                } else if (da == 1 || db == 1) {
+                    flip += 1;
+                }
+            }
+            a = a >> 1;
+            b = b >> 1;
+            c = c >> 1;
+        }
+        return flip;
+    }
+
+    static class TN {
+        TN[] children;
+        boolean eow;
+
+        public TN() {
+            children = new TN[26];
+            eow = false;
+        }
+    }
+    static class Trie {
+        private final TN root;
+
+        public Trie() {
+            root = new TN();
+        }
+
+        public void insert(String word) {
+            TN curr = root;
+            for (char c : word.toCharArray()) {
+                int index = c - 'a';
+                if (curr.children[index] == null)
+                    curr.children[index] = new TN();
+                curr = curr.children[index];
+            }
+            curr.eow = true;
+        }
+
+        public boolean search(String word) {
+            TN curr = root;
+            for (char c : word.toCharArray()) {
+                int index = c - 'a';
+                if (curr.children[index] == null)
+                    return false;
+                curr = curr.children[index];
+            }
+            return curr.eow;
+        }
+
+        public boolean startsWith(String prefix) {
+            TN curr = root;
+            for (char c : prefix.toCharArray()) {
+                int index = c - 'a';
+                if (curr.children[index] == null)
+                    return false;
+                curr = curr.children[index];
+            }
+            return true;
+        }
+    }
 }
