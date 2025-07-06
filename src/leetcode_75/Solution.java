@@ -1793,4 +1793,77 @@ public class Solution {
             return true;
         }
     }
+
+    static class TrieNode {
+        TrieNode[] children;
+
+        public TrieNode() {
+            children = new TrieNode[26];
+        }
+    }
+    static class Trie2 {
+        TrieNode root;
+        Map<String, List<String>> prefix;    // store available words
+
+        public Trie2() {
+            root = new TrieNode();
+            prefix = new HashMap<>();
+        }
+
+        public void insert(String word) {
+            TrieNode cur = root;
+            StringBuilder sb = new StringBuilder();
+            for (Character ch : word.toCharArray()) {
+                String key = sb.append(ch).toString();
+                if (!prefix.containsKey(key)) {
+                    prefix.put(key, new ArrayList<>());
+                }
+                prefix.get(key).add(word);
+                if (cur.children[ch - 'a'] == null) {
+                    cur.children[ch - 'a'] = new TrieNode();
+                }
+                cur = cur.children[ch - 'a'];
+            }
+        }
+    }
+    public List<List<String>> suggestedProducts(String[] products, String searchWord) {
+        List<List<String>> res = new ArrayList<>();
+        Trie2 trie = new Trie2();
+        Arrays.sort(products);
+        for (String p : products) {
+            trie.insert(p);
+        }
+        for (int i = 1; i <= searchWord.length(); i++) {
+            String key = searchWord.substring(0, i);
+            List<String> pres = trie.prefix.get(key);
+            if (pres == null) {
+                res.add(new ArrayList<>());
+            } else {
+                if (pres.size() > 3) {
+                    res.add(trie.prefix.get(key).subList(0, 3));
+                } else {
+                    res.add(trie.prefix.get(key));
+                }
+            }
+        }
+        return res;
+    }
+
+    public int eraseOverlapIntervals(int[][] intervals) {
+        if (intervals.length == 1) {
+            return 0;
+        }
+        Arrays.sort(intervals, (a, b)->a[0]-b[0]);
+        int ref = intervals[0][1];
+        int lap = 0;
+        for (int i = 1; i <= intervals.length-1; i++) {
+            if (intervals[i][0] < ref) {
+                lap += 1;
+                ref = Math.min(ref, intervals[i][1]);
+            } else {
+                ref = intervals[i][1];
+            }
+        }
+        return lap;
+    }
 }

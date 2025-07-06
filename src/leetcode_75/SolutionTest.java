@@ -445,4 +445,16 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertEquals(3, solution.minFlips(2, 6, 5));
     }
+
+    @Test
+    public void testNoOverlap() {
+        Solution solution = new Solution();
+        int[][] intervals = new int[][] {
+                {1, 100},
+                {11, 22},
+                {1, 11},
+                {2, 12}
+        };
+        assertEquals(2, solution.eraseOverlapIntervals(intervals));
+    }
 }
