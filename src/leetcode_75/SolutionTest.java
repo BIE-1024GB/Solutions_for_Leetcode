@@ -457,4 +457,34 @@ public class SolutionTest {
         };
         assertEquals(2, solution.eraseOverlapIntervals(intervals));
     }
+
+    @Test
+    public void testArrow() {
+        Solution solution = new Solution();
+        int[][] points = new int[][] {
+                {-2147483646, -2147483645},
+                {2147483646, 2147483647}
+        };
+        assertEquals(2, solution.findMinArrowShots(points));
+    }
+
+    @Test
+    public void testTemperature() {
+        Solution solution = new Solution();
+        int[] temperatures = new int[] {73,74,75,71,69,72,76,73};
+        int[] ans = new int[] {1,1,4,2,1,1,0,0};
+        assertTrue(Arrays.equals(ans, solution.dailyTemperatures(temperatures)));
+    }
+
+    @Test
+    public void testStockSpan() {
+        Solution.StockSpanner spanner = new Solution.StockSpanner();
+        assertEquals(1, spanner.next(100));
+        assertEquals(1, spanner.next(80));
+        assertEquals(1, spanner.next(60));
+        assertEquals(2, spanner.next(70));
+        assertEquals(1, spanner.next(60));
+        assertEquals(4, spanner.next(75));
+        assertEquals(6, spanner.next(85));
+    }
 }

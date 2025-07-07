@@ -1866,4 +1866,56 @@ public class Solution {
         }
         return lap;
     }
+
+    public int findMinArrowShots(int[][] points) {
+        if (points.length == 1) {
+            return 1;
+        }
+        int res = 1;
+        Arrays.sort(points, (a, b)->Integer.compare(a[1], b[1])); // Integer.compare() avoids overflow
+        int rb = points[0][1];
+        for (int i = 1; i <= points.length-1; i++) {
+            if (points[i][0] > rb) {
+                res += 1;
+                rb = points[i][1];
+            }
+        }
+        return res;
+    }
+
+    public int[] dailyTemperatures(int[] temperatures) {
+        if (temperatures.length == 1) {
+            return new int[] {0};
+        }
+        int[] res = new int[temperatures.length];
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i <= temperatures.length-1; i++) {
+            while (!stack.isEmpty() && temperatures[i] > temperatures[stack.peek()]) {
+                int prevIndex = stack.pop();
+                res[prevIndex] = i - prevIndex;
+            }
+            stack.push(i);
+        }
+        return res;
+    }
+
+    static class StockSpanner {
+        private final ArrayList<Integer> list;
+        public StockSpanner() {
+            list = new ArrayList<>();
+        }
+
+        public int next(int price) {
+            list.add(price);
+            int res = 0;
+            for (int i = list.size()-1; i >= 0; i--) {
+                if (list.get(i) <= price) {
+                    res += 1;
+                } else {
+                    break;
+                }
+            }
+            return res;
+        }
+    }
 }
