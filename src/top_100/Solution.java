@@ -59,4 +59,47 @@ public class Solution {
         GPdfs(res, new StringBuilder(), 0, 0, n);
         return res;
     }
+
+    private void CSdfs(int[] candidates, int target, List<List<Integer>> res, List<Integer> curr, int sum, int index) {
+        if (sum == target) {
+            List<Integer> list = new ArrayList<>(curr);    //don't directly add 'curr'
+            res.add(list);
+        } else if (sum < target) {
+            for (int i = index; i <= candidates.length-1; i++) {
+                if (sum+candidates[i] > target) {
+                    break;
+                } else {
+                    curr.add(candidates[i]);
+                    CSdfs(candidates, target, res, curr, sum+candidates[i], i);
+                    curr.removeLast();
+                }
+            }
+        }
+    }
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> res = new ArrayList<>();
+        Arrays.sort(candidates);
+        CSdfs(candidates, target, res, new ArrayList<>(), 0, 0);
+        return res;
+    }
+
+    private void Pdfs(int[] nums, List<List<Integer>> res, List<Integer> curr) {
+        if (curr.size() == nums.length) {
+            List<Integer> list = new ArrayList<>(curr);
+            res.add(list);
+        } else {
+            for (int n : nums) {
+                if (!curr.contains(n)) {
+                    curr.add(n);
+                    Pdfs(nums, res, curr);
+                    curr.removeLast();
+                }
+            }
+        }
+    }
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        Pdfs(nums, res, new ArrayList<>());
+        return res;
+    }
 }
