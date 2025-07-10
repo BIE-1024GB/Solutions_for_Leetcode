@@ -25,4 +25,15 @@ public class SolutionTest {
         List<String> exp = new ArrayList<>(Arrays.asList("((()))", "(()())", "(())()", "()(())", "()()()"));
         assertEquals(exp, solution.generateParenthesis(3));
     }
+
+    @Test
+    public void testQueens() {
+        Solution solution = new Solution();
+        List<List<String>> exp = new ArrayList<>();
+        List<String> s1 = new ArrayList<>(Arrays.asList(".Q..", "...Q", "Q...", "..Q."));
+        List<String> s2 = new ArrayList<>(Arrays.asList("..Q.", "Q...", "...Q", ".Q.."));
+        exp.add(s1);
+        exp.add(s2);
+        assertEquals(exp, solution.solveNQueens(4));
+    }
 }

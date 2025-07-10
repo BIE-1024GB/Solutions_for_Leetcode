@@ -102,4 +102,80 @@ public class Solution {
         Pdfs(nums, res, new ArrayList<>());
         return res;
     }
+
+    private boolean isValid(char[][] board, int row, int col, int n) {
+        for (int i = 0; i < row; i++) {
+            if (board[i][col] == 'Q') {
+                return false;
+            }
+        }
+        for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
+            if (board[i][j] == 'Q') {
+                return false;
+            }
+        }
+        for (int i = row - 1, j = col + 1; i >= 0 && j < n; i--, j++) {
+            if (board[i][j] == 'Q') {
+                return false;
+            }
+        }
+        return true;
+    }
+    private List<String> constructSolution(char[][] board) {
+        List<String> solution = new ArrayList<>();
+        for (char[] row : board) {
+            solution.add(new String(row));
+        }
+        return solution;
+    }
+    private void backtrack(List<List<String>> solutions, char[][] board, int row, int n) {
+        if (row == n) {
+            solutions.add(constructSolution(board));
+        } else {
+            for (int col = 0; col < n; col++) {
+                if (isValid(board, row, col, n)) {
+                    board[row][col] = 'Q';
+                    backtrack(solutions, board, row + 1, n);
+                    board[row][col] = '.';
+                }
+            }
+        }
+    }
+    public List<List<String>> solveNQueens(int n) {
+        List<List<String>> solutions = new ArrayList<>();
+        char[][] board = new char[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                board[i][j] = '.';
+            }
+        }
+        backtrack(solutions, board, 0, n);
+        return solutions;
+    }
+
+    private void Sdfs(List<List<Integer>> res, int[] nums, List<Integer> curr, int index) {
+        if (curr.size() == nums.length) {
+            List<Integer> list = new ArrayList<>(curr);
+            res.add(list);
+        } else {
+            curr.add(nums[index]);
+            List<Integer> list = new ArrayList<>(curr);
+            res.add(list);
+            int k = 1;
+            while (index+k <= nums.length-1) {
+                Sdfs(res, nums, curr, index+k);
+                k++;
+            }
+            curr.removeLast();
+            if (curr.isEmpty() && index <= nums.length-2) {
+                Sdfs(res, nums, curr, index+1);
+            }
+        }
+    }
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        res.add(new ArrayList<>(0));
+        Sdfs(res, nums, new ArrayList<>(), 0);
+        return res;
+    }
 }
