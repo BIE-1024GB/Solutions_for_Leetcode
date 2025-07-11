@@ -178,4 +178,89 @@ public class Solution {
         Sdfs(res, nums, new ArrayList<>(), 0);
         return res;
     }
+
+    private boolean SWdfs(char[][] board, String word, int index, int r, int c, boolean[][] visit) {
+        if (index == word.length()) {
+            return true;
+        } else {
+            if (r-1>=0 && !visit[r-1][c] && board[r-1][c]==word.charAt(index)) {
+                visit[r-1][c] = true;
+                if (SWdfs(board, word, index+1, r-1, c, visit)) {
+                    return true;
+                }
+                visit[r-1][c] = false;
+            }
+            if (c+1<=board[0].length-1 && !visit[r][c+1] && board[r][c+1]==word.charAt(index)) {
+                visit[r][c+1] = true;
+                if (SWdfs(board, word, index+1, r, c+1, visit)) {
+                    return true;
+                }
+                visit[r][c+1] = false;
+            }
+            if (r+1<=board.length-1 && !visit[r+1][c] && board[r+1][c]==word.charAt(index)) {
+                visit[r+1][c] = true;
+                if (SWdfs(board, word, index+1, r+1, c, visit)) {
+                    return true;
+                }
+                visit[r+1][c] = false;
+            }
+            if (c-1>=0 && !visit[r][c-1] && board[r][c-1]==word.charAt(index)) {
+                visit[r][c-1] = true;
+                if (SWdfs(board, word, index+1, r, c-1, visit)) {
+                    return true;
+                }
+                visit[r][c-1] = false;
+            }
+            return false;
+        }
+    }
+    public boolean exist(char[][] board, String word) {
+        boolean[][] visit = new boolean[board.length][board[0].length];
+        for (int i = 0; i <= board.length-1; i++) {
+            for (int j = 0; j <= board[0].length-1; j++) {
+                if (board[i][j] == word.charAt(0)) {
+                    visit[i][j] = true;
+                    if (SWdfs(board, word, 1, i, j, visit)) {
+                        return true;
+                    }
+                    visit[i][j] = false;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean isPalindrome(String s) {
+        int left = 0;
+        int right = s.length() - 1;
+        while (left < right) {
+            if (s.charAt(left) != s.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+    private void backtrack(String s, int start, List<String> current, List<List<String>> result) {
+        // If we've reached the end of the string, add the current partition to result
+        if (start == s.length()) {
+            result.add(new ArrayList<>(current));
+            return;
+        }
+        // Explore all possible partitions
+        for (int end = start + 1; end <= s.length(); end++) {
+            String substring = s.substring(start, end);
+            if (isPalindrome(substring)) {
+                current.add(substring);
+                backtrack(s, end, current, result);
+                current.removeLast();
+            }
+        }
+    }
+    public List<List<String>> partition(String s) {
+        List<List<String>> result = new ArrayList<>();
+        backtrack(s, 0, new ArrayList<>(), result);
+        return result;
+    }
 }

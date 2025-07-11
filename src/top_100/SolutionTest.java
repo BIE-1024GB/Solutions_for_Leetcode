@@ -36,4 +36,16 @@ public class SolutionTest {
         exp.add(s2);
         assertEquals(exp, solution.solveNQueens(4));
     }
+
+    @Test
+    public void testSW() {
+        Solution solution = new Solution();
+        char[][] board = new char[][] {
+                {'A','B','C','E'},
+                {'S','F','C','S'},
+                {'A','D','E','E'}
+        };
+        String word = "ABCCED";
+        assertTrue(solution.exist(board, word));
+    }
 }
