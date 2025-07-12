@@ -48,4 +48,19 @@ public class SolutionTest {
         String word = "ABCCED";
         assertTrue(solution.exist(board, word));
     }
+
+    @Test
+    public void testMed() {
+        Solution solution = new Solution();
+        int[] n1 = new int[] {1, 2};
+        int[] n2 = new int[] {3, 4};
+        assertEquals(2.50000, solution.findMedianSortedArrays(n1, n2));
+    }
+
+    @Test
+    public void testRS() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {4,5,6,7,0,1,2};
+        assertEquals(4, solution.search(nums, 0));
+    }
 }

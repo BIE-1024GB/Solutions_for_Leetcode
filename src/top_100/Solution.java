@@ -263,4 +263,66 @@ public class Solution {
         backtrack(s, 0, new ArrayList<>(), result);
         return result;
     }
+
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        if (nums1.length > nums2.length) {
+            return findMedianSortedArrays(nums2, nums1);
+        }
+        int m = nums1.length;
+        int n = nums2.length;
+        int left = 0, right = m;
+        int halfLen = (m + n + 1) / 2;
+        while (left <= right) {
+            int partitionX = (left + right) / 2;
+            int partitionY = halfLen - partitionX;
+            // Handle edge cases where partitions are at the boundaries
+            int maxLeftX = (partitionX == 0) ? Integer.MIN_VALUE : nums1[partitionX - 1];
+            int minRightX = (partitionX == m) ? Integer.MAX_VALUE : nums1[partitionX];
+            int maxLeftY = (partitionY == 0) ? Integer.MIN_VALUE : nums2[partitionY - 1];
+            int minRightY = (partitionY == n) ? Integer.MAX_VALUE : nums2[partitionY];
+            if (maxLeftX <= minRightY && maxLeftY <= minRightX) {
+                // Found the correct partition
+                if ((m + n) % 2 == 0) {
+                    return (Math.max(maxLeftX, maxLeftY) + Math.min(minRightX, minRightY)) / 2.0;
+                } else {
+                    return Math.max(maxLeftX, maxLeftY);
+                }
+            } else if (maxLeftX > minRightY) {
+                right = partitionX - 1;
+            } else {
+                left = partitionX + 1;
+            }
+        }
+        throw new IllegalArgumentException("Input arrays are not sorted.");
+    }
+
+    public int search(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            }
+            // Check if the left half is sorted
+            if (nums[left] <= nums[mid]) {
+                // Target is in the left sorted half
+                if (nums[left] <= target && target < nums[mid]) {
+                    right = mid - 1;
+                } else {
+                    left = mid + 1;
+                }
+            }
+            // Otherwise, the right half must be sorted
+            else {
+                // Target is in the right sorted half
+                if (nums[mid] < target && target <= nums[right]) {
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                }
+            }
+        }
+        return -1;
+    }
 }
