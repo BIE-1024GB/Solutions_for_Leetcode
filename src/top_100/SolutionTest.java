@@ -63,4 +63,19 @@ public class SolutionTest {
         int[] nums = new int[] {4,5,6,7,0,1,2};
         assertEquals(4, solution.search(nums, 0));
     }
+
+    @Test
+    public void testSR() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {5, 7, 7, 8, 8, 10};
+        int[] exp = new int[] {3, 4};
+        assertArrayEquals(exp, solution.searchRange(nums, 8));
+    }
+
+    @Test
+    public void testSI() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {1, 3, 5, 6};
+        assertEquals(1, solution.searchInsert(nums, 2));
+    }
 }
