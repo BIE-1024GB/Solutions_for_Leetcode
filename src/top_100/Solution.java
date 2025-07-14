@@ -393,4 +393,58 @@ public class Solution {
         }
         return lp;
     }
+
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        int lp = 0;
+        int rp = rows*cols-1;
+        while (lp <= rp) {
+            int mid = lp+(rp-lp)/2;
+            int mr = mid/cols;
+            int mc = mid%cols;
+            if (matrix[mr][mc] == target) {
+                return true;
+            } else {
+                if (matrix[mr][mc] < target) {
+                    lp = mid+1;
+                } else {
+                    rp = mid-1;
+                }
+            }
+        }
+        return false;
+    }
+
+    static class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode() {}
+        TreeNode(int val) { this.val = val; }
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+
+        private int maxSum = Integer.MIN_VALUE;
+        private int maxGain(TreeNode node) {
+            if (node == null)
+                return 0;
+            // Max sum on the left and right sub-trees of node
+            int leftGain = Math.max(maxGain(node.left), 0);
+            int rightGain = Math.max(maxGain(node.right), 0);
+            // The price to start a new path where 'node' is the highest node
+            int priceNewPath = node.val + leftGain + rightGain;
+            // Update the global maximum sum
+            maxSum = Math.max(maxSum, priceNewPath);
+            // Return the maximum contribution this node can make to a path
+            return node.val + Math.max(leftGain, rightGain);
+        }
+        public int maxPathSum(TreeNode root) {
+            maxGain(root);
+            return maxSum;
+        }
+    }
 }

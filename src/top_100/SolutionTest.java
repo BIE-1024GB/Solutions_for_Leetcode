@@ -78,4 +78,22 @@ public class SolutionTest {
         int[] nums = new int[] {1, 3, 5, 6};
         assertEquals(1, solution.searchInsert(nums, 2));
     }
+
+    @Test
+    public void testMS() {
+        Solution solution = new Solution();
+        int[][] matrix = new int[][] {
+                {1,3,5,7},
+                {10,11,16,20},
+                {23,30,34,60}
+        };
+        assertFalse(solution.searchMatrix(matrix, 13));
+    }
+
+    @Test
+    public void testBTMPS() {
+        Solution.TreeNode n1 = new Solution.TreeNode(-10, new Solution.TreeNode(9), new Solution.TreeNode(20,
+                new Solution.TreeNode(15), new Solution.TreeNode(7)));
+        assertEquals(42, n1.maxPathSum(n1));
+    }
 }
