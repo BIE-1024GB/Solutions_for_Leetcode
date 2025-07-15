@@ -459,6 +459,42 @@ public class Solution {
             inTra(root, res);
             return res;
         }
+
+        private boolean checker(TreeNode node, Integer low, Integer up) {
+            if (node == null) {
+                return true;
+            } else {
+                int val = node.val;
+
+                // Check current node's value against boundaries
+                if (low != null && val <= low)
+                    return false;
+                if (up != null && val >= up)
+                    return false;
+
+                // Recursively check left and right subtrees with updated boundaries
+                return checker(node.left, low, val) && checker(node.right, val, up);
+            }
+        }
+        public boolean isValidBST(TreeNode root) {
+            return checker(root, null, null);
+        }
+
+        private boolean isMirror(TreeNode left, TreeNode right) {
+            // Base cases
+            if (left == null && right == null)
+                return true;
+            if (left == null || right == null)
+                return false;
+
+            // Check values and recurse
+            return (left.val == right.val)
+                    && isMirror(left.left, right.right)
+                    && isMirror(left.right, right.left);
+        }
+        public boolean isSymmetric(TreeNode root) {
+            return isMirror(root.left, root.right);
+        }
     }
 
     public int findMin(int[] nums) {

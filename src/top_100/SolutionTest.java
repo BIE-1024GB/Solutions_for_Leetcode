@@ -103,4 +103,18 @@ public class SolutionTest {
         int[] nums = new int[] {5, 1, 2, 3, 4};
         assertEquals(1, solution.findMin(nums));
     }
+
+    @Test
+    public void testValidBST() {
+        Solution.TreeNode root = new Solution.TreeNode(5, new Solution.TreeNode(4), new Solution.TreeNode(6,
+                new Solution.TreeNode(3), new Solution.TreeNode(7)));
+        assertFalse(root.isValidBST(root));
+    }
+
+    @Test
+    public void testMirror() {
+        Solution.TreeNode root = new Solution.TreeNode(1, new Solution.TreeNode(2, null, new Solution.TreeNode(3)),
+                new Solution.TreeNode(2, null, new Solution.TreeNode(3)));
+        assertFalse(root.isSymmetric(root));
+    }
 }
