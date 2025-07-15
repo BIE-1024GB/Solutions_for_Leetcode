@@ -96,4 +96,11 @@ public class SolutionTest {
                 new Solution.TreeNode(15), new Solution.TreeNode(7)));
         assertEquals(42, n1.maxPathSum(n1));
     }
+
+    @Test
+    public void testFindMin() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {5, 1, 2, 3, 4};
+        assertEquals(1, solution.findMin(nums));
+    }
 }

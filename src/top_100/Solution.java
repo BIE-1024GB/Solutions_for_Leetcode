@@ -446,5 +446,46 @@ public class Solution {
             maxGain(root);
             return maxSum;
         }
+
+        private void inTra(TreeNode root, List<Integer> res) {
+            if (root != null) {
+                inTra(root.left, res);
+                res.add(root.val);
+                inTra(root.right, res);
+            }
+        }
+        public List<Integer> inorderTraversal(TreeNode root) {
+            List<Integer> res = new ArrayList<>();
+            inTra(root, res);
+            return res;
+        }
+    }
+
+    public int findMin(int[] nums) {
+        if (nums.length == 1 || nums[0] < nums[nums.length - 1]) {
+            return nums[0];
+        } else if (nums[nums.length - 1] < nums[nums.length - 2] && nums[nums.length - 1] < nums[0]) {
+            return nums[nums.length - 1];
+        } else {
+            int lp = 0;
+            int rp = nums.length - 1;
+            while (lp <= rp) {
+                int mid = lp + (rp - lp) / 2;
+                if (nums[mid] < nums[mid - 1] && nums[mid] < nums[mid + 1] && nums[mid + 1] < nums[mid - 1]) {
+                    return nums[mid];
+                } else {
+                    if (nums[lp] < nums[rp]) {
+                        rp = mid;
+                    } else {
+                        if (nums[mid] > nums[lp]) {
+                            lp = mid;
+                        } else {
+                            rp = mid;
+                        }
+                    }
+                }
+            }
+            throw new IllegalArgumentException("Not found");
+        }
     }
 }
