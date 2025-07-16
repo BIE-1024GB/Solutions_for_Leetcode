@@ -495,6 +495,78 @@ public class Solution {
         public boolean isSymmetric(TreeNode root) {
             return isMirror(root.left, root.right);
         }
+
+        public List<List<Integer>> levelOrder(TreeNode root) {
+            List<List<Integer>> res = new ArrayList<>();
+            if (root != null) {
+                Queue<TreeNode> queue = new LinkedList<>();
+                queue.add(root);
+                while (!queue.isEmpty()) {
+                    int ls = queue.size();
+                    List<Integer> lr = new ArrayList<>();
+                    for (int i = 1; i <= ls; i++) {
+                        TreeNode curr = queue.poll();
+                        lr.add(curr.val);
+                        if (curr.left != null) {
+                            queue.add(curr.left);
+                        }
+                        if (curr.right != null) {
+                            queue.add(curr.right);
+                        }
+                    }
+                    res.add(lr);
+                }
+            }
+            return res;
+        }
+
+        public int maxDepth(TreeNode root) {
+            if (root == null) {
+                return 0;
+            } else {
+                return 1+Math.max(maxDepth(root.left), maxDepth(root.right));
+            }
+        }
+
+        private int preIndex = 0;
+        private HashMap<Integer, Integer> inorderMap = new HashMap<>();
+        private TreeNode buildTreeHelper(int[] preorder, int inStart, int inEnd) {
+            if (inStart > inEnd) {
+                return null;
+            }
+            // The current root is the next element in preorder
+            int rootValue = preorder[preIndex++];
+            TreeNode root = new TreeNode(rootValue);
+            // Get the index of the root in inorder to divide left and right subtrees
+            int inIndex = inorderMap.get(rootValue);
+            // Recursively build left and right subtrees
+            root.left = buildTreeHelper(preorder, inStart, inIndex - 1);
+            root.right = buildTreeHelper(preorder, inIndex + 1, inEnd);
+            return root;
+        }
+        public TreeNode buildTree(int[] preorder, int[] inorder) {
+            // Build a hashmap to store value -> index relations
+            for (int i = 0; i < inorder.length; i++) {
+                inorderMap.put(inorder[i], i);
+            }
+
+            return buildTreeHelper(preorder, 0, inorder.length - 1);
+        }
+
+        private TreeNode builder(int[] nums, int lp, int rp) {
+            if (lp > rp) {
+                return null;
+            } else {
+                int mid = lp+(rp-lp)/2;
+                TreeNode curr = new TreeNode(nums[mid]);
+                curr.left = builder(nums, lp, mid-1);
+                curr.right = builder(nums, mid+1, rp);
+                return curr;
+            }
+        }
+        public TreeNode sortedArrayToBST(int[] nums) {
+            return builder(nums, 0, nums.length-1);
+        }
     }
 
     public int findMin(int[] nums) {

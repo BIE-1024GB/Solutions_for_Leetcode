@@ -117,4 +117,11 @@ public class SolutionTest {
                 new Solution.TreeNode(2, null, new Solution.TreeNode(3)));
         assertFalse(root.isSymmetric(root));
     }
+
+    @Test
+    public void testMD() {
+        Solution.TreeNode root = new Solution.TreeNode(3, new Solution.TreeNode(9), new Solution.TreeNode(20,
+                new Solution.TreeNode(15), new Solution.TreeNode(7)));
+        assertEquals(3, root.maxDepth(root));
+    }
 }
