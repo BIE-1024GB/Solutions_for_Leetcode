@@ -420,7 +420,6 @@ public class Solution {
         int val;
         TreeNode left;
         TreeNode right;
-        TreeNode() {}
         TreeNode(int val) { this.val = val; }
         TreeNode(int val, TreeNode left, TreeNode right) {
             this.val = val;
@@ -506,12 +505,14 @@ public class Solution {
                     List<Integer> lr = new ArrayList<>();
                     for (int i = 1; i <= ls; i++) {
                         TreeNode curr = queue.poll();
-                        lr.add(curr.val);
-                        if (curr.left != null) {
-                            queue.add(curr.left);
-                        }
-                        if (curr.right != null) {
-                            queue.add(curr.right);
+                        if (curr != null) {
+                            lr.add(curr.val);
+                            if (curr.left != null) {
+                                queue.add(curr.left);
+                            }
+                            if (curr.right != null) {
+                                queue.add(curr.right);
+                            }
                         }
                     }
                     res.add(lr);
@@ -529,7 +530,7 @@ public class Solution {
         }
 
         private int preIndex = 0;
-        private HashMap<Integer, Integer> inorderMap = new HashMap<>();
+        private final HashMap<Integer, Integer> inorderMap = new HashMap<>();
         private TreeNode buildTreeHelper(int[] preorder, int inStart, int inEnd) {
             if (inStart > inEnd) {
                 return null;
@@ -566,6 +567,78 @@ public class Solution {
         }
         public TreeNode sortedArrayToBST(int[] nums) {
             return builder(nums, 0, nums.length-1);
+        }
+
+        public void flatten(TreeNode root) {
+            if (root != null) {
+                TreeNode lt = root.left;
+                root.left = null;
+                flatten(lt);
+                TreeNode rt = root.right;
+                root.right = lt;
+                TreeNode curr = root;
+                while (curr.right != null) {
+                    curr = curr.right;
+                }
+                flatten(rt);
+                curr.right = rt;
+            }
+        }
+
+        public List<Integer> rightSideView(TreeNode root) {
+            List<Integer> res = new ArrayList<>();
+            if (root != null) {
+                Queue<TreeNode> queue = new LinkedList<>();
+                queue.add(root);
+                while (!queue.isEmpty()) {
+                    int ls = queue.size();
+                    for (int i = 1; i <= ls; i++) {
+                        TreeNode curr = queue.poll();
+                        if (curr != null) {
+                            if (curr.left != null) {
+                                queue.add(curr.left);
+                            }
+                            if (curr.right != null) {
+                                queue.add(curr.right);
+                            }
+                            if (i == ls) {
+                                res.add(curr.val);
+                            }
+                        }
+                    }
+                }
+            }
+            return res;
+        }
+
+        public TreeNode invertTree(TreeNode root) {
+            if (root == null) {
+                return null;
+            } else {
+                TreeNode nl = invertTree(root.right);
+                TreeNode nr = invertTree(root.left);
+                root.left = nl;
+                root.right = nr;
+                return root;
+            }
+        }
+
+        private int count = 0;
+        private int result = 0;
+        private void inOrder(TreeNode node) {
+            if (node == null) return;
+            inOrder(node.left);
+            count--;
+            if (count == 0) {
+                result = node.val;
+                return;
+            }
+            inOrder(node.right);
+        }
+        public int kthSmallest(TreeNode root, int k) {
+            count = k;
+            inOrder(root);
+            return result;
         }
     }
 
