@@ -131,4 +131,11 @@ public class SolutionTest {
                 new Solution.TreeNode(4));
         assertEquals(4, root.kthSmallest(root, 4));
     }
+
+    @Test
+    public void testLP() {
+        Solution solution = new Solution();
+        String s = "cbbd";
+        assertEquals("bb", solution.longestPalindrome(s));
+    }
 }

@@ -640,6 +640,79 @@ public class Solution {
             inOrder(root);
             return result;
         }
+
+        public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+            if (root==null || root==p || root==q) {
+                return root;
+            } else {
+                TreeNode lr = lowestCommonAncestor(root.left, p, q);
+                TreeNode rr = lowestCommonAncestor(root.right, p, q);
+                if (lr!=null && rr!=null) {
+                    return root;
+                } else {
+                    return (lr==null) ? rr : lr;
+                }
+            }
+        }
+
+        private int PSdfs(TreeNode r, int cs, int ts) {
+            if (r == null) {
+                return 0;
+            }
+            if (r.val >= 0) {
+                if (cs > Integer.MAX_VALUE-r.val) {
+                    return 0;
+                }
+            } else {
+                if (cs < Integer.MIN_VALUE-r.val) {
+                    return 0;
+                }
+            }
+            int cnt = 0;
+            if (r.val + cs == ts) {
+                cnt += 1;
+            }
+            cnt = cnt+PSdfs(r.left, cs+r.val, ts)+PSdfs(r.right, cs+r.val, ts);
+            return cnt;
+        }
+        public int pathSum(TreeNode root, int targetSum) {
+            if (root == null) {
+                return 0;
+            }
+            Queue<TreeNode> queue = new LinkedList<>();
+            queue.offer(root);
+            ArrayList<TreeNode> list = new ArrayList<>();
+            while (!queue.isEmpty()) {
+                TreeNode curr = queue.poll();
+                list.add(curr);
+                if (curr.left != null) {
+                    queue.offer(curr.left);
+                }
+                if (curr.right != null) {
+                    queue.offer(curr.right);
+                }
+            }
+            int ttl = 0;
+            for (TreeNode tn : list) {
+                ttl += PSdfs(tn, 0, targetSum);
+            }
+            return ttl;
+        }
+
+        private int maxDiameter = 0;
+        private int depth(TreeNode node) {
+            if (node == null) {
+                return 0;
+            }
+            int leftDepth = depth(node.left);
+            int rightDepth = depth(node.right);
+            maxDiameter = Math.max(maxDiameter, leftDepth + rightDepth);
+            return Math.max(leftDepth, rightDepth) + 1;
+        }
+        public int diameterOfBinaryTree(TreeNode root) {
+            depth(root);
+            return maxDiameter;
+        }
     }
 
     public int findMin(int[] nums) {
@@ -668,5 +741,37 @@ public class Solution {
             }
             throw new IllegalArgumentException("Not found");
         }
+    }
+
+    public String longestPalindrome(String s) {
+        int l = s.length();
+        if (l == 1)
+            return s;
+        boolean[][] dp = new boolean[l][l];
+        for (int i = 0; i <= l-1; i++)
+            dp[i][i] = true;
+        int lpl = 1;
+        String lp = s.substring(0, 1);
+        for (int i = 0; i <= l-2; i++) {
+            if (s.charAt(i) == s.charAt(i+1)) {
+                dp[i][i+1] = true;
+                if (2 > lpl) {
+                    lpl = 2;
+                    lp = s.substring(i, i+2);
+                }
+            }
+        }
+        for (int sl = 3; sl <= l; sl++) {
+            for (int i = 0; i <= l-sl; i++) {
+                if (s.charAt(i) == s.charAt(i+sl-1) && dp[i+1][i+sl-2]) {
+                    dp[i][i+sl-1] = true;
+                    if (sl > lpl) {
+                        lpl = sl;
+                        lp = s.substring(i, i+sl);
+                    }
+                }
+            }
+        }
+        return lp;
     }
 }
