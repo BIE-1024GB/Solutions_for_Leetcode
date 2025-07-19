@@ -774,4 +774,43 @@ public class Solution {
         }
         return lp;
     }
+
+    public int longestValidParentheses(String s) {
+        int maxLen = 0;
+        int n = s.length();
+        int[] dp = new int[n];
+        for (int i = 1; i < n; i++) {
+            if (s.charAt(i) == ')') {
+                if (s.charAt(i - 1) == '(') {
+                    dp[i] = (i >= 2 ? dp[i - 2] : 0) + 2;
+                } else {
+                    if (i - dp[i - 1] > 0 && s.charAt(i - dp[i - 1] - 1) == '(') {
+                        dp[i] = dp[i - 1] + 2 + ((i - dp[i - 1] - 2) >= 0 ? dp[i - dp[i - 1] - 2] : 0);
+                    }
+                }
+                maxLen = Math.max(maxLen, dp[i]);
+            }
+        }
+        return maxLen;
+    }
+
+    public int uniquePaths(int m, int n) {
+        if (m==1 || n==1) {
+            return 1;
+        } else {
+            int[][] dp = new int[m][n];
+            for (int i = 0; i <= n-1; i++) {
+                dp[0][i] = 1;
+            }
+            for (int j = 0; j <= m-1; j++) {
+                dp[j][0] = 1;
+            }
+            for (int p = 1; p <= m-1; p++) {
+                for (int q = 1; q <= n-1; q++) {
+                    dp[p][q] = dp[p-1][q]+dp[p][q-1];
+                }
+            }
+            return dp[m-1][n-1];
+        }
+    }
 }

@@ -138,4 +138,17 @@ public class SolutionTest {
         String s = "cbbd";
         assertEquals("bb", solution.longestPalindrome(s));
     }
+
+    @Test
+    public void testLVP() {
+        Solution solution = new Solution();
+        String s = ")()())";
+        assertEquals(4, solution.longestValidParentheses(s));
+    }
+
+    @Test
+    public void testUP() {
+        Solution solution = new Solution();
+        assertEquals(28, solution.uniquePaths(3, 7));
+    }
 }
