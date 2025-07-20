@@ -151,4 +151,21 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertEquals(28, solution.uniquePaths(3, 7));
     }
+
+    @Test
+    public void testminPathSum() {
+        Solution solution = new Solution();
+        int[][] grid = new int[][] {
+                {1,3,1},
+                {1,5,1},
+                {4,2,1}
+        };
+        assertEquals(7, solution.minPathSum(grid));
+    }
+
+    @Test
+    public void testStair() {
+        Solution solution = new Solution();
+        assertEquals(3, solution.climbStairs(3));
+    }
 }
