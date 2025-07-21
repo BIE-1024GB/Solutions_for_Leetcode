@@ -848,4 +848,53 @@ public class Solution {
             return dp[n];
         }
     }
+
+    public int minDistance(String word1, String word2) {
+        int[][] dp = new int[word1.length() + 1][word2.length() + 1];
+        dp[0][0] = 0;
+        for (int i = 1; i <= word2.length(); i++) {
+            dp[0][i] = i;
+        }
+        for (int i = 1; i <= word1.length(); i++) {
+            dp[i][0] = i;
+        }
+        for (int i = 1; i <= word1.length(); i++) {
+            for (int j = 1; j <= word2.length(); j++) {
+                if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = Math.min(dp[i - 1][j], Math.min(dp[i][j - 1], dp[i - 1][j - 1])) + 1;
+                }
+            }
+        }
+        return dp[word1.length()][word2.length()];
+    }
+
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> r1 = new ArrayList<>();
+        r1.add(1);
+        res.add(r1);
+        if (numRows > 1) {
+            List<Integer> r2 = new ArrayList<>();
+            r2.add(1);
+            r2.add(1);
+            res.add(r2);
+            if (numRows > 2) {
+                for (int i = 3; i <= numRows; i++) {
+                    List<Integer> curr = new ArrayList<>();
+                    List<Integer> prev = res.get(i-2);
+                    for (int k = 1; k <= i; k++) {
+                        if (k == 1 || k == i) {
+                            curr.add(1);
+                        } else {
+                            curr.add(prev.get(k-2)+prev.get(k-1));
+                        }
+                    }
+                    res.add(curr);
+                }
+            }
+        }
+        return res;
+    }
 }

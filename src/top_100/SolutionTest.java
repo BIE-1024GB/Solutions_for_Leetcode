@@ -168,4 +168,10 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertEquals(3, solution.climbStairs(3));
     }
+
+    @Test
+    public void testEdit() {
+        Solution solution = new Solution();
+        assertEquals(3, solution.minDistance("horse", "ros"));
+    }
 }
