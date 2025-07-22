@@ -174,4 +174,18 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertEquals(3, solution.minDistance("horse", "ros"));
     }
+
+    @Test
+    public void testWordBreak() {
+        Solution solution = new Solution();
+        List<String> dict = new ArrayList<>(Arrays.asList("cats", "dog", "sand", "and", "cat"));
+        assertFalse(solution.wordBreak("catsandog", dict));
+    }
+
+    @Test
+    public void testMPS() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {-2, 0, -1};
+        assertEquals(0, solution.maxProduct(nums));
+    }
 }

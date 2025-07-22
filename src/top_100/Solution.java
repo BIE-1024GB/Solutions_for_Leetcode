@@ -897,4 +897,35 @@ public class Solution {
         }
         return res;
     }
+
+    public boolean wordBreak(String s, List<String> wordDict) {
+        HashSet<String> set = new HashSet<>(wordDict);
+        boolean[] dp = new boolean[s.length() + 1];
+        dp[0] = true;
+        for (int i = 1; i <= dp.length - 1; i++) {
+            for (int j = 0; j <= i - 1; j++) {
+                if (dp[j]) {
+                    if (set.contains(s.substring(j, i))) {
+                        dp[i] = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return dp[dp.length - 1];
+    }
+
+    public int maxProduct(int[] nums) {
+        int max_so_far = nums[0];
+        int min_so_far = nums[0];
+        int result = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            int current = nums[i];
+            int temp_max = Math.max(current, Math.max(max_so_far * current, min_so_far * current));
+            min_so_far = Math.min(current, Math.min(max_so_far * current, min_so_far * current));
+            max_so_far = temp_max;
+            result = Math.max(result, max_so_far);
+        }
+        return result;
+    }
 }
