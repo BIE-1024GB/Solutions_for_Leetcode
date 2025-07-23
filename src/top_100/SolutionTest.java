@@ -188,4 +188,17 @@ public class SolutionTest {
         int[] nums = new int[] {-2, 0, -1};
         assertEquals(0, solution.maxProduct(nums));
     }
+
+    @Test
+    public void testRob() {
+        Solution solution = new Solution();
+        int[] house = new int[] {2, 7, 9, 3, 1};
+        assertEquals(12, solution.rob(house));
+    }
+
+    @Test
+    public void testSquare() {
+        Solution solution = new Solution();
+        assertEquals(2, solution.numSquares(9802));
+    }
 }

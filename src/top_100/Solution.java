@@ -928,4 +928,42 @@ public class Solution {
         }
         return result;
     }
+
+    public int rob(int[] nums) {
+        if (nums.length == 1) {
+            return nums[0];
+        } else {
+            int[] dp = new int[nums.length+1];
+            dp[0] = 0;
+            dp[1] = nums[0];
+            for (int i = 2; i <= nums.length; i++) {
+                dp[i] = Math.max(dp[i-1], nums[i-1]+dp[i-2]);
+            }
+            return dp[dp.length-1];
+        }
+    }
+
+    public int numSquares(int n) {
+        // note: more efficient solution available
+        if (n == 1) {
+            return 1;
+        } else {
+            int[] dp = new int[n];
+            int ps = 1;
+            for (int i = 0; i <= n-1; i++) {
+                if (i+1 == ps*ps) {
+                    dp[i] = 1;
+                    ps += 1;
+                } else {
+                    int mn = Integer.MAX_VALUE;
+                    for (int j = 0; j <= i-1; j++) {
+                        int diff = i-j;
+                        mn = Math.min(mn, dp[j]+dp[diff-1]);
+                    }
+                    dp[i] = mn;
+                }
+            }
+            return dp[n-1];
+        }
+    }
 }
