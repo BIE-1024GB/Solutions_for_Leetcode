@@ -201,4 +201,18 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertEquals(2, solution.numSquares(9802));
     }
+
+    @Test
+    public void testLIS() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {0,1,0,3,2,3};
+        assertEquals(4, solution.lengthOfLIS(nums));
+    }
+
+    @Test
+    public void testCoins() {
+        Solution solution = new Solution();
+        int[] coins = new int[] {1, 2, 5};
+        assertEquals(3, solution.coinChange(coins, 11));
+    }
 }
