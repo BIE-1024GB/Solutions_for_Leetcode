@@ -215,4 +215,17 @@ public class SolutionTest {
         int[] coins = new int[] {1, 2, 5};
         assertEquals(3, solution.coinChange(coins, 11));
     }
+
+    @Test
+    public void testSum() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {1, 5, 11, 5};
+        assertTrue(solution.canPartition(nums));
+    }
+
+    @Test
+    public void testLCS() {
+        Solution solution = new Solution();
+        assertEquals(1, solution.longestCommonSubsequence("psnw", "vozsh"));
+    }
 }

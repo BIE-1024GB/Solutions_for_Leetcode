@@ -1000,4 +1000,55 @@ public class Solution {
             return dp[amount];
         }
     }
+
+    public boolean canPartition(int[] nums) {
+        int totalSum = 0;
+        for (int num : nums) {
+            totalSum += num;
+        }
+        // If total sum is odd, can't partition into equal subsets
+        if (totalSum % 2 != 0) {
+            return false;
+        }
+        int target = totalSum / 2;
+        boolean[] dp = new boolean[target + 1];
+        dp[0] = true; // Base case: sum of 0 can always be achieved
+        for (int num : nums) {
+            for (int j = target; j >= num; j--) {
+                dp[j] = dp[j] || dp[j - num];
+            }
+        }
+        return dp[target];
+    }
+
+    public int longestCommonSubsequence(String text1, String text2) {
+        int[][] dp = new int[text1.length()][text2.length()];
+        if (text1.charAt(0) == text2.charAt(0)) {
+            dp[0][0] = 1;
+        }
+        for (int i = 1; i <= dp[0].length - 1; i++) {
+            if (text1.charAt(0) == text2.charAt(i)) {
+                dp[0][i] = 1;
+            } else {
+                dp[0][i] = dp[0][i - 1];
+            }
+        }
+        for (int i = 1; i <= dp.length - 1; i++) {
+            if (text1.charAt(i) == text2.charAt(0)) {
+                dp[i][0] = 1;
+            } else {
+                dp[i][0] = dp[i-1][0];
+            }
+        }
+        for (int p = 1; p <= dp.length - 1; p++) {
+            for (int q = 1; q <= dp[0].length - 1; q++) {
+                if (text1.charAt(p) == text2.charAt(q)) {
+                    dp[p][q] = dp[p-1][q-1] + 1;
+                } else {
+                    dp[p][q] = Math.max(dp[p-1][q], dp[p][q-1]);
+                }
+            }
+        }
+        return dp[dp.length - 1][dp[0].length - 1];
+    }
 }
