@@ -3696,7 +3696,7 @@ public class Solution {
         }
         int res = 0;
         for (int n: nums) {
-            res = res^n;    // ^: bitwise XOR, a^a=0, a^0=a, both commutative and associative
+            res = res^n;    // ^: bitwise XOR, a^a=0, a^0=a both commutative and associative
         }
         return res;
     }
@@ -4052,7 +4052,7 @@ public class Solution {
         for (int j = 1; j <= len2; j++) dp[0][j] = dp[0][j - 1] && (s2.charAt(j - 1) == s3.charAt(j - 1));
         // Fill the first column (s2 is empty)
         for (int i = 1; i <= len1; i++) dp[i][0] = dp[i - 1][0] && (s1.charAt(i - 1) == s3.charAt(i - 1));
-        // Fill the rest of the DP table
+        // Fill the rest
         for (int i = 1; i <= len1; i++) {
             for (int j = 1; j <= len2; j++) {
                 dp[i][j] = (dp[i - 1][j] && (s1.charAt(i - 1) == s3.charAt(i + j - 1))) ||

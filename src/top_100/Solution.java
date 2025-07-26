@@ -431,7 +431,7 @@ public class Solution {
         private int maxGain(TreeNode node) {
             if (node == null)
                 return 0;
-            // Max sum on the left and right sub-trees of node
+            // Max sum on the left and right subtrees of node
             int leftGain = Math.max(maxGain(node.left), 0);
             int rightGain = Math.max(maxGain(node.right), 0);
             // The price to start a new path where 'node' is the highest node
