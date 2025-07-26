@@ -1051,4 +1051,91 @@ public class Solution {
         }
         return dp[dp.length - 1][dp[0].length - 1];
     }
+
+    private void islandBFS(char[][] grid, boolean[][] visit, int r, int c) {
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[] { r, c });
+        while (!queue.isEmpty()) {
+            int[] curr = queue.poll();
+            assert curr != null;
+            int row = curr[0];
+            int col = curr[1];
+            if (row >= 1) {
+                if (grid[row - 1][col] == '1' && !visit[row - 1][col]) {
+                    queue.offer(new int[] { row - 1, col });
+                    visit[row - 1][col] = true;
+                }
+            }
+            if (col + 1 <= visit[0].length - 1) {
+                if (grid[row][col + 1] == '1' && !visit[row][col + 1]) {
+                    queue.offer(new int[] { row, col + 1 });
+                    visit[row][col + 1] = true;
+                }
+            }
+            if (row + 1 <= visit.length - 1) {
+                if (grid[row + 1][col] == '1' && !visit[row + 1][col]) {
+                    queue.offer(new int[] { row + 1, col });
+                    visit[row + 1][col] = true;
+                }
+            }
+            if (col >= 1) {
+                if (grid[row][col - 1] == '1' && !visit[row][col - 1]) {
+                    queue.offer(new int[] { row, col - 1 });
+                    visit[row][col - 1] = true;
+                }
+            }
+        }
+    }
+    public int numIslands(char[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int island = 0;
+        boolean[][] visit = new boolean[m][n];
+        for (int i = 0; i <= m - 1; i++) {
+            for (int j = 0; j <= n - 1; j++) {
+                if (grid[i][j] == '1' && !visit[i][j]) {
+                    island += 1;
+                    islandBFS(grid, visit, i, j);
+                }
+            }
+        }
+        return island;
+    }
+
+    private boolean cycleDFS(int node, List<List<Integer>> adjList, int[] visited) {
+        if (visited[node] == 1) {
+            return true;
+        }
+        if (visited[node] == 2) {
+            return false;
+        }
+        visited[node] = 1;
+        for (int neighbor : adjList.get(node)) {
+            if (cycleDFS(neighbor, adjList, visited)) {
+                return true;
+            }
+        }
+        visited[node] = 2;
+        return false;
+    }
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        // Create an adjacency list to represent the graph
+        List<List<Integer>> adjList = new ArrayList<>();
+        for (int i = 0; i < numCourses; i++) {
+            adjList.add(new ArrayList<>());
+        }
+        for (int[] prerequisite : prerequisites) {
+            adjList.get(prerequisite[1]).add(prerequisite[0]);
+        }
+        int[] visited = new int[numCourses];
+        // DFS to detect cycle
+        for (int i = 0; i < numCourses; i++) {
+            if (visited[i] == 0) {
+                if (cycleDFS(i, adjList, visited)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }

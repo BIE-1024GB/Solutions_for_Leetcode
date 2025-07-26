@@ -228,4 +228,26 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertEquals(1, solution.longestCommonSubsequence("psnw", "vozsh"));
     }
+
+    @Test
+    public void testIsland() {
+        Solution solution = new Solution();
+        char[][] grid = new char[][] {
+                {'1', '1', '0', '0', '0'},
+                {'1', '1', '0', '0', '0'},
+                {'0', '0', '1', '0', '0'},
+                {'0', '0', '0', '1', '1'},
+        };
+        assertEquals(3, solution.numIslands(grid));
+    }
+
+    @Test
+    public void testCourse() {
+        Solution solution = new Solution();
+        int[][] pre = new int[][] {
+                {1, 0},
+                {0, 1}
+        };
+        assertFalse(solution.canFinish(2, pre));
+    }
 }
