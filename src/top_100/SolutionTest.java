@@ -250,4 +250,23 @@ public class SolutionTest {
         };
         assertFalse(solution.canFinish(2, pre));
     }
+
+    @Test
+    public void testOrange() {
+        Solution solution = new Solution();
+        int[][] grid = new int[][] {
+                {2, 1, 1},
+                {1, 1, 0},
+                {0, 1, 1}
+        };
+        assertEquals(4, solution.orangesRotting(grid));
+    }
+
+    @Test
+    public void testJump() {
+        Solution solution = new Solution();
+        int[] nums = new int[9999];
+        Arrays.fill(nums, 1);
+        assertEquals(9998, solution.jump(nums));
+    }
 }

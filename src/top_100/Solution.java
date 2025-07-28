@@ -1138,4 +1138,77 @@ public class Solution {
         }
         return true;
     }
+
+    public int orangesRotting(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        Queue<int[]> queue = new LinkedList<>();
+        boolean[][] visit = new boolean[m][n];
+        int fresh = 0;
+        for (int i = 0; i <= m - 1; i++) {
+            for (int j = 0; j <= n - 1; j++) {
+                if (grid[i][j] == 2) {
+                    queue.offer(new int[] { i, j });
+                    visit[i][j] = true;
+                } else if (grid[i][j] == 1) {
+                    fresh += 1;
+                }
+            }
+        }
+        if (fresh == 0) {
+            return 0;
+        }
+        int[][] dir = new int[][] {
+                { -1, 0 },
+                { 1, 0 },
+                { 0, -1 },
+                { 0, 1 }
+        };
+        int minute = 1;
+        while (!queue.isEmpty()) {
+            int ls = queue.size();
+            for (int o = 1; o <= ls; o++) {
+                int[] q = queue.poll();
+                for (int[] d : dir) {
+                    assert q != null;
+                    int nr = q[0] + d[0];
+                    int nc = q[1] + d[1];
+                    if (nr >= 0 && nr <= m - 1 && nc >= 0 && nc <= n - 1) {
+                        if (grid[nr][nc] == 1 && !visit[nr][nc]) {
+                            grid[nr][nc] = 2;
+                            queue.offer(new int[] { nr, nc });
+                            visit[nr][nc] = true;
+                            fresh -= 1;
+                            if (fresh == 0) {
+                                return minute;
+                            }
+                        }
+                    }
+                }
+            }
+            minute += 1;
+        }
+        return -1;
+    }
+
+    public int jump(int[] nums) {
+        if (nums.length == 1) {
+            return 0;
+        } else if (nums.length == 2) {
+            return 1;
+        } else {
+            int[] dp = new int[nums.length];
+            dp[0] = 0;
+            dp[1] = 1;
+            for (int i = 2; i <= dp.length-1; i++) {
+                for (int j = 0; j <= i-1; j++) {
+                    if (j+nums[j] >= i) {
+                        dp[i] = dp[j]+1;
+                        break;
+                    }
+                }
+            }
+            return dp[dp.length-1];
+        }
+    }
 }
