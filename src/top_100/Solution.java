@@ -1211,4 +1211,35 @@ public class Solution {
             return dp[dp.length-1];
         }
     }
+
+    public boolean canJump(int[] nums) {
+        if (nums.length == 1) {
+            return true;
+        } else {
+            int target = nums.length-1;
+            for (int i = nums.length-2; i >= 0; i--) {
+                if (i+nums[i] >= target) {
+                    target = i;
+                }
+            }
+            return target==0;
+        }
+    }
+
+    public int maxProfit(int[] prices) {
+        if (prices.length == 1) {
+            return 0;
+        } else {
+            int mp = 0;
+            int base = prices[0];
+            for (int i = 1; i <= prices.length-1; i++) {
+                if (prices[i] < base) {
+                    base = prices[i];
+                } else {
+                    mp = Math.max(mp, prices[i]-base);
+                }
+            }
+            return mp;
+        }
+    }
 }

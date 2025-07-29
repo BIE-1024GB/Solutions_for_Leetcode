@@ -269,4 +269,18 @@ public class SolutionTest {
         Arrays.fill(nums, 1);
         assertEquals(9998, solution.jump(nums));
     }
+
+    @Test
+    public void testCanJump() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {3, 2, 1, 0, 4};
+        assertFalse(solution.canJump(nums));
+    }
+
+    @Test
+    public void testStock() {
+        Solution solution = new Solution();
+        int[] price = new int[] {7, 1, 5, 3, 6, 4};
+        assertEquals(5, solution.maxProfit(price));
+    }
 }
