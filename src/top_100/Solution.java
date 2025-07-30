@@ -1242,4 +1242,48 @@ public class Solution {
             return mp;
         }
     }
+
+    public List<Integer> partitionLabels(String s) {
+        // Create a list to store the sizes of the partitions
+        List<Integer> partitionSizes = new ArrayList<>();
+
+        // Create an array to store the last occurrence index of each character
+        int[] lastOccurrence = new int[26]; // Assuming lowercase English letters
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            lastOccurrence[c - 'a'] = i;
+        }
+
+        int start = 0; // Start index of the current partition
+        int end = 0; // End index of the current partition
+
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            // Update the end of the current partition to be the max of the current end
+            // and the last occurrence of the current character
+            end = Math.max(end, lastOccurrence[c - 'a']);
+
+            // If we've reached the end of the current partition
+            if (i == end) {
+                // Add the size of the current partition to the list
+                partitionSizes.add(end - start + 1);
+                // Update the start to be the next character
+                start = end + 1;
+            }
+        }
+
+        return partitionSizes;
+    }
+
+    public int[] twoSum(int[] nums, int target) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i <= nums.length-1; i++) {
+            if (map.containsKey(target-nums[i])) {
+                return new int[] {map.get(target-nums[i]), i};
+            } else {
+                map.put(nums[i], i);
+            }
+        }
+        return new int[2];
+    }
 }
