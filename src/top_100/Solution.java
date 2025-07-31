@@ -1286,4 +1286,43 @@ public class Solution {
         }
         return new int[2];
     }
+
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> map = new HashMap<>();
+        for (String s : strs) {
+            // Convert string to char array, sort it, then convert back to string
+            char[] charArray = s.toCharArray();
+            Arrays.sort(charArray);
+            String sorted = new String(charArray);
+            // If the sorted string isn't in the map, add it with a new list
+            if (!map.containsKey(sorted)) {
+                map.put(sorted, new ArrayList<>());
+            }
+            // Add the original string to the appropriate list
+            map.get(sorted).add(s);
+        }
+        return new ArrayList<>(map.values());
+    }
+
+    public int longestConsecutive(int[] nums) {
+        Set<Integer> numSet = new HashSet<>();
+        for (int num : nums) {
+            numSet.add(num);
+        }
+        int maxLength = 0;
+        for (int num : numSet) {
+            // Check if it's the start of a sequence
+            if (!numSet.contains(num - 1)) {
+                int currentNum = num;
+                int currentLength = 1;
+                // Count the length of the consecutive sequence
+                while (numSet.contains(currentNum + 1)) {
+                    currentNum++;
+                    currentLength++;
+                }
+                maxLength = Math.max(maxLength, currentLength);
+            }
+        }
+        return maxLength;
+    }
 }

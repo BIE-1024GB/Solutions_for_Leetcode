@@ -283,4 +283,11 @@ public class SolutionTest {
         int[] price = new int[] {7, 1, 5, 3, 6, 4};
         assertEquals(5, solution.maxProfit(price));
     }
+
+    @Test
+    public void testLongconse() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {0, 1, 2, 4, 8, 5, 6, 7, 9, 3, 55, 88, 77, 99, 999999999};
+        assertEquals(10, solution.longestConsecutive(nums));
+    }
 }
