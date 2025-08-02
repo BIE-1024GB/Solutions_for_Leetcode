@@ -1358,4 +1358,83 @@ public class Solution {
         assert pq.peek() != null;
         return pq.peek();
     }
+
+    static class MedianFinder {
+        private final PriorityQueue<Integer> up;
+        private final PriorityQueue<Integer> down;
+        private int count;
+        public MedianFinder() {
+            up = new PriorityQueue<>();
+            down = new PriorityQueue<>((a, b)->b-a);
+            count = 0;
+        }
+
+        public void addNum(int num) {
+            if (count == 0) {
+                up.offer(num);
+            } else {
+                if (down.isEmpty()) {
+                    assert up.peek() != null;
+                    if (num <= up.peek()) {
+                        down.offer(num);
+                    } else {
+                        down.offer(up.poll());
+                        up.offer(num);
+                    }
+                } else {
+                    if (up.size() == down.size()) {
+                        if (num > down.peek()) {
+                            up.offer(num);
+                        } else {
+                            down.offer(num);
+                        }
+                    } else if (up.size() > down.size()) {
+                        if (num >= up.peek()) {
+                            down.offer(up.poll());
+                            up.offer(num);
+                        } else {
+                            down.offer(num);
+                        }
+                    } else {
+                        if (num <= down.peek()) {
+                            up.offer(down.poll());
+                            down.offer(num);
+                        } else {
+                            up.offer(num);
+                        }
+                    }
+                }
+            }
+            count += 1;
+        }
+
+        public double findMedian() {
+            if (count%2 == 0) {
+                assert up.peek() != null;
+                assert down.peek() != null;
+                return ((double) up.peek()+(double) down.peek())/2;
+            } else {
+                assert down.peek() != null;
+                return (double) (up.size()>down.size() ? up.peek() : down.peek());
+            }
+        }
+    }
+
+    public int[] topKFrequent(int[] nums, int k) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int n : nums) {
+            map.put(n, map.getOrDefault(n, 0)+1);
+        }
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b)->b[1]-a[1]);
+        for (Integer i : map.keySet()) {
+            int[] pair = new int[] {i, map.get(i)};
+            pq.offer(pair);
+        }
+        int[] res = new int[k];
+        for (int index = 0; index <= k-1; index++) {
+            assert pq.peek() != null;
+            res[index] = pq.poll()[0];
+        }
+        return res;
+    }
 }

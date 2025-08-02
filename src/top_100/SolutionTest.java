@@ -304,4 +304,22 @@ public class SolutionTest {
         int[] nums = new int[] {3, 2, 3, 1, 2, 4, 5, 5, 6};
         assertEquals(4, solution.findKthLargest(nums, 4));
     }
+
+    @Test
+    public void testMedianFinder() {
+        Solution.MedianFinder medianFinder = new Solution.MedianFinder();
+        medianFinder.addNum(1);
+        medianFinder.addNum(2);
+        assertEquals(1.50000, medianFinder.findMedian());
+        medianFinder.addNum(3);
+        assertEquals(2.00000, medianFinder.findMedian());
+    }
+
+    @Test
+    public void testTopKFreq() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {1, 1, 1, 2, 2, 3};
+        int[] exp = {1, 2};
+        assertArrayEquals(exp, solution.topKFrequent(nums, 2));
+    }
 }
