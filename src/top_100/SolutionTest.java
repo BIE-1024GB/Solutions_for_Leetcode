@@ -290,4 +290,18 @@ public class SolutionTest {
         int[] nums = new int[] {0, 1, 2, 4, 8, 5, 6, 7, 9, 3, 55, 88, 77, 99, 999999999};
         assertEquals(10, solution.longestConsecutive(nums));
     }
+
+    @Test
+    public void testSubarraySumK() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {1, 2, 3};
+        assertEquals(2, solution.subarraySum(nums, 3));
+    }
+
+    @Test
+    public void testKthLargest() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {3, 2, 3, 1, 2, 4, 5, 5, 6};
+        assertEquals(4, solution.findKthLargest(nums, 4));
+    }
 }

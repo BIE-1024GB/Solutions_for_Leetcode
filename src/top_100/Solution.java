@@ -1325,4 +1325,37 @@ public class Solution {
         }
         return maxLength;
     }
+
+    public int subarraySum(int[] nums, int k) {
+        Map<Integer, Integer> prefixSumCount = new HashMap<>();
+        prefixSumCount.put(0, 1); // Base case: empty subarray has sum 0
+        int count = 0;
+        int currentSum = 0;
+        for (int num : nums) {
+            currentSum += num;
+            // If (currentSum - k) exists in map, we found subarrays that sum to k
+            count += prefixSumCount.getOrDefault(currentSum - k, 0);
+            // Update the count of current prefix sum
+            prefixSumCount.put(currentSum, prefixSumCount.getOrDefault(currentSum, 0) + 1);
+        }
+        return count;
+    }
+
+    public int findKthLargest(int[] nums, int k) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for (int n : nums) {
+            if (pq.size() < k) {
+                pq.offer(n);
+            } else {
+                assert pq.peek() != null;
+                int cm = pq.peek();
+                if (n > cm) {
+                    pq.poll();
+                    pq.offer(n);
+                }
+            }
+        }
+        assert pq.peek() != null;
+        return pq.peek();
+    }
 }
