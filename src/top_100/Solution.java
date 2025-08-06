@@ -1437,4 +1437,82 @@ public class Solution {
         }
         return res;
     }
+
+    static class ListNode {
+        private int val;
+        private ListNode next;
+
+        public ListNode() {
+
+        }
+        public ListNode(int val) {
+            this.val = val;
+        }
+        public ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
+
+        public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+            ListNode res = new ListNode();
+            ListNode head = res;
+            int addon = 0;
+            while (l1 != null && l2 != null) {
+                int curr = l1.val+l2.val+addon;
+                if (curr >= 10) {
+                    res.next = new ListNode(curr-10);
+                    res = res.next;
+                    addon = 1;
+                } else {
+                    res.next = new ListNode(curr);
+                    res = res.next;
+                    addon = 0;
+                }
+                l1 = l1.next;
+                l2 = l2.next;
+            }
+            if (l1 != null || l2 != null) {
+                ListNode nn = (l1 == null ? l2 : l1);
+                while (nn != null) {
+                    int curr = nn.val+addon;
+                    if (curr >= 10) {
+                        res.next = new ListNode(curr-10);
+                        res = res.next;
+                        addon = 1;
+                    } else {
+                        res.next = new ListNode(curr);
+                        res = res.next;
+                        addon = 0;
+                    }
+                    nn = nn.next;
+                }
+            }
+            if (addon == 1) {
+                res.next = new ListNode(1);
+            }
+            return head.next;
+        }
+
+        public ListNode removeNthFromEnd(ListNode head, int n) {
+            if (head.next == null) {
+                return null;
+            } else {
+                ListNode sp = head;
+                ListNode fp = head;
+                while (n > 0) {
+                    fp = fp.next;
+                    n -= 1;
+                }
+                if (fp == null) {
+                    return sp.next;
+                }
+                while (fp.next != null) {
+                    sp = sp.next;
+                    fp = fp.next;
+                }
+                sp.next = sp.next.next;
+                return head;
+            }
+        }
+    }
 }
