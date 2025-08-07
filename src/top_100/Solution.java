@@ -1514,5 +1514,57 @@ public class Solution {
                 return head;
             }
         }
+
+        public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+            if (list1 == null && list2 == null) {
+                return null;
+            } else if (list1 == null || list2 == null) {
+                return (list1 == null ? list2 : list1);
+            } else {
+                ListNode head = new ListNode();
+                ListNode res = head;
+                while (list1 != null && list2 != null) {
+                    if (list1.val <= list2.val) {
+                        head.next = list1;
+                        head = head.next;
+                        list1 = list1.next;
+                    } else {
+                        head.next = list2;
+                        head = head.next;
+                        list2 = list2.next;
+                    }
+                }
+                head.next = (list1 == null ? list2 : list1);
+                return res.next;
+            }
+        }
+
+        public ListNode mergeKLists(ListNode[] lists) {
+            // use a min-heap, time complexity: O(Nlog(k)), better than divide-and-conquer
+            if (lists.length == 0) {
+                return null;
+            }
+            PriorityQueue<ListNode> minHeap = new PriorityQueue<>(Comparator.comparingInt(a -> a.val));
+            for (ListNode list : lists) {
+                if (list != null) {
+                    minHeap.add(list);
+                }
+            }
+            ListNode dummy = new ListNode();
+            ListNode current = dummy;
+            // While there are nodes in the heap
+            while (!minHeap.isEmpty()) {
+                // Get the smallest node
+                ListNode smallest = minHeap.poll();
+                // Add it to the merged list
+                current.next = smallest;
+                current = current.next;
+                // If there are more nodes in the list from which this node was extracted, add the next node to the heap
+                if (smallest.next != null) {
+                    minHeap.add(smallest.next);
+                }
+            }
+            return dummy.next;
+        }
     }
 }
