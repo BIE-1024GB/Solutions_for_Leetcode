@@ -1566,5 +1566,48 @@ public class Solution {
             }
             return dummy.next;
         }
+
+        public ListNode swapPairs(ListNode head) {
+            if (head == null || head.next == null) {
+                return head;
+            } else {
+                ListNode n1 = head;
+                ListNode n2 = n1.next;
+                ListNode n3 = n2.next;
+                n2.next = n1;
+                n1.next = swapPairs(n3);
+                return n2;
+            }
+        }
+
+        public ListNode reverseKGroup(ListNode head, int k) {
+            // O(1) space complexity
+            if (k == 1) {
+                return head;
+            }
+            ListNode dummy = new ListNode(0);
+            dummy.next = head;
+            ListNode curr = dummy, prev = dummy, next = dummy;
+            int count = 0;
+            // Count the number of nodes in the linked list
+            while (curr.next != null) {
+                curr = curr.next;
+                count++;
+            }
+            // Iterate through the list and reverse k nodes at a time
+            while (count >= k) {
+                curr = prev.next;
+                next = curr.next;
+                for (int i = 1; i < k; i++) {
+                    curr.next = next.next;
+                    next.next = prev.next;
+                    prev.next = next;
+                    next = curr.next;
+                }
+                prev = curr;
+                count -= k;
+            }
+            return dummy.next;
+        }
     }
 }
