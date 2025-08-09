@@ -1439,8 +1439,8 @@ public class Solution {
     }
 
     static class ListNode {
-        private int val;
-        private ListNode next;
+        int val;
+        ListNode next;
 
         public ListNode() {
 
@@ -1571,11 +1571,10 @@ public class Solution {
             if (head == null || head.next == null) {
                 return head;
             } else {
-                ListNode n1 = head;
-                ListNode n2 = n1.next;
+                ListNode n2 = head.next;
                 ListNode n3 = n2.next;
-                n2.next = n1;
-                n1.next = swapPairs(n3);
+                n2.next = head;
+                head.next = swapPairs(n3);
                 return n2;
             }
         }
@@ -1608,6 +1607,59 @@ public class Solution {
                 count -= k;
             }
             return dummy.next;
+        }
+
+        public boolean hasCycle(ListNode head) {
+            if (head == null) {
+                return false;
+            } else {
+                HashSet<ListNode> set = new HashSet<>();
+                while (head != null) {
+                    if (set.contains(head)) {
+                        return true;
+                    } else {
+                        set.add(head);
+                        head = head.next;
+                    }
+                }
+                return false;
+            }
+        }
+    }
+
+    static class Node {
+        int val;
+        Node next;
+        Node random;
+
+        public Node(int val) {
+            this.val = val;
+            this.next = null;
+            this.random = null;
+        }
+
+        public Node copyRandomList(Node head) {
+            if (head == null) {
+                return null;
+            }
+            // Create a map to store the original nodes and their copies
+            Map<Node, Node> map = new HashMap<>();
+            // Create a copy of each node and put it in the map
+            Node current = head;
+            while (current != null) {
+                map.put(current, new Node(current.val));
+                current = current.next;
+            }
+            // Set the next and random pointers for the copy nodes
+            current = head;
+            while (current != null) {
+                Node copy = map.get(current);
+                copy.next = map.get(current.next);
+                copy.random = map.get(current.random);
+                current = current.next;
+            }
+            // Return the head of the copied list
+            return map.get(head);
         }
     }
 }

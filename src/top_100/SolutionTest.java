@@ -322,4 +322,17 @@ public class SolutionTest {
         int[] exp = {1, 2};
         assertArrayEquals(exp, solution.topKFrequent(nums, 2));
     }
+
+    @Test
+    public void testCycle() {
+        Solution.ListNode n1 = new Solution.ListNode(3);
+        Solution.ListNode n2 = new Solution.ListNode(2);
+        Solution.ListNode n3 = new Solution.ListNode(0);
+        Solution.ListNode n4 = new Solution.ListNode(-4);
+        n1.next = n2;
+        n2.next = n3;
+        n3.next = n4;
+        n4.next = n2;
+        assertTrue(n1.hasCycle(n1));
+    }
 }
