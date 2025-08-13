@@ -1610,20 +1610,21 @@ public class Solution {
         }
 
         public boolean hasCycle(ListNode head) {
-            if (head == null) {
-                return false;
-            } else {
-                HashSet<ListNode> set = new HashSet<>();
-                while (head != null) {
-                    if (set.contains(head)) {
-                        return true;
-                    } else {
-                        set.add(head);
-                        head = head.next;
-                    }
-                }
+            // Floyd’s Cycle Detection Algorithm
+            if (head == null || head.next == null) {
                 return false;
             }
+            ListNode slow = head;
+            ListNode fast = head;
+            while (fast != null && fast.next != null) {
+                slow = slow.next;         // move 1 step
+                fast = fast.next.next;    // move 2 steps
+
+                if (slow == fast) {       // cycle detected
+                    return true;
+                }
+            }
+            return false; // no cycle
         }
     }
 
