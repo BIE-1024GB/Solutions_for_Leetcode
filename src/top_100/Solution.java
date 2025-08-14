@@ -1626,6 +1626,21 @@ public class Solution {
             }
             return false; // no cycle
         }
+
+        public ListNode detectCycle(ListNode head) {
+            if (head != null) {
+                HashSet<ListNode> set = new HashSet<>();
+                while (head != null) {
+                    if (set.contains(head)) {
+                        return head;
+                    } else {
+                        set.add(head);
+                        head = head.next;
+                    }
+                }
+            }
+            return null;
+        }
     }
 
     static class Node {
@@ -1661,6 +1676,82 @@ public class Solution {
             }
             // Return the head of the copied list
             return map.get(head);
+        }
+    }
+
+    static class LRUCache {
+        private static class Node {
+            int key, value;
+            Node prev, next;
+
+            Node(int k, int v) {
+                key = k;
+                value = v;
+            }
+        }
+
+        private final int capacity;
+        private final HashMap<Integer, Node> map;
+        private final Node head, tail; // dummy head/tail for easy pointer ops
+
+        public LRUCache(int capacity) {
+            this.capacity = capacity;
+            this.map = new HashMap<>();
+            head = new Node(0, 0);
+            tail = new Node(0, 0);
+            head.next = tail;
+            tail.prev = head;
+        }
+
+        public int get(int key) {
+            if (!map.containsKey(key))
+                return -1;
+            Node node = map.get(key);
+            moveToHead(node); // mark as recently used
+            return node.value;
+        }
+
+        public void put(int key, int value) {
+            if (map.containsKey(key)) {
+                Node node = map.get(key);
+                node.value = value;
+                moveToHead(node);
+            } else {
+                Node newNode = new Node(key, value);
+                map.put(key, newNode);
+                addNode(newNode);
+                if (map.size() > capacity) {
+                    Node tailPrev = popTail();
+                    map.remove(tailPrev.key);
+                }
+            }
+        }
+
+        // --- Doubly linked list helper methods ---
+
+        private void addNode(Node node) {
+            node.prev = head;
+            node.next = head.next;
+            head.next.prev = node;
+            head.next = node;
+        }
+
+        private void removeNode(Node node) {
+            Node prev = node.prev;
+            Node next = node.next;
+            prev.next = next;
+            next.prev = prev;
+        }
+
+        private void moveToHead(Node node) {
+            removeNode(node);
+            addNode(node);
+        }
+
+        private Node popTail() {
+            Node res = tail.prev;
+            removeNode(res);
+            return res;
         }
     }
 }
