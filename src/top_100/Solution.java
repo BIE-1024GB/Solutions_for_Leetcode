@@ -1641,6 +1641,82 @@ public class Solution {
             }
             return null;
         }
+
+        private ListNode split(ListNode head, int size) {
+            // Splits the list after 'size' nodes, returns the head of the next sublist
+            if (head == null)
+                return null;
+            for (int i = 1; head.next != null && i < size; i++) {
+                head = head.next;
+            }
+            ListNode second = head.next;
+            head.next = null;
+            return second;
+        }
+        private ListNode merge(ListNode l1, ListNode l2, ListNode prev) {
+            // Merges l1 and l2, attaches to 'prev', returns tail of merged list
+            ListNode curr = prev;
+            while (l1 != null && l2 != null) {
+                if (l1.val < l2.val) {
+                    curr.next = l1;
+                    l1 = l1.next;
+                } else {
+                    curr.next = l2;
+                    l2 = l2.next;
+                }
+                curr = curr.next;
+            }
+            curr.next = (l1 != null) ? l1 : l2;
+
+            // Move curr to the end of merged list
+            while (curr.next != null) {
+                curr = curr.next;
+            }
+            return curr;
+        }
+        public ListNode sortList(ListNode head) {
+            if (head == null || head.next == null)
+                return head;
+            // Step 1: Get length of list
+            int length = 0;
+            ListNode node = head;
+            while (node != null) {
+                length++;
+                node = node.next;
+            }
+            // Dummy head for easier manipulation
+            ListNode dummy = new ListNode(0, head);
+            // Step 2: Bottom-up merge sort
+            for (int step = 1; step < length; step <<= 1) {
+                ListNode prev = dummy;
+                ListNode curr = dummy.next;
+                while (curr != null) {
+                    // Step 3: Split first sublist
+                    ListNode left = curr;
+                    ListNode right = split(left, step);
+                    curr = split(right, step);
+                    // Step 4: Merge two sorted sublists
+                    prev = merge(left, right, prev);
+                }
+            }
+            return dummy.next;
+        }
+
+        public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+            HashSet<ListNode> set = new HashSet<>();
+            while (headA != null) {
+                set.add(headA);
+                headA = headA.next;
+            }
+            while (headB != null) {
+                if (set.contains(headB)) {
+                    return headB;
+                } else {
+                    headB = headB.next;
+                }
+            }
+            return null;
+        }
     }
 
     static class Node {
