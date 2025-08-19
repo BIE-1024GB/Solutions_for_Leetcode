@@ -1879,4 +1879,126 @@ public class Solution {
             return res;
         }
     }
+
+    public void rotate(int[][] matrix) {
+        int n = matrix.length;
+        // Step 1: Transpose the matrix
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
+            }
+        }
+        // Step 2: Reverse each row
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n / 2; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[i][n - 1 - j];
+                matrix[i][n - 1 - j] = temp;
+            }
+        }
+    }
+
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> res = new ArrayList<>();
+        int m = matrix.length;
+        int n = matrix[0].length;
+        boolean[][] visit = new boolean[m][n];
+        int cr = 0;
+        int cc = 0;
+        res.add(matrix[cr][cc]);
+        visit[cr][cc] = true;
+        char dir = 'r';
+        while (res.size() < m*n) {
+            switch (dir) {
+                case 'r':
+                    if (cc+1 <= n-1 && !visit[cr][cc+1]) {
+                        cc += 1;
+                        res.add(matrix[cr][cc]);
+                        visit[cr][cc] = true;
+                    } else {
+                        dir = 'd';
+                    }
+                    break;
+                case 'd':
+                    if (cr+1 <= m-1 && !visit[cr+1][cc]) {
+                        cr += 1;
+                        res.add(matrix[cr][cc]);
+                        visit[cr][cc] = true;
+                    } else {
+                        dir = 'l';
+                    }
+                    break;
+                case 'l':
+                    if (cc-1 >= 0 && !visit[cr][cc-1]) {
+                        cc -= 1;
+                        res.add(matrix[cr][cc]);
+                        visit[cr][cc] = true;
+                    } else {
+                        dir = 'u';
+                    }
+                    break;
+                default:
+                    if (cr-1 >= 0 && !visit[cr-1][cc]) {
+                        cr -= 1;
+                        res.add(matrix[cr][cc]);
+                        visit[cr][cc] = true;
+                    } else {
+                        dir = 'r';
+                    }
+            }
+        }
+        return res;
+    }
+
+    public void setZeroes(int[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        boolean firstRowZero = false;
+        boolean firstColZero = false;
+        // Check if first row should be zero
+        for (int j = 0; j < n; j++) {
+            if (matrix[0][j] == 0) {
+                firstRowZero = true;
+                break;
+            }
+        }
+        // Check if first col should be zero
+        for (int i = 0; i < m; i++) {
+            if (matrix[i][0] == 0) {
+                firstColZero = true;
+                break;
+            }
+        }
+        // Use first row and first col as markers
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                if (matrix[i][j] == 0) {
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
+                }
+            }
+        }
+        // Zero cells based on markers
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                if (matrix[i][0] == 0 || matrix[0][j] == 0) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        // Handle first row
+        if (firstRowZero) {
+            for (int j = 0; j < n; j++) {
+                matrix[0][j] = 0;
+            }
+        }
+        // Handle first col
+        if (firstColZero) {
+            for (int i = 0; i < m; i++) {
+                matrix[i][0] = 0;
+            }
+        }
+    }
 }
