@@ -1965,8 +1965,8 @@ public class Solution {
             }
         }
         // Check if first col should be zero
-        for (int i = 0; i < m; i++) {
-            if (matrix[i][0] == 0) {
+        for (int[] ints : matrix) {
+            if (ints[0] == 0) {
                 firstColZero = true;
                 break;
             }
@@ -2000,5 +2000,134 @@ public class Solution {
                 matrix[i][0] = 0;
             }
         }
+    }
+
+    public boolean searchMatrixII(int[][] matrix, int target) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int minn = matrix[0][0];
+        int maxn = matrix[m-1][n-1];
+        if (target < minn || target > maxn) {
+            return false;
+        }
+        for (int i = 0; i <= m-1; i++) {
+            int rmin = matrix[i][0];
+            int rmax = matrix[i][n-1];
+            if (target < rmin || target > rmax) {
+                continue;
+            }
+            int lp = 0;
+            int rp = n-1;
+            while (lp <= rp) {
+                int mid = lp+(rp-lp)/2;
+                if (matrix[i][mid] == target) {
+                    return true;
+                } else if (matrix[i][mid] < target) {
+                    lp = mid+1;
+                } else {
+                    rp = mid-1;
+                }
+            }
+        }
+        return false;
+    }
+
+    public int lengthOfLongestSubstring(String s) {
+        if (s.length() <= 1) {
+            return s.length();
+        }
+        HashMap<Character, Integer> map = new HashMap<>();
+        int lp = 0;
+        int rp = 0;
+        int ml = 1;
+        while (rp <= s.length()-1) {
+            char curr = s.charAt(rp);
+            if (map.isEmpty() || !map.containsKey(curr)) {
+                map.put(curr, rp);
+            } else {
+                int cl = rp-lp;
+                ml = Math.max(ml, cl);
+                int colli = map.get(curr);
+                if (colli >= lp) {
+                    lp = colli+1;
+                }
+                map.put(curr, rp);
+            }
+            rp += 1;
+        }
+        return Math.max(ml, rp-lp);
+    }
+
+    public String minWindow(String s, String t) {
+        if (s.length() < t.length())
+            return "";
+
+        // Frequency map for characters in t
+        Map<Character, Integer> need = new HashMap<>();
+        for (char c : t.toCharArray()) {
+            need.put(c, need.getOrDefault(c, 0) + 1);
+        }
+
+        // Sliding window
+        Map<Character, Integer> window = new HashMap<>();
+        int have = 0, needCount = need.size();
+        int left = 0;
+        int minLen = Integer.MAX_VALUE;
+        int start = 0;
+
+        for (int right = 0; right < s.length(); right++) {
+            char c = s.charAt(right);
+            window.put(c, window.getOrDefault(c, 0) + 1);
+
+            if (need.containsKey(c) && window.get(c).intValue() == need.get(c).intValue()) {
+                have++;
+            }
+
+            // Try to shrink window from the left while it's valid
+            while (have == needCount) {
+                // Update result
+                if (right - left + 1 < minLen) {
+                    minLen = right - left + 1;
+                    start = left;
+                }
+
+                char leftChar = s.charAt(left);
+                window.put(leftChar, window.get(leftChar) - 1);
+                if (need.containsKey(leftChar) && window.get(leftChar) < need.get(leftChar)) {
+                    have--;
+                }
+                left++;
+            }
+        }
+
+        return minLen == Integer.MAX_VALUE ? "" : s.substring(start, start + minLen);
+    }
+
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        int n = nums.length;
+        int[] result = new int[n - k + 1];
+        Deque<Integer> deque = new ArrayDeque<>(); // stores indices
+
+        for (int i = 0; i < n; i++) {
+            // Remove indices that are out of this window
+            if (!deque.isEmpty() && deque.peekFirst() <= i - k) {
+                deque.pollFirst();
+            }
+
+            // Remove smaller elements in deque since they are useless
+            while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) {
+                deque.pollLast();
+            }
+
+            // Add current element's index
+            deque.offerLast(i);
+
+            // The front of the deque is the largest element in current window
+            if (i >= k - 1) {
+                result[i - k + 1] = nums[deque.peekFirst()];
+            }
+        }
+
+        return result;
     }
 }

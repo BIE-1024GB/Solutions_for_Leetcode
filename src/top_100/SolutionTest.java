@@ -348,4 +348,24 @@ public class SolutionTest {
         n4.next = n2;
         assertEquals(n2, n1.detectCycle(n1));
     }
+
+    @Test
+    public void testSM2() {
+        Solution solution = new Solution();
+        int[][] matrix = new int[][] {
+                {1,4,7,11,15},
+                {2,5,8,12,19},
+                {3,6,9,16,22},
+                {10,13,14,17,24},
+                {18,21,23,26,30}
+        };
+        assertFalse(solution.searchMatrixII(matrix, 20));
+    }
+
+    @Test
+    public void testLongestSubstring() {
+        Solution solution = new Solution();
+        String s = "abcabcbb";
+        assertEquals(3, solution.lengthOfLongestSubstring(s));
+    }
 }
