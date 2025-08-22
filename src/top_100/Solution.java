@@ -2130,4 +2130,71 @@ public class Solution {
 
         return result;
     }
+
+    public List<Integer> findAnagrams(String s, String p) {
+        // Optimal sliding window approach
+        List<Integer> result = new ArrayList<>();
+        int n = s.length(), m = p.length();
+        if (n < m)
+            return result;
+        int[] countP = new int[26];
+        int[] countS = new int[26];
+        // Count characters in p
+        for (char c : p.toCharArray()) {
+            countP[c - 'a']++;
+        }
+        // Sliding window
+        for (int i = 0; i < n; i++) {
+            // Add current char into the window
+            countS[s.charAt(i) - 'a']++;
+            // Remove the char left out of window
+            if (i >= m) {
+                countS[s.charAt(i - m) - 'a']--;
+            }
+            // Compare counts when window size matches
+            if (i >= m - 1 && Arrays.equals(countP, countS)) {
+                result.add(i - m + 1);
+            }
+        }
+        return result;
+    }
+
+    public boolean isValid(String s) {
+        if (s.length()%2 != 0) {
+            return false;
+        }
+        Stack<Character> stack = new Stack<>();
+        for (int i = 0; i <= s.length()-1; i++) {
+            char c = s.charAt(i);
+            if (stack.isEmpty() || c=='(' || c=='{' || c=='[') {
+                stack.push(c);
+            } else {
+                char top = stack.peek();
+                switch (top) {
+                    case '(':
+                        if (c != ')') {
+                            return false;
+                        } else {
+                            stack.pop();
+                        }
+                        break;
+                    case '{':
+                        if (c != '}') {
+                            return false;
+                        } else {
+                            stack.pop();
+                        }
+                        break;
+                    case '[':
+                        if (c != ']') {
+                            return false;
+                        } else {
+                            stack.pop();
+                        }
+                        break;
+                }
+            }
+        }
+        return stack.isEmpty();
+    }
 }

@@ -368,4 +368,11 @@ public class SolutionTest {
         String s = "abcabcbb";
         assertEquals(3, solution.lengthOfLongestSubstring(s));
     }
+
+    @Test
+    public void testValidParenthesis() {
+        Solution solution = new Solution();
+        String vp = "([)]";
+        assertFalse(solution.isValid(vp));
+    }
 }
