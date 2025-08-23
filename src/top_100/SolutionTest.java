@@ -375,4 +375,11 @@ public class SolutionTest {
         String vp = "([)]";
         assertFalse(solution.isValid(vp));
     }
+
+    @Test
+    public void testRectangle() {
+        Solution solution = new Solution();
+        int[] height = new int[] {2, 1, 5, 6, 2, 3};
+        assertEquals(10, solution.largestRectangleArea(height));
+    }
 }
