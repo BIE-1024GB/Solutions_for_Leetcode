@@ -2215,4 +2215,68 @@ public class Solution {
         }
         return maxArea;
     }
+
+    static class MinStack {
+        private Stack<Integer> stack;
+        private Stack<Integer> minStack;
+
+        public MinStack() {
+            stack = new Stack<>();
+            minStack = new Stack<>();
+        }
+
+        public void push(int val) {
+            stack.push(val);
+            if (minStack.isEmpty()) {
+                minStack.push(val);
+            } else {
+                minStack.push(Math.min(val, minStack.peek()));
+            }
+        }
+
+        public void pop() {
+            stack.pop();
+            minStack.pop();
+        }
+
+        public int top() {
+            return stack.peek();
+        }
+
+        public int getMin() {
+            return minStack.peek();
+        }
+    }
+
+    public String decodeString(String s) {
+        Stack<Integer> countStack = new Stack<>();
+        Stack<StringBuilder> strStack = new Stack<>();
+        StringBuilder current = new StringBuilder();
+        int k = 0;
+        for (char c : s.toCharArray()) {
+            if (Character.isDigit(c)) {
+                // build multi-digit number
+                k = k * 10 + (c - '0');
+            } else if (c == '[') {
+                // push current context
+                countStack.push(k);
+                strStack.push(current);
+                // reset for new block
+                k = 0;
+                current = new StringBuilder();
+            } else if (c == ']') {
+                // pop count and previous string
+                int repeatTimes = countStack.pop();
+                StringBuilder decoded = strStack.pop();
+                for (int i = 0; i < repeatTimes; i++) {
+                    decoded.append(current);
+                }
+                current = decoded;
+            } else {
+                // append normal characters
+                current.append(c);
+            }
+        }
+        return current.toString();
+    }
 }
