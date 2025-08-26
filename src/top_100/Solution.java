@@ -2279,4 +2279,98 @@ public class Solution {
         }
         return current.toString();
     }
+
+    public int[] dailyTemperatures(int[] temperatures) {
+        if (temperatures.length == 1) {
+            return new int[] { 0 };
+        }
+        int n = temperatures.length;
+        int[] answer = new int[n];
+        Stack<Integer> stack = new Stack<>(); // stores indices of days
+        // iterate from left to right
+        for (int i = 0; i < n; i++) {
+            // While the current temperature is warmer than the temperature at the top index of stack
+            while (!stack.isEmpty() && temperatures[i] > temperatures[stack.peek()]) {
+                int prevIndex = stack.pop();
+                answer[prevIndex] = i - prevIndex; // difference in days
+            }
+            // push current index to stack
+            stack.push(i);
+        }
+        // any indices left in the stack will have answer[i] = 0 by default
+        return answer;
+    }
+
+    public int maxArea(int[] height) {
+        int left = 0;
+        int right = height.length - 1;
+        int maxArea = 0;
+        while (left < right) {
+            int minHeight = Math.min(height[left], height[right]);
+            int width = right - left;
+            int area = minHeight * width;
+            maxArea = Math.max(maxArea, area);
+            // Move the pointer with the smaller height
+            if (height[left] < height[right]) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+        return maxArea;
+    }
+
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length - 2; i++) {
+            // Skip duplicate values for i
+            if (i > 0 && nums[i] == nums[i - 1])
+                continue;
+            int left = i + 1;
+            int right = nums.length - 1;
+            while (left < right) {
+                int sum = nums[i] + nums[left] + nums[right];
+                if (sum == 0) {
+                    result.add(Arrays.asList(nums[i], nums[left], nums[right]));
+                    // Skip duplicate values for left and right
+                    while (left < right && nums[left] == nums[left + 1])
+                        left++;
+                    while (left < right && nums[right] == nums[right - 1])
+                        right--;
+                    left++;
+                    right--;
+                } else if (sum < 0) {
+                    left++; // Need a bigger sum
+                } else {
+                    right--; // Need a smaller sum
+                }
+            }
+        }
+        return result;
+    }
+
+    public int trap(int[] height) {
+        int left = 0, right = height.length - 1;
+        int leftMax = 0, rightMax = 0;
+        int water = 0;
+        while (left < right) {
+            if (height[left] < height[right]) {
+                if (height[left] >= leftMax) {
+                    leftMax = height[left];
+                } else {
+                    water += leftMax - height[left];
+                }
+                left++;
+            } else {
+                if (height[right] >= rightMax) {
+                    rightMax = height[right];
+                } else {
+                    water += rightMax - height[right];
+                }
+                right--;
+            }
+        }
+        return water;
+    }
 }

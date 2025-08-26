@@ -382,4 +382,18 @@ public class SolutionTest {
         int[] height = new int[] {2, 1, 5, 6, 2, 3};
         assertEquals(10, solution.largestRectangleArea(height));
     }
+
+    @Test
+    public void testRain() {
+        Solution solution = new Solution();
+        int[] heights = new int[] {7, 6, 5, 4, 3, 2, 1};
+        assertEquals(12, solution.maxArea(heights));
+    }
+
+    @Test
+    public void testTrap() {
+        Solution solution = new Solution();
+        int[] height = new int[] {0,1,0,2,1,0,1,3,2,1,2,1};
+        assertEquals(6, solution.trap(height));
+    }
 }
