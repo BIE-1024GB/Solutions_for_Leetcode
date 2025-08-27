@@ -2373,4 +2373,81 @@ public class Solution {
         }
         return water;
     }
+
+    public void moveZeroes(int[] nums) {
+        if (nums.length > 1) {
+            int lp = 0;
+            int rp = 0;
+            while (rp <= nums.length-1) {
+                if (nums[rp] != 0) {
+                    nums[lp] = nums[rp];
+                    lp++;
+                }
+                rp++;
+            }
+            while (lp <= nums.length-1) {
+                nums[lp] = 0;
+                lp++;
+            }
+        }
+    }
+
+    static class Trie {
+
+        // Nested class for TrieNode
+        private class TrieNode {
+            TrieNode[] children; // 26 lowercase English letters
+            boolean isEndOfWord;
+
+            TrieNode() {
+                children = new TrieNode[26];
+                isEndOfWord = false;
+            }
+        }
+
+        private TrieNode root;
+
+        public Trie() {
+            root = new TrieNode();
+        }
+
+        // Insert a word into the Trie
+        public void insert(String word) {
+            TrieNode node = root;
+            for (char c : word.toCharArray()) {
+                int index = c - 'a';
+                if (node.children[index] == null) {
+                    node.children[index] = new TrieNode();
+                }
+                node = node.children[index];
+            }
+            node.isEndOfWord = true;
+        }
+
+        // Search for a complete word in the Trie
+        public boolean search(String word) {
+            TrieNode node = root;
+            for (char c : word.toCharArray()) {
+                int index = c - 'a';
+                if (node.children[index] == null) {
+                    return false;
+                }
+                node = node.children[index];
+            }
+            return node.isEndOfWord;
+        }
+
+        // Check if any word in the Trie starts with the given prefix
+        public boolean startsWith(String prefix) {
+            TrieNode node = root;
+            for (char c : prefix.toCharArray()) {
+                int index = c - 'a';
+                if (node.children[index] == null) {
+                    return false;
+                }
+                node = node.children[index];
+            }
+            return true;
+        }
+    }
 }
