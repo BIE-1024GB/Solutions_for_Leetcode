@@ -2450,4 +2450,56 @@ public class Solution {
             return true;
         }
     }
+
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+    private void reverse(int[] nums, int left, int right) {
+        while (left < right) {
+            swap(nums, left++, right--);
+        }
+    }
+    public void nextPermutation(int[] nums) {
+        int n = nums.length;
+        // Step 1: Find the first decreasing element from the right
+        int i = n - 2;
+        while (i >= 0 && nums[i] >= nums[i + 1]) {
+            i--;
+        }
+        // Step 2: If found, find the element just larger than nums[i] and swap
+        if (i >= 0) {
+            int j = n - 1;
+            while (j >= 0 && nums[j] <= nums[i]) {
+                j--;
+            }
+            swap(nums, i, j);
+        }
+        // Step 3: Reverse the suffix (from i+1 to end)
+        reverse(nums, i + 1, n - 1);
+    }
+
+    public int firstMissingPositive(int[] nums) {
+        // O(n) time, O(1) space
+        int n = nums.length;
+        // Place each number in its right place if possible
+        for (int i = 0; i < n; i++) {
+            while (nums[i] > 0 && nums[i] <= n && nums[nums[i] - 1] != nums[i]) {
+                // swap nums[i] with nums[nums[i] - 1]
+                int correctIndex = nums[i] - 1;
+                int temp = nums[i];
+                nums[i] = nums[correctIndex];
+                nums[correctIndex] = temp;
+            }
+        }
+        // After rearranging, the first place where index doesn't match value gives the answer
+        for (int i = 0; i < n; i++) {
+            if (nums[i] != i + 1) {
+                return i + 1;
+            }
+        }
+        // If all values from 1..n are present, answer is n+1
+        return n + 1;
+    }
 }
