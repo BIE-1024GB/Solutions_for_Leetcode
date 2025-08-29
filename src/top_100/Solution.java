@@ -2502,4 +2502,47 @@ public class Solution {
         // If all values from 1..n are present, answer is n+1
         return n + 1;
     }
+
+    public int maxSubArray(int[] nums) {
+        if (nums.length == 1) {
+            return nums[0];
+        }
+        int ms = Integer.MIN_VALUE;
+        int cs = 0;
+        for (int n : nums) {
+            cs = Math.max(cs+n, n);
+            ms = Math.max(ms, cs);
+        }
+        return ms;
+    }
+
+    public int[][] merge(int[][] intervals) {
+        if (intervals.length == 1) {
+            return intervals;
+        }
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b)->a[0]-b[0]);
+        for (int[] inter : intervals) {
+            pq.offer(inter);
+        }
+        ArrayList<int[]> list = new ArrayList<>();
+        while (pq.size() >= 2) {
+            int[] fi = pq.poll();
+            int[] si = pq.peek();
+            if (si[0] <= fi[1]) {
+                si = pq.poll();
+                int[] mi = new int[] {fi[0], Math.max(fi[1], si[1])};
+                pq.offer(mi);
+            } else {
+                list.add(fi);
+            }
+        }
+        list.add(pq.poll());
+        int[][] res = new int[list.size()][2];
+        for (int i = 0; i <= res.length-1; i++) {
+            int[] ri = list.get(i);
+            res[i][0] = ri[0];
+            res[i][1] = ri[1];
+        }
+        return res;
+    }
 }
