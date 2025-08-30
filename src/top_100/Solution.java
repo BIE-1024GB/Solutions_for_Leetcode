@@ -2545,4 +2545,38 @@ public class Solution {
         }
         return res;
     }
+
+    public void sortColors(int[] nums) {
+        int low = 0; // boundary for 0 (red)
+        int mid = 0; // current element
+        int high = nums.length - 1; // boundary for 2 (blue)
+        while (mid <= high) {
+            if (nums[mid] == 0) {
+                // Swap nums[low] and nums[mid], move both forward
+                int temp = nums[low];
+                nums[low] = nums[mid];
+                nums[mid] = temp;
+                low++;
+                mid++;
+            } else if (nums[mid] == 1) {
+                // Leave 1 in place, just move mid
+                mid++;
+            } else { // nums[mid] == 2
+                // Swap nums[mid] and nums[high], move high backward
+                int temp = nums[mid];
+                nums[mid] = nums[high];
+                nums[high] = temp;
+                high--;
+                // Don't move mid here, because the swapped value at mid must be checked
+            }
+        }
+    }
+
+    public int singleNumber(int[] nums) {
+        int result = 0;
+        for (int num : nums) {
+            result ^= num; // XOR accumulates
+        }
+        return result;
+    }
 }
