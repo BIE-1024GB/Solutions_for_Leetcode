@@ -2603,4 +2603,43 @@ public class Solution {
         // Step 3: reverse remaining n-k elements
         reverse(nums, k, n - 1);
     }
+
+    public int[] productExceptSelf(int[] nums) {
+        int[] lp = new int[nums.length];
+        int[] rp = new int[nums.length];
+        for (int i = 0; i <= lp.length-1; i++) {
+            if (i == 0) {
+                lp[i] = 1;
+            } else {
+                lp[i] = lp[i-1]*nums[i-1];
+            }
+        }
+        for (int i = rp.length-1; i >= 0; i--) {
+            if (i == rp.length-1) {
+                rp[i] = 1;
+            } else {
+                rp[i] = rp[i+1]*nums[i+1];
+            }
+        }
+        int[] res = new int[nums.length];
+        for (int i = 0; i <= res.length-1; i++) {
+            res[i] = lp[i]*rp[i];
+        }
+        return res;
+    }
+
+    public int findDuplicate(int[] nums) {
+        int slow = nums[0];
+        int fast = nums[0];
+        do {
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        } while (slow != fast);
+        slow = nums[0];
+        while (slow != fast) {
+            slow = nums[slow];
+            fast = nums[fast];
+        }
+        return slow;
+    }
 }

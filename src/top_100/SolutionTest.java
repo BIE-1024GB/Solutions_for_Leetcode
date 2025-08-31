@@ -424,4 +424,11 @@ public class SolutionTest {
         int[] num = new int[] {2,2,1,1,1,2,2};
         assertEquals(2, solution.majorityElement(num));
     }
+
+    @Test
+    public void testDup() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {3, 3, 3, 3, 3};
+        assertEquals(3, solution.findDuplicate(nums));
+    }
 }
