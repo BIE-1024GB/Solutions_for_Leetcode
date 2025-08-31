@@ -417,4 +417,11 @@ public class SolutionTest {
         int[] num = new int[] {4,1,2,1,2};
         assertEquals(4, solution.singleNumber(num));
     }
+
+    @Test
+    public void testME() {
+        Solution solution = new Solution();
+        int[] num = new int[] {2,2,1,1,1,2,2};
+        assertEquals(2, solution.majorityElement(num));
+    }
 }

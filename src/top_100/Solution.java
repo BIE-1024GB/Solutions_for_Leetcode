@@ -2579,4 +2579,28 @@ public class Solution {
         }
         return result;
     }
+
+    public int majorityElement(int[] nums) {
+        // Boyer–Moore Voting Algorithm
+        int candidate = 0;
+        int count = 0;
+        for (int num : nums) {
+            if (count == 0) {
+                candidate = num;
+            }
+            count += (num == candidate) ? 1 : -1;
+        }
+        return candidate;
+    }
+
+    public void rotate(int[] nums, int k) {
+        int n = nums.length;
+        k = k % n;
+        // Step 1: reverse entire array
+        reverse(nums, 0, n - 1);
+        // Step 2: reverse first k elements
+        reverse(nums, 0, k - 1);
+        // Step 3: reverse remaining n-k elements
+        reverse(nums, k, n - 1);
+    }
 }
