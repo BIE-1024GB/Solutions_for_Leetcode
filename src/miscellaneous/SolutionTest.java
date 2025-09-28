@@ -53,4 +53,11 @@ public class SolutionTest {
         int[] sides = new int[] {1,2,1,10};
         assertEquals(0, solution.largestPerimeter(sides));
     }
+
+    @Test
+    public void testATOI() {
+        Solution solution = new Solution();
+        String str = "  0000000000012345678";
+        assertEquals(12345678, solution.myAtoi(str));
+    }
 }
