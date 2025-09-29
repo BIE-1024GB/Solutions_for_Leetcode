@@ -60,4 +60,11 @@ public class SolutionTest {
         String str = "  0000000000012345678";
         assertEquals(12345678, solution.myAtoi(str));
     }
+
+    @Test
+    public void testTriangulation() {
+        Solution solution = new Solution();
+        int[] vertex = new int[] {1,3,1,4,1,5};
+        assertEquals(13, solution.minScoreTriangulation(vertex));
+    }
 }
