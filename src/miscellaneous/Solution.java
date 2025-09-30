@@ -572,4 +572,19 @@ public class Solution {
         }
         return dp[0][n - 1];
     }
+
+    public int triangularSum(int[] nums) {
+        if (nums.length == 1) {
+            return nums[0];
+        }
+        int[] prev = nums;
+        while (prev.length > 1) {
+            int[] nn = new int[prev.length-1];
+            for (int i = 0; i <= nn.length-1; i++) {
+                nn[i] = (prev[i]+prev[i+1])%10;
+            }
+            prev = nn;
+        }
+        return prev[0];
+    }
 }

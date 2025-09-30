@@ -67,4 +67,11 @@ public class SolutionTest {
         int[] vertex = new int[] {1,3,1,4,1,5};
         assertEquals(13, solution.minScoreTriangulation(vertex));
     }
+
+    @Test
+    public void testTS() {
+        Solution solution = new Solution();
+        int[] arr = new int[] {1, 2, 3, 4, 5};
+        assertEquals(8, solution.triangularSum(arr));
+    }
 }
