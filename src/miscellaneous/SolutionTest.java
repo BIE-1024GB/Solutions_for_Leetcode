@@ -74,4 +74,10 @@ public class SolutionTest {
         int[] arr = new int[] {1, 2, 3, 4, 5};
         assertEquals(8, solution.triangularSum(arr));
     }
+
+    @Test
+    public void testBottle() {
+        Solution solution = new Solution();
+        assertEquals(19, solution.numWaterBottles(15, 4));
+    }
 }

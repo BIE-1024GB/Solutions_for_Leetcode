@@ -587,4 +587,18 @@ public class Solution {
         }
         return prev[0];
     }
+
+    public int numWaterBottles(int numBottles, int numExchange) {
+        int res = 0;
+        int empt = 0;
+        int fb = numBottles;
+        while (fb+empt >= numExchange) {
+            res += fb;
+            empt += fb;
+            fb = empt/numExchange;
+            empt %= numExchange;
+        }
+        res += fb;
+        return res;
+    }
 }
