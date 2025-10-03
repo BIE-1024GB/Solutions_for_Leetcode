@@ -86,4 +86,15 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertEquals(15, solution.maxBottlesDrunk(13, 6));
     }
+
+    @Test
+    public void testRain2() {
+        Solution solution = new Solution();
+        int[][] heights = new int[][] {
+                {1,4,3,1,3,2},
+                {3,2,1,3,2,4},
+                {2,3,3,2,3,1}
+        };
+        assertEquals(4, solution.trapRainWater(heights));
+    }
 }

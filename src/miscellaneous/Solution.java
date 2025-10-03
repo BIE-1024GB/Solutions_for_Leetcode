@@ -618,4 +618,62 @@ public class Solution {
         }
         return res;
     }
+
+    static class Cell {
+        int i, j, height;
+
+        Cell(int i, int j, int height) {
+            this.i = i;
+            this.j = j;
+            this.height = height;
+        }
+    }
+    public int trapRainWater(int[][] heightMap) {
+        int m = heightMap.length, n = heightMap[0].length;
+        if (m <= 2 || n <= 2)
+            return 0;
+
+        // Min-heap (lowest height first)
+        PriorityQueue<Cell> pq = new PriorityQueue<>((a, b) -> a.height - b.height);
+        boolean[][] visited = new boolean[m][n];
+
+        // Add all boundary cells into the heap
+        for (int i = 0; i < m; i++) {
+            pq.offer(new Cell(i, 0, heightMap[i][0]));
+            pq.offer(new Cell(i, n - 1, heightMap[i][n - 1]));
+            visited[i][0] = true;
+            visited[i][n - 1] = true;
+        }
+        for (int j = 1; j < n - 1; j++) {
+            pq.offer(new Cell(0, j, heightMap[0][j]));
+            pq.offer(new Cell(m - 1, j, heightMap[m - 1][j]));
+            visited[0][j] = true;
+            visited[m - 1][j] = true;
+        }
+
+        int totalWater = 0;
+        int[][] dirs = { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
+
+        while (!pq.isEmpty()) {
+            Cell cell = pq.poll();
+
+            for (int[] d : dirs) {
+                int ni = cell.i + d[0];
+                int nj = cell.j + d[1];
+                if (ni < 0 || nj < 0 || ni >= m || nj >= n || visited[ni][nj])
+                    continue;
+
+                visited[ni][nj] = true;
+                int neighborHeight = heightMap[ni][nj];
+                // If neighbor is lower, water can be trapped
+                if (neighborHeight < cell.height) {
+                    totalWater += cell.height - neighborHeight;
+                }
+                // Push the neighbor with the effective boundary height
+                pq.offer(new Cell(ni, nj, Math.max(neighborHeight, cell.height)));
+            }
+        }
+
+        return totalWater;
+    }
 }
