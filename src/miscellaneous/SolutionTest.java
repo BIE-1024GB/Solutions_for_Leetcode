@@ -80,4 +80,10 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertEquals(19, solution.numWaterBottles(15, 4));
     }
+
+    @Test
+    public void testBottle2() {
+        Solution solution = new Solution();
+        assertEquals(15, solution.maxBottlesDrunk(13, 6));
+    }
 }

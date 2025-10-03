@@ -601,4 +601,21 @@ public class Solution {
         res += fb;
         return res;
     }
+
+    public int maxBottlesDrunk(int numBottles, int numExchange) {
+        int res = 0;
+        int empt = 0;
+        while (numBottles>0 || empt>=numExchange) {
+            if (numBottles > 0) {
+                res += numBottles;
+                empt += numBottles;
+                numBottles = 0;
+            } else {
+                numBottles = 1;
+                empt -= numExchange;
+                numExchange += 1;
+            }
+        }
+        return res;
+    }
 }
