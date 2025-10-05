@@ -97,4 +97,11 @@ public class SolutionTest {
         };
         assertEquals(4, solution.trapRainWater(heights));
     }
+
+    @Test
+    public void testCW() {
+        Solution solution = new Solution();
+        int[] heights = new int[] {1,8,6,2,5,4,8,3,7};
+        assertEquals(49, solution.maxArea(heights));
+    }
 }
