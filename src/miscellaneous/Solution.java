@@ -692,4 +692,17 @@ public class Solution {
         }
         return mw;
     }
+
+    public int subarraySum(int[] nums, int k) {
+        HashMap<Integer, Integer> pf = new HashMap<>();
+        pf.put(0, 1);
+        int ps = 0;
+        int res = 0;
+        for (int n : nums) {
+            ps += n;
+            res += pf.getOrDefault(ps-k, 0);
+            pf.put(ps, pf.getOrDefault(ps, 0)+1);
+        }
+        return res;
+    }
 }

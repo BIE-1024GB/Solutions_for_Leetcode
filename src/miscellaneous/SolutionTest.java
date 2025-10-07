@@ -104,4 +104,11 @@ public class SolutionTest {
         int[] heights = new int[] {1,8,6,2,5,4,8,3,7};
         assertEquals(49, solution.maxArea(heights));
     }
+
+    @Test
+    public void testMSS() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {1, 2, 3};
+        assertEquals(2, solution.subarraySum(nums, 3));
+    }
 }
