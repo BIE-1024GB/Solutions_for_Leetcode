@@ -705,4 +705,31 @@ public class Solution {
         }
         return res;
     }
+
+    public int[] avoidFlood(int[] rains) {
+        int n = rains.length;
+        int[] ans = new int[n];
+        Map<Integer, Integer> fullLakes = new HashMap<>();
+        TreeSet<Integer> dryDays = new TreeSet<>();
+        for (int i = 0; i < n; i++) {
+            int lake = rains[i];
+            if (lake == 0) {
+                dryDays.add(i);
+                ans[i] = 1;
+            } else {
+                ans[i] = -1;
+                if (fullLakes.containsKey(lake)) {
+                    // Find the next dry day after the last rain on this lake
+                    Integer dryDay = dryDays.higher(fullLakes.get(lake));
+                    if (dryDay == null) {
+                        return new int[0]; // impossible to prevent flood
+                    }
+                    ans[dryDay] = lake; // dry this lake on that day
+                    dryDays.remove(dryDay);
+                }
+                fullLakes.put(lake, i); // mark the lake as full (last filled today)
+            }
+        }
+        return ans;
+    }
 }
