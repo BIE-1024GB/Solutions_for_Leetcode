@@ -732,4 +732,24 @@ public class Solution {
         }
         return ans;
     }
+
+    public int[] successfulPairs(int[] spells, int[] potions, long success) {
+        Arrays.sort(potions);
+        int[] res = new int[spells.length];
+        for (int i = 0; i <= res.length - 1; i++) {
+            long st = (success + spells[i] - 1) / spells[i];
+            int lp = 0;
+            int rp = potions.length;
+            while (lp < rp) {
+                int mid = lp + (rp - lp) / 2;
+                if (potions[mid] < st) {
+                    lp = mid + 1;
+                } else {
+                    rp = mid;
+                }
+            }
+            res[i] = potions.length - lp;
+        }
+        return res;
+    }
 }
