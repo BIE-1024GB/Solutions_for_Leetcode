@@ -752,4 +752,128 @@ public class Solution {
         }
         return res;
     }
+
+    public long minTime(int[] skill, int[] mana) {
+        int n = skill.length, m = mana.length;
+        // prefix for previous job (size n)
+        long[] prevPrefix = new long[n];
+
+        // prefix for job 0
+        prevPrefix[0] = (long) skill[0] * mana[0];
+        for (int i = 1; i < n; i++) {
+            prevPrefix[i] = prevPrefix[i - 1] + (long) skill[i] * mana[0];
+        }
+
+        long start = 0L; // S_0
+
+        // process jobs 1..m-1
+        for (int j = 1; j < m; j++) {
+            long[] currPrefix = new long[n];
+            currPrefix[0] = (long) skill[0] * mana[j];
+            for (int i = 1; i < n; i++) {
+                currPrefix[i] = currPrefix[i - 1] + (long) skill[i] * mana[j];
+            }
+
+            // compute D = max_i (prevPrefix[i] - currPrefix[i-1]) with currPrefix[-1] = 0
+            long D = prevPrefix[0]; // i = 0 case: prevPrefix[0] - 0
+            for (int i = 1; i < n; i++) {
+                long val = prevPrefix[i] - currPrefix[i - 1];
+                if (val > D)
+                    D = val;
+            }
+            if (D < 0)
+                D = 0;
+            start += D;
+
+            prevPrefix = currPrefix;
+        }
+
+        // makespan = start of last job + total time of last job
+        return start + prevPrefix[n - 1];
+    }
+
+    static class LRUCache {
+        static class Node {
+            Node prev;
+            Node next;
+            int key;
+            int val;
+
+            public Node(int k, int v) {
+                key = k;
+                val = v;
+            }
+        }
+
+        private final int capacity;
+        private final HashMap<Integer, Node> map;
+        private final Node head;
+        private final Node tail;
+
+        public LRUCache(int capacity) {
+            this.capacity = capacity;
+            map = new HashMap<>();
+            head = new Node(-1, -1);
+            tail = new Node(-1, -1);
+            head.next = tail;
+            tail.prev = head;
+        }
+
+        private void pop(Node n) {
+            Node prev = n.prev;
+            Node next = n.next;
+            prev.next = next;
+            next.prev = prev;
+        }
+
+        private void push(Node n) {
+            Node hn = head.next;
+            head.next = n;
+            n.next = hn;
+            n.prev = head;
+            hn.prev = n;
+        }
+
+        public int get(int key) {
+            if (map.containsKey(key)) {
+                Node target = map.get(key);
+                pop(target);
+                push(target);
+                return target.val;
+            } else {
+                return -1;
+            }
+        }
+
+        public void put(int key, int value) {
+            if (map.containsKey(key)) {
+                Node target = map.get(key);
+                target.val = value;
+                pop(target);
+                push(target);
+            } else {
+                Node nn = new Node(key, value);
+                push(nn);
+                map.put(key, nn);
+                if (map.size() > capacity) {
+                    Node dump = tail.prev;
+                    pop(dump);
+                    map.remove(dump.key);
+                }
+            }
+        }
+    }
+
+    public int maximumEnergy(int[] energy, int k) {
+        int[] dp = new int[energy.length];
+        if (k - 1 + 1 >= 0) System.arraycopy(energy, 0, dp, 0, k - 1 + 1);
+        for (int i = k; i <= dp.length-1; i++) {
+            dp[i] = Math.max(energy[i], energy[i]+dp[i-k]);
+        }
+        int me = Integer.MIN_VALUE;
+        for (int i = dp.length-k; i <= dp.length-1; i++) {
+            me = Math.max(me, dp[i]);
+        }
+        return me;
+    }
 }

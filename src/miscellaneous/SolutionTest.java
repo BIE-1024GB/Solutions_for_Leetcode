@@ -111,4 +111,19 @@ public class SolutionTest {
         int[] nums = new int[] {1, 2, 3};
         assertEquals(2, solution.subarraySum(nums, 3));
     }
+
+    @Test
+    public void testBrew() {
+        Solution solution = new Solution();
+        int[] skills = new int[] {1, 5, 2, 4};
+        int[] manas = new int[] {5, 1, 4, 2};
+        assertEquals(110, solution.minTime(skills, manas));
+    }
+
+    @Test
+    public void testEnergy() {
+        Solution solution = new Solution();
+        int[] energy = new int[] {5,2,-10,-5,1};
+        assertEquals(3, solution.maximumEnergy(energy, 3));
+    }
 }
