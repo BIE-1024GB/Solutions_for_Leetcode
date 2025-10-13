@@ -876,4 +876,92 @@ public class Solution {
         }
         return me;
     }
+
+    private int binarySearch(List<Integer> vals, int i) {
+        // Find largest index j < i where vals[i] - vals[j] > 2
+        int lo = 0, hi = i - 1, ans = -1;
+        while (lo <= hi) {
+            int mid = (lo + hi) / 2;
+            if (vals.get(i) - vals.get(mid) > 2) {
+                ans = mid;
+                lo = mid + 1;
+            } else {
+                hi = mid - 1;
+            }
+        }
+        return ans;
+    }
+    public long maximumTotalDamage(int[] power) {
+        // Step 1: Count total damage per unique power
+        Map<Integer, Long> map = new HashMap<>();
+        for (int p : power) {
+            map.put(p, map.getOrDefault(p, 0L) + p);
+        }
+
+        // Step 2: Sort unique power values
+        List<Integer> vals = new ArrayList<>(map.keySet());
+        Collections.sort(vals);
+        int n = vals.size();
+
+        // Step 3: Prepare DP array
+        long[] dp = new long[n];
+        dp[0] = map.get(vals.getFirst());
+
+        for (int i = 1; i < n; i++) {
+            long take = map.get(vals.get(i));
+
+            // Binary search for last non-conflicting index j
+            int j = binarySearch(vals, i);
+            if (j != -1)
+                take += dp[j];
+
+            dp[i] = Math.max(dp[i - 1], take);
+        }
+
+        return dp[n - 1];
+    }
+
+    public List<String> removeAnagrams(String[] words) {
+        List<String> res = new ArrayList<>();
+        if (words.length == 1) {
+            res.add(words[0]);
+            return res;
+        }
+        res.addAll(Arrays.asList(words));
+        while (res.size()>=2) {
+            boolean mod = false;
+            for (int i = 1; i <= res.size()-1; i++) {
+                String curr = res.get(i);
+                HashMap<Character, Integer> map = new HashMap<>();
+                for (char c : curr.toCharArray()) {
+                    map.put(c, map.getOrDefault(c, 0)+1);
+                }
+                String prev = res.get(i-1);
+                HashMap<Character, Integer> pm = new HashMap<>();
+                for (char c : prev.toCharArray()) {
+                    pm.put(c, pm.getOrDefault(c, 0)+1);
+                }
+                boolean ana = true;
+                if (map.size() == pm.size()) {
+                    for (Character c : map.keySet()) {
+                        if (!pm.containsKey(c) || !Objects.equals(map.get(c), pm.get(c))) {
+                            ana = false;
+                            break;
+                        }
+                    }
+                } else {
+                    ana = false;
+                }
+                if (ana) {
+                    res.remove(i);
+                    mod = true;
+                    break;
+                }
+            }
+            if (!mod) {
+                break;
+            }
+        }
+        return res;
+    }
 }

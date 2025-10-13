@@ -126,4 +126,30 @@ public class SolutionTest {
         int[] energy = new int[] {5,2,-10,-5,1};
         assertEquals(3, solution.maximumEnergy(energy, 3));
     }
+
+    @Test
+    public void testPower() {
+        Solution solution = new Solution();
+        int[] powers = new int[] {7,1,6,6};
+        assertEquals(13, solution.maximumTotalDamage(powers));
+    }
+
+    @Test
+    public void testRemoveAna() {
+        Solution solution = new Solution();
+        String[] words = new String[] {"nelduncd","dcnndeul","uendlcnd","nluncedd","fozlsvr","osfvrlz","vozsrfl","dm",
+                "md","md","dm","md","dm","md","md","dm","dm","dm","dm","md","eatzkewuyx","a","wulzacir"};
+        List<String> exp = new ArrayList<>();
+        exp.add("nelduncd");
+        exp.add("fozlsvr");
+        exp.add("dm");
+        exp.add("eatzkewuyx");
+        exp.add("a");
+        exp.add("wulzacir");
+        List<String> act = solution.removeAnagrams(words);
+        assertEquals(exp.size(), act.size());
+        for (int i = 0; i <= exp.size()-1; i++) {
+            assertEquals(exp.get(i), act.get(i));
+        }
+    }
 }
