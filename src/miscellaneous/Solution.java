@@ -964,4 +964,60 @@ public class Solution {
         }
         return res;
     }
+
+    public boolean hasIncreasingSubarrays(List<Integer> nums, int k) {
+        int i = 0;
+        int len = 0;
+        int fp = Integer.MIN_VALUE;
+        int sp = Integer.MIN_VALUE;
+        while (i <= nums.size()-k-1) {
+            if (nums.get(i) > fp && nums.get(i+k) > sp) {
+                len += 1;
+                if (len == k) {
+                    return true;
+                }
+            } else {
+                len = 1;
+            }
+            fp = nums.get(i);
+            sp = nums.get(i+k);
+            i++;
+        }
+        return false;
+    }
+
+    public int maxIncreasingSubarrays(List<Integer> nums) {
+        int n = nums.size();
+        int[] inc = new int[n];
+        int[] incEnd = new int[n];
+
+        // Compute increasing lengths starting at each index
+        inc[n - 1] = 1;
+        for (int i = n - 2; i >= 0; i--) {
+            if (nums.get(i) < nums.get(i + 1)) {
+                inc[i] = inc[i + 1] + 1;
+            } else {
+                inc[i] = 1;
+            }
+        }
+        // Compute increasing lengths ending at each index
+        incEnd[0] = 1;
+        for (int i = 1; i < n; i++) {
+            if (nums.get(i - 1) < nums.get(i)) {
+                incEnd[i] = incEnd[i - 1] + 1;
+            } else {
+                incEnd[i] = 1;
+            }
+        }
+
+        // Find maximum k where both adjacent segments of length k are strictly increasing
+        int maxK = 1;
+        for (int i = 0; i < n - 1; i++) {
+            int k = Math.min(incEnd[i], inc[i + 1]);
+            if (k > maxK)
+                maxK = k;
+        }
+
+        return maxK;
+    }
 }
