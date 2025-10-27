@@ -1061,4 +1061,44 @@ public class Solution {
             return true;
         }
     }
+
+    public int numberOfBeams(String[] bank) {
+        if (bank.length == 1) {
+            return 0;
+        }
+        boolean hasDevice = false;
+        int fr = 0;
+        for (int i = 0; i <= bank.length-1; i++) {
+            String b = bank[i];
+            if (b.contains("1")) {
+                hasDevice = true;
+                fr = i;
+                break;
+            }
+        }
+        if (!hasDevice || fr==bank.length-1) {
+            return 0;
+        }
+        int res = 0;
+        int cd = 0;
+        for (char c : bank[fr].toCharArray()) {
+            if (c == '1') {
+                cd += 1;
+            }
+        }
+        for (int j = fr+1; j <= bank.length-1; j++) {
+            String curr = bank[j];
+            if (curr.contains("1")) {
+                int nd = 0;
+                for (char c : curr.toCharArray()) {
+                    if (c == '1') {
+                        nd += 1;
+                    }
+                }
+                res += nd*cd;
+                cd = nd;
+            }
+        }
+        return res;
+    }
 }

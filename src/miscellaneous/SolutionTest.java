@@ -173,4 +173,11 @@ public class SolutionTest {
         List<Integer> nums = new ArrayList<>(Arrays.asList(1,2,3,4,4,4,4,5,6,7));
         assertEquals(2, solution.maxIncreasingSubarrays(nums));
     }
+
+    @Test
+    public void testLaser() {
+        Solution solution = new Solution();
+        String[] devices = new String[] {"011001","000000","010100","001000"};
+        assertEquals(8, solution.numberOfBeams(devices));
+    }
 }
