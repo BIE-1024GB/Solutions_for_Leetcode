@@ -1101,4 +1101,27 @@ public class Solution {
         }
         return res;
     }
+
+    public int countValidSelections(int[] nums) {
+        if (nums.length == 1) {
+            return 2;
+        }
+        int[] prefix = new int[nums.length];
+        int[] suffix = new int[nums.length];
+        for (int i = 1; i <= nums.length-1; i++) {
+            prefix[i] = prefix[i-1]+nums[i-1];
+            suffix[nums.length-1-i] = suffix[nums.length-i]+nums[nums.length-i];
+        }
+        int res = 0;
+        for (int i = 0; i <= nums.length-1; i++) {
+            if (nums[i] == 0) {
+                if (prefix[i] == suffix[i]) {
+                    res += 2;
+                } else if (Math.abs(prefix[i]-suffix[i]) == 1) {
+                    res += 1;
+                }
+            }
+        }
+        return res;
+    }
 }

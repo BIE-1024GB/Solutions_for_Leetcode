@@ -180,4 +180,11 @@ public class SolutionTest {
         String[] devices = new String[] {"011001","000000","010100","001000"};
         assertEquals(8, solution.numberOfBeams(devices));
     }
+
+    @Test
+    public void testDir() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {16,13,10,0,0,0,10,6,7,8,7};
+        assertEquals(3, solution.countValidSelections(nums));
+    }
 }
