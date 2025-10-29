@@ -187,4 +187,10 @@ public class SolutionTest {
         int[] nums = new int[] {16,13,10,0,0,0,10,6,7,8,7};
         assertEquals(3, solution.countValidSelections(nums));
     }
+
+    @Test
+    public void testBit() {
+        Solution solution = new Solution();
+        assertEquals(15, solution.smallestNumber(10));
+    }
 }
