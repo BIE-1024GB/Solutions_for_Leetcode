@@ -1132,4 +1132,14 @@ public class Solution {
         }
         return res-1;
     }
+
+    public int minNumberOperations(int[] target) {
+        int op = target[0];
+        for (int i = 1; i <= target.length-1; i++) {
+            if (target[i] > target[i-1]) {
+                op += (target[i]-target[i-1]);
+            }
+        }
+        return op;
+    }
 }

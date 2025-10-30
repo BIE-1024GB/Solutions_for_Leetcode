@@ -193,4 +193,11 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertEquals(15, solution.smallestNumber(10));
     }
+
+    @Test
+    public void testOp() {
+        Solution solution = new Solution();
+        int[] target = new int[] {3, 1, 1, 2};
+        assertEquals(4, solution.minNumberOperations(target));
+    }
 }
