@@ -1142,4 +1142,53 @@ public class Solution {
         }
         return op;
     }
+
+    public int[] getSneakyNumbers(int[] nums) {
+        int[] res = new int[2];
+        HashSet<Integer> set = new HashSet<>();
+        int idx = 0;
+        for (int n : nums) {
+            if (!set.contains(n)) {
+                set.add(n);
+            } else {
+                res[idx] = n;
+                idx++;
+                if (idx == 2) {
+                    break;
+                }
+            }
+        }
+        return res;
+    }
+
+    public int minCost(String colors, int[] neededTime) {
+        if (colors.length() == 1) {
+            return 0;
+        }
+        int res = 0;
+        char curr = colors.charAt(0);
+        int ci = 0;
+        for (int i = 1; i <= colors.length()-1; i++) {
+            char n = colors.charAt(i);
+            if (n == curr) {
+                int sum = neededTime[ci]+neededTime[i];
+                int mt = Math.max(neededTime[ci], neededTime[i]);
+                int j = i+1;
+                while (j <= colors.length()-1 && colors.charAt(j) == curr) {
+                    sum += neededTime[j];
+                    mt = Math.max(mt, neededTime[j]);
+                    j++;
+                }
+                res += (sum-mt);
+                i = j;
+
+            }
+            if (i >= colors.length()) {
+                break;
+            }
+            curr = colors.charAt(i);
+            ci = i;
+        }
+        return res;
+    }
 }

@@ -200,4 +200,12 @@ public class SolutionTest {
         int[] target = new int[] {3, 1, 1, 2};
         assertEquals(4, solution.minNumberOperations(target));
     }
+
+    @Test
+    public void testBalloon() {
+        Solution solution = new Solution();
+        String colors = "abaac";
+        int[] nt = new int[] {1, 2, 3, 4, 5};
+        assertEquals(3, solution.minCost(colors, nt));
+    }
 }
