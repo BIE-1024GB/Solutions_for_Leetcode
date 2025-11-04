@@ -1191,4 +1191,29 @@ public class Solution {
         }
         return res;
     }
+
+    public int[] findXSum(int[] nums, int k, int x) {
+        int[] res = new int[nums.length-k+1];
+        for (int i = 0; i <= nums.length-k; i++) {
+            HashMap<Integer, Integer> map = new HashMap<>();
+            for (int j = i; j <= i+k-1; j++) {
+                map.put(nums[j], map.getOrDefault(nums[j], 0)+1);
+            }
+            ArrayList<Map.Entry<Integer, Integer>> list = new ArrayList<>(map.entrySet());
+            list.sort((a, b)->{
+                if (!a.getValue().equals(b.getValue())) {
+                    return b.getValue()-a.getValue();
+                } else {
+                    return b.getKey()-a.getKey();
+                }
+            });
+            int sum = 0;
+            for (int l = 0; l <= Math.min(list.size(), x)-1; l++) {
+                Map.Entry<Integer, Integer> e = list.get(l);
+                sum += e.getKey()*e.getValue();
+            }
+            res[i] = sum;
+        }
+        return res;
+    }
 }
