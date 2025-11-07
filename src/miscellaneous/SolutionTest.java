@@ -208,4 +208,11 @@ public class SolutionTest {
         int[] nt = new int[] {1, 2, 3, 4, 5};
         assertEquals(3, solution.minCost(colors, nt));
     }
+
+    @Test
+    public void testMaxMinPower() {
+        Solution solution = new Solution();
+        int[] stations = new int[] {1, 2, 4, 5, 0};
+        assertEquals(5, solution.maxPower(stations, 1, 2));
+    }
 }
