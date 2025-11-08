@@ -215,4 +215,10 @@ public class SolutionTest {
         int[] stations = new int[] {1, 2, 4, 5, 0};
         assertEquals(5, solution.maxPower(stations, 1, 2));
     }
+
+    @Test
+    public void testTurnZero() {
+        Solution solution = new Solution();
+        assertEquals(4, solution.minimumOneBitOperations(6));
+    }
 }

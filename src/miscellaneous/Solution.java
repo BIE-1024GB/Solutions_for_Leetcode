@@ -1366,7 +1366,7 @@ public class Solution {
             cnt[right] -= stations[i];
         }
 
-        long lo = Arrays.stream(stations).min().getAsInt();
+        long lo = Arrays.stream(stations).min().orElse(0);
         long hi = Arrays.stream(stations).asLongStream().sum() + k;
         long res = 0;
 
@@ -1380,5 +1380,18 @@ public class Solution {
             }
         }
         return res;
+    }
+
+    public int minimumOneBitOperations(int n) {
+        if (n == 0) {
+            return 0;
+        }
+        int k = 0;
+        int curr = 1;
+        while (curr*2 <= n) {
+            curr *= 2;
+            k++;
+        }
+        return (1 << (k+1))-1-minimumOneBitOperations(n^curr);
     }
 }
