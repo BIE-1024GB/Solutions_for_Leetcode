@@ -221,4 +221,11 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertEquals(4, solution.minimumOneBitOperations(6));
     }
+
+    @Test
+    public void testZeroOps() {
+        Solution solution = new Solution();
+        int[] nums = new int[]{3, 1, 2, 1};
+        assertEquals(3, solution.minOperations(nums));
+    }
 }

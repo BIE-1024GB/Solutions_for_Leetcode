@@ -1394,4 +1394,22 @@ public class Solution {
         }
         return (1 << (k+1))-1-minimumOneBitOperations(n^curr);
     }
+
+    public int minOperations(int[] nums) {
+        int res = 0;
+        Deque<Integer> deque = new ArrayDeque<>();
+        for (int n : nums) {
+            while (!deque.isEmpty() && deque.peek()>n) {
+                deque.pop();
+            }
+            if (n == 0) {
+                continue;
+            }
+            while (deque.isEmpty() || deque.peek()<n) {
+                deque.push(n);
+                res += 1;
+            }
+        }
+        return res;
+    }
 }
