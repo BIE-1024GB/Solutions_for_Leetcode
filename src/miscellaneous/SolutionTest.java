@@ -228,4 +228,11 @@ public class SolutionTest {
         int[] nums = new int[]{3, 1, 2, 1};
         assertEquals(3, solution.minOperations(nums));
     }
+
+    @Test
+    public void testZO() {
+        Solution solution = new Solution();
+        String[] strs = new String[] {"00011", "00001", "00001", "0011", "111"};
+        assertEquals(3, solution.findMaxForm(strs, 8, 5));
+    }
 }

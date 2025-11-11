@@ -1412,4 +1412,49 @@ public class Solution {
         }
         return res;
     }
+
+    public int findMaxForm(String[] strs, int m, int n) {
+        Map<Integer, Integer> m0 = new HashMap<>();
+        for (int i = 0; i <= strs.length-1; i++) {
+            String str = strs[i];
+            int cnt = 0;
+            for (char c : str.toCharArray()) {
+                if (c == '0') {
+                    cnt += 1;
+                }
+            }
+            m0.put(i, cnt);
+        }
+        Map<Integer, Integer> m1 = new HashMap<>();
+        for (int i = 0; i <= strs.length-1; i++) {
+            String str = strs[i];
+            int cnt = 0;
+            for (char c : str.toCharArray()) {
+                if (c == '1') {
+                    cnt += 1;
+                }
+            }
+            m1.put(i, cnt);
+        }
+        int[][][] dp = new int[strs.length+1][m+1][n+1];
+        for (int i = 0; i <= m; i++) {
+            for (int j = 0; j <= n; j++) {
+                dp[0][i][j] = 0;
+            }
+        }
+        for (int i = 1; i <= strs.length; i++) {
+            for (int j = 0; j <= m; j++) {
+                for (int k = 0; k <= n; k++) {
+                    int c0 = m0.get(i-1);
+                    int c1 = m1.get(i-1);
+                    if (c0>j || c1>k) {
+                        dp[i][j][k] = dp[i-1][j][k];
+                    } else {
+                        dp[i][j][k] = Math.max(1+dp[i-1][j-c0][k-c1], dp[i-1][j][k]);
+                    }
+                }
+            }
+        }
+        return dp[strs.length][m][n];
+    }
 }
