@@ -235,4 +235,11 @@ public class SolutionTest {
         String[] strs = new String[] {"00011", "00001", "00001", "0011", "111"};
         assertEquals(3, solution.findMaxForm(strs, 8, 5));
     }
+
+    @Test
+    public void testTurnOne() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {2, 6, 3, 4};
+        assertEquals(4, solution.minOperationsOne(nums));
+    }
 }

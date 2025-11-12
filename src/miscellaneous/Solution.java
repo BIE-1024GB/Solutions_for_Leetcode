@@ -1457,4 +1457,36 @@ public class Solution {
         }
         return dp[strs.length][m][n];
     }
+
+    public int minOperationsOne(int[] nums) {
+        int n = nums.length;
+        // Step 1: if global gcd > 1 → impossible
+        int g = nums[0];
+        for (int i = 1; i < n; i++) {
+            g = gcd(g, nums[i]);
+        }
+        if (g > 1) return -1;
+        // Step 2: if we already have 1s
+        int countOne = 0;
+        for (int num : nums) {
+            if (num == 1) countOne++;
+        }
+        if (countOne > 0) {
+            return n - countOne; // each non-1 element takes one operation
+        }
+        // Step 3: find shortest subarray with gcd == 1
+        int minLen = Integer.MAX_VALUE;
+        for (int i = 0; i < n; i++) {
+            int currGcd = nums[i];
+            for (int j = i; j < n; j++) {
+                currGcd = gcd(currGcd, nums[j]);
+                if (currGcd == 1) {
+                    minLen = Math.min(minLen, j - i + 1);
+                    break; // no need to extend further
+                }
+            }
+        }
+        // Step 4: total = (create one 1) + (spread it)
+        return (minLen - 1) + (n - 1);
+    }
 }
