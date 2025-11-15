@@ -242,4 +242,11 @@ public class SolutionTest {
         int[] nums = new int[] {2, 6, 3, 4};
         assertEquals(4, solution.minOperationsOne(nums));
     }
+
+    @Test
+    public void testDominantOne() {
+        Solution solution = new Solution();
+        String string = "00011";
+        assertEquals(5, solution.numberOfSubstrings(string));
+    }
 }
