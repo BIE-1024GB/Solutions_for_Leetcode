@@ -249,4 +249,11 @@ public class SolutionTest {
         String string = "00011";
         assertEquals(5, solution.numberOfSubstrings(string));
     }
+
+    @Test
+    public void testKApart() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {1,0,0,0,1,0,0,1};
+        assertTrue(solution.kLengthApart(nums, 2));
+    }
 }

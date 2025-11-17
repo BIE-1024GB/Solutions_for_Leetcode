@@ -1532,4 +1532,29 @@ public class Solution {
         }
         return res;
     }
+
+    public boolean kLengthApart(int[] nums, int k) {
+        if (nums.length == 1) {
+            return true;
+        }
+        int i = 0;
+        while (i<=nums.length-1 && nums[i]!=1) {
+            i++;
+        }
+        if (i == nums.length) {
+            return true;
+        }
+        int dist = 0;
+        for (int j = i+1; j <= nums.length-1; j++) {
+            if (nums[j] == 1) {
+                if (dist < k) {
+                    return false;
+                }
+                dist = 0;
+            } else {
+                dist += 1;
+            }
+        }
+        return true;
+    }
 }
