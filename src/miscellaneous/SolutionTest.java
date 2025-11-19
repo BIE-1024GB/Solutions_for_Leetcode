@@ -6,8 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SolutionTest {
     @Test
@@ -255,5 +254,19 @@ public class SolutionTest {
         Solution solution = new Solution();
         int[] nums = new int[] {1,0,0,0,1,0,0,1};
         assertTrue(solution.kLengthApart(nums, 2));
+    }
+
+    @Test
+    public void testBits() {
+        Solution solution = new Solution();
+        int[] bits = new int[] {1, 1, 1, 0};
+        assertFalse(solution.isOneBitCharacter(bits));
+    }
+
+    @Test
+    public void testDouble() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {5, 3, 6, 1, 12};
+        assertEquals(24, solution.findFinalValue(nums, 3));
     }
 }

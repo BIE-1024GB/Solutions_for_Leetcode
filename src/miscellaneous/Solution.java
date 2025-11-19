@@ -1557,4 +1557,27 @@ public class Solution {
         }
         return true;
     }
+
+    public boolean isOneBitCharacter(int[] bits) {
+        int i = 0;
+        while (i < bits.length-1) {
+            if (bits[i] == 0) {
+                i++;
+            } else {
+                i += 2;
+            }
+        }
+        return i == bits.length-1;
+    }
+
+    public int findFinalValue(int[] nums, int original) {
+        Set<Integer> set = new HashSet<>();
+        for (int n : nums) {
+            set.add(n);
+        }
+        while (set.contains(original)) {
+            original *= 2;
+        }
+        return original;
+    }
 }
