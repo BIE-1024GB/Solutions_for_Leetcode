@@ -269,4 +269,11 @@ public class SolutionTest {
         int[] nums = new int[] {5, 3, 6, 1, 12};
         assertEquals(24, solution.findFinalValue(nums, 3));
     }
+
+    @Test
+    public void testDivide3() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {1, 2, 3, 4};
+        assertEquals(3, solution.minimumOperations(nums));
+    }
 }
