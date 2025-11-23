@@ -1511,7 +1511,7 @@ public class Solution {
         int[] pre = new int[n + 1];
         pre[0] = -1;
         for (int i = 0; i < n; i++) {
-            if (i == 0 || (i > 0 && s.charAt(i - 1) == '0')) {
+            if (i == 0 || s.charAt(i - 1) == '0') {
                 pre[i + 1] = i;
             } else {
                 pre[i + 1] = pre[i];
@@ -1589,5 +1589,56 @@ public class Solution {
             }
         }
         return res;
+    }
+
+    public int maxSumDivThree(int[] nums) {
+        int total = 0;
+
+        // smallest two numbers with remainder 1 and 2
+        int min1 = Integer.MAX_VALUE, min2 = Integer.MAX_VALUE;
+        int sec1 = Integer.MAX_VALUE, sec2 = Integer.MAX_VALUE;
+
+        for (int x : nums) {
+            total += x;
+            int r = x % 3;
+
+            if (r == 1) {
+                if (x < min1) {
+                    sec1 = min1;
+                    min1 = x;
+                } else if (x < sec1)
+                    sec1 = x;
+            } else if (r == 2) {
+                if (x < min2) {
+                    sec2 = min2;
+                    min2 = x;
+                } else if (x < sec2)
+                    sec2 = x;
+            }
+        }
+
+        int r = total % 3;
+        if (r == 0)
+            return total;
+
+        int remove = Integer.MAX_VALUE;
+
+        if (r == 1) {
+            // Option 1: remove smallest remainder-1
+            if (min1 != Integer.MAX_VALUE)
+                remove = min1;
+            // Option 2: remove two smallest remainder-2
+            if (min2 != Integer.MAX_VALUE && sec2 != Integer.MAX_VALUE)
+                remove = Math.min(remove, min2 + sec2);
+        } else { // r == 2
+            // Option 1: remove smallest remainder-2
+            if (min2 != Integer.MAX_VALUE)
+                remove = min2;
+            // Option 2: remove two smallest remainder-1
+            if (min1 != Integer.MAX_VALUE && sec1 != Integer.MAX_VALUE)
+                remove = Math.min(remove, min1 + sec1);
+        }
+
+        return total - (remove == Integer.MAX_VALUE ? 0 : remove);
     }
 }

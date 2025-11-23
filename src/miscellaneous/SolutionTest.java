@@ -276,4 +276,11 @@ public class SolutionTest {
         int[] nums = new int[] {1, 2, 3, 4};
         assertEquals(3, solution.minimumOperations(nums));
     }
+
+    @Test
+    public void testMaxDivide3() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {3, 6, 5, 1, 8};
+        assertEquals(18, solution.maxSumDivThree(nums));
+    }
 }
