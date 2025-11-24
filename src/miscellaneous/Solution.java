@@ -1641,4 +1641,18 @@ public class Solution {
 
         return total - (remove == Integer.MAX_VALUE ? 0 : remove);
     }
+
+    public List<Boolean> prefixesDivBy5(int[] nums) {
+        List<Boolean> res = new ArrayList<>();
+        int val = 0;
+        for (int n : nums) {
+            val = ((val<<1)+n)%5;
+            if (val == 0) {
+                res.add(true);
+            } else {
+                res.add(false);
+            }
+        }
+        return res;
+    }
 }
