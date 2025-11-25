@@ -1655,4 +1655,23 @@ public class Solution {
         }
         return res;
     }
+
+    public int smallestRepunitDivByK(int k) {
+        if (k == 1) {
+            return 1;
+        }
+        int len = 1;
+        int rem = 1;
+        int op = 10%k;
+        Set<Integer> set = new HashSet<>();
+        while (!set.contains(rem)) {
+            set.add(rem);
+            len++;
+            rem = (rem*op+1)%k;
+            if (rem == 0) {
+                return len;
+            }
+        }
+        return -1;
+    }
 }

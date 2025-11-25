@@ -283,4 +283,10 @@ public class SolutionTest {
         int[] nums = new int[] {3, 6, 5, 1, 8};
         assertEquals(18, solution.maxSumDivThree(nums));
     }
+
+    @Test
+    public void testDivideK() {
+        Solution solution = new Solution();
+        assertEquals(3, solution.smallestRepunitDivByK(3));
+    }
 }
