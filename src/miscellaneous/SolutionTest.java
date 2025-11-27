@@ -289,4 +289,11 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertEquals(3, solution.smallestRepunitDivByK(3));
     }
+
+    @Test
+    public void testkMSS() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {-5,1,2,-3,4};
+        assertEquals(4, solution.maxSubarraySum(nums, 2));
+    }
 }
