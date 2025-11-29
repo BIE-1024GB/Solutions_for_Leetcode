@@ -296,4 +296,11 @@ public class SolutionTest {
         int[] nums = new int[] {-5,1,2,-3,4};
         assertEquals(4, solution.maxSubarraySum(nums, 2));
     }
+
+    @Test
+    public void testMinOp() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {3, 2};
+        assertEquals(5, solution.minOperations(nums, 6));
+    }
 }
