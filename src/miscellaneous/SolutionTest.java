@@ -303,4 +303,11 @@ public class SolutionTest {
         int[] nums = new int[] {3, 2};
         assertEquals(5, solution.minOperations(nums, 6));
     }
+
+    @Test
+    public void testRMS() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {3, 1, 4, 2};
+        assertEquals(1, solution.minSubarray(nums, 6));
+    }
 }
