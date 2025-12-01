@@ -1702,9 +1702,7 @@ public class Solution {
         long prefixSum = 0;
         long maxSum = Long.MIN_VALUE;
         long[] kSum = new long[k];
-        for (int i = 0; i < k; i++) {
-            kSum[i] = Long.MAX_VALUE / 2;
-        }
+        Arrays.fill(kSum, Long.MAX_VALUE / 2);
         kSum[k - 1] = 0;
         for (int i = 0; i < n; i++) {
             prefixSum += nums[i];
@@ -1746,5 +1744,44 @@ public class Solution {
             map.put(curMod, i);
         }
         return ans == nums.length ? -1 : ans;
+    }
+
+    private List<List<Integer>> twoSum(int[] nums, long target, int start) {
+        List<List<Integer>> res = new ArrayList<>();
+        int lp = start;
+        int hp = nums.length-1;
+        while (lp < hp) {
+            int cs = nums[lp]+nums[hp];
+            if (cs<target || (lp>start&&nums[lp]==nums[lp-1])) {
+                lp += 1;
+            } else if (cs>target || (hp<nums.length-1&&nums[hp]==nums[hp+1])) {
+                hp -= 1;
+            } else {
+                res.add(Arrays.asList(nums[lp++], nums[hp--]));
+            }
+        }
+        return res;
+    }
+    private List<List<Integer>> kSum(int[] nums, long target, int start, int k) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (start == nums.length) {
+            return res;
+        }
+        if (k == 2) {
+            return twoSum(nums, target, start);
+        }
+        for (int i = start; i <= nums.length-1; i++) {
+            if (i==start || nums[i]!=nums[i-1]) {
+                for (List<Integer> l : kSum(nums, target-nums[i], i+1, k-1)) {
+                    res.add(new ArrayList<>(List.of(nums[i])));
+                    res.getLast().addAll(l);
+                }
+            }
+        }
+        return res;
+    }
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        Arrays.sort(nums);
+        return kSum(nums, target, 0, 4);
     }
 }

@@ -310,4 +310,12 @@ public class SolutionTest {
         int[] nums = new int[] {3, 1, 4, 2};
         assertEquals(1, solution.minSubarray(nums, 6));
     }
+
+    @Test
+    public void test4Sum() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {1000000000,1000000000,1000000000,1000000000};
+        int target = -294967296;
+        assertEquals(0, solution.fourSum(nums, target).size());
+    }
 }
