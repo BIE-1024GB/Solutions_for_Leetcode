@@ -318,4 +318,15 @@ public class SolutionTest {
         int target = -294967296;
         assertEquals(0, solution.fourSum(nums, target).size());
     }
+
+    @Test
+    public void testTrape() {
+        Solution solution = new Solution();
+        int[][] points = new int[][] {
+                {-3, -70}, {8, -70}, {-85, 90},
+                {-99, 90}, {-6, 90}, {47, -23},
+                {-16, -23}
+        };
+        assertEquals(7, solution.countTrapezoids(points));
+    }
 }

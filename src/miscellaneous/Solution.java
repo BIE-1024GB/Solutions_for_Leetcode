@@ -1784,4 +1784,39 @@ public class Solution {
         Arrays.sort(nums);
         return kSum(nums, target, 0, 4);
     }
+
+    public int countTrapezoids(int[][] points) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int[] p : points) {
+            int height = p[1];
+            map.put(height, map.getOrDefault(height, 0)+1);
+        }
+        if (map.size() < 2) {
+            return 0;
+        }
+        int mod = 1000000007;
+        List<Long> list = new ArrayList<>();
+        for (int k : map.keySet()) {
+            if (map.get(k) >= 2) {
+                long np = map.get(k);
+                list.add(np*(np-1)/2);
+            }
+        }
+        if (list.size() < 2) {
+            return 0;
+        }
+        long res = list.getFirst()%mod;
+        long acc = res%mod;
+        for (int i = 1; i <= list.size()-1; i++) {
+            long curr = list.get(i)%mod;
+            if (i == 1) {
+                res *= curr;
+            } else {
+                res = res + acc*curr;
+            }
+            res %= mod;
+            acc += curr;
+        }
+        return (int) res%mod;
+    }
 }
