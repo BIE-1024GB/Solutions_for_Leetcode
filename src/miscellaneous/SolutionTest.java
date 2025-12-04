@@ -329,4 +329,11 @@ public class SolutionTest {
         };
         assertEquals(7, solution.countTrapezoids(points));
     }
+
+    @Test
+    public void testCrash() {
+        Solution solution = new Solution();
+        String pos = "RLRSLL";
+        assertEquals(5, solution.countCollisions(pos));
+    }
 }

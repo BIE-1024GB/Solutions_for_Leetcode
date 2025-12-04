@@ -1819,4 +1819,58 @@ public class Solution {
         }
         return (int) res%mod;
     }
+
+    public int countCollisions(String directions) {
+        if (directions.length() == 1) {
+            return 0;
+        }
+        int res = 0;
+        Deque<Character> deque = new ArrayDeque<>();
+        for (char c : directions.toCharArray()) {
+            if (deque.isEmpty()) {
+                deque.push(c);
+            } else {
+                if (deque.peek() == 'L') {
+                    deque.push(c);
+                } else if (deque.peek() == 'R') {
+                    if (c == 'L') {
+                        res += 2;
+                        deque.pop();
+                        while (!deque.isEmpty()) {
+                            char next = deque.peek();
+                            if (next == 'R') {
+                                res += 1;
+                                deque.pop();
+                            } else {
+                                break;
+                            }
+                        }
+                        deque.push('S');
+                    } else if (c == 'R') {
+                        deque.push(c);
+                    } else {
+                        res += 1;
+                        deque.pop();
+                        while (!deque.isEmpty()) {
+                            char next = deque.peek();
+                            if (next == 'R') {
+                                res += 1;
+                                deque.pop();
+                            } else {
+                                break;
+                            }
+                        }
+                        deque.push('S');
+                    }
+                } else {
+                    if (c == 'L') {
+                        res += 1;
+                    } else {
+                        deque.push(c);
+                    }
+                }
+            }
+        }
+        return res;
+    }
 }
