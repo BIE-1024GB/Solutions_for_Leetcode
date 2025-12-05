@@ -336,4 +336,11 @@ public class SolutionTest {
         String pos = "RLRSLL";
         assertEquals(5, solution.countCollisions(pos));
     }
+
+    @Test
+    public void testPartition() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {10, 10, 3, 7, 6};
+        assertEquals(4, solution.countPartitions(nums));
+    }
 }

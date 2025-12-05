@@ -1873,4 +1873,21 @@ public class Solution {
         }
         return res;
     }
+
+    public int countPartitions(int[] nums) {
+        int res = 0;
+        int ts = 0;
+        for (int n : nums) {
+            ts += n;
+        }
+        int ls = 0;
+        for (int i = 0; i < nums.length-1; i++) {
+            ls += nums[i];
+            int rs = ts-ls;
+            if (Math.abs(ls-rs)%2 == 0) {
+                res += 1;
+            }
+        }
+        return res;
+    }
 }
