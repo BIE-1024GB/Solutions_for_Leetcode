@@ -1890,4 +1890,57 @@ public class Solution {
         }
         return res;
     }
+
+    public int countPartitions(int[] nums, int k) {
+        int n = nums.length;
+        final int MOD = 1_000_000_007;
+        long[] dp = new long[n + 1]; // dp[i] = ways for nums[0..i-1]
+        long[] pref = new long[n + 1]; // prefix sum for dp
+        dp[0] = 1;
+        pref[0] = 1;
+
+        // monotonic deques: store values, not indices
+        java.util.Deque<Integer> maxD = new java.util.ArrayDeque<>();
+        java.util.Deque<Integer> minD = new java.util.ArrayDeque<>();
+
+        int left = 0;
+
+        for (int right = 0; right < n; right++) {
+
+            // Maintain MAX deque
+            while (!maxD.isEmpty() && maxD.peekLast() < nums[right]) {
+                maxD.pollLast();
+            }
+            maxD.addLast(nums[right]);
+
+            // Maintain MIN deque
+            while (!minD.isEmpty() && minD.peekLast() > nums[right]) {
+                minD.pollLast();
+            }
+            minD.addLast(nums[right]);
+
+            // Shrink window from the left until valid
+            while (!maxD.isEmpty() && !minD.isEmpty() &&
+                    maxD.peekFirst() - minD.peekFirst() > k) {
+
+                // If the outgoing element equals the front of max deque, remove it
+                if (nums[left] == maxD.peekFirst())
+                    maxD.pollFirst();
+                if (nums[left] == minD.peekFirst())
+                    minD.pollFirst();
+
+                left++;
+            }
+
+            // Now all segments starting from [left..right] are valid
+            // dp[right+1] = sum(dp[left..right])
+            long sum = pref[right] - (left == 0 ? 0 : pref[left - 1]);
+            sum = (sum % MOD + MOD) % MOD; // normalize
+
+            dp[right + 1] = sum;
+            pref[right + 1] = (pref[right] + dp[right + 1]) % MOD;
+        }
+
+        return (int) dp[n];
+    }
 }

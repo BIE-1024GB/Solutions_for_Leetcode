@@ -343,4 +343,11 @@ public class SolutionTest {
         int[] nums = new int[] {10, 10, 3, 7, 6};
         assertEquals(4, solution.countPartitions(nums));
     }
+
+    @Test
+    public void testPartitionII() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {9,4,1,3,7};
+        assertEquals(6, solution.countPartitions(nums, 4));
+    }
 }
