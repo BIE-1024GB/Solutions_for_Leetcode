@@ -350,4 +350,10 @@ public class SolutionTest {
         int[] nums = new int[] {9,4,1,3,7};
         assertEquals(6, solution.countPartitions(nums, 4));
     }
+
+    @Test
+    public void testOdd() {
+        Solution solution = new Solution();
+        assertEquals(3, solution.countOdds(3, 7));
+    }
 }

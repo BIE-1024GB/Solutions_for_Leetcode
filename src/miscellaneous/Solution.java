@@ -1943,4 +1943,16 @@ public class Solution {
 
         return (int) dp[n];
     }
+
+    public int countOdds(int low, int high) {
+        if (low%2==0 && high%2==0) {
+            return countOdds(low+1, high-1);
+        } else if (low%2 == 0) {
+            return countOdds(low+1, high);
+        } else if (high%2 == 0) {
+            return countOdds(low, high-1);
+        } else {
+            return (high-low)/2+1;
+        }
+    }
 }
