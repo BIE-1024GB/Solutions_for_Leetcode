@@ -356,4 +356,10 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertEquals(3, solution.countOdds(3, 7));
     }
+
+    @Test
+    public void testSquare() {
+        Solution solution = new Solution();
+        assertEquals(4, solution.countTriples(10));
+    }
 }

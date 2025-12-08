@@ -1955,4 +1955,24 @@ public class Solution {
             return (high-low)/2+1;
         }
     }
+
+    public int countTriples(int n) {
+        if (n == 1) {
+            return 0;
+        }
+        Set<Integer> set = new HashSet<>();
+        for (int i = 1; i <= n; i++) {
+            set.add(i*i);
+        }
+        int res = 0;
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                int square = i*i+j*j;
+                if (set.contains(square)) {
+                    res += 1;
+                }
+            }
+        }
+        return res;
+    }
 }
