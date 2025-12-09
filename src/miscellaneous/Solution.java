@@ -1975,4 +1975,28 @@ public class Solution {
         }
         return res;
     }
+
+    public int specialTriplets(int[] nums) {
+        final long MOD = 1_000_000_007L;
+        int n = nums.length;
+        int maxVal = 100000;
+        int[] freqRight = new int[maxVal + 1];
+        for (int x : nums)
+            freqRight[x]++;
+        int[] freqLeft = new int[maxVal + 1];
+        long res = 0;
+        for (int mid : nums) {
+            // This element is now being processed, remove it from the right side
+            freqRight[mid]--;
+            int twice = mid * 2;
+            if (twice <= maxVal) {
+                long left = freqLeft[twice];
+                long right = freqRight[twice];
+                res = (res + left * right) % MOD;
+            }
+            // Add current to left side
+            freqLeft[mid]++;
+        }
+        return (int) res;
+    }
 }

@@ -362,4 +362,11 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertEquals(4, solution.countTriples(10));
     }
+
+    @Test
+    public void testTriplets() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {8, 4, 2, 8, 4};
+        assertEquals(2, solution.specialTriplets(nums));
+    }
 }
