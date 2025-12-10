@@ -369,4 +369,11 @@ public class SolutionTest {
         int[] nums = new int[] {8, 4, 2, 8, 4};
         assertEquals(2, solution.specialTriplets(nums));
     }
+
+    @Test
+    public void testUnlock() {
+        Solution solution = new Solution();
+        int[] comp = new int[] {38,223,100,123,406,234,256,93,222,259,233,69,139,245,45,98,214};
+        assertEquals(789741546, solution.countPermutations(comp));
+    }
 }

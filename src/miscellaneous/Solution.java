@@ -1999,4 +1999,20 @@ public class Solution {
         }
         return (int) res;
     }
+
+    public int countPermutations(int[] complexity) {
+        for (int i = 1; i <= complexity.length-1; i++) {
+            if (complexity[i] <= complexity[0]) {
+                return 0;
+            }
+        }
+        int fac = complexity.length-1;
+        long res = 1;
+        int mod = 1000000007;
+        while (fac >= 1) {
+            res = ((res%mod)*(fac%mod))%mod;
+            fac--;
+        }
+        return (int) res%mod;
+    }
 }
