@@ -2015,4 +2015,31 @@ public class Solution {
         }
         return (int) res%mod;
     }
+
+    public int countCoveredBuildings(int n, int[][] buildings) {
+        if (n < 3) {
+            return 0;
+        }
+        Map<Integer, Integer> xmax = new HashMap<>();
+        Map<Integer, Integer> xmin = new HashMap<>();
+        Map<Integer, Integer> ymax = new HashMap<>();
+        Map<Integer, Integer> ymin = new HashMap<>();
+        for (int[] b : buildings) {
+            int x = b[0];
+            int y = b[1];
+            xmax.put(x, Math.max(xmax.getOrDefault(x, Integer.MIN_VALUE), y));
+            xmin.put(x, Math.min(xmin.getOrDefault(x, Integer.MAX_VALUE), y));
+            ymax.put(y, Math.max(ymax.getOrDefault(y, Integer.MIN_VALUE), x));
+            ymin.put(y, Math.min(ymin.getOrDefault(y, Integer.MAX_VALUE), x));
+        }
+        int res = 0;
+        for (int[] b : buildings) {
+            int x = b[0];
+            int y = b[1];
+            if (x!=ymax.get(y) && x!=ymin.get(y) && y!=xmax.get(x) && y!=xmin.get(x)) {
+                res += 1;
+            }
+        }
+        return res;
+    }
 }

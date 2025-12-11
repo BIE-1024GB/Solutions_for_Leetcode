@@ -376,4 +376,13 @@ public class SolutionTest {
         int[] comp = new int[] {38,223,100,123,406,234,256,93,222,259,233,69,139,245,45,98,214};
         assertEquals(789741546, solution.countPermutations(comp));
     }
+
+    @Test
+    public void testBuilding() {
+        Solution solution = new Solution();
+        int[][] buildings = new int[][] {
+                {1, 2}, {2, 2}, {3, 2}, {2, 1}, {2, 3}
+        };
+        assertEquals(1, solution.countCoveredBuildings(3, buildings));
+    }
 }
