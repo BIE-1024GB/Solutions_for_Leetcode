@@ -385,4 +385,35 @@ public class SolutionTest {
         };
         assertEquals(1, solution.countCoveredBuildings(3, buildings));
     }
+
+    @Test
+    public void testMention() {
+        Solution solution = new Solution();
+        List<String> l1 = new ArrayList<>();
+        l1.add("MESSAGE");
+        l1.add("1");
+        l1.add("id0 id1");
+        List<String> l2 = new ArrayList<>();
+        l2.add("MESSAGE");
+        l2.add("5");
+        l2.add("id2");
+        List<String> l3 = new ArrayList<>();
+        l3.add("MESSAGE");
+        l3.add("6");
+        l3.add("ALL");
+        List<String> l4 = new ArrayList<>();
+        l4.add("OFFLINE");
+        l4.add("5");
+        l4.add("2");
+        List<List<String>> events = new ArrayList<>();
+        events.add(l1);
+        events.add(l2);
+        events.add(l3);
+        events.add(l4);
+        int[] exp = new int[] {2, 2, 2};
+        int[] act = solution.countMentions(3, events);
+        for (int i = 0; i <= exp.length-1; i++) {
+            assertEquals(exp[i], act[i]);
+        }
+    }
 }

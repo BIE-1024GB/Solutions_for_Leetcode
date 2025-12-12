@@ -2042,4 +2042,42 @@ public class Solution {
         }
         return res;
     }
+
+    public int[] countMentions(int numberOfUsers, List<List<String>> events) {
+        events.sort(
+                Comparator
+                        .comparingInt((List<String> inner) -> Integer.parseInt(inner.get(1)))
+                        .thenComparingInt(inner -> inner.getFirst().equals("OFFLINE") ? 0 : 1)
+        );
+        int[] mention = new int[numberOfUsers];
+        int[] ol = new int[numberOfUsers];
+        for (List<String> event : events) {
+            String status = event.getFirst();
+            int time = Integer.parseInt(event.get(1));
+            String targets = event.getLast();
+            if (status.equals("OFFLINE")) {
+                int id = Integer.parseInt(targets);
+                ol[id] = time+60;
+            } else {
+                if (targets.equals("ALL")) {
+                    for (int i = 0; i <= mention.length-1; i++) {
+                        mention[i] += 1;
+                    }
+                } else if (targets.equals("HERE")) {
+                    for (int i = 0; i <= mention.length-1; i++) {
+                        if (time >= ol[i]) {
+                            mention[i] += 1;
+                        }
+                    }
+                } else {
+                    String[] parts = targets.split(" ");
+                    for (String p : parts) {
+                        int id = Integer.parseInt(p.substring(2));
+                        mention[id] += 1;
+                    }
+                }
+            }
+        }
+        return mention;
+    }
 }
