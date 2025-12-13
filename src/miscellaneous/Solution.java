@@ -2080,4 +2080,32 @@ public class Solution {
         }
         return mention;
     }
+
+    public List<String> validateCoupons(String[] code, String[] businessLine, boolean[] isActive) {
+        List<String> res = new ArrayList<>();
+        int n = code.length;
+        List<String> ec = new ArrayList<>();
+        List<String> gc = new ArrayList<>();
+        List<String> pc = new ArrayList<>();
+        List<String> rc = new ArrayList<>();
+        for (int i = 0; i <= n-1; i++) {
+            if (isActive[i] && code[i].matches("[A-Za-z0-9_]+")) {
+                switch (businessLine[i]) {
+                    case "electronics" -> ec.add(code[i]);
+                    case "grocery" -> gc.add(code[i]);
+                    case "pharmacy" -> pc.add(code[i]);
+                    case "restaurant" -> rc.add(code[i]);
+                }
+            }
+        }
+        Collections.sort(ec);
+        Collections.sort(gc);
+        Collections.sort(pc);
+        Collections.sort(rc);
+        res.addAll(ec);
+        res.addAll(gc);
+        res.addAll(pc);
+        res.addAll(rc);
+        return res;
+    }
 }
