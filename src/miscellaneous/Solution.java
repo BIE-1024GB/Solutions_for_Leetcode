@@ -2108,4 +2108,30 @@ public class Solution {
         res.addAll(rc);
         return res;
     }
+
+    public int numberOfWays(String corridor) {
+        final int MOD = 1_000_000_007;
+        int seatCount = 0;
+        for (char c : corridor.toCharArray()) {
+            if (c == 'S')
+                seatCount++;
+        }
+        if (seatCount == 0 || seatCount%2!=0)
+            return 0;
+        long result = 1;
+        int seatsSeen = 0;
+        int plantsBetween = 0;
+        for (char c : corridor.toCharArray()) {
+            if (c == 'S') {
+                seatsSeen++;
+                if (seatsSeen % 2 == 0) {
+                    result = (result * (plantsBetween + 1)) % MOD;
+                    plantsBetween = 0;
+                }
+            } else if (seatsSeen!=0 && seatsSeen%2==0) {
+                plantsBetween++;
+            }
+        }
+        return (int) result;
+    }
 }

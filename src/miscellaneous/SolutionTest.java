@@ -416,4 +416,11 @@ public class SolutionTest {
             assertEquals(exp[i], act[i]);
         }
     }
+
+    @Test
+    public void testCorridor() {
+        Solution solution = new Solution();
+        String corridor = "SSPPSPS";
+        assertEquals(3, solution.numberOfWays(corridor));
+    }
 }
