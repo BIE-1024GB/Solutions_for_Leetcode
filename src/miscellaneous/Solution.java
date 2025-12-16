@@ -2134,4 +2134,110 @@ public class Solution {
         }
         return (int) result;
     }
+
+    public long getDescentPeriods(int[] prices) {
+        if (prices.length == 1) {
+            return 1;
+        }
+        long res = 0;
+        int cs = 0;
+        int prev = -1;
+        for (int i = 0; i <= prices.length-1; i++) {
+            if (i == 0) {
+                cs = 1;
+            } else {
+                if (prices[i] == prev-1) {
+                    cs += 1;
+                } else {
+                    cs = 1;
+                }
+            }
+            res += cs;
+            prev = prices[i];
+        }
+        return res;
+    }
+
+    static final int NEG = -1_000_000_000;
+    List<Integer>[] tree;
+    int[] present, future;
+    int budget;
+    private int[][] dfs(int u) {
+        // base dp: before considering children
+        int[][] dp = new int[2][budget + 1];
+        for (int s = 0; s < 2; s++) {
+            Arrays.fill(dp[s], NEG);
+            dp[s][0] = 0;
+        }
+        // merge children
+        for (int v : tree[u]) {
+            int[][] child = dfs(v);
+            int[][] next = new int[2][budget + 1];
+            for (int s = 0; s < 2; s++) {
+                Arrays.fill(next[s], NEG);
+                for (int i = 0; i <= budget; i++) {
+                    if (dp[s][i] < 0)
+                        continue;
+                    for (int j = 0; j + i <= budget; j++) {
+                        if (child[s][j] < 0)
+                            continue;
+                        next[s][i + j] = Math.max(
+                                next[s][i + j],
+                                dp[s][i] + child[s][j]);
+                    }
+                }
+            }
+            dp = next;
+        }
+        // final dp after deciding whether to buy u
+        int[][] res = new int[2][budget + 1];
+        for (int s = 0; s < 2; s++)
+            Arrays.fill(res[s], NEG);
+        // state 0: boss NOT bought
+        int cost0 = present[u];
+        for (int b = 0; b <= budget; b++) {
+            // don't buy u
+            res[0][b] = dp[0][b];
+            // buy u
+            if (b >= cost0) {
+                res[0][b] = Math.max(
+                        res[0][b],
+                        dp[1][b - cost0] + future[u] - cost0);
+            }
+        }
+        // state 1: boss IS bought
+        int cost1 = present[u] / 2;
+        for (int b = 0; b <= budget; b++) {
+            // don't buy u
+            res[1][b] = dp[0][b];
+
+            // buy u
+            if (b >= cost1) {
+                res[1][b] = Math.max(
+                        res[1][b],
+                        dp[1][b - cost1] + future[u] - cost1);
+            }
+        }
+
+        return res;
+    }
+    @SuppressWarnings("unchecked")
+    public int maxProfit(int n, int[] present, int[] future, int[][] hierarchy, int budget) {
+        this.present = present;
+        this.future = future;
+        this.budget = budget;
+        tree = new ArrayList[n];
+        for (int i = 0; i < n; i++)
+            tree[i] = new ArrayList<>();
+        // build tree (0-based)
+        for (int[] e : hierarchy) {
+            tree[e[0] - 1].add(e[1] - 1);
+        }
+        int[][] dpRoot = dfs(0);
+        int ans = 0;
+        for (int b = 0; b <= budget; b++) {
+            ans = Math.max(ans, dpRoot[0][b]);
+        }
+        return ans;
+    }
 }

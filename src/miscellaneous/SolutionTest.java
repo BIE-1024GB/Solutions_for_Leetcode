@@ -423,4 +423,22 @@ public class SolutionTest {
         String corridor = "SSPPSPS";
         assertEquals(3, solution.numberOfWays(corridor));
     }
+
+    @Test
+    public void testSmooth() {
+        Solution solution = new Solution();
+        int[] prices = new int[] {3, 2, 1, 4};
+        assertEquals(7, solution.getDescentPeriods(prices));
+    }
+
+    @Test
+    public void testProfit() {
+        Solution solution = new Solution();
+        int n = 2;
+        int[] present = {3, 4};
+        int[] future = {5, 8};
+        int[][] hierarchy = {{1, 2}};
+        int budget = 4;
+        assertEquals(4, solution.maxProfit(n, present, future, hierarchy, budget));
+    }
 }
