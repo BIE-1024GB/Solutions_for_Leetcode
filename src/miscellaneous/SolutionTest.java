@@ -441,4 +441,11 @@ public class SolutionTest {
         int budget = 4;
         assertEquals(4, solution.maxProfit(n, present, future, hierarchy, budget));
     }
+
+    @Test
+    public void testStockV() {
+        Solution solution = new Solution();
+        int[] prices = {1, 7, 9, 8, 2};
+        assertEquals(14, solution.maximumProfit(prices, 2));
+    }
 }

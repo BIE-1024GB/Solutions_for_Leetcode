@@ -2240,4 +2240,55 @@ public class Solution {
         }
         return ans;
     }
+
+    public long maximumProfit(int[] prices, int k) {
+        final long NEG_INF = Long.MIN_VALUE / 4;
+        long[] flat = new long[k + 1];
+        long[] lon = new long[k + 1];
+        long[] sh = new long[k + 1];
+        Arrays.fill(flat, NEG_INF);
+        Arrays.fill(lon, NEG_INF);
+        Arrays.fill(sh, NEG_INF);
+        flat[0] = 0;
+
+        for (int price : prices) {
+            long[] nFlat = new long[k + 1];
+            long[] nLon = new long[k + 1];
+            long[] nSh = new long[k + 1];
+            Arrays.fill(nFlat, NEG_INF);
+            Arrays.fill(nLon, NEG_INF);
+            Arrays.fill(nSh, NEG_INF);
+            for (int t = 0; t <= k; t++) {
+                // Stay flat
+                nFlat[t] = Math.max(nFlat[t], flat[t]);
+                // Close positions
+                if (t > 0) {
+                    if (lon[t - 1] != NEG_INF) {
+                        nFlat[t] = Math.max(nFlat[t], lon[t - 1] + price);
+                    }
+                    if (sh[t - 1] != NEG_INF) {
+                        nFlat[t] = Math.max(nFlat[t], sh[t - 1] - price);
+                    }
+                }
+                // Keep or open long
+                if (flat[t] != NEG_INF) {
+                    nLon[t] = Math.max(nLon[t], flat[t] - price);
+                }
+                nLon[t] = Math.max(nLon[t], lon[t]);
+                // Keep or open short
+                if (flat[t] != NEG_INF) {
+                    nSh[t] = Math.max(nSh[t], flat[t] + price);
+                }
+                nSh[t] = Math.max(nSh[t], sh[t]);
+            }
+            flat = nFlat;
+            lon = nLon;
+            sh = nSh;
+        }
+        long ans = 0;
+        for (int t = 0; t <= k; t++) {
+            ans = Math.max(ans, flat[t]);
+        }
+        return ans;
+    }
 }
