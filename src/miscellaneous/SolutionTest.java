@@ -448,4 +448,12 @@ public class SolutionTest {
         int[] prices = {1, 7, 9, 8, 2};
         assertEquals(14, solution.maximumProfit(prices, 2));
     }
+
+    @Test
+    public void testStockStrat() {
+        Solution solution = new Solution();
+        int[] prices = new int[] {5, 4, 3};
+        int[] strategy = new int[] {1, 1, 0};
+        assertEquals(9, solution.maxProfit(prices, strategy, 2));
+    }
 }

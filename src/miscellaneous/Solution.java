@@ -286,7 +286,7 @@ public class Solution {
             if (seen.contains(k))
                 return false; // duplicate
 
-            // If memory full, evict oldest packet
+            // If memory full, evict the oldest packet
             if (queue.size() == memoryLimit) {
                 Packet old = queue.poll();
                 assert old != null;
@@ -559,7 +559,6 @@ public class Solution {
     public int minScoreTriangulation(int[] values) {
         int n = values.length;
         int[][] dp = new int[n][n];
-        // length is the distance between i and j
         for (int len = 2; len < n; len++) {
             for (int i = 0; i + len < n; i++) {
                 int j = i + len;
@@ -634,7 +633,7 @@ public class Solution {
             return 0;
 
         // Min-heap (lowest height first)
-        PriorityQueue<Cell> pq = new PriorityQueue<>((a, b) -> a.height - b.height);
+        PriorityQueue<Cell> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a.height));
         boolean[][] visited = new boolean[m][n];
 
         // Add all boundary cells into the heap
@@ -766,7 +765,7 @@ public class Solution {
 
         long start = 0L; // S_0
 
-        // process jobs 1..m-1
+        // process jobs 1...m-1
         for (int j = 1; j < m; j++) {
             long[] currPrefix = new long[n];
             currPrefix[0] = (long) skill[0] * mana[j];
@@ -1474,7 +1473,7 @@ public class Solution {
         if (countOne > 0) {
             return n - countOne; // each non-1 element takes one operation
         }
-        // Step 3: find shortest subarray with gcd == 1
+        // Step 3: find the shortest subarray with gcd == 1
         int minLen = Integer.MAX_VALUE;
         for (int i = 0; i < n; i++) {
             int currGcd = nums[i];
@@ -1926,14 +1925,15 @@ public class Solution {
                 // If the outgoing element equals the front of max deque, remove it
                 if (nums[left] == maxD.peekFirst())
                     maxD.pollFirst();
+                assert !minD.isEmpty();
                 if (nums[left] == minD.peekFirst())
                     minD.pollFirst();
 
                 left++;
             }
 
-            // Now all segments starting from [left..right] are valid
-            // dp[right+1] = sum(dp[left..right])
+            // Now all segments starting from [left...right] are valid
+            // dp[right+1] = sum(dp[left...right])
             long sum = pref[right] - (left == 0 ? 0 : pref[left - 1]);
             sum = (sum % MOD + MOD) % MOD; // normalize
 
@@ -1978,7 +1978,6 @@ public class Solution {
 
     public int specialTriplets(int[] nums) {
         final long MOD = 1_000_000_007L;
-        int n = nums.length;
         int maxVal = 100000;
         int[] freqRight = new int[maxVal + 1];
         for (int x : nums)
@@ -2290,5 +2289,36 @@ public class Solution {
             ans = Math.max(ans, flat[t]);
         }
         return ans;
+    }
+
+    public long maxProfit(int[] prices, int[] strategy, int k) {
+        long sum = 0;
+        for (int i = 0; i <= prices.length-1; i++) {
+            sum += (long) prices[i] * strategy[i];
+        }
+        long res = sum;
+        long prev = 0;
+        for (int i = 0; i <= prices.length-1; i++) {
+            if (i >= k/2) {
+                if (i <= k-1) {
+                    prev += prices[i];
+                } else {
+                    prev += (long) prices[i] * strategy[i];
+                }
+            }
+        }
+        res = Math.max(res, prev);
+        for (int i = 1; i <= prices.length-k; i++) {
+            long curr = prev;
+            curr += (long) prices[i - 1] * strategy[i-1];
+            int ci = k/2-1+i;
+            curr -= prices[ci];
+            int ti = i+k-1;
+            curr -= (long) prices[ti] * strategy[ti];
+            curr += prices[ti];
+            res = Math.max(res, curr);
+            prev = curr;
+        }
+        return res;
     }
 }
