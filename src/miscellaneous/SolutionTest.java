@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -455,5 +456,18 @@ public class SolutionTest {
         int[] prices = new int[] {5, 4, 3};
         int[] strategy = new int[] {1, 1, 0};
         assertEquals(9, solution.maxProfit(prices, strategy, 2));
+    }
+
+    @Test
+    public void testSecret() {
+        Solution solution = new Solution();
+        int[][] meetings = new int[][] {{1, 2, 5}, {2, 3, 8}, {1, 5, 10}};
+        List<Integer> exp = new ArrayList<>();
+        exp.add(0);
+        exp.add(1);
+        exp.add(2);
+        exp.add(3);
+        exp.add(5);
+        assertTrue(new HashSet<>(exp).equals(new HashSet<>(solution.findAllPeople(6, meetings, 1))));
     }
 }

@@ -2321,4 +2321,69 @@ public class Solution {
         }
         return res;
     }
+
+    static class UnionFind {
+        int[] parent;
+
+        UnionFind(int n) {
+            parent = new int[n];
+            for (int i = 0; i < n; i++) parent[i] = i;
+        }
+
+        int find(int node) {
+            if (parent[node] != node)
+                parent[node] = find(parent[node]);
+            return parent[node];
+        }
+
+        void union(int x, int y) {
+            parent[find(x)] = find(y);
+        }
+
+        void reset(int x) {
+            parent[x] = x;
+        }
+    }
+    public List<Integer> findAllPeople(int n, int[][] meetings, int firstPerson) {
+        Arrays.sort(meetings, Comparator.comparingInt(a -> a[2]));
+        boolean[] knows = new boolean[n];
+        knows[0] = true;
+        knows[firstPerson] = true;
+        UnionFind uf = new UnionFind(n);
+        int i = 0;
+        while (i < meetings.length) {
+            int time = meetings[i][2];
+            List<int[]> batch = new ArrayList<>();
+            while (i < meetings.length && meetings[i][2] == time) {
+                batch.add(meetings[i]);
+                uf.union(meetings[i][0], meetings[i][1]);
+                i++;
+            }
+            // Track which roots should spread the secret
+            Set<Integer> secretRoots = new HashSet<>();
+            for (int[] m : batch) {
+                if (knows[m[0]] || knows[m[1]]) {
+                    secretRoots.add(uf.find(m[0]));
+                    secretRoots.add(uf.find(m[1]));
+                }
+            }
+            // Spread secret to entire components
+            for (int[] m : batch) {
+                if (secretRoots.contains(uf.find(m[0]))) {
+                    knows[m[0]] = true;
+                    knows[m[1]] = true;
+                }
+            }
+            // Reset DSU for next time
+            for (int[] m : batch) {
+                uf.reset(m[0]);
+                uf.reset(m[1]);
+            }
+        }
+        List<Integer> res = new ArrayList<>();
+        for (int p = 0; p < n; p++) {
+            if (knows[p]) res.add(p);
+        }
+        return res;
+    }
 }
