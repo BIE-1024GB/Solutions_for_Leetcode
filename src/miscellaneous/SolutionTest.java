@@ -477,4 +477,11 @@ public class SolutionTest {
         String[] strings = new String[] {"cba", "daf", "ghi"};
         assertEquals(1, solution.minDeletionSize(strings));
     }
+
+    @Test
+    public void testSortedColII() {
+        Solution solution = new Solution();
+        String[] strings = new String[] {"xga","xfb","yfa"};
+        assertEquals(1, solution.minDeletionSizeII(strings));
+    }
 }
