@@ -2430,4 +2430,43 @@ public class Solution {
         }
         return deleteCount;
     }
+
+    private int lastIndexLessThan(int[] arr, int x) {
+        int lo = 0, hi = arr.length - 1;
+        int res = -1;
+        while (lo <= hi) {
+            int mid = lo + (hi - lo) / 2;
+            if (arr[mid] < x) {
+                res = mid;
+                lo = mid + 1;
+            } else {
+                hi = mid - 1;
+            }
+        }
+        return res;
+    }
+    public int maxTwoEvents(int[][] events) {
+        // Sort events by end time
+        Arrays.sort(events, Comparator.comparingInt(a -> a[1]));
+        int n = events.length;
+        int[] ends = new int[n];
+        int[] best = new int[n];
+        for (int i = 0; i < n; i++) {
+            ends[i] = events[i][1];
+            best[i] = events[i][2];
+            if (i > 0) {
+                best[i] = Math.max(best[i], best[i - 1]);
+            }
+        }
+        int ans = 0;
+        for (int[] event : events) {
+            int start = event[0];
+            int value = event[2];
+            // Find the last event that ends before this one starts
+            int idx = lastIndexLessThan(ends, start);
+            int candidate = value + (idx >= 0 ? best[idx] : 0);
+            ans = Math.max(ans, candidate);
+        }
+        return ans;
+    }
 }

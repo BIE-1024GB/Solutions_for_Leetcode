@@ -484,4 +484,13 @@ public class SolutionTest {
         String[] strings = new String[] {"xga","xfb","yfa"};
         assertEquals(1, solution.minDeletionSizeII(strings));
     }
+
+    @Test
+    public void testTwoEvents() {
+        Solution solution = new Solution();
+        int[][] events = new int[][] {
+                {1, 3, 2}, {4, 5, 2}, {2, 4, 3}
+        };
+        assertEquals(4, solution.maxTwoEvents(events));
+    }
 }
