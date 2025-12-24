@@ -2469,4 +2469,23 @@ public class Solution {
         }
         return ans;
     }
+
+    public int minimumBoxes(int[] apple, int[] capacity) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b)->b-a);
+        for (int c : capacity) {
+            pq.offer(c);
+        }
+        int res = 0;
+        int sum = 0;
+        for (int a : apple) {
+            sum += a;
+        }
+        while (sum > 0) {
+            assert  pq.peek()!=null;
+            int curr = pq.poll();
+            res += 1;
+            sum -= curr;
+        }
+        return res;
+    }
 }

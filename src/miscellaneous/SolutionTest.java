@@ -493,4 +493,12 @@ public class SolutionTest {
         };
         assertEquals(4, solution.maxTwoEvents(events));
     }
+
+    @Test
+    public void testApple() {
+        Solution solution = new Solution();
+        int[] apples = new int[] {5, 5, 5};
+        int[] boxes = new int[] {2, 4, 2, 7};
+        assertEquals(4, solution.minimumBoxes(apples, boxes));
+    }
 }
