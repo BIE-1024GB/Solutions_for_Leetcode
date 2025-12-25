@@ -2488,4 +2488,24 @@ public class Solution {
         }
         return res;
     }
+
+    public long maximumHappinessSum(int[] happiness, int k) {
+        List<Integer> list = new ArrayList<>();
+        for (int h : happiness) {
+            list.add(h);
+        }
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b)->b-a);
+        pq.addAll(list);
+        int cnt = 0;
+        long res = 0;
+        while (cnt < k) {
+            assert pq.peek() != null;
+            int ch = pq.poll();
+            ch -= cnt;
+            ch = Math.max(ch, 0);
+            res += ch;
+            cnt += 1;
+        }
+        return res;
+    }
 }

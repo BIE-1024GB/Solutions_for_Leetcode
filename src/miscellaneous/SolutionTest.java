@@ -501,4 +501,12 @@ public class SolutionTest {
         int[] boxes = new int[] {2, 4, 2, 7};
         assertEquals(4, solution.minimumBoxes(apples, boxes));
     }
+
+    @Test
+    public void testHappy() {
+        Solution solution = new Solution();
+        int[] happiness = new int[] {1, 2, 3};
+        int k = 2;
+        assertEquals(4, solution.maximumHappinessSum(happiness, k));
+    }
 }
