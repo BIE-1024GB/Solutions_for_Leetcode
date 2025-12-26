@@ -2508,4 +2508,36 @@ public class Solution {
         }
         return res;
     }
+
+    public int bestClosingTime(String customers) {
+        int n = customers.length()+1;
+        int[] pre = new int[n];
+        for (int i = 1; i <= n-1; i++) {
+            if (customers.charAt(i-1) == 'N') {
+                pre[i] = pre[i-1]+1;
+            } else {
+                pre[i] = pre[i-1];
+            }
+        }
+        int[] post = new int[n];
+        for (int i = n-2; i >= 0; i--) {
+            if (customers.charAt(i) == 'Y') {
+                post[i] = post[i+1]+1;
+            } else {
+                post[i] = post[i+1];
+            }
+        }
+        int bp = Integer.MAX_VALUE;
+        int bh = 0;
+        int ch = 0;
+        while (ch <= customers.length()) {
+            int cp = pre[ch]+post[ch];
+            if (cp < bp) {
+                bp = cp;
+                bh = ch;
+            }
+            ch++;
+        }
+        return bh;
+    }
 }

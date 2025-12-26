@@ -509,4 +509,11 @@ public class SolutionTest {
         int k = 2;
         assertEquals(4, solution.maximumHappinessSum(happiness, k));
     }
+
+    @Test
+    public void testPenalty() {
+        Solution solution = new Solution();
+        String log = "YYNY";
+        assertEquals(2, solution.bestClosingTime(log));
+    }
 }
