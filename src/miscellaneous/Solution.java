@@ -2540,4 +2540,48 @@ public class Solution {
         }
         return bh;
     }
+
+    public int mostBooked(int n, int[][] meetings) {
+        Map<Integer, Long> availTime = new HashMap<>();
+        Map<Integer, Integer> meetCnt = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            availTime.put(i, (long) 0);
+            meetCnt.put(i, 0);
+        }
+        Arrays.sort(meetings, Comparator.comparingInt(a -> a[0]));
+        for (int[] m : meetings) {
+            int start = m[0];
+            int dur = m[1]-m[0];
+            boolean hasAvail = false;
+            for (int i = 0; i < n; i++) {
+                if (availTime.get(i) <= start) {
+                    availTime.put(i, (long) m[1]);
+                    meetCnt.put(i, meetCnt.get(i)+1);
+                    hasAvail = true;
+                    break;
+                }
+            }
+            if (!hasAvail) {
+                long earlyEnd = Long.MAX_VALUE;
+                int earlyId = 0;
+                for (int i = 0; i < n; i++) {
+                    if (availTime.get(i) < earlyEnd) {
+                        earlyEnd = availTime.get(i);
+                        earlyId = i;
+                    }
+                }
+                availTime.put(earlyId, earlyEnd+dur);
+                meetCnt.put(earlyId, meetCnt.get(earlyId)+1);
+            }
+        }
+        int mostCnt = Integer.MIN_VALUE;
+        int mostId = 0;
+        for (int i = 0; i < n; i++) {
+            if (meetCnt.get(i) > mostCnt) {
+                mostCnt = meetCnt.get(i);
+                mostId = i;
+            }
+        }
+        return mostId;
+    }
 }
