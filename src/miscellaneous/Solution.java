@@ -2584,4 +2584,48 @@ public class Solution {
         }
         return mostId;
     }
+
+    public int countNegatives(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int res = 0;
+        if (m > n) {
+            for (int i = 0; i < n; i++) {
+                int idx = -1;
+                int up = 0;
+                int down = m-1;
+                while (up <= down) {
+                    int mid = up+(down-up)/2;
+                    if (grid[mid][i] < 0) {
+                        down = mid-1;
+                        idx = mid;
+                    } else {
+                        up = mid+1;
+                    }
+                }
+                if (idx != -1) {
+                    res = res+m-idx;
+                }
+            }
+        } else {
+            for (int i = 0; i < m; i++) {
+                int idx = -1;
+                int left = 0;
+                int right = n-1;
+                while (left <= right) {
+                    int mid = left+(right-left)/2;
+                    if (grid[i][mid] < 0) {
+                        right = mid-1;
+                        idx = mid;
+                    } else {
+                        left = mid+1;
+                    }
+                }
+                if (idx != -1) {
+                    res = res+n-idx;
+                }
+            }
+        }
+        return res;
+    }
 }

@@ -525,4 +525,13 @@ public class SolutionTest {
         };
         assertEquals(0, solution.mostBooked(2, meetings));
     }
+
+    @Test
+    public void testNegaGrid() {
+        Solution solution = new Solution();
+        int[][] grid = new int[][] {
+                {4,3,2,-1}, {3,2,1,-1}, {1,1,-1,-2}, {-1,-1,-2,-3}
+        };
+        assertEquals(8, solution.countNegatives(grid));
+    }
 }
