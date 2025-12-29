@@ -2608,24 +2608,67 @@ public class Solution {
                 }
             }
         } else {
-            for (int i = 0; i < m; i++) {
+            for (int[] ints : grid) {
                 int idx = -1;
                 int left = 0;
-                int right = n-1;
+                int right = n - 1;
                 while (left <= right) {
-                    int mid = left+(right-left)/2;
-                    if (grid[i][mid] < 0) {
-                        right = mid-1;
+                    int mid = left + (right - left) / 2;
+                    if (ints[mid] < 0) {
+                        right = mid - 1;
                         idx = mid;
                     } else {
-                        left = mid+1;
+                        left = mid + 1;
                     }
                 }
                 if (idx != -1) {
-                    res = res+n-idx;
+                    res = res + n - idx;
                 }
             }
         }
         return res;
+    }
+
+    private final int[][] transitions = new int[6][6];
+    private final Map<String, Boolean> memo = new HashMap<>();
+    private boolean buildNextRow(char[] cur, int idx, char[] next) {
+        if (idx == next.length) {
+            return canBuild(new String(next));
+        }
+        int a = cur[idx] - 'A';
+        int b = cur[idx + 1] - 'A';
+        int mask = transitions[a][b];
+        if (mask == 0)
+            return false;
+        while (mask != 0) {
+            int bit = mask & -mask; // lowest set bit
+            int c = Integer.numberOfTrailingZeros(bit);
+            next[idx] = (char) ('A' + c);
+            if (buildNextRow(cur, idx + 1, next))
+                return true;
+            mask -= bit;
+        }
+        return false;
+    }
+    private boolean canBuild(String bottom) {
+        if (bottom.length() == 1)
+            return true;
+        Boolean cached = memo.get(bottom);
+        if (cached != null)
+            return cached;
+        char[] cur = bottom.toCharArray();
+        char[] next = new char[cur.length - 1];
+        boolean ans = buildNextRow(cur, 0, next);
+        memo.put(bottom, ans);
+        return ans;
+    }
+    public boolean pyramidTransition(String bottom, List<String> allowed) {
+        for (String s : allowed) {
+            int a = s.charAt(0) - 'A';
+            int b = s.charAt(1) - 'A';
+            int c = s.charAt(2) - 'A';
+            transitions[a][b] |= (1 << c);
+        }
+        return canBuild(bottom);
     }
 }
