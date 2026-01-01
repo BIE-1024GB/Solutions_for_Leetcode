@@ -2671,4 +2671,65 @@ public class Solution {
         }
         return canBuild(bottom);
     }
+
+    public int numMagicSquaresInside(int[][] grid) {
+        if (grid.length<3 || grid[0].length<3) {
+            return 0;
+        }
+        int res = 0;
+        for (int i = 0; i < grid.length-2; i++) {
+            for (int j = 0; j < grid[0].length-2; j++) {
+                Set<Integer> set = new HashSet<>();
+                for (int r = 0; r < 3; r++) {
+                    for (int c = 0; c < 3; c++) {
+                        int cn = grid[i+r][j+c];
+                        if (cn>=1 && cn<=9) {
+                            set.add(cn);
+                        }
+                    }
+                }
+                if (set.size() == 9) {
+                    int rs1 = grid[i][j]+grid[i][j+1]+grid[i][j+2];
+                    int rs2 = grid[i+1][j]+grid[i+1][j+1]+grid[i+1][j+2];
+                    int rs3 = grid[i+2][j]+grid[i+2][j+1]+grid[i+2][j+2];
+                    int cs1 = grid[i][j]+grid[i+1][j]+grid[i+2][j];
+                    int cs2 = grid[i][j+1]+grid[i+1][j+1]+grid[i+2][j+1];
+                    int cs3 = grid[i][j+2]+grid[i+1][j+2]+grid[i+2][j+2];
+                    int ds1 = grid[i][j]+grid[i+1][j+1]+grid[i+2][j+2];
+                    int ds2 = grid[i][j+2]+grid[i+1][j+1]+grid[i+2][j];
+                    if (rs1==rs2 && rs2==rs3 &&
+                            rs3==cs1 && cs1==cs2 && cs2==cs3 &&
+                            cs3==ds1 && ds1==ds2) {
+                        res += 1;
+                    }
+                }
+            }
+        }
+        return res;
+    }
+
+    public int[] plusOne(int[] digits) {
+        List<Integer> list = new ArrayList<>();
+        int n = digits.length;
+        int addon = 1;
+        for (int i = n-1; i >= 0; i--) {
+            int curr = digits[i];
+            int plus = curr+addon;
+            if (plus >= 10) {
+                list.addFirst(plus-10);
+                addon = 1;
+            } else {
+                list.addFirst(plus);
+                addon = 0;
+            }
+        }
+        if (addon == 1) {
+            list.addFirst(1);
+        }
+        int[] res = new int[list.size()];
+        for (int i = 0; i <= list.size()-1; i++) {
+            res[i] = list.get(i);
+        }
+        return res;
+    }
 }

@@ -549,4 +549,21 @@ public class SolutionTest {
                 "FEF","FFD","FFE","FFF"));
         assertFalse(solution.pyramidTransition(bottom, allowed));
     }
+
+    @Test
+    public void testMagicSquare() {
+        Solution solution = new Solution();
+        int[][] grid = new int[][] {
+                {4, 3, 8, 4}, {9, 5, 1, 9}, {2, 7, 6, 2}
+        };
+        assertEquals(1, solution.numMagicSquaresInside(grid));
+    }
+
+    @Test
+    public void testAddOne() {
+        Solution solution = new Solution();
+        int[] number = new int[] {9, 9, 9};
+        int[] exp = new int[] {1, 0, 0, 0};
+        assertArrayEquals(exp, solution.plusOne(number));
+    }
 }
