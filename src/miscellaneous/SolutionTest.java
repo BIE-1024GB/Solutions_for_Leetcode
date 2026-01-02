@@ -566,4 +566,11 @@ public class SolutionTest {
         int[] exp = new int[] {1, 0, 0, 0};
         assertArrayEquals(exp, solution.plusOne(number));
     }
+
+    @Test
+    public void testRepeat() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {5,1,5,2,5,3,5,4};
+        assertEquals(5, solution.repeatedNTimes(nums));
+    }
 }

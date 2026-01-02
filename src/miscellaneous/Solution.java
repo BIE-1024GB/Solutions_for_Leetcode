@@ -2709,27 +2709,27 @@ public class Solution {
     }
 
     public int[] plusOne(int[] digits) {
-        List<Integer> list = new ArrayList<>();
-        int n = digits.length;
-        int addon = 1;
-        for (int i = n-1; i >= 0; i--) {
-            int curr = digits[i];
-            int plus = curr+addon;
-            if (plus >= 10) {
-                list.addFirst(plus-10);
-                addon = 1;
+        for (int i = digits.length-1; i >= 0; i--) {
+            if (digits[i] < 9) {
+                digits[i] += 1;
+                return digits;
             } else {
-                list.addFirst(plus);
-                addon = 0;
+                digits[i] = 0;
             }
         }
-        if (addon == 1) {
-            list.addFirst(1);
-        }
-        int[] res = new int[list.size()];
-        for (int i = 0; i <= list.size()-1; i++) {
-            res[i] = list.get(i);
-        }
+        int[] res = new int[digits.length+1];
+        res[0] = 1;
         return res;
+    }
+
+    public int repeatedNTimes(int[] nums) {
+        for (int a = 1; a <= 3; a++) {
+            for (int i = 0; i <= nums.length-1-a; i++) {
+                if (nums[i] == nums[i+a]) {
+                    return nums[i];
+                }
+            }
+        }
+        return -1;
     }
 }
