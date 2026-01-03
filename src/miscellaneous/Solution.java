@@ -2732,4 +2732,17 @@ public class Solution {
         }
         return -1;
     }
+
+    public int numOfWays(int n) {
+        int mod = 1_000_000_007;
+        long va = 6;
+        long vb = 6;
+        for (int i = 2; i <= n; i++) {
+            long na = (va*2+vb*2)%mod;
+            long nb = (va*2+vb*3)%mod;
+            va = na;
+            vb = nb;
+        }
+        return (int) (va+vb)%mod;
+    }
 }

@@ -573,4 +573,10 @@ public class SolutionTest {
         int[] nums = new int[] {5,1,5,2,5,3,5,4};
         assertEquals(5, solution.repeatedNTimes(nums));
     }
+
+    @Test
+    public void testN3Grid() {
+        Solution solution = new Solution();
+        assertEquals(30228214, solution.numOfWays(5000));
+    }
 }
