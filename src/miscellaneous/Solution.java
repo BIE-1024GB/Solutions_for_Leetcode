@@ -2745,4 +2745,38 @@ public class Solution {
         }
         return (int) (va+vb)%mod;
     }
+
+    public int sumFourDivisors(int[] nums) {
+        int res = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int n : nums) {
+            if (map.containsKey(n)) {
+                res = res + map.get(n);
+            } else {
+                if (n <= 5) {
+                    map.put(n, 0);
+                    continue;
+                }
+                int fd = -1;
+                for (int i = 2; i <= (int) Math.sqrt(n); i++) {
+                    if (n % i == 0) {
+                        if (fd != -1) {
+                            fd = -1;
+                            break;
+                        } else {
+                            fd = i;
+                        }
+                    }
+                }
+                if (fd != -1 && fd != n/fd) {
+                    int sum = 1 + n + fd + n/fd;
+                    res = res + sum;
+                    map.put(n, sum);
+                } else {
+                    map.put(n, 0);
+                }
+            }
+        }
+        return res;
+    }
 }
