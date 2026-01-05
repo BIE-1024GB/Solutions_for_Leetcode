@@ -2779,4 +2779,46 @@ public class Solution {
         }
         return res;
     }
+
+    public long maxMatrixSum(int[][] matrix) {
+        int np = 0;
+        for (int[] row : matrix) {
+            for (int r : row) {
+                if (r <= 0) {
+                    np++;
+                }
+            }
+        }
+        long res = 0;
+        if (np % 2 == 0) {
+            for (int[] row : matrix) {
+                for (int r : row) {
+                    res += Math.abs(r);
+                }
+            }
+        } else {
+            int min = Integer.MAX_VALUE;
+            int mr = 0;
+            int mc = 0;
+            for (int i = 0; i <= matrix.length-1; i++) {
+                for (int j = 0; j <= matrix[0].length-1; j++) {
+                    if (Math.abs(matrix[i][j]) < min) {
+                        min = Math.abs(matrix[i][j]);
+                        mr = i;
+                        mc = j;
+                    }
+                }
+            }
+            for (int i = 0; i <= matrix.length-1; i++) {
+                for (int j = 0; j <= matrix[0].length-1; j++) {
+                    if (i==mr && j==mc) {
+                        res -= Math.abs(matrix[i][j]);
+                    } else {
+                        res += Math.abs(matrix[i][j]);
+                    }
+                }
+            }
+        }
+        return res;
+    }
 }

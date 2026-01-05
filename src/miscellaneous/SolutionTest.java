@@ -597,4 +597,13 @@ public class SolutionTest {
                 100000,10000};
         assertEquals(0, solution.sumFourDivisors(nums));
     }
+
+    @Test
+    public void testMatrixSumNeg() {
+        Solution solution = new Solution();
+        int[][] matrix = new int[][] {
+                {2, 9, 3}, {5, 4, -4}, {1, 7, 1}
+        };
+        assertEquals(34, solution.maxMatrixSum(matrix));
+    }
 }
