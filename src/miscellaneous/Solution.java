@@ -2821,4 +2821,43 @@ public class Solution {
         }
         return res;
     }
+
+    static class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode(int val) {
+            this.val = val;
+        }
+    }
+    public int maxLevelSum(TreeNode root) {
+        int ms = Integer.MIN_VALUE;
+        int ml = 0;
+        int cl = 0;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            cl += 1;
+            int cs = 0;
+            int cn = queue.size();
+            while (cn > 0) {
+                TreeNode node = queue.poll();
+                assert node != null;
+                cs += node.val;
+                cn--;
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+            if (cs > ms) {
+                ms = cs;
+                ml = cl;
+            }
+        }
+        return ml;
+    }
 }

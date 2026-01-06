@@ -468,7 +468,7 @@ public class SolutionTest {
         exp.add(2);
         exp.add(3);
         exp.add(5);
-        assertTrue(new HashSet<>(exp).equals(new HashSet<>(solution.findAllPeople(6, meetings, 1))));
+        assertEquals(new HashSet<>(exp), new HashSet<>(solution.findAllPeople(6, meetings, 1)));
     }
 
     @Test
@@ -605,5 +605,20 @@ public class SolutionTest {
                 {2, 9, 3}, {5, 4, -4}, {1, 7, 1}
         };
         assertEquals(34, solution.maxMatrixSum(matrix));
+    }
+
+    @Test
+    public void testMaxLevel() {
+        Solution solution = new Solution();
+        Solution.TreeNode n1 = new Solution.TreeNode(1);
+        Solution.TreeNode n2 = new Solution.TreeNode(7);
+        Solution.TreeNode n3 = new Solution.TreeNode(0);
+        Solution.TreeNode n4 = new Solution.TreeNode(7);
+        Solution.TreeNode n5 = new Solution.TreeNode(-8);
+        n1.left = n2;
+        n1.right = n3;
+        n2.left = n4;
+        n2.right = n5;
+        assertEquals(2, solution.maxLevelSum(n1));
     }
 }
