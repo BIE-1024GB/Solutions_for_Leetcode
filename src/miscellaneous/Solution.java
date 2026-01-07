@@ -2831,6 +2831,7 @@ public class Solution {
             this.val = val;
         }
     }
+
     public int maxLevelSum(TreeNode root) {
         int ms = Integer.MIN_VALUE;
         int ml = 0;
@@ -2859,5 +2860,49 @@ public class Solution {
             }
         }
         return ml;
+    }
+
+    public int maxProduct(TreeNode root) {
+        // 1) Get total sum (iterative DFS)
+        long total = 0;
+        Deque<TreeNode> st = new ArrayDeque<>();
+        st.push(root);
+        while (!st.isEmpty()) {
+            TreeNode node = st.pop();
+            total += node.val;
+            if (node.left != null)
+                st.push(node.left);
+            if (node.right != null)
+                st.push(node.right);
+        }
+        // 2) Postorder to compute subtree sums once, track max product.
+        Map<TreeNode, Long> subSum = new IdentityHashMap<>(); // fast, node identity keys
+        long best = 0;
+        Deque<Object[]> stack = new ArrayDeque<>();
+        stack.push(new Object[] { root, false });
+        while (!stack.isEmpty()) {
+            Object[] top = stack.pop();
+            TreeNode node = (TreeNode) top[0];
+            boolean visited = (boolean) top[1];
+            if (!visited) {
+                stack.push(new Object[] { node, true });
+                if (node.left != null)
+                    stack.push(new Object[] { node.left, false });
+                if (node.right != null)
+                    stack.push(new Object[] { node.right, false });
+            } else {
+                long left = node.left == null ? 0 : subSum.get(node.left);
+                long right = node.right == null ? 0 : subSum.get(node.right);
+                long s = left + right + node.val;
+                subSum.put(node, s);
+                if (node != root) {
+                    long product = s * (total - s);
+                    if (product > best)
+                        best = product;
+                }
+            }
+        }
+        long MOD = 1000000007;
+        return (int) (best % MOD);
     }
 }

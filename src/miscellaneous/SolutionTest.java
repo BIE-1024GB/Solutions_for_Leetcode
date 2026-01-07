@@ -621,4 +621,21 @@ public class SolutionTest {
         n2.right = n5;
         assertEquals(2, solution.maxLevelSum(n1));
     }
+
+    @Test
+    public void testMaxMulti() {
+        Solution solution = new Solution();
+        Solution.TreeNode n1 = new Solution.TreeNode(1);
+        Solution.TreeNode n2 = new Solution.TreeNode(2);
+        Solution.TreeNode n3 = new Solution.TreeNode(3);
+        Solution.TreeNode n4 = new Solution.TreeNode(4);
+        Solution.TreeNode n5 = new Solution.TreeNode(5);
+        Solution.TreeNode n6 = new Solution.TreeNode(6);
+        n1.right = n2;
+        n2.left = n3;
+        n2.right = n4;
+        n4.left = n5;
+        n4.right = n6;
+        assertEquals(90, solution.maxProduct(n1));
+    }
 }
