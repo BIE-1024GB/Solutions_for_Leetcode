@@ -638,4 +638,12 @@ public class SolutionTest {
         n4.right = n6;
         assertEquals(90, solution.maxProduct(n1));
     }
+
+    @Test
+    public void testMaxDot() {
+        Solution solution = new Solution();
+        int[] n1 = new int[] {2, 1, -2, 5};
+        int[] n2 = new int[] {3, 0, -6};
+        assertEquals(18, solution.maxDotProduct(n1, n2));
+    }
 }

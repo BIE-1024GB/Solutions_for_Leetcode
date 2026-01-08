@@ -2831,7 +2831,6 @@ public class Solution {
             this.val = val;
         }
     }
-
     public int maxLevelSum(TreeNode root) {
         int ms = Integer.MIN_VALUE;
         int ml = 0;
@@ -2861,7 +2860,6 @@ public class Solution {
         }
         return ml;
     }
-
     public int maxProduct(TreeNode root) {
         // 1) Get total sum (iterative DFS)
         long total = 0;
@@ -2904,5 +2902,24 @@ public class Solution {
         }
         long MOD = 1000000007;
         return (int) (best % MOD);
+    }
+
+    public int maxDotProduct(int[] nums1, int[] nums2) {
+        int l1 = nums1.length, l2 = nums2.length;
+        long NEG = Long.MIN_VALUE / 4;
+        long[][] dp = new long[l1 + 1][l2 + 1];
+        for (int i = 0; i <= l1; i++)
+            dp[i][0] = NEG;
+        for (int j = 0; j <= l2; j++)
+            dp[0][j] = NEG;
+        for (int i = 1; i <= l1; i++) {
+            for (int j = 1; j <= l2; j++) {
+                long prod = 1L * nums1[i - 1] * nums2[j - 1];
+                long addon = (dp[i - 1][j - 1] == NEG) ? NEG : dp[i - 1][j - 1] + prod;
+                dp[i][j] = Math.max(Math.max(dp[i - 1][j], dp[i][j - 1]),
+                        Math.max(prod, addon));
+            }
+        }
+        return (int) dp[l1][l2];
     }
 }
