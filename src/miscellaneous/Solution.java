@@ -2903,6 +2903,68 @@ public class Solution {
         long MOD = 1000000007;
         return (int) (best % MOD);
     }
+    private boolean isUpper(TreeNode node, List<TreeNode> target) {
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(node);
+        Set<Integer> expl = new HashSet<>();
+        while (!queue.isEmpty()) {
+            TreeNode curr = queue.poll();
+            expl.add(curr.val);
+            if (curr.left != null) {
+                queue.offer(curr.left);
+            }
+            if (curr.right != null) {
+                queue.offer(curr.right);
+            }
+        }
+        for (TreeNode t : target) {
+            if (!expl.contains(t.val)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public TreeNode subtreeWithAllDeepest(TreeNode root) {
+        if (root.left==null && root.right==null) {
+            return root;
+        }
+        Map<Integer, List<TreeNode>> levels = new HashMap<>();
+        int lvl = 1;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int cnt = queue.size();
+            List<TreeNode> list = new ArrayList<>(cnt);
+            while (cnt > 0) {
+                TreeNode curr = queue.poll();
+                list.add(curr);
+                assert curr != null;
+                if (curr.left != null) {
+                    queue.offer(curr.left);
+                }
+                if (curr.right != null) {
+                    queue.offer(curr.right);
+                }
+                cnt--;
+            }
+            levels.put(lvl, list);
+            lvl++;
+        }
+        List<TreeNode> deep = levels.get(lvl-1);
+        if (deep.size() == 1) {
+            return deep.getFirst();
+        } else {
+            for (int l = lvl-2; l >= 2; l--) {
+                List<TreeNode> curr = levels.get(l);
+                for (TreeNode node : curr) {
+                    if (isUpper(node, deep)) {
+                        return node;
+                    }
+                }
+            }
+            return root;
+        }
+    }
 
     public int maxDotProduct(int[] nums1, int[] nums2) {
         int l1 = nums1.length, l2 = nums2.length;
@@ -2914,7 +2976,7 @@ public class Solution {
             dp[0][j] = NEG;
         for (int i = 1; i <= l1; i++) {
             for (int j = 1; j <= l2; j++) {
-                long prod = 1L * nums1[i - 1] * nums2[j - 1];
+                long prod = (long) nums1[i - 1] * nums2[j - 1];
                 long addon = (dp[i - 1][j - 1] == NEG) ? NEG : dp[i - 1][j - 1] + prod;
                 dp[i][j] = Math.max(Math.max(dp[i - 1][j], dp[i][j - 1]),
                         Math.max(prod, addon));
