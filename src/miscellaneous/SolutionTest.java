@@ -646,4 +646,12 @@ public class SolutionTest {
         int[] n2 = new int[] {3, 0, -6};
         assertEquals(18, solution.maxDotProduct(n1, n2));
     }
+
+    @Test
+    public void testMinASCII() {
+        Solution solution = new Solution();
+        String s1 = "delete";
+        String s2 = "leet";
+        assertEquals(403, solution.minimumDeleteSum(s1, s2));
+    }
 }

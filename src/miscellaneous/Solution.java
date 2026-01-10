@@ -2984,4 +2984,33 @@ public class Solution {
         }
         return (int) dp[l1][l2];
     }
+
+    public int minimumDeleteSum(String s1, String s2) {
+        int r = s1.length();
+        int c = s2.length();
+        int[][] dp = new int[r+1][c+1];
+        for (int j = 0; j <= c; j++) {
+            dp[0][j] = 0;
+        }
+        for (int i = 0; i <= r; i++) {
+            dp[i][0] = 0;
+        }
+        for (int i = 1; i <= r; i++) {
+            for (int j = 1; j <= c; j++) {
+                if (s1.charAt(i-1) == s2.charAt(j-1)) {
+                    dp[i][j] = dp[i-1][j-1]+(int) s1.charAt(i-1);
+                } else {
+                    dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
+                }
+            }
+        }
+        int total = 0;
+        for (char ch : s1.toCharArray()) {
+            total += ch;
+        }
+        for (char ch : s2.toCharArray()) {
+            total += ch;
+        }
+        return total-2*dp[r][c];
+    }
 }
