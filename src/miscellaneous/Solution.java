@@ -3013,4 +3013,35 @@ public class Solution {
         }
         return total-2*dp[r][c];
     }
+
+    private int largestRectangleArea(int[] heights) {
+        int n = heights.length;
+        Deque<Integer> st = new ArrayDeque<>();
+        int best = 0;
+        for (int i = 0; i <= n; i++) {
+            int cur = (i == n) ? 0 : heights[i];
+            while (!st.isEmpty() && heights[st.peek()] > cur) {
+                int h = heights[st.pop()];
+                int leftLessIdx = st.isEmpty() ? -1 : st.peek();
+                int width = i - leftLessIdx - 1;
+                best = Math.max(best, h * width);
+            }
+            st.push(i);
+        }
+
+        return best;
+    }
+    public int maximalRectangle(char[][] matrix) {
+        int cols = matrix[0].length;
+        int[] heights = new int[cols];
+        int best = 0;
+        for (char[] chars : matrix) {
+            for (int c = 0; c < cols; c++) {
+                if (chars[c] == '1') heights[c] += 1;
+                else heights[c] = 0;
+            }
+            best = Math.max(best, largestRectangleArea(heights));
+        }
+        return best;
+    }
 }

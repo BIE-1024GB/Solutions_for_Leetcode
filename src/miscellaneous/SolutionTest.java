@@ -654,4 +654,16 @@ public class SolutionTest {
         String s2 = "leet";
         assertEquals(403, solution.minimumDeleteSum(s1, s2));
     }
+
+    @Test
+    public void testMatrixRectangle() {
+        Solution solution = new Solution();
+        char[][] matrix = new char[][] {
+                {'1', '0', '1', '0', '0'},
+                {'1', '0', '1', '1', '1'},
+                {'1', '1', '1', '1', '1'},
+                {'1', '0', '0', '1', '0'}
+        };
+        assertEquals(6, solution.maximalRectangle(matrix));
+    }
 }
