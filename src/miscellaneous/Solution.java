@@ -3044,4 +3044,29 @@ public class Solution {
         }
         return best;
     }
+
+    public int minTimeToVisitAllPoints(int[][] points) {
+        int n = points.length;
+        if (n == 1) {
+            return 0;
+        }
+        int res = 0;
+        int cx = points[0][0];
+        int cy = points[0][1];
+        for (int i = 1; i <= n-1; i++) {
+            int nx = points[i][0];
+            int ny = points[i][1];
+            if (nx==cx || ny==cy) {
+                res += (Math.abs(nx-cx)+Math.abs(ny-cy));
+            } else {
+                int dx = Math.abs(nx-cx);
+                int dy = Math.abs(ny-cy);
+                int md = Math.min(dx, dy);
+                res += (dx+dy-md);
+            }
+            cx = nx;
+            cy = ny;
+        }
+        return res;
+    }
 }

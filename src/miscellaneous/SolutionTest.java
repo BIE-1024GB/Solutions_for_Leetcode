@@ -666,4 +666,13 @@ public class SolutionTest {
         };
         assertEquals(6, solution.maximalRectangle(matrix));
     }
+
+    @Test
+    public void testMinDist() {
+        Solution solution = new Solution();
+        int[][] points = new int[][] {
+                {1, 1}, {3, 4}, {-1, 0}
+        };
+        assertEquals(7, solution.minTimeToVisitAllPoints(points));
+    }
 }
