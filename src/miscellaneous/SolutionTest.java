@@ -675,4 +675,13 @@ public class SolutionTest {
         };
         assertEquals(7, solution.minTimeToVisitAllPoints(points));
     }
+
+    @Test
+    public void testSepSquare() {
+        Solution solution = new Solution();
+        int[][] squares = new int[][] {
+                {0, 0, 2}, {1, 1, 1}
+        };
+        assertTrue(Math.abs(1.16667-solution.separateSquares(squares))<=0.00001);
+    }
 }

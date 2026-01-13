@@ -3069,4 +3069,46 @@ public class Solution {
         }
         return res;
     }
+
+    private double areaBelow(int[][] squares, double Y) {
+        double sum = 0.0;
+        for (int[] s : squares) {
+            double y = s[1];
+            double l = s[2];
+            if (Y <= y) {
+                sum += 0.0;
+            } else if (Y >= y + l) {
+                sum += l * l;
+            } else {
+                sum += l * (Y - y);
+            }
+        }
+        return sum;
+    }
+    public double separateSquares(int[][] squares) {
+        double totalArea = 0.0;
+        double low = Double.POSITIVE_INFINITY;
+        double high = Double.NEGATIVE_INFINITY;
+        for (int[] s : squares) {
+            double y = s[1];
+            double l = s[2];
+            totalArea += l * l;
+            low = Math.min(low, y);
+            high = Math.max(high, y + l);
+        }
+        double half = totalArea / 2.0;
+        // Binary search for Y such that area below Y == half
+        // 60-80 iterations is plenty for 1e-5 accuracy in double
+        for (int it = 0; it < 80; it++) {
+            double mid = low + (high - low) / 2.0;
+            double below = areaBelow(squares, mid);
+            if (below < half) {
+                low = mid;
+            } else {
+                high = mid;
+            }
+        }
+        // low and high are extremely close; either is fine
+        return high;
+    }
 }
