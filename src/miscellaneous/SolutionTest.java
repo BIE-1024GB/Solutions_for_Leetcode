@@ -684,4 +684,13 @@ public class SolutionTest {
         };
         assertTrue(Math.abs(1.16667-solution.separateSquares(squares))<=0.00001);
     }
+
+    @Test
+    public void testSeqSquareII() {
+        Solution solution = new Solution();
+        int[][] squares = new int[][] {
+                {0, 0, 2}, {1, 1, 1}
+        };
+        assertTrue(Math.abs(1.00000-solution.separateSquaresII(squares))<=0.00001);
+    }
 }

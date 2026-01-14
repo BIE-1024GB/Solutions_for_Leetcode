@@ -3111,4 +3111,175 @@ public class Solution {
         // low and high are extremely close; either is fine
         return high;
     }
+
+    static class Event {
+        long y;
+        long x1, x2;
+        int type; // +1 add, -1 remove
+
+        Event(long y, long x1, long x2, int type) {
+            this.y = y;
+            this.x1 = x1;
+            this.x2 = x2;
+            this.type = type;
+        }
+    }
+    static class Slab {
+        long y0, y1;
+        long coveredLen; // union length on x in this slab
+        double cumStart; // cumulative area before this slab
+        double area; // area contributed by this slab
+
+        Slab(long y0, long y1, long coveredLen, double cumStart, double area) {
+            this.y0 = y0;
+            this.y1 = y1;
+            this.coveredLen = coveredLen;
+            this.cumStart = cumStart;
+            this.area = area;
+        }
+    }
+    // Segment tree for union length of covered x-intervals on compressed coords.
+    static class SegTree {
+        final long[] xs; // unique sorted coordinates
+        final int nSeg; // number of elementary segments = xs.length - 1
+        final int[] cover; // cover count
+        final long[] len; // covered length in this node
+
+        SegTree(long[] xs) {
+            this.xs = xs;
+            this.nSeg = xs.length - 1;
+            int size = 4 * Math.max(1, nSeg);
+            this.cover = new int[size];
+            this.len = new long[size];
+        }
+
+        void update(int ql, int qr, int delta) {
+            if (ql > qr)
+                return;
+            update(1, 0, nSeg - 1, ql, qr, delta);
+        }
+
+        private void update(int idx, int l, int r, int ql, int qr, int delta) {
+            if (ql <= l && r <= qr) {
+                cover[idx] += delta;
+                pull(idx, l, r);
+                return;
+            }
+            int mid = (l + r) >>> 1;
+            if (ql <= mid)
+                update(idx << 1, l, mid, ql, qr, delta);
+            if (qr > mid)
+                update(idx << 1 | 1, mid + 1, r, ql, qr, delta);
+            pull(idx, l, r);
+        }
+
+        private void pull(int idx, int l, int r) {
+            if (cover[idx] > 0) {
+                // fully covered
+                len[idx] = xs[r + 1] - xs[l];
+            } else if (l == r) {
+                len[idx] = 0;
+            } else {
+                len[idx] = len[idx << 1] + len[idx << 1 | 1];
+            }
+        }
+
+        long coveredLen() {
+            return len[1];
+        }
+    }
+    private static long[] unique(long[] arr) {
+        int m = arr.length;
+        long[] tmp = new long[m];
+        int k = 0;
+        for (int i = 0; i < m; i++) {
+            if (i == 0 || arr[i] != arr[i - 1])
+                tmp[k++] = arr[i];
+        }
+        return Arrays.copyOf(tmp, k);
+    }
+    public double separateSquaresII(int[][] squares) {
+        int n = squares.length;
+        // Build events and collect x coords for compression.
+        Event[] events = new Event[2 * n];
+        long[] xCoords = new long[2 * n];
+        int ei = 0, xi = 0;
+
+        for (int[] s : squares) {
+            long x = s[0], y = s[1], l = s[2];
+            long x2 = x + l;
+            long y2 = y + l;
+            events[ei++] = new Event(y, x, x2, +1);
+            events[ei++] = new Event(y2, x, x2, -1);
+            xCoords[xi++] = x;
+            xCoords[xi++] = x2;
+        }
+
+        Arrays.sort(events, Comparator.comparingLong(a -> a.y));
+
+        Arrays.sort(xCoords);
+        long[] xs = unique(xCoords);
+        if (xs.length <= 1) {
+            // All squares would have zero width (not possible with l>=1), but guard anyway.
+            return events[0].y;
+        }
+
+        SegTree st = new SegTree(xs);
+
+        // Helper: map x interval to indices in xs.
+        // Leaf i represents [xs[i], xs[i+1]] for i in [0..xs.length-2]
+        // For interval [x1, x2), we update i in [idx(x1) .. idx(x2)-1]
+        // since x2 is an endpoint coordinate.
+        Map<Long, Integer> xIndex = new HashMap<>(xs.length * 2);
+        for (int i = 0; i < xs.length; i++)
+            xIndex.put(xs[i], i);
+
+        List<Slab> slabs = new ArrayList<>();
+        long prevY = events[0].y;
+        double cum = 0.0;
+
+        int i = 0;
+        while (i < events.length) {
+            long y = events[i].y;
+
+            long deltaY = y - prevY;
+            if (deltaY > 0) {
+                long covered = st.coveredLen();
+                if (covered > 0) {
+                    double area = (double) covered * (double) deltaY;
+                    slabs.add(new Slab(prevY, y, covered, cum, area));
+                    cum += area;
+                }
+                prevY = y;
+            }
+
+            // Apply all events at this y
+            while (i < events.length && events[i].y == y) {
+                Event e = events[i];
+                int l = xIndex.get(e.x1);
+                int r = xIndex.get(e.x2);
+                // update segments [l .. r-1]
+                st.update(l, r - 1, e.type);
+                i++;
+            }
+        }
+
+        double total = cum;
+        double half = total / 2.0;
+
+        // Find Y in slabs
+        for (Slab s : slabs) {
+            double end = s.cumStart + s.area;
+            if (half <= end + 1e-12) { // tiny tolerance for floating error
+                if (half <= s.cumStart + 1e-12)
+                    return (double) s.y0;
+                // Interpolate inside slab
+                double need = half - s.cumStart;
+                return (double) s.y0 + need / (double) s.coveredLen;
+            }
+        }
+
+        // If half==total (can happen with precision), return top-most.
+        return (double) prevY;
+    }
 }
