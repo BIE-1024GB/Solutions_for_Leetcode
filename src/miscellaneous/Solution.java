@@ -3138,7 +3138,6 @@ public class Solution {
             this.area = area;
         }
     }
-    // Segment tree for union length of covered x-intervals on compressed coords.
     static class SegTree {
         final long[] xs; // unique sorted coordinates
         final int nSeg; // number of elementary segments = xs.length - 1
@@ -3281,5 +3280,40 @@ public class Solution {
 
         // If half==total (can happen with precision), return top-most.
         return (double) prevY;
+    }
+
+    public int maximizeSquareHoleArea(int n, int m, int[] hBars, int[] vBars) {
+        Arrays.sort(hBars);
+        int ci = hBars[0];
+        int chs = 1;
+        int bhs = 1;
+        for (int i = 1; i <= hBars.length-1; i++) {
+            int ni = hBars[i];
+            if (ni == ci+1) {
+                chs += 1;
+            } else {
+                bhs = Math.max(bhs, chs);
+                chs = 1;
+            }
+            ci = ni;
+        }
+        bhs = Math.max(bhs, chs);
+        Arrays.sort(vBars);
+        ci = vBars[0];
+        int cvs = 1;
+        int bvs = 1;
+        for (int i = 1; i <= vBars.length-1; i++) {
+            int ni = vBars[i];
+            if (ni == ci+1) {
+                cvs += 1;
+            } else {
+                bvs = Math.max(bvs, cvs);
+                cvs = 1;
+            }
+            ci = ni;
+        }
+        bvs = Math.max(bvs, cvs);
+        int side = Math.min(bhs, bvs);
+        return (side+1)*(side+1);
     }
 }

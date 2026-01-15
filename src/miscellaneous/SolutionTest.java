@@ -693,4 +693,12 @@ public class SolutionTest {
         };
         assertTrue(Math.abs(1.00000-solution.separateSquaresII(squares))<=0.00001);
     }
+
+    @Test
+    public void testMaxSquare() {
+        Solution solution = new Solution();
+        int[] hb = new int[] {3, 2, 4};
+        int[] vb = new int[] {4, 6, 7, 12, 10, 13, 2};
+        assertEquals(9, solution.maximizeSquareHoleArea(3, 13, hb, vb));
+    }
 }
