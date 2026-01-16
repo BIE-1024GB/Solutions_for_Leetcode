@@ -701,4 +701,12 @@ public class SolutionTest {
         int[] vb = new int[] {4, 6, 7, 12, 10, 13, 2};
         assertEquals(9, solution.maximizeSquareHoleArea(3, 13, hb, vb));
     }
+
+    @Test
+    public void testMaxFenceSquare() {
+        Solution solution = new Solution();
+        int[] hf = new int[] {2, 3};
+        int[] vf = new int[] {2};
+        assertEquals(4, solution.maximizeSquareArea(4, 3, hf, vf));
+    }
 }

@@ -3316,4 +3316,59 @@ public class Solution {
         int side = Math.min(bhs, bvs);
         return (side+1)*(side+1);
     }
+
+    private static Set<Integer> getHset(int m, int[] hFences) {
+        Set<Integer> hset = new HashSet<>();
+        for (int i = 0; i <= hFences.length; i++) {
+            for (int j = i+1; j <= hFences.length+1; j++) {
+                if (i == 0) {
+                    if (j != hFences.length+1) {
+                        hset.add(hFences[j-1]-1);
+                    } else {
+                        hset.add(m -1);
+                    }
+                } else {
+                    if (j != hFences.length+1) {
+                        hset.add(hFences[j-1]- hFences[i-1]);
+                    } else {
+                        hset.add(m - hFences[i-1]);
+                    }
+                }
+            }
+        }
+        return hset;
+    }
+    public int maximizeSquareArea(int m, int n, int[] hFences, int[] vFences) {
+        Arrays.sort(hFences);
+        Set<Integer> hset = getHset(m, hFences);
+        int bd = 0;
+        Arrays.sort(vFences);
+        for (int i = 0; i <= vFences.length; i++) {
+            for (int j = i+1; j <= vFences.length+1; j++) {
+                int diff;
+                if (i == 0) {
+                    if (j != vFences.length+1) {
+                        diff = vFences[j-1]-1;
+                    } else {
+                        diff = n-1;
+                    }
+                } else {
+                    if (j != vFences.length+1) {
+                        diff = vFences[j-1]-vFences[i-1];
+                    } else {
+                        diff = n-vFences[i-1];
+                    }
+                }
+                if (hset.contains(diff)) {
+                    bd = Math.max(bd, diff);
+                }
+            }
+        }
+        if (bd == 0) {
+            return -1;
+        } else {
+            long ans = (long) bd*bd%1000000007;
+            return (int) ans;
+        }
+    }
 }
