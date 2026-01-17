@@ -3371,4 +3371,27 @@ public class Solution {
             return (int) ans;
         }
     }
+
+    public long largestSquareArea(int[][] bottomLeft, int[][] topRight) {
+        long bl = 0;
+        int n = bottomLeft.length;
+        for (int i = 0; i <= n-2; i++) {
+            int xib = bottomLeft[i][0];
+            int yib = bottomLeft[i][1];
+            int xit = topRight[i][0];
+            int yit = topRight[i][1];
+            for (int j = i+1; j <= n-1; j++) {
+                int xjb = bottomLeft[j][0];
+                int yjb = bottomLeft[j][1];
+                int xjt = topRight[j][0];
+                int yjt = topRight[j][1];
+                int w = Math.min(xit, xjt)-Math.max(xib, xjb);
+                int h = Math.min(yit, yjt)-Math.max(yib, yjb);
+                if (w>0 && h>0) {
+                    bl = Math.max(bl, Math.min(w, h));
+                }
+            }
+        }
+        return bl*bl;
+    }
 }

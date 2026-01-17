@@ -709,4 +709,16 @@ public class SolutionTest {
         int[] vf = new int[] {2};
         assertEquals(4, solution.maximizeSquareArea(4, 3, hf, vf));
     }
+
+    @Test
+    public void testIntersectSquare() {
+        Solution solution = new Solution();
+        int[][] bl = new int[][] {
+                {1, 1}, {1, 3}, {1, 5}
+        };
+        int[][] tr = new int[][] {
+                {5, 5}, {5, 7}, {5, 9}
+        };
+        assertEquals(4, solution.largestSquareArea(bl, tr));
+    }
 }
