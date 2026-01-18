@@ -3394,4 +3394,102 @@ public class Solution {
         }
         return bl*bl;
     }
+
+    public int largestMagicSquare(int[][] grid) {
+        int m = grid.length, n = grid[0].length;
+
+        // Prefix sums for rows and columns:
+        // rowPref[r][c+1] = sum(grid[r][0..c])
+        // colPref[r+1][c] = sum(grid[0..r][c])
+        long[][] rowPref = new long[m][n + 1];
+        long[][] colPref = new long[m + 1][n];
+
+        for (int r = 0; r < m; r++) {
+            long run = 0;
+            for (int c = 0; c < n; c++) {
+                run += grid[r][c];
+                rowPref[r][c + 1] = run;
+            }
+        }
+
+        for (int c = 0; c < n; c++) {
+            long run = 0;
+            for (int r = 0; r < m; r++) {
+                run += grid[r][c];
+                colPref[r + 1][c] = run;
+            }
+        }
+
+        // Diagonal prefix sums:
+        // diag1Pref[r+1][c+1] accumulates along top-left -> bottom-right:
+        // diag1Pref[r+1][c+1] = grid[r][c] + diag1Pref[r][c]
+        long[][] diag1Pref = new long[m + 1][n + 1];
+
+        // diag2Pref[r+1][c] accumulates along top-right -> bottom-left:
+        // diag2Pref[r+1][c] = grid[r][c] + diag2Pref[r][c+1]
+        long[][] diag2Pref = new long[m + 1][n + 1];
+
+        for (int r = 0; r < m; r++) {
+            for (int c = 0; c < n; c++) {
+                diag1Pref[r + 1][c + 1] = diag1Pref[r][c] + grid[r][c];
+            }
+            for (int c = n - 1; c >= 0; c--) {
+                diag2Pref[r + 1][c] = diag2Pref[r][c + 1] + grid[r][c];
+            }
+        }
+
+        // Helper lambdas (implemented as local methods via private functions not allowed here).
+        // We'll inline computations for performance/clarity.
+
+        int maxK = Math.min(m, n);
+
+        // Try larger k first, return immediately when found.
+        for (int k = maxK; k >= 2; k--) {
+            for (int r0 = 0; r0 + k <= m; r0++) {
+                int r1 = r0 + k - 1;
+                for (int c0 = 0; c0 + k <= n; c0++) {
+                    int c1 = c0 + k - 1;
+
+                    // Target sum = first row sum of the kxk square
+                    long target = rowPref[r0][c1 + 1] - rowPref[r0][c0];
+
+                    // Check both diagonals
+                    long d1 = diag1Pref[r1 + 1][c1 + 1] - diag1Pref[r0][c0];
+                    if (d1 != target)
+                        continue;
+
+                    long d2 = diag2Pref[r1 + 1][c0] - diag2Pref[r0][c1 + 1];
+                    if (d2 != target)
+                        continue;
+
+                    boolean ok = true;
+
+                    // Check all row sums
+                    for (int r = r0; r <= r1; r++) {
+                        long rs = rowPref[r][c1 + 1] - rowPref[r][c0];
+                        if (rs != target) {
+                            ok = false;
+                            break;
+                        }
+                    }
+                    if (!ok)
+                        continue;
+
+                    // Check all column sums
+                    for (int c = c0; c <= c1; c++) {
+                        long cs = colPref[r1 + 1][c] - colPref[r0][c];
+                        if (cs != target) {
+                            ok = false;
+                            break;
+                        }
+                    }
+                    if (ok)
+                        return k;
+                }
+            }
+        }
+
+        // If no k>=2 works, any 1x1 is magic
+        return 1;
+    }
 }
