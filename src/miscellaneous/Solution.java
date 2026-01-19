@@ -3492,4 +3492,42 @@ public class Solution {
         // If no k>=2 works, any 1x1 is magic
         return 1;
     }
+
+    private boolean existsSquareOfSize(int k, long[][] pre, int m, int n, int threshold) {
+        if (k == 0)
+            return true;
+        for (int i = 0; i + k <= m; i++) {
+            for (int j = 0; j + k <= n; j++) {
+                long sum = pre[i + k][j + k]
+                        - pre[i][j + k]
+                        - pre[i + k][j]
+                        + pre[i][j];
+                if (sum <= threshold)
+                    return true;
+            }
+        }
+        return false;
+    }
+    public int maxSideLength(int[][] mat, int threshold) {
+        int m = mat.length, n = mat[0].length;
+        // 2D prefix sums: pre[r+1][c+1] = sum of mat[0..r][0..c]
+        long[][] pre = new long[m + 1][n + 1];
+        for (int r = 0; r < m; r++) {
+            long rowRun = 0;
+            for (int c = 0; c < n; c++) {
+                rowRun += mat[r][c];
+                pre[r + 1][c + 1] = pre[r][c + 1] + rowRun;
+            }
+        }
+        int lo = 0, hi = Math.min(m, n);
+        while (lo < hi) {
+            int mid = lo + (hi - lo + 1) / 2; // upper mid to prevent infinite loop
+            if (existsSquareOfSize(mid, pre, m, n, threshold)) {
+                lo = mid;
+            } else {
+                hi = mid - 1;
+            }
+        }
+        return lo;
+    }
 }

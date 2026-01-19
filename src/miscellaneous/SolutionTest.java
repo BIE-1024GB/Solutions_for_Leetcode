@@ -733,4 +733,15 @@ public class SolutionTest {
         };
         assertEquals(3, solution.largestMagicSquare(grid));
     }
+
+    @Test
+    public void testMaxSumSquare() {
+        Solution solution = new Solution();
+        int[][] matrix = new int[][] {
+                {1,1,3,2,4,3,2},
+                {1,1,3,2,4,3,2},
+                {1,1,3,2,4,3,2}
+        };
+        assertEquals(2, solution.maxSideLength(matrix, 4));
+    }
 }
