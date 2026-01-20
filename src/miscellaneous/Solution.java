@@ -3530,4 +3530,19 @@ public class Solution {
         }
         return lo;
     }
+
+    public int[] minBitwiseArray(List<Integer> nums) {
+        int mn = Collections.max(nums);
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 1; i <= mn; i++) {
+            int bo = i | (i + 1);
+            map.putIfAbsent(bo, i);
+        }
+        int[] ans = new int[nums.size()];
+        for (int i = 0; i < ans.length; i++) {
+            int target = nums.get(i);
+            ans[i] = (target == 2) ? -1 : map.getOrDefault(target, -1);
+        }
+        return ans;
+    }
 }

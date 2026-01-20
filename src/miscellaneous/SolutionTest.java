@@ -744,4 +744,16 @@ public class SolutionTest {
         };
         assertEquals(2, solution.maxSideLength(matrix, 4));
     }
+
+    @Test
+    public void testMinBit() {
+        Solution solution = new Solution();
+        List<Integer> nums = new ArrayList<>();
+        nums.add(2);
+        nums.add(3);
+        nums.add(5);
+        nums.add(7);
+        int[] exp = new int[] {-1, 1, 4, 3};
+        assertArrayEquals(exp, solution.minBitwiseArray(nums));
+    }
 }
