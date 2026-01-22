@@ -3545,4 +3545,39 @@ public class Solution {
         }
         return ans;
     }
+
+    public int minimumPairRemoval(int[] nums) {
+        if (nums.length == 1) {
+            return 0;
+        }
+        int cn = Integer.MIN_VALUE;
+        boolean nd = true;
+        for (int n : nums) {
+            if (n >= cn) {
+                cn = n;
+            } else {
+                nd = false;
+                break;
+            }
+        }
+        if (nd) {
+            return 0;
+        } else {
+            int bi = 0;
+            int mins = Integer.MAX_VALUE;
+            for (int i = 0; i <= nums.length-2; i++) {
+                int cs = nums[i]+nums[i+1];
+                if (cs < mins) {
+                    bi = i;
+                    mins = cs;
+                }
+            }
+            int[] res = new int[nums.length-1];
+            System.arraycopy(nums, 0, res, 0, bi);
+            res[bi] = mins;
+            if (res.length - (bi + 1) >= 0)
+                System.arraycopy(nums, bi + 2, res, bi + 1, res.length - (bi + 1));
+            return 1+minimumPairRemoval(res);
+        }
+    }
 }

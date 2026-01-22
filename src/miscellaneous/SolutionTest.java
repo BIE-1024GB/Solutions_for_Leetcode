@@ -756,4 +756,11 @@ public class SolutionTest {
         int[] exp = new int[] {-1, 1, 4, 3};
         assertArrayEquals(exp, solution.minBitwiseArray(nums));
     }
+
+    @Test
+    public void testMinPairRemove() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {5, 2, 3, 1};
+        assertEquals(2, solution.minimumPairRemoval(nums));
+    }
 }
