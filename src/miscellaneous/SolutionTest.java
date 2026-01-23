@@ -763,4 +763,11 @@ public class SolutionTest {
         int[] nums = new int[] {5, 2, 3, 1};
         assertEquals(2, solution.minimumPairRemoval(nums));
     }
+
+    @Test
+    public void testMinPairRemoveII() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {3,4,1,1,-3,2,4,3};
+        assertEquals(5, solution.minimumPairRemovalII(nums));
+    }
 }
