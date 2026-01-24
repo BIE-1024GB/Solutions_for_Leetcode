@@ -770,4 +770,11 @@ public class SolutionTest {
         int[] nums = new int[] {3,4,1,1,-3,2,4,3};
         assertEquals(5, solution.minimumPairRemovalII(nums));
     }
+
+    @Test
+    public void testMinMaxPair() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {3,5,4,2,4,6};
+        assertEquals(8, solution.minPairSum(nums));
+    }
 }

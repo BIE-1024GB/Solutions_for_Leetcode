@@ -3670,4 +3670,14 @@ public class Solution {
         }
         return count;
     }
+
+    public int minPairSum(int[] nums) {
+        Arrays.sort(nums);
+        int sum = Integer.MIN_VALUE;
+        for (int i = 0; i <= nums.length/2-1; i++) {
+            int cs = nums[i] + nums[nums.length-1-i];
+            sum = Math.max(sum, cs);
+        }
+        return sum;
+    }
 }
