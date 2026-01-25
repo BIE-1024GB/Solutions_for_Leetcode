@@ -777,4 +777,11 @@ public class SolutionTest {
         int[] nums = new int[] {3,5,4,2,4,6};
         assertEquals(8, solution.minPairSum(nums));
     }
+
+    @Test
+    public void testMinMaxDiff() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {9, 4, 1, 7};
+        assertEquals(2, solution.minimumDifference(nums, 2));
+    }
 }
