@@ -3693,4 +3693,24 @@ public class Solution {
         }
         return diff;
     }
+
+    public List<List<Integer>> minimumAbsDifference(int[] arr) {
+        Arrays.sort(arr);
+        int diff = Integer.MAX_VALUE;
+        for (int i = 0; i <= arr.length-2; i++) {
+            int cd = arr[i+1]-arr[i];
+            diff = Math.min(diff, cd);
+        }
+        List<List<Integer>> res = new ArrayList<>();
+        for (int i = 0; i <= arr.length-2; i++) {
+            int cd = arr[i+1]-arr[i];
+            if (cd == diff) {
+                List<Integer> list = new ArrayList<>();
+                list.add(arr[i]);
+                list.add(arr[i+1]);
+                res.add(list);
+            }
+        }
+        return res;
+    }
 }

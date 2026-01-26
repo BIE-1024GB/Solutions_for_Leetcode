@@ -784,4 +784,17 @@ public class SolutionTest {
         int[] nums = new int[] {9, 4, 1, 7};
         assertEquals(2, solution.minimumDifference(nums, 2));
     }
+
+    @Test
+    public void testMinDiffPairs() {
+        int[] arr = {4, 2, 1, 3};
+        Solution solution = new Solution();
+        List<List<Integer>> actual = solution.minimumAbsDifference(arr);
+        List<List<Integer>> expected = List.of(
+                List.of(1, 2),
+                List.of(2, 3),
+                List.of(3, 4)
+        );
+        assertEquals(expected, actual);
+    }
 }
