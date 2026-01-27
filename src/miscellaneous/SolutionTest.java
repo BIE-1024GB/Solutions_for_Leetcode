@@ -797,4 +797,13 @@ public class SolutionTest {
         );
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void testSwitchMinCost() {
+        Solution solution = new Solution();
+        int[][] edges = new int[][] {
+                {0, 1, 3}, {3, 1, 1}, {2, 3, 4}, {0, 2, 2}
+        };
+        assertEquals(5, solution.minCost(4, edges));
+    }
 }
