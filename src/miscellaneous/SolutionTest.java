@@ -806,4 +806,13 @@ public class SolutionTest {
         };
         assertEquals(5, solution.minCost(4, edges));
     }
+
+    @Test
+    public void testTeleMinCost() {
+        Solution solution = new Solution();
+        int[][] grid = new int[][] {
+                {1, 3, 3}, {2, 5, 4}, {4, 3, 5}
+        };
+        assertEquals(7, solution.minCost(grid, 2));
+    }
 }
