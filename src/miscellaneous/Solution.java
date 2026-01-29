@@ -3807,4 +3807,42 @@ public class Solution {
         }
         return costs[0][0];
     }
+
+    public long minimumCost(String source, String target, char[] original, char[] changed, int[] cost) {
+        long[][] paths = new long[26][26];
+        for (int i = 0; i <= 25; i++) {
+            for (int j = 0; j <= 25; j++) {
+                if (i != j) {
+                    paths[i][j] = 10000000000L;
+                }
+            }
+        }
+        int p = original.length;
+        for (int i = 0; i <= p-1; i++) {
+            int src = original[i]-'a';
+            int dst = changed[i]-'a';
+            paths[src][dst] = Math.min(paths[src][dst], cost[i]);
+        }
+        for (int k = 0; k <= 25; k++) {
+            for (int i = 0; i <= 25; i++) {
+                for (int j = 0; j <= 25; j++) {
+                    if (paths[i][k]+paths[k][j] < paths[i][j]) {
+                        paths[i][j] = paths[i][k]+paths[k][j];
+                    }
+                }
+            }
+        }
+        long tc = 0;
+        int l = source.length();
+        for (int i = 0; i <= l-1; i++) {
+            int src = source.charAt(i)-'a';
+            int dst = target.charAt(i)-'a';
+            if (paths[src][dst] == 10000000000L) {
+                return -1;
+            } else {
+                tc += paths[src][dst];
+            }
+        }
+        return tc;
+    }
 }

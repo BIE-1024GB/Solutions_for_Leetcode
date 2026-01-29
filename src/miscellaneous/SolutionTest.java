@@ -815,4 +815,15 @@ public class SolutionTest {
         };
         assertEquals(7, solution.minCost(grid, 2));
     }
+
+    @Test
+    public void testMinCostStringTransform() {
+        Solution solution = new Solution();
+        String source = "abcd";
+        String target = "acbe";
+        char[] original = new char[] {'a', 'b', 'c', 'c', 'e', 'd'};
+        char[] changed = new char[] {'b', 'c', 'b', 'e', 'b', 'e'};
+        int[] cost = new int[] {2, 5, 5, 1, 2, 20};
+        assertEquals(28, solution.minimumCost(source, target, original, changed, cost));
+    }
 }
