@@ -826,4 +826,15 @@ public class SolutionTest {
         int[] cost = new int[] {2, 5, 5, 1, 2, 20};
         assertEquals(28, solution.minimumCost(source, target, original, changed, cost));
     }
+
+    @Test
+    public void testMinCostStringTransformII() {
+        Solution solution = new Solution();
+        String source = "abcd";
+        String target = "acbe";
+        String[] original = new String[] {"a","b","c","c","e","d"};
+        String[] changed = new String[] {"b","c","b","e","b","e"};
+        int[] cost = new int[] {2,5,5,1,2,20};
+        assertEquals(28, solution.minimumCost(source, target, original, changed, cost));
+    }
 }
