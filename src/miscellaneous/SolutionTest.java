@@ -837,4 +837,12 @@ public class SolutionTest {
         int[] cost = new int[] {2,5,5,1,2,20};
         assertEquals(28, solution.minimumCost(source, target, original, changed, cost));
     }
+
+    @Test
+    public void testSmallChar() {
+        Solution solution = new Solution();
+        char[] letters = new char[] {'c', 'f', 'j'};
+        char target = 'c';
+        assertEquals('f', solution.nextGreatestLetter(letters, target));
+    }
 }
