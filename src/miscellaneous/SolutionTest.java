@@ -845,4 +845,11 @@ public class SolutionTest {
         char target = 'c';
         assertEquals('f', solution.nextGreatestLetter(letters, target));
     }
+
+    @Test
+    public void testminCutCost() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {1, 2, 3, 12};
+        assertEquals(6, solution.minimumCost(nums));
+    }
 }
