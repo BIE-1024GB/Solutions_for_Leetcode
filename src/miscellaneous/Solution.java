@@ -3937,4 +3937,91 @@ public class Solution {
         }
         return nums[0]+min1+min2;
     }
+
+    private void addToMap(TreeMap<Integer, Integer> map, int x) {
+        map.put(x, map.getOrDefault(x, 0) + 1);
+    }
+    private void removeFromMap(TreeMap<Integer, Integer> map, int x) {
+        int cnt = map.getOrDefault(x, 0);
+        if (cnt <= 1)
+            map.remove(x);
+        else
+            map.put(x, cnt - 1);
+    }
+    public long minimumCost(int[] nums, int k, int dist) {
+        int n = nums.length;
+        long answer = Long.MAX_VALUE;
+        long baseCost = nums[0]; // always included
+        int need = k - 1; // we must pick need starts from indices 1...n-1
+        // Two multiset implemented with TreeMap<value, count>
+        TreeMap<Integer, Integer> small = new TreeMap<>(); // holds smallest 'need' values
+        TreeMap<Integer, Integer> large = new TreeMap<>(); // holds the rest
+        long sumSmall = 0L; // sum of values currently in 'small'
+        int smallCount = 0; // number of items in 'small'
+        int largeCount = 0; // number of items in 'large'
+        int left = 1; // window over indices [left ... right] on the array excluding index 0
+        for (int right = 1; right < n; right++) {
+            // add nums[right] initially into 'small' (we'll rebalance next)
+            addToMap(small, nums[right]);
+            sumSmall += nums[right];
+            smallCount++;
+            // rebalance: ensure smallCount <= need by moving largest from small -> large
+            while (smallCount > need) {
+                int x = small.lastKey();
+                removeFromMap(small, x);
+                sumSmall -= x;
+                smallCount--;
+                addToMap(large, x);
+                largeCount++;
+            }
+            // if smallCount < need, move smallest from large -> small
+            while (smallCount < need && largeCount > 0) {
+                int x = large.firstKey();
+                removeFromMap(large, x);
+                largeCount--;
+                addToMap(small, x);
+                sumSmall += x;
+                smallCount++;
+            }
+            // shrink window from left if it violates the dist constraint
+            while (right - left > dist) {
+                int val = nums[left];
+                // remove from whichever multiset contains it
+                if (small.containsKey(val)) {
+                    removeFromMap(small, val);
+                    sumSmall -= val;
+                    smallCount--;
+                } else {
+                    // must be in large
+                    removeFromMap(large, val);
+                    largeCount--;
+                }
+                left++;
+                // rebalance after removal
+                while (smallCount > need) {
+                    int x = small.lastKey();
+                    removeFromMap(small, x);
+                    sumSmall -= x;
+                    smallCount--;
+
+                    addToMap(large, x);
+                    largeCount++;
+                }
+                while (smallCount < need && largeCount > 0) {
+                    int x = large.firstKey();
+                    removeFromMap(large, x);
+                    largeCount--;
+
+                    addToMap(small, x);
+                    sumSmall += x;
+                    smallCount++;
+                }
+            }
+            // if we currently have exactly 'need' items in small, window is valid candidate
+            if (smallCount == need) {
+                answer = Math.min(answer, baseCost + sumSmall);
+            }
+        }
+        return answer;
+    }
 }
