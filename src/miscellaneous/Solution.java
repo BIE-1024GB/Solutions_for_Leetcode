@@ -4024,4 +4024,46 @@ public class Solution {
         }
         return answer;
     }
+
+    public boolean isTrionic(int[] nums) {
+        int n = nums.length;
+        if (n == 3) {
+            return false;
+        }
+        int p = -1;
+        int q = -1;
+        int prev = nums[0];
+        for (int i = 1; i <= n-1; i++) {
+            if (p == -1) {
+                if (nums[i] > prev) {
+                    prev = nums[i];
+                } else {
+                    if (i == 1 || nums[i] == prev) {
+                        return false;
+                    } else {
+                        p = i-1;
+                        prev = nums[i];
+                    }
+                }
+            } else if (q == -1) {
+                if (nums[i] < prev) {
+                    prev = nums[i];
+                } else {
+                    if (nums[i] == prev) {
+                        return false;
+                    } else {
+                        q = i-1;
+                        prev = nums[i];
+                    }
+                }
+            } else {
+                if (nums[i] > prev) {
+                    prev = nums[i];
+                } else {
+                    return false;
+                }
+            }
+        }
+        return p != -1 && q != -1;
+    }
 }

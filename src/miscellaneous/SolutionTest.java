@@ -859,4 +859,11 @@ public class SolutionTest {
         int[] nums = new int[] {1, 3, 2, 6, 4, 2};
         assertEquals(5, solution.minimumCost(nums, 3, 3));
     }
+
+    @Test
+    public void testTrionic() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {6, 7, 5, 1};
+        assertFalse(solution.isTrionic(nums));
+    }
 }
