@@ -866,4 +866,11 @@ public class SolutionTest {
         int[] nums = new int[] {6, 7, 5, 1};
         assertFalse(solution.isTrionic(nums));
     }
+
+    @Test
+    public void testMaxTrionic() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {1,4,2,2,3,1,2};
+        assertEquals(8, solution.maxSumTrionic(nums));
+    }
 }
