@@ -4116,4 +4116,22 @@ public class Solution {
         }
         return ans;
     }
+
+    public int[] constructTransformedArray(int[] nums) {
+        int[] result = new int[nums.length];
+        for (int i = 0; i <= nums.length-1; i++) {
+            if (nums[i] > 0) {
+                int rm = nums[i];
+                int ri = (rm+i)%nums.length;
+                result[i] = nums[ri];
+            } else if (nums[i] < 0) {
+                int lm = Math.abs(nums[i]);
+                int ri = nums.length-1-((nums.length-1-i+lm)%nums.length);
+                result[i] = nums[ri];
+            } else {
+                result[i] = nums[i];
+            }
+        }
+        return result;
+    }
 }

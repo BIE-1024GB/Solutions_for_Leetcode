@@ -873,4 +873,12 @@ public class SolutionTest {
         int[] nums = new int[] {1,4,2,2,3,1,2};
         assertEquals(8, solution.maxSumTrionic(nums));
     }
+
+    @Test
+    public void testTransArray() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {3, -2, 1, 1};
+        int[] exp = new int[] {1, 1, 1, 3};
+        assertArrayEquals(exp, solution.constructTransformedArray(nums));
+    }
 }
