@@ -881,4 +881,11 @@ public class SolutionTest {
         int[] exp = new int[] {1, 1, 1, 3};
         assertArrayEquals(exp, solution.constructTransformedArray(nums));
     }
+
+    @Test
+    public void testminRemove() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {1, 34, 23};
+        assertEquals(1, solution.minRemoval(nums, 2));
+    }
 }

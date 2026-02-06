@@ -4134,4 +4134,30 @@ public class Solution {
         }
         return result;
     }
+
+    public int minRemoval(int[] nums, int k) {
+        int n = nums.length;
+        if (n == 1) {
+            return 0;
+        }
+        Arrays.sort(nums);
+        int lp = 0;
+        int rp = 0;
+        int rl = Integer.MIN_VALUE;
+        while (rp <= n-1) {
+            long multi = (long) nums[lp]*k;
+            if (multi >= nums[rp]) {
+                rp++;
+            } else {
+                int cl = rp-lp;
+                rl = Math.max(rl, cl);
+                lp++;
+            }
+        }
+        if (rl == Integer.MIN_VALUE) {
+            return 0;
+        } else {
+            return n-Math.max(rl, rp-lp);
+        }
+    }
 }
