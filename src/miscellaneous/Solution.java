@@ -4160,4 +4160,45 @@ public class Solution {
             return n-Math.max(rl, rp-lp);
         }
     }
+
+    public int minimumDeletions(String s) {
+        int n = s.length();
+        if (n == 1) {
+            return 0;
+        }
+        int na = 0;
+        int nb = 0;
+        for (char c : s.toCharArray()) {
+            if (c == 'a') {
+                na += 1;
+            } else {
+                nb += 1;
+            }
+        }
+        if (na==0 || nb==0) {
+            return 0;
+        }
+        int[] ta = new int[n+1];
+        for (int i = 1; i <= n; i++) {
+            if (s.charAt(i-1) == 'b') {
+                ta[i] = ta[i-1]+1;
+            } else {
+                ta[i] = ta[i-1];
+            }
+        }
+        int[] tb = new int[n+1];
+        for (int i = n-1; i >= 0; i--) {
+            if (s.charAt(i) == 'a') {
+                tb[i] = tb[i+1]+1;
+            } else {
+                tb[i] = tb[i+1];
+            }
+        }
+        int cost = Integer.MAX_VALUE;
+        for (int i = 0; i <= n; i++) {
+            int cc = ta[i]+tb[i];
+            cost = Math.min(cost, cc);
+        }
+        return cost;
+    }
 }

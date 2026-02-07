@@ -888,4 +888,11 @@ public class SolutionTest {
         int[] nums = new int[] {1, 34, 23};
         assertEquals(1, solution.minRemoval(nums, 2));
     }
+
+    @Test
+    public void testminRemoveString() {
+        Solution solution = new Solution();
+        String s = "aababbab";
+        assertEquals(2, solution.minimumDeletions(s));
+    }
 }
