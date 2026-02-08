@@ -895,4 +895,19 @@ public class SolutionTest {
         String s = "aababbab";
         assertEquals(2, solution.minimumDeletions(s));
     }
+
+    @Test
+    public void testBalanceBT() {
+        Solution solution = new Solution();
+        Solution.TreeNode n1 = new Solution.TreeNode(3);
+        Solution.TreeNode n2 = new Solution.TreeNode(9);
+        Solution.TreeNode n3 = new Solution.TreeNode(20);
+        Solution.TreeNode n4 = new Solution.TreeNode(15);
+        Solution.TreeNode n5 = new Solution.TreeNode(7);
+        n1.left = n2;
+        n1.right = n3;
+        n3.left = n4;
+        n3.right = n5;
+        assertTrue(solution.isBalanced(n1));
+    }
 }

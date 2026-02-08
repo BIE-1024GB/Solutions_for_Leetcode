@@ -2965,6 +2965,27 @@ public class Solution {
             return root;
         }
     }
+    private int height(TreeNode node) {
+        if (node == null) {
+            return 0;
+        }
+        int left = height(node.left);
+        if (left == -1) {
+            return -1;
+        }
+        int right = height(node.right);
+        if (right == -1) {
+            return -1;
+        }
+        if (Math.abs(left-right) > 1) {
+            return -1;
+        }
+        return Math.max(left, right)+1;
+    }
+    public boolean isBalanced(TreeNode root) {
+        int bal = height(root);
+        return bal != -1;
+    }
 
     public int maxDotProduct(int[] nums1, int[] nums2) {
         int l1 = nums1.length, l2 = nums2.length;
