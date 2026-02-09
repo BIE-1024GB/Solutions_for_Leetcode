@@ -2986,6 +2986,31 @@ public class Solution {
         int bal = height(root);
         return bal != -1;
     }
+    private void inorder(TreeNode node, List<TreeNode> list) {
+        if (node != null) {
+            inorder(node.left, list);
+            list.add(node);
+            inorder(node.right, list);
+        }
+    }
+    private TreeNode build(List<TreeNode> list, int lp, int rp) {
+        int mp = (lp+rp)/2;
+        TreeNode root = list.get(mp);
+        root.left = null;
+        root.right = null;
+        if (mp-1 >= lp) {
+            root.left = build(list, lp, mp-1);
+        }
+        if (mp+1 <= rp) {
+            root.right = build(list, mp+1, rp);
+        }
+        return root;
+    }
+    public TreeNode balanceBST(TreeNode root) {
+        List<TreeNode> list = new ArrayList<>();
+        inorder(root, list);
+        return build(list, 0, list.size()-1);
+    }
 
     public int maxDotProduct(int[] nums1, int[] nums2) {
         int l1 = nums1.length, l2 = nums2.length;
