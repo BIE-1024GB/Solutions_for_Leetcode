@@ -4247,4 +4247,27 @@ public class Solution {
         }
         return cost;
     }
+
+    public int longestBalanced(int[] nums) {
+        int n = nums.length;
+        int ans = 0;
+        for (int i = 0; i < n; i++) {
+            Set<Integer> seen = new HashSet<>();
+            int balance = 0;
+            for (int j = i; j < n; j++) {
+                if (!seen.contains(nums[j])) {
+                    seen.add(nums[j]);
+                    if (nums[j] % 2 == 0) {
+                        balance++;
+                    } else {
+                        balance--;
+                    }
+                }
+                if (balance == 0) {
+                    ans = Math.max(ans, j - i + 1);
+                }
+            }
+        }
+        return ans;
+    }
 }

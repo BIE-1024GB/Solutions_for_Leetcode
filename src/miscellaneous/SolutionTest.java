@@ -910,4 +910,11 @@ public class SolutionTest {
         n3.right = n5;
         assertTrue(solution.isBalanced(n1));
     }
+
+    @Test
+    public void testBalanceArray() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {2, 5, 4, 3};
+        assertEquals(4, solution.longestBalanced(nums));
+    }
 }
