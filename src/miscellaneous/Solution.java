@@ -4270,4 +4270,36 @@ public class Solution {
         }
         return ans;
     }
+
+    public int longestBalanced(String s) {
+        int n = s.length();
+        if (n == 1) {
+            return 1;
+        }
+        int ml = 1;
+        for (int i = 0; i < n; i++) {
+            int[] freq = new int[26];
+            for (int j = i; j < n; j++) {
+                freq[s.charAt(j) - 'a']++;
+                int target = 0;
+                boolean flag = true;
+                for (int f : freq) {
+                    if (f > 0) {
+                        if (target == 0) {
+                            target = f;
+                        } else {
+                            if (f != target) {
+                                flag = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (flag) {
+                    ml = Math.max(ml, j-i+1);
+                }
+            }
+        }
+        return ml;
+    }
 }

@@ -917,4 +917,11 @@ public class SolutionTest {
         int[] nums = new int[] {2, 5, 4, 3};
         assertEquals(4, solution.longestBalanced(nums));
     }
+
+    @Test
+    public void testBalanceString() {
+        Solution solution = new Solution();
+        String s = "zzabccy";
+        assertEquals(4, solution.longestBalanced(s));
+    }
 }
