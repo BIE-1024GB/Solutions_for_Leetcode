@@ -924,4 +924,15 @@ public class SolutionTest {
         String s = "zzabccy";
         assertEquals(4, solution.longestBalanced(s));
     }
+
+    @Test
+    public void testBalanceString2() {
+        Solution solution = new Solution();
+        String s = "abbac";
+        assertEquals(4, solution.longestBalancedII(s));
+        s = "aabcc";
+        assertEquals(3, solution.longestBalancedII(s));
+        s = "aba";
+        assertEquals(2, solution.longestBalancedII(s));
+    }
 }

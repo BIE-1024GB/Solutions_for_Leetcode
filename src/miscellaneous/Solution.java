@@ -4302,4 +4302,77 @@ public class Solution {
         }
         return ml;
     }
+
+    private int singlec(String s) {
+        int ml = 1;
+        char ref = s.charAt(0);
+        int cl = 1;
+        for (int i = 1; i <= s.length()-1; i++) {
+            char cc = s.charAt(i);
+            if (cc == ref) {
+                cl += 1;
+            } else {
+                ml = Math.max(ml, cl);
+                ref = cc;
+                cl = 1;
+            }
+        }
+        return ml;
+    }
+    private int doublec(char[] c, char x, char y) {
+        int n = c.length, max_len = 0;
+        int[] first = new int[2 * n + 1];      // → index = diff + n
+        Arrays.fill(first, -2);                // -2 means "not set"
+        int clear_idx = -1, diff = n;          // diff = 0 + offset
+        first[diff] = -1;                     // difference 0 at position -1
+        for (int i = 0; i < n; i++) {
+            if (c[i] != x && c[i] != y) {     // → forbidden character (the third letter)
+                clear_idx = i;                // new segment starts after this position
+                diff = n;                    // reset difference to zero
+                first[diff] = clear_idx;     // record where this segment starts
+            } else {                         // → one of the two letters we care about
+                if (c[i] == x) diff++; else diff--;
+                if (first[diff] < clear_idx) { // first time we see this diff in current segment
+                    first[diff] = i;
+                } else {                       // we've seen this diff before – equal counts!
+                    max_len = Math.max(max_len, i - first[diff]);
+                }
+            }
+        }
+        return max_len;
+    }
+    private int triplec(String s) {
+        Map<String, Integer> map = new HashMap<>();
+        int countA = 0, countB = 0, countC = 0;
+        int maxLen = 0;
+        map.put("0#0", -1);
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (ch == 'a') countA++;
+            else if (ch == 'b') countB++;
+            else countC++;
+            int diffAB = countA - countB;
+            int diffAC = countA - countC;
+            String key = diffAB + "#" + diffAC;
+            if (map.containsKey(key)) {
+                maxLen = Math.max(maxLen, i - map.get(key));
+            } else {
+                map.put(key, i);
+            }
+        }
+        return maxLen;
+    }
+    public int longestBalancedII(String s) {
+        int n = s.length();
+        if (n == 1) {
+            return 1;
+        }
+        int one = singlec(s);
+        char[] chars = s.toCharArray();
+        int two = doublec(chars, 'a', 'b');
+        two = Math.max(two, doublec(chars, 'a', 'c'));
+        two = Math.max(two, doublec(chars, 'b', 'c'));
+        int three = triplec(s);
+        return Math.max(Math.max(one, two), three);
+    }
 }
