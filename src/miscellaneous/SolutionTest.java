@@ -935,4 +935,10 @@ public class SolutionTest {
         s = "aba";
         assertEquals(2, solution.longestBalancedII(s));
     }
+
+    @Test
+    public void testChampaign() {
+        Solution solution = new Solution();
+        assertEquals(1.00000, solution.champagneTower(100000009, 33, 17));
+    }
 }
