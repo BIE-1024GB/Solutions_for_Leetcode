@@ -941,4 +941,13 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertEquals(1.00000, solution.champagneTower(100000009, 33, 17));
     }
+
+    @Test
+    public void testAddBinary() {
+        Solution solution = new Solution();
+        String a = "11";
+        String b = "1";
+        String exp = "100";
+        assertEquals(exp, solution.addBinary(a, b));
+    }
 }

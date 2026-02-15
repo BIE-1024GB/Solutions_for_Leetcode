@@ -4391,4 +4391,30 @@ public class Solution {
         }
         return Math.min(1, dp[query_row][query_glass]);
     }
+
+    public String addBinary(String a, String b) {
+        if (a.length() < b.length()) {
+            return addBinary(b, a);
+        }
+        String res = "";
+        int addon = 0;
+        for (int i = 0; i <= a.length()-1; i++) {
+            int ca = a.charAt(a.length()-1-i)-'0';
+            int cb = 0;
+            if (i <= b.length()-1) {
+                cb = b.charAt(b.length()-1-i)-'0';
+            }
+            if (ca+cb+addon >= 2) {
+                res = String.valueOf(ca+cb+addon-2).concat(res);
+                addon = 1;
+            } else {
+                res = String.valueOf(ca+cb+addon).concat(res);
+                addon = 0;
+            }
+        }
+        if (addon == 1) {
+            res = "1".concat(res);
+        }
+        return res;
+    }
 }
