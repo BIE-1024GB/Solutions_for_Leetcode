@@ -4417,4 +4417,14 @@ public class Solution {
         }
         return res;
     }
+
+    public int reverseBits(int n) {
+        int res = 0;
+        for (int i = 1; i <= 31; i++) {
+            int lsb = n&1;
+            res += lsb*Math.pow(2, 32-i);
+            n = n>>1;
+        }
+        return res;
+    }
 }

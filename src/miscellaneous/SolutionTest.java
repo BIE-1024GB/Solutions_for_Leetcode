@@ -950,4 +950,12 @@ public class SolutionTest {
         String exp = "100";
         assertEquals(exp, solution.addBinary(a, b));
     }
+
+    @Test
+    public void testReverseBinary() {
+        Solution solution = new Solution();
+        int n = 2147483644;
+        int exp = 1073741822;
+        assertEquals(exp, solution.reverseBits(n));
+    }
 }
