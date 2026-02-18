@@ -958,4 +958,10 @@ public class SolutionTest {
         int exp = 1073741822;
         assertEquals(exp, solution.reverseBits(n));
     }
+
+    @Test
+    public void testAlterBit() {
+        Solution solution = new Solution();
+        assertFalse(solution.hasAlternatingBits(7));
+    }
 }
