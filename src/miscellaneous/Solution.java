@@ -4447,4 +4447,27 @@ public class Solution {
         int x = n ^ (n >> 1);
         return (x & (x + 1)) == 0;
     }
+
+    public int countBinarySubstrings(String s) {
+        int n = s.length();
+        if (n == 1) {
+            return 0;
+        }
+        int res = 0;
+        char cc = s.charAt(0);
+        int cb = 1;
+        int pb = 0;
+        for (int i = 1; i <= s.length()-1; i++) {
+            if (s.charAt(i) == cc) {
+                cb += 1;
+            } else {
+                res += Math.min(pb, cb);
+                pb = cb;
+                cb = 1;
+                cc = s.charAt(i);
+            }
+        }
+        res += Math.min(pb, cb);
+        return res;
+    }
 }

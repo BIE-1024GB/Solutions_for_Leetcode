@@ -964,4 +964,11 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertFalse(solution.hasAlternatingBits(7));
     }
+
+    @Test
+    public void testBinSub() {
+        Solution solution = new Solution();
+        String s = "00110011";
+        assertEquals(6, solution.countBinarySubstrings(s));
+    }
 }
