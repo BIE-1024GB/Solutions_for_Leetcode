@@ -971,4 +971,11 @@ public class SolutionTest {
         String s = "00110011";
         assertEquals(6, solution.countBinarySubstrings(s));
     }
+
+    @Test
+    public void testSpecialBS() {
+        Solution solution = new Solution();
+        String s = "11011000";
+        assertEquals("11100100", solution.makeLargestSpecial(s));
+    }
 }
