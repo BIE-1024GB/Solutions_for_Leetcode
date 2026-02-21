@@ -978,4 +978,10 @@ public class SolutionTest {
         String s = "11011000";
         assertEquals("11100100", solution.makeLargestSpecial(s));
     }
+
+    @Test
+    public void testPrimeSetBits() {
+        Solution solution = new Solution();
+        assertEquals(4, solution.countPrimeSetBits(6, 10));
+    }
 }
