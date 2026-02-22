@@ -984,4 +984,10 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertEquals(4, solution.countPrimeSetBits(6, 10));
     }
+
+    @Test
+    public void test1Gap() {
+        Solution solution = new Solution();
+        assertEquals(2, solution.binaryGap(22));
+    }
 }

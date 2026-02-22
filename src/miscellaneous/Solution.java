@@ -4511,4 +4511,25 @@ public class Solution {
         }
         return res;
     }
+
+    public int binaryGap(int n) {
+        int nb = Integer.bitCount(n);
+        if (nb == 1) {
+            return 0;
+        }
+        int bd = 0;
+        int prev = -1;
+        for (int i = 1; i <= 30; i++) {
+            int cb = n&1;
+            if (cb == 1) {
+                if (prev != -1) {
+                    int dist = i-prev;
+                    bd = Math.max(bd, dist);
+                }
+                prev = i;
+            }
+            n = n>>1;
+        }
+        return bd;
+    }
 }
