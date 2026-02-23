@@ -4532,4 +4532,51 @@ public class Solution {
         }
         return bd;
     }
+
+    private String add1(String str, int k) {
+        int addon = 0;
+        String res = "";
+        for (int i = 0; i <= k-1; i++) {
+            int cc = str.charAt(str.length()-1-i)-'0';
+            int add;
+            if (i == 0) {
+                add = cc+1+addon;
+            } else {
+                add = cc+addon;
+            }
+            if (add >= 2) {
+                res = String.valueOf(add-2).concat(res);
+                addon = 1;
+            } else {
+                res = String.valueOf(add).concat(res);
+                addon = 0;
+            }
+        }
+        return res;
+    }
+    public boolean hasAllCodes(String s, int k) {
+        int n = s.length();
+        if (k > n) {
+            return false;
+        }
+        Set<String> set = new HashSet<>();
+        for (int i = 0; i <= n-k; i++) {
+            set.add(s.substring(i, i+k));
+        }
+        String ini = "";
+        for (int i = 1; i <= k; i++) {
+            ini = ini.concat("0");
+        }
+        int limit = (int) Math.pow(2, k)-1;
+        int count = 0;
+        while (count <= limit) {
+            if (set.contains(ini)) {
+                ini = add1(ini, k);
+                count++;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
 }
