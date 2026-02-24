@@ -1005,4 +1005,23 @@ public class SolutionTest {
                 "1111011110010100011111000000001011100110000010101110110111";
         assertFalse(solution.hasAllCodes(s, 7));
     }
+
+    @Test
+    public void testPathSum() {
+        Solution solution = new Solution();
+        Solution.TreeNode n1 = new Solution.TreeNode(1);
+        Solution.TreeNode n2 = new Solution.TreeNode(0);
+        Solution.TreeNode n3 = new Solution.TreeNode(1);
+        Solution.TreeNode n4 = new Solution.TreeNode(0);
+        Solution.TreeNode n5 = new Solution.TreeNode(1);
+        Solution.TreeNode n6 = new Solution.TreeNode(0);
+        Solution.TreeNode n7 = new Solution.TreeNode(1);
+        n1.left = n2;
+        n1.right = n3;
+        n2.left = n4;
+        n2.right = n5;
+        n3.left = n6;
+        n3.right = n7;
+        assertEquals(22, solution.sumRootToLeaf(n1));
+    }
 }

@@ -3011,6 +3011,21 @@ public class Solution {
         inorder(root, list);
         return build(list, 0, list.size()-1);
     }
+    private int dfs(TreeNode node, int current) {
+        if (node == null) {
+            return 0;
+        }
+        current = current * 2 + node.val;
+        // If it's a leaf, return the computed number
+        if (node.left == null && node.right == null) {
+            return current;
+        }
+        // Otherwise, return sum of left and right subtrees
+        return dfs(node.left, current) + dfs(node.right, current);
+    }
+    public int sumRootToLeaf(TreeNode root) {
+        return dfs(root, 0);
+    }
 
     public int maxDotProduct(int[] nums1, int[] nums2) {
         int l1 = nums1.length, l2 = nums2.length;
