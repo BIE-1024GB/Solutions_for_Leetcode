@@ -4594,4 +4594,25 @@ public class Solution {
         }
         return true;
     }
+
+    public int[] sortByBits(int[] arr) {
+        Integer[] boxed = new Integer[arr.length];
+        for (int i = 0; i <= boxed.length-1; i++) {
+            boxed[i] = arr[i];
+        }
+        Arrays.sort(boxed, (a, b)->{
+            int ba = Integer.bitCount(a);
+            int bb = Integer.bitCount(b);
+            if (ba != bb) {
+                return Integer.compare(ba, bb);
+            } else {
+                return Integer.compare(a, b);
+            }
+        });
+        int[] res = new int[arr.length];
+        for (int i = 0; i <= res.length-1; i++) {
+            res[i] = boxed[i];
+        }
+        return res;
+    }
 }
