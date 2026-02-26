@@ -1032,4 +1032,11 @@ public class SolutionTest {
         int[] exp = new int[] {0,1,2,4,8,3,5,6,7};
         assertArrayEquals(exp, solution.sortByBits(arr));
     }
+
+    @Test
+    public void testSteps() {
+        Solution solution = new Solution();
+        String s = "1101";
+        assertEquals(6, solution.numSteps(s));
+    }
 }

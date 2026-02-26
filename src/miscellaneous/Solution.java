@@ -4615,4 +4615,25 @@ public class Solution {
         }
         return res;
     }
+
+    public int numSteps(String s) {
+        int steps = 0;
+        int carry = 0;
+        // Start from the last bit down to index 1
+        // (we stop at 1 because we don't divide the final '1')
+        for (int i = s.length() - 1; i > 0; i--) {
+            int bit = s.charAt(i) - '0';
+            if (bit + carry == 1) {
+                // odd → add 1 (1 step) + divide (1 step)
+                steps += 2;
+                carry = 1;
+            } else {
+                // even → divide only
+                steps += 1;
+                // carry stays same
+            }
+        }
+        // If carry is still 1 at MSB, we need one extra step
+        return steps + carry;
+    }
 }
