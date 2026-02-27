@@ -1039,4 +1039,11 @@ public class SolutionTest {
         String s = "1101";
         assertEquals(6, solution.numSteps(s));
     }
+
+    @Test
+    public void testMinOps() {
+        Solution solution = new Solution();
+        String s = "0101";
+        assertEquals(2, solution.minOperations(s, 3));
+    }
 }
