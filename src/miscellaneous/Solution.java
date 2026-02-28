@@ -4674,4 +4674,25 @@ public class Solution {
         }
         return dist[0] == Integer.MAX_VALUE ? -1 : dist[0];
     }
+
+    public int concatenatedBinary(int n) {
+        if (n == 1) {
+            return 1;
+        }
+        long res = 1;
+        int bc = 2;
+        int cnt = 2;
+        int agg = 1;
+        for (int i = 2; i <= n; i++) {
+            res = (res<<bc)%1000000007;
+            res = (res+i)%1000000007;
+            agg++;
+            if (agg > cnt) {
+                agg = 1;
+                bc++;
+                cnt = cnt<<1;
+            }
+        }
+        return (int) (res%1000000007);
+    }
 }

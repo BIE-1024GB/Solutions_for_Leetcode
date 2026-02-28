@@ -1046,4 +1046,10 @@ public class SolutionTest {
         String s = "0101";
         assertEquals(2, solution.minOperations(s, 3));
     }
+
+    @Test
+    public void testBinConcat() {
+        Solution solution = new Solution();
+        assertEquals(505379714, solution.concatenatedBinary(12));
+    }
 }
