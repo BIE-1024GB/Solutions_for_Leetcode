@@ -4695,4 +4695,13 @@ public class Solution {
         }
         return (int) (res%1000000007);
     }
+
+    public int minPartitions(String n) {
+        int res = 1;
+        for (char c : n.toCharArray()) {
+            int i = c-'0';
+            res = Math.max(res, i);
+        }
+        return res;
+    }
 }

@@ -1052,4 +1052,10 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertEquals(505379714, solution.concatenatedBinary(12));
     }
+
+    @Test
+    public void testDeciBin() {
+        Solution solution = new Solution();
+        assertEquals(8, solution.minPartitions("82734"));
+    }
 }
