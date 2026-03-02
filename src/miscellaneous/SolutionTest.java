@@ -1058,4 +1058,15 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertEquals(8, solution.minPartitions("82734"));
     }
+
+    @Test
+    public void testBinSwap() {
+        Solution solution = new Solution();
+        int[][] grid = new int[][] {
+                {0, 0, 1},
+                {1, 1, 0},
+                {1, 0, 0}
+        };
+        assertEquals(3, solution.minSwaps(grid));
+    }
 }

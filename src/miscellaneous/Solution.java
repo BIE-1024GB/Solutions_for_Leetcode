@@ -4704,4 +4704,36 @@ public class Solution {
         }
         return res;
     }
+
+    public int minSwaps(int[][] grid) {
+        int n = grid.length;
+        int[] rights = new int[n];
+        for (int i = 0; i <= n - 1; i++) {
+            rights[i] = -1;
+            for (int j = n - 1; j >= 0; j--) {
+                if (grid[i][j] == 1) {
+                    rights[i] = j;
+                    break;
+                }
+            }
+        }
+        int swaps = 0;
+        for (int i = 0; i < n; i++) {
+            int j = i;
+            while (j < n && rights[j] > i) {
+                j++;
+            }
+            if (j == n) {
+                return -1;
+            }
+            while (j > i) {
+                int temp = rights[j];
+                rights[j] = rights[j - 1];
+                rights[j - 1] = temp;
+                j--;
+                swaps++;
+            }
+        }
+        return swaps;
+    }
 }
