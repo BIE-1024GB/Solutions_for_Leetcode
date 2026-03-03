@@ -1069,4 +1069,10 @@ public class SolutionTest {
         };
         assertEquals(3, solution.minSwaps(grid));
     }
+
+    @Test
+    public void testFindBit() {
+        Solution solution = new Solution();
+        assertEquals('1', solution.findKthBit(4, 11));
+    }
 }
