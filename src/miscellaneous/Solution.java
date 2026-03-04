@@ -4752,4 +4752,34 @@ public class Solution {
             return (rev=='1' ? '0' : '1');
         }
     }
+
+    public int numSpecial(int[][] mat) {
+        int[] rs = new int[mat.length];
+        for (int i = 0; i <= mat.length-1; i++) {
+            int sum = 0;
+            for (int j = 0; j <= mat[0].length-1; j++) {
+                sum += mat[i][j];
+            }
+            rs[i] = sum;
+        }
+        int[] cs = new int[mat[0].length];
+        for (int i = 0; i <= mat[0].length-1; i++) {
+            int sum = 0;
+            for (int j = 0; j <= mat.length-1; j++) {
+                sum += mat[j][i];
+            }
+            cs[i] = sum;
+        }
+        int res = 0;
+        for (int i = 0; i <= mat.length-1; i++) {
+            for (int j = 0; j <= mat[0].length-1; j++) {
+                if (mat[i][j] == 1) {
+                    if (rs[i]==1 && cs[j]==1) {
+                        res++;
+                    }
+                }
+            }
+        }
+        return res;
+    }
 }

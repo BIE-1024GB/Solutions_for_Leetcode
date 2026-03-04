@@ -1075,4 +1075,17 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertEquals('1', solution.findKthBit(4, 11));
     }
+
+    @Test
+    public void testSpecialLoc() {
+        Solution solution = new Solution();
+        int[][] matrix = new int[][] {
+                {0,0,0,0,0,1,0,0},
+                {0,0,0,0,1,0,0,1},
+                {0,0,0,0,1,0,0,0},
+                {1,0,0,0,1,0,0,0},
+                {0,0,1,1,0,0,0,0}
+        };
+        assertEquals(1, solution.numSpecial(matrix));
+    }
 }
