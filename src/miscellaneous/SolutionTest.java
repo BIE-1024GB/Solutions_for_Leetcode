@@ -1088,4 +1088,11 @@ public class SolutionTest {
         };
         assertEquals(1, solution.numSpecial(matrix));
     }
+
+    @Test
+    public void testAltBit() {
+        Solution solution = new Solution();
+        String s = "0100";
+        assertEquals(1, solution.minOperations(s));
+    }
 }

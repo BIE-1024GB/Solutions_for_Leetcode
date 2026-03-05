@@ -4782,4 +4782,25 @@ public class Solution {
         }
         return res;
     }
+
+    public int minOperations(String s) {
+        int of = 0;
+        int zf = 0;
+        for (int i = 0; i <= s.length()-1; i++) {
+            if (i%2 == 0) {
+                if (s.charAt(i) == '1') {
+                    zf++;
+                } else {
+                    of++;
+                }
+            } else {
+                if (s.charAt(i) == '1') {
+                    of++;
+                } else {
+                    zf++;
+                }
+            }
+        }
+        return Math.min(of, zf);
+    }
 }
