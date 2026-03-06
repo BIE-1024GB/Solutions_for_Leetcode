@@ -1095,4 +1095,10 @@ public class SolutionTest {
         String s = "0100";
         assertEquals(1, solution.minOperations(s));
     }
+
+    @Test
+    public void testContiguousOne() {
+        Solution solution = new Solution();
+        assertFalse(solution.checkOnesSegment("1001"));
+    }
 }
