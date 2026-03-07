@@ -4804,6 +4804,7 @@ public class Solution {
         return Math.min(of, zf);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public boolean checkOnesSegment(String s) {
         int n = s.length();
         if (n <= 2) {
@@ -4820,5 +4821,58 @@ public class Solution {
             }
         }
         return true;
+    }
+
+    public int minFlips(String s) {
+        String ts = s.concat(s);
+        int n = s.length();
+        int of = 0;
+        int zf = 0;
+        for (int i = 0; i <= n-1; i++) {
+            if (i%2 == 0) {
+                if (s.charAt(i) == '1') {
+                    zf++;
+                } else {
+                    of++;
+                }
+            } else {
+                if (s.charAt(i) == '0') {
+                    zf++;
+                } else {
+                    of++;
+                }
+            }
+        }
+        int mof = of;
+        int mzf = zf;
+        for (int i = n; i <= ts.length()-1; i++) {
+            int tof = of;
+            int tzf = zf;
+            if (ts.charAt(i) == '1') {
+                if (n%2 == 0) {
+                    of = zf+1;
+                    zf = tof;
+                } else {
+                    zf = of+1;
+                    of = tzf;
+                }
+            } else {
+                if (n%2 == 0) {
+                    zf = of+1;
+                    of = tzf;
+                } else {
+                    of = zf+1;
+                    zf = tof;
+                }
+            }
+            if (ts.charAt(i-n) == '1') {
+                of--;
+            } else {
+                zf--;
+            }
+            mof = Math.min(mof, of);
+            mzf = Math.min(mzf, zf);
+        }
+        return Math.min(mof, mzf);
     }
 }

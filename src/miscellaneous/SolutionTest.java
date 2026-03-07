@@ -1101,4 +1101,10 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertFalse(solution.checkOnesSegment("1001"));
     }
+
+    @Test
+    public void testAltBit2() {
+        Solution solution = new Solution();
+        assertEquals(5, solution.minFlips("10001100101000000"));
+    }
 }
