@@ -4804,23 +4804,8 @@ public class Solution {
         return Math.min(of, zf);
     }
 
-    @SuppressWarnings("DataFlowIssue")
     public boolean checkOnesSegment(String s) {
-        int n = s.length();
-        if (n <= 2) {
-            return true;
-        }
-        int po = 0;
-        for (int i = 1; i <= n-1; i++) {
-            if (s.charAt(i) == '1') {
-                if (i == po+1) {
-                    po = i;
-                } else {
-                    return false;
-                }
-            }
-        }
-        return true;
+        return !s.contains("01");
     }
 
     public int minFlips(String s) {
@@ -4874,5 +4859,15 @@ public class Solution {
             mzf = Math.min(mzf, zf);
         }
         return Math.min(mof, mzf);
+    }
+
+    public String findDifferentBinaryString(String[] nums) {
+        int n = nums.length;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < n; i++) {
+            char c = nums[i].charAt(i);
+            sb.append(c == '0' ? '1' : '0');
+        }
+        return sb.toString();
     }
 }
