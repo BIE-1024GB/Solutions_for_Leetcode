@@ -4870,4 +4870,48 @@ public class Solution {
         }
         return sb.toString();
     }
+
+    public int numberOfStableArrays(int zero, int one, int limit) {
+        final int mod = 1000000007;
+        int[][][] dp = new int[zero + 1][one + 1][2];
+        for (int i = 0; i <= one; i++) {
+            for (int j = 0; j <= 1; j++) {
+                if (j == 1) {
+                    if (i <= limit) {
+                        dp[0][i][j] = 1;
+                    } else {
+                        dp[0][i][j] = 0;
+                    }
+                }
+            }
+        }
+        for (int i = 0; i <= zero; i++) {
+            for (int j = 0; j <= 1; j++) {
+                if (j == 0) {
+                    if (i <= limit) {
+                        dp[i][0][j] = 1;
+                    } else {
+                        dp[i][0][j] = 0;
+                    }
+                }
+            }
+        }
+        for (int i = 1; i <= zero; i++) {
+            for (int j = 1; j <= one; j++) {
+                for (int k = 0; k <= 1; k++) {
+                    int sub;
+                    if (k == 0) {
+                        sub = (i - limit - 1 < 0) ? 0 : dp[i - limit - 1][j][1];
+                        dp[i][j][k] = (dp[i - 1][j][0] + dp[i - 1][j][1] - sub) % mod;
+                    } else {
+                        sub = (j - limit - 1 < 0) ? 0 : dp[i][j - limit - 1][0];
+                        dp[i][j][k] = (dp[i][j - 1][0] + dp[i][j - 1][1] - sub) % mod;
+                    }
+                    if (dp[i][j][k] < 0)
+                        dp[i][j][k] += mod;
+                }
+            }
+        }
+        return (dp[zero][one][0] + dp[zero][one][1]) % mod;
+    }
 }

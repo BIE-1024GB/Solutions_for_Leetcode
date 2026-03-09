@@ -1107,4 +1107,10 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertEquals(5, solution.minFlips("10001100101000000"));
     }
+
+    @Test
+    public void testStableBin() {
+        Solution solution = new Solution();
+        assertEquals(207227572, solution.numberOfStableArrays(39, 20, 18));
+    }
 }
