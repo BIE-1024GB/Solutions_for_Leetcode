@@ -1113,4 +1113,10 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertEquals(207227572, solution.numberOfStableArrays(39, 20, 18));
     }
+
+    @Test
+    public void testComplement() {
+        Solution solution = new Solution();
+        assertEquals(0, solution.bitwiseComplement(7));
+    }
 }

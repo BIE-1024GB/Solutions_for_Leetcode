@@ -4914,4 +4914,24 @@ public class Solution {
         }
         return (dp[zero][one][0] + dp[zero][one][1]) % mod;
     }
+
+    public int bitwiseComplement(int n) {
+        if (n == 0) {
+            return 1;
+        }
+        int res = 0;
+        int no = Integer.bitCount(n);
+        int bc = 0;
+        while (no > 0) {
+            int lsb = n & 1;
+            if (lsb == 1) {
+                no--;
+            } else {
+                res += Math.pow(2, bc);
+            }
+            bc++;
+            n = n >>1;
+        }
+        return res;
+    }
 }
