@@ -1119,4 +1119,21 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertEquals(0, solution.bitwiseComplement(7));
     }
+
+    @Test
+    public void testMaxStability() {
+        Solution solution = new Solution();
+        int[][] edges = new int[][] {
+                {0, 1, 2, 1},
+                {1, 2, 3, 0}
+        };
+        assertEquals(2, solution.maxStability(3, edges, 1));
+    }
+
+    @Test
+    public void testMountain() {
+        Solution solution = new Solution();
+        int[] workers = new int[] {3, 2, 2, 4};
+        assertEquals(12, solution.minNumberOfSeconds(10, workers));
+    }
 }

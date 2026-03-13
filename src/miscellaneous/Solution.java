@@ -4927,11 +4927,146 @@ public class Solution {
             if (lsb == 1) {
                 no--;
             } else {
-                res += Math.pow(2, bc);
+                res += (int) Math.pow(2, bc);
             }
             bc++;
             n = n >>1;
         }
         return res;
+    }
+
+    static class DSU {
+        int[] parent, rank;
+        int count;
+
+        DSU(int n) {
+            parent = new int[n];
+            rank = new int[n];
+            count = n;
+            for (int i = 0; i < n; i++) {
+                parent[i] = i;
+            }
+        }
+
+        int find(int x) {
+            if (parent[x] != x) {
+                parent[x] = find(parent[x]);
+            }
+            return parent[x];
+        }
+
+        @SuppressWarnings({"SuspiciousNameCombination"})
+        boolean union(int x, int y) {
+            int px = find(x);
+            int py = find(y);
+            if (px == py)
+                return false;
+
+            if (rank[px] < rank[py]) {
+                parent[px] = py;
+            } else if (rank[px] > rank[py]) {
+                parent[py] = px;
+            } else {
+                parent[py] = px;
+                rank[px]++;
+            }
+
+            count--;
+            return true;
+        }
+    }
+    private boolean canBuild(int n, int[][] edges, int k, int target) {
+        DSU dsu = new DSU(n);
+        int usedEdges = 0;
+        int upgradesUsed = 0;
+
+        List<int[]> strong = new ArrayList<>();
+        List<int[]> upgradeable = new ArrayList<>();
+
+        // Step 1: process mandatory edges
+        for (int[] e : edges) {
+            int u = e[0], v = e[1], s = e[2], must = e[3];
+
+            if (must == 1) {
+                if (s < target)
+                    return false; // mandatory edge too weak
+
+                if (!dsu.union(u, v))
+                    return false; // cycle
+                usedEdges++;
+            } else {
+                if (s >= target) {
+                    strong.add(e);
+                } else if (2L * s >= target) {
+                    upgradeable.add(e);
+                }
+            }
+        }
+
+        // Step 2: use strong edges first
+        for (int[] e : strong) {
+            if (usedEdges == n - 1)
+                break;
+            if (dsu.union(e[0], e[1])) {
+                usedEdges++;
+            }
+        }
+
+        // Step 3: use upgradeable edges
+        for (int[] e : upgradeable) {
+            if (usedEdges == n - 1)
+                break;
+            if (upgradesUsed == k)
+                break;
+            if (dsu.union(e[0], e[1])) {
+                usedEdges++;
+                upgradesUsed++;
+            }
+        }
+
+        return usedEdges == n - 1 && dsu.count == 1;
+    }
+    public int maxStability(int n, int[][] edges, int k) {
+        int left = 1, right = 200000; // max possible after upgrade
+        int ans = -1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (canBuild(n, edges, k, mid)) {
+                ans = mid;
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+
+        return ans;
+    }
+
+    public long minNumberOfSeconds(int mountainHeight, int[] workerTimes) {
+        int maxw = Integer.MIN_VALUE;
+        for (int w : workerTimes) {
+            maxw = Math.max(maxw, w);
+        }
+        long lb = 1;
+        long ub = maxw*(long) mountainHeight*(1+mountainHeight)/2;
+        while (lb <= ub) {
+            long mid = lb+(ub-lb)/2;
+            long th = 0;
+            for (int w : workerTimes) {
+                long k = (2 * mid) / w;
+                long x = (long)((-1 + Math.sqrt(1 + 4.0 * k)) / 2);
+                th += x;
+                if (th >= mountainHeight) {
+                    break;
+                }
+            }
+            if (th >= mountainHeight) {
+                ub = mid-1;
+            } else {
+                lb = mid+1;
+            }
+        }
+        return lb;
     }
 }
