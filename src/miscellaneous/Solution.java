@@ -5069,4 +5069,50 @@ public class Solution {
         }
         return lb;
     }
+
+    private void buildStrings(List<String> list, StringBuilder stringBuilder, int n) {
+        if (stringBuilder.length() == n) {
+            list.add(stringBuilder.toString());
+        } else {
+            char lc = stringBuilder.charAt(stringBuilder.length()-1);
+            int ol = stringBuilder.length();
+            switch (lc) {
+                case 'a':
+                    stringBuilder.append('b');
+                    buildStrings(list, stringBuilder, n);
+                    stringBuilder.delete(ol, stringBuilder.length());
+                    stringBuilder.append('c');
+                    buildStrings(list, stringBuilder, n);
+                    break;
+                case 'b':
+                    stringBuilder.append('a');
+                    buildStrings(list, stringBuilder, n);
+                    stringBuilder.delete(ol, stringBuilder.length());
+                    stringBuilder.append('c');
+                    buildStrings(list, stringBuilder, n);
+                    break;
+                default:
+                    stringBuilder.append('a');
+                    buildStrings(list, stringBuilder, n);
+                    stringBuilder.delete(ol, stringBuilder.length());
+                    stringBuilder.append('b');
+                    buildStrings(list, stringBuilder, n);
+                    break;
+            }
+        }
+    }
+    public String getHappyString(int n, int k) {
+        List<String> list = new ArrayList<>();
+        char[] lib = new char[] {'a', 'b', 'c'};
+        for (char c : lib) {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(c);
+            buildStrings(list, stringBuilder, n);
+        }
+        if (k > list.size()) {
+            return "";
+        } else {
+            return list.get(k-1);
+        }
+    }
 }

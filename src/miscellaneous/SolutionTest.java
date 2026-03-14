@@ -1136,4 +1136,10 @@ public class SolutionTest {
         int[] workers = new int[] {3, 2, 2, 4};
         assertEquals(12, solution.minNumberOfSeconds(10, workers));
     }
+
+    @Test
+    public void testHappyString() {
+        Solution solution = new Solution();
+        assertEquals("abacbabacb", solution.getHappyString(10, 100));
+    }
 }
