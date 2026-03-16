@@ -5163,4 +5163,53 @@ public class Solution {
             return res;
         }
     }
+
+    public int[] getBiggestThree(int[][] grid) {
+        int row = grid.length;
+        int col = grid[0].length;
+        int ml = (Math.min(row, col)+1)/2;
+        List<Integer> list = new ArrayList<>();
+        for (int s = 1; s <= ml; s++) {
+            for (int i = s-1; i <= row-s; i++) {
+                for (int j = s-1; j <= col-s; j++) {
+                    if (s == 1) {
+                        list.add(grid[i][j]);
+                    } else {
+                        int tr = i-s+1;
+                        int sum = 0;
+                        for (int k = 0; k <= 2*s-2; k++) {
+                            if (k == 0) {
+                                sum += grid[tr][j];
+                            } else if (k <= s-1) {
+                                sum += grid[tr+k][j+k];
+                                sum += grid[tr+k][j-k];
+                            } else if (k < 2*s-2) {
+                                sum += grid[tr+k][j+2*s-2-k];
+                                sum += grid[tr+k][j-2*s+2+k];
+                            } else {
+                                sum += grid[tr+k][j];
+                            }
+                        }
+                        list.add(sum);
+                    }
+                }
+            }
+        }
+        Set<Integer> set = new HashSet<>(list);
+        list = new ArrayList<>(set);
+        list.sort(Collections.reverseOrder());
+        int[] res;
+        if (list.size() >= 3) {
+            res = new int[3];
+            for (int i = 0; i <= 2; i++) {
+                res[i] = list.get(i);
+            }
+        } else {
+            res = new int[list.size()];
+            for (int i = 0; i <= res.length-1; i++) {
+                res[i] = list.get(i);
+            }
+        }
+        return res;
+    }
 }

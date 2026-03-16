@@ -1142,4 +1142,13 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertEquals("abacbabacb", solution.getHappyString(10, 100));
     }
+
+    @Test
+    public void testRhombust() {
+        Solution solution = new Solution();
+        int[][] grid = new int[][] {
+                {7, 7, 7}
+        };
+        assertArrayEquals(new int[] {7}, solution.getBiggestThree(grid));
+    }
 }
