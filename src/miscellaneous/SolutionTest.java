@@ -1151,4 +1151,14 @@ public class SolutionTest {
         };
         assertArrayEquals(new int[] {7}, solution.getBiggestThree(grid));
     }
+
+    @Test
+    public void testSubMat() {
+        Solution solution = new Solution();
+        int[][] matrix = new int[][] {
+                {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,0,1,1},
+                {0,1,1,0,1,1,1,1,0,1,1,0,0,1,0,1,1,1,1,0,1,1,1,1,1,1}
+        };
+        assertEquals(34, solution.largestSubmatrix(matrix));
+    }
 }
