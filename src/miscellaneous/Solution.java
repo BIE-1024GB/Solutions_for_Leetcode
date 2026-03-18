@@ -5238,4 +5238,36 @@ public class Solution {
         }
         return maxA;
     }
+
+    public int countSubmatrices(int[][] grid, int k) {
+        int[][] dp = new int[grid.length][grid[0].length];
+        int res = 0;
+        dp[0][0] = grid[0][0];
+        if (dp[0][0] <= k) {
+            res++;
+        }
+        for (int i = 1; i <= grid[0].length-1; i++) {
+            dp[0][i] = dp[0][i-1]+grid[0][i];
+            if (dp[0][i] <= k) {
+                res++;
+            }
+        }
+        for (int i = 1; i <= grid.length-1; i++) {
+            dp[i][0] = dp[i-1][0]+grid[i][0];
+            if (dp[i][0] <= k) {
+                res++;
+            }
+        }
+        for (int i = 1; i <= grid.length-1; i++) {
+            int rs = grid[i][0];
+            for (int j = 1; j <= grid[0].length-1; j++) {
+                rs += grid[i][j];
+                dp[i][j] = dp[i-1][j]+rs;
+                if (dp[i][j] <= k) {
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
 }

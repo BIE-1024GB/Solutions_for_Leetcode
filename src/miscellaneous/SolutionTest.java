@@ -1161,4 +1161,14 @@ public class SolutionTest {
         };
         assertEquals(34, solution.largestSubmatrix(matrix));
     }
+
+    @Test
+    public void testSubMatSum() {
+        Solution solution = new Solution();
+        int[][] matrix = new int[][] {
+                {7, 6, 3},
+                {6, 6, 1}
+        };
+        assertEquals(4, solution.countSubmatrices(matrix, 18));
+    }
 }
