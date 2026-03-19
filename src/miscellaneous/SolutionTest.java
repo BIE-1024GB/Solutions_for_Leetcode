@@ -1171,4 +1171,14 @@ public class SolutionTest {
         };
         assertEquals(4, solution.countSubmatrices(matrix, 18));
     }
+
+    @Test
+    public void testSubMatEql() {
+        Solution solution = new Solution();
+        char[][] matrix = new char[][] {
+                {'X', 'Y', '.'},
+                {'Y', '.', '.'}
+        };
+        assertEquals(3, solution.numberOfSubmatrices(matrix));
+    }
 }

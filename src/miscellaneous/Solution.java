@@ -5270,4 +5270,62 @@ public class Solution {
         }
         return res;
     }
+
+    public int numberOfSubmatrices(char[][] grid) {
+        int[][] dpx = new int[grid.length][grid[0].length];
+        int[][] dpy = new int[grid.length][grid[0].length];
+        int res = 0;
+        if (grid[0][0] == 'X') {
+            dpx[0][0] = 1;
+        } else if (grid[0][0] == 'Y') {
+            dpy[0][0] = 1;
+        }
+        for (int i = 1; i <= grid[0].length-1; i++) {
+            if (grid[0][i] == 'X') {
+                dpx[0][i] = dpx[0][i-1]+1;
+                dpy[0][i] = dpy[0][i-1];
+            } else if (grid[0][i] == 'Y') {
+                dpx[0][i] = dpx[0][i-1];
+                dpy[0][i] = dpy[0][i-1]+1;
+            } else {
+                dpx[0][i] = dpx[0][i-1];
+                dpy[0][i] = dpy[0][i-1];
+            }
+            if (dpx[0][i]>=1 && dpx[0][i]==dpy[0][i]) {
+                res++;
+            }
+        }
+        for (int i = 1; i <= grid.length-1; i++) {
+            if (grid[i][0] == 'X') {
+                dpx[i][0] = dpx[i-1][0]+1;
+                dpy[i][0] = dpy[i-1][0];
+            } else if (grid[i][0] == 'Y') {
+                dpx[i][0] = dpx[i-1][0];
+                dpy[i][0] = dpy[i-1][0]+1;
+            } else {
+                dpx[i][0] = dpx[i-1][0];
+                dpy[i][0] = dpy[i-1][0];
+            }
+            if (dpx[i][0]>=1 && dpx[i][0]==dpy[i][0]) {
+                res++;
+            }
+        }
+        for (int i = 1; i <= grid.length-1; i++) {
+            int rx = (grid[i][0]=='X' ? 1 : 0);
+            int ry = (grid[i][0]=='Y' ? 1 : 0);
+            for (int j = 1; j <= grid[0].length-1; j++) {
+                if (grid[i][j] == 'X') {
+                    rx++;
+                } else if (grid[i][j] == 'Y') {
+                    ry++;
+                }
+                dpx[i][j] = rx+dpx[i-1][j];
+                dpy[i][j] = ry+dpy[i-1][j];
+                if (dpx[i][j]>=1 && dpx[i][j]==dpy[i][j]) {
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
 }
