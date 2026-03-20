@@ -1181,4 +1181,14 @@ public class SolutionTest {
         };
         assertEquals(3, solution.numberOfSubmatrices(matrix));
     }
+
+    @Test
+    public void testMinDiffSub() {
+        Solution solution = new Solution();
+        int[][] matrix = new int[][] {
+                {1, -2, 3},
+                {2, 3, 5}
+        };
+        assertArrayEquals(new int[][] {{1, 2}}, solution.minAbsDiff(matrix, 2));
+    }
 }

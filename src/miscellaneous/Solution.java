@@ -5328,4 +5328,35 @@ public class Solution {
         }
         return res;
     }
+
+    public int[][] minAbsDiff(int[][] grid, int k) {
+        int[][] res = new int[grid.length-k+1][grid[0].length-k+1];
+        for (int i = 0; i <= grid.length-k; i++) {
+            for (int j = 0; j <= grid[0].length-k; j++) {
+                Set<Integer> set = new HashSet<>();
+                for (int m = 0; m <= k-1; m++) {
+                    for (int n = 0; n <= k-1; n++) {
+                        set.add(grid[i+m][j+n]);
+                    }
+                }
+                if (set.size() > 1) {
+                    PriorityQueue<Integer> pq = new PriorityQueue<>();
+                    for (Integer s : set) {
+                        pq.offer(s);
+                    }
+                    int md = Integer.MAX_VALUE;
+                    assert pq.size() >= 2;
+                    int cv = pq.poll();
+                    while (!pq.isEmpty()) {
+                        int nv = pq.poll();
+                        int diff = nv-cv;
+                        md = Math.min(md, diff);
+                        cv = nv;
+                    }
+                    res[i][j] = md;
+                }
+            }
+        }
+        return res;
+    }
 }
