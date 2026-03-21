@@ -1191,4 +1191,22 @@ public class SolutionTest {
         };
         assertArrayEquals(new int[][] {{1, 2}}, solution.minAbsDiff(matrix, 2));
     }
+
+    @Test
+    public void testVFlip() {
+        Solution solution = new Solution();
+        int[][] grid = new int[][] {
+                {1, 2, 3, 4},
+                {5, 6, 7, 8},
+                {9, 10, 11, 12},
+                {13, 14, 15, 16}
+        };
+        int[][] exp = new int[][] {
+                {1, 2, 3, 4},
+                {13, 14, 15, 8},
+                {9, 10, 11, 12},
+                {5, 6, 7, 16}
+        };
+        assertArrayEquals(exp, solution.reverseSubmatrix(grid, 1, 0, 3));
+    }
 }

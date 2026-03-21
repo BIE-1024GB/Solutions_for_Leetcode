@@ -5359,4 +5359,19 @@ public class Solution {
         }
         return res;
     }
+
+    public int[][] reverseSubmatrix(int[][] grid, int x, int y, int k) {
+        if (k > 1) {
+            for (int i = 0; i <= k/2-1; i++) {
+                int ur = x+i;
+                int lr = x+k-1-i;
+                for (int j = 0; j <= k-1; j++) {
+                    int temp = grid[ur][y+j];
+                    grid[ur][y+j] = grid[lr][y+j];
+                    grid[lr][y+j] = temp;
+                }
+            }
+        }
+        return grid;
+    }
 }
