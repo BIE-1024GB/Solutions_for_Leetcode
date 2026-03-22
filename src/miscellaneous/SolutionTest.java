@@ -1209,4 +1209,20 @@ public class SolutionTest {
         };
         assertArrayEquals(exp, solution.reverseSubmatrix(grid, 1, 0, 3));
     }
+
+    @Test
+    public void testMatRot() {
+        Solution solution = new Solution();
+        int[][] matrix = new int[][] {
+                {0, 0, 0},
+                {0, 1, 0},
+                {1, 1, 1}
+        };
+        int[][] target = new int[][] {
+                {1, 1, 1},
+                {0, 1, 0},
+                {0, 0, 0}
+        };
+        assertTrue(solution.findRotation(matrix, target));
+    }
 }

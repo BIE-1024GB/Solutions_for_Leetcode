@@ -5374,4 +5374,44 @@ public class Solution {
         }
         return grid;
     }
+
+    public boolean findRotation(int[][] mat, int[][] target) {
+        int n = mat.length;
+        Set<String> rot = new HashSet<>();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i <= n-1; i++) {
+            for (int j = 0; j <= n-1; j++) {
+                sb.append(mat[i][j]);
+            }
+        }
+        rot.add(sb.toString());
+        sb = new StringBuilder();
+        for (int j = 0; j <= n-1; j++) {
+            for (int i = n-1; i >= 0; i--) {
+                sb.append(mat[i][j]);
+            }
+        }
+        rot.add(sb.toString());
+        sb = new StringBuilder();
+        for (int i = n-1; i >= 0; i--) {
+            for (int j = n-1; j >= 0; j--) {
+                sb.append(mat[i][j]);
+            }
+        }
+        rot.add(sb.toString());
+        sb = new StringBuilder();
+        for (int j = n-1; j >= 0; j--) {
+            for (int i = 0; i <= n-1; i++) {
+                sb.append(mat[i][j]);
+            }
+        }
+        rot.add(sb.toString());
+        sb = new StringBuilder();
+        for (int i = 0; i <= n-1; i++) {
+            for (int j = 0; j <= n-1; j++) {
+                sb.append(target[i][j]);
+            }
+        }
+        return rot.contains(sb.toString());
+    }
 }
