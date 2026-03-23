@@ -5414,4 +5414,34 @@ public class Solution {
         }
         return rot.contains(sb.toString());
     }
+
+    public int maxProductPath(int[][] grid) {
+        long[][] maxd = new long[grid.length][grid[0].length];
+        long[][] mind = new long[grid.length][grid[0].length];
+        maxd[0][0] = grid[0][0];
+        mind[0][0] = grid[0][0];
+        for (int i = 1; i <= grid[0].length-1; i++) {
+            maxd[0][i] = maxd[0][i-1]*grid[0][i];
+            mind[0][i] = mind[0][i-1]*grid[0][i];
+        }
+        for (int i = 1; i <= grid.length-1; i++) {
+            maxd[i][0] = maxd[i-1][0]*grid[i][0];
+            mind[i][0] = mind[i-1][0]*grid[i][0];
+        }
+        for (int i = 1; i <= grid.length-1; i++) {
+            for (int j = 1; j <= grid[0].length-1; j++) {
+                long umax = maxd[i-1][j]*grid[i][j];
+                long umin = mind[i-1][j]*grid[i][j];
+                long lmax = maxd[i][j-1]*grid[i][j];
+                long lmin = mind[i][j-1]*grid[i][j];
+                maxd[i][j] = Math.max(Math.max(umax, umin), Math.max(lmax, lmin));
+                mind[i][j] = Math.min(Math.min(umax, umin), Math.min(lmax, lmin));
+            }
+        }
+        if (maxd[grid.length-1][grid[0].length-1] < 0) {
+            return -1;
+        } else {
+            return (int) (maxd[grid.length-1][grid[0].length-1]%1000000007);
+        }
+    }
 }

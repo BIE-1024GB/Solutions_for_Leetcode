@@ -1225,4 +1225,15 @@ public class SolutionTest {
         };
         assertTrue(solution.findRotation(matrix, target));
     }
+
+    @Test
+    public void testMaxMatProd() {
+        Solution solution = new Solution();
+        int[][] grid = new int[][] {
+                {-1, -2, -3},
+                {-2, -3, -3},
+                {-3, -3, -2}
+        };
+        assertEquals(-1, solution.maxProductPath(grid));
+    }
 }
