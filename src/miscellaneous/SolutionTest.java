@@ -1236,4 +1236,18 @@ public class SolutionTest {
         };
         assertEquals(-1, solution.maxProductPath(grid));
     }
+
+    @Test
+    public void testProductMatrix() {
+        Solution solution = new Solution();
+        int[][] matrix = new int[][] {
+                {1, 2},
+                {3, 4}
+        };
+        int[][] exp = new int[][] {
+                {24, 12},
+                {8, 6}
+        };
+        assertArrayEquals(exp, solution.constructProductMatrix(matrix));
+    }
 }

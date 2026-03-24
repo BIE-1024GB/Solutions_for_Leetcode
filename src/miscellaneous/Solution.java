@@ -5444,4 +5444,37 @@ public class Solution {
             return (int) (maxd[grid.length-1][grid[0].length-1]%1000000007);
         }
     }
+
+    public int[][] constructProductMatrix(int[][] grid) {
+        final int MOD = 12345;
+        int n = grid.length;
+        int m = grid[0].length;
+        int size = n * m;
+        int[] flat = new int[size];
+        int idx = 0;
+        for (int[] row : grid) {
+            for (int val : row) {
+                flat[idx++] = val % MOD;
+            }
+        }
+        int[] res = new int[size];
+        long prefix = 1;
+        for (int i = 0; i < size; i++) {
+            res[i] = (int) prefix;
+            prefix = (prefix * flat[i]) % MOD;
+        }
+        long suffix = 1;
+        for (int i = size - 1; i >= 0; i--) {
+            res[i] = (int) ((res[i] * suffix) % MOD);
+            suffix = (suffix * flat[i]) % MOD;
+        }
+        int[][] ans = new int[n][m];
+        idx = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                ans[i][j] = res[idx++];
+            }
+        }
+        return ans;
+    }
 }
