@@ -1250,4 +1250,14 @@ public class SolutionTest {
         };
         assertArrayEquals(exp, solution.constructProductMatrix(matrix));
     }
+
+    @Test
+    public void testSplit() {
+        Solution solution = new Solution();
+        int[][] grid = new int[][] {
+                {1, 4},
+                {2, 3}
+        };
+        assertTrue(solution.canPartitionGrid(grid));
+    }
 }

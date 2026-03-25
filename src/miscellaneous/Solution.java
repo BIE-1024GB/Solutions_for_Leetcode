@@ -5477,4 +5477,39 @@ public class Solution {
         }
         return ans;
     }
+
+    public boolean canPartitionGrid(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        long[] rowSums = new long[m];
+        long[] colSums = new long[n];
+        long total = 0L;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                int val = grid[i][j];
+                rowSums[i] += val;
+                colSums[j] += val;
+                total += val;
+            }
+        }
+        if ((total & 1L) == 1L) {
+            return false;
+        }
+        long target = total / 2;
+        long prefix = 0L;
+        for (int i = 0; i < m - 1; i++) {
+            prefix += rowSums[i];
+            if (prefix == target) {
+                return true;
+            }
+        }
+        prefix = 0L;
+        for (int j = 0; j < n - 1; j++) {
+            prefix += colSums[j];
+            if (prefix == target) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
