@@ -1260,4 +1260,14 @@ public class SolutionTest {
         };
         assertTrue(solution.canPartitionGrid(grid));
     }
+
+    @Test
+    public void testSplit2() {
+        Solution solution = new Solution();
+        int[][] grid = new int[][] {
+                {1, 2, 4},
+                {2, 3, 5}
+        };
+        assertFalse(solution.canPartitionGridII(grid));
+    }
 }

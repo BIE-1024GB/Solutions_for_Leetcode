@@ -5512,4 +5512,118 @@ public class Solution {
         }
         return false;
     }
+
+    private static final int MAXV = 100000;
+    private boolean canRemoveFromRowSection(int[][] grid, int startRow, int endRow, int n,
+                                            long value, int countInSection) {
+        int h = endRow - startRow + 1;
+        // 1x1 section cannot lose its only cell.
+        if (h == 1 && n == 1) {
+            return false;
+        }
+        // If both dimensions are > 1, removing any cell keeps it connected.
+        if (h > 1 && n > 1) {
+            return countInSection > 0;
+        }
+        // Single row: only the two ends are removable.
+        if (h == 1) {
+            return grid[startRow][0] == value || grid[startRow][n - 1] == value;
+        }
+        // Single column: only the top and bottom ends are removable.
+        return grid[startRow][0] == value || grid[endRow][0] == value;
+    }
+    private boolean canRemoveFromColSection(int[][] grid, int startCol, int endCol, int m,
+                                            long value, int countInSection) {
+        int w = endCol - startCol + 1;
+        // 1x1 section cannot lose its only cell.
+        if (w == 1 && m == 1) {
+            return false;
+        }
+        // If both dimensions are > 1, removing any cell keeps it connected.
+        if (m > 1 && w > 1) {
+            return countInSection > 0;
+        }
+        // Single row: only the two ends are removable.
+        if (m == 1) {
+            return grid[0][startCol] == value || grid[0][endCol] == value;
+        }
+        // Single column: only the top and bottom ends are removable.
+        return grid[0][startCol] == value || grid[m - 1][startCol] == value;
+    }
+    public boolean canPartitionGridII(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        long totalSum = 0L;
+        int[] totalCount = new int[MAXV + 1];
+        long[] rowSum = new long[m];
+        long[] colSum = new long[n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                int v = grid[i][j];
+                totalSum += v;
+                totalCount[v]++;
+                rowSum[i] += v;
+                colSum[j] += v;
+            }
+        }
+        // Try all horizontal cuts.
+        int[] topCount = new int[MAXV + 1];
+        long topSum = 0L;
+        for (int r = 0; r < m - 1; r++) {
+            // Include row r in the top part.
+            topSum += rowSum[r];
+            for (int c = 0; c < n; c++) {
+                topCount[grid[r][c]]++;
+            }
+            long bottomSum = totalSum - topSum;
+            if (topSum == bottomSum) {
+                return true;
+            }
+            long diff = Math.abs(topSum - bottomSum);
+            if (diff <= MAXV) {
+                int d = (int) diff;
+                if (topSum > bottomSum) {
+                    int countInTop = topCount[d];
+                    if (canRemoveFromRowSection(grid, 0, r, n, diff, countInTop)) {
+                        return true;
+                    }
+                } else {
+                    int countInBottom = totalCount[d] - topCount[d];
+                    if (canRemoveFromRowSection(grid, r + 1, m - 1, n, diff, countInBottom)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        // Try all vertical cuts.
+        int[] leftCount = new int[MAXV + 1];
+        long leftSum = 0L;
+        for (int c = 0; c < n - 1; c++) {
+            // Include column c in the left part.
+            leftSum += colSum[c];
+            for (int[] ints : grid) {
+                leftCount[ints[c]]++;
+            }
+            long rightSum = totalSum - leftSum;
+            if (leftSum == rightSum) {
+                return true;
+            }
+            long diff = Math.abs(leftSum - rightSum);
+            if (diff <= MAXV) {
+                int d = (int) diff;
+                if (leftSum > rightSum) {
+                    int countInLeft = leftCount[d];
+                    if (canRemoveFromColSection(grid, 0, c, m, diff, countInLeft)) {
+                        return true;
+                    }
+                } else {
+                    int countInRight = totalCount[d] - leftCount[d];
+                    if (canRemoveFromColSection(grid, c + 1, n - 1, m, diff, countInRight)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 }
