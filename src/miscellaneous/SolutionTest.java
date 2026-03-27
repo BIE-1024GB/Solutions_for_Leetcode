@@ -1270,4 +1270,15 @@ public class SolutionTest {
         };
         assertFalse(solution.canPartitionGridII(grid));
     }
+
+    @Test
+    public void testSimMat() {
+        Solution solution = new Solution();
+        int[][] matrix = new int[][] {
+                {1, 2, 1, 2},
+                {5, 5, 5, 5},
+                {6, 3, 6, 3}
+        };
+        assertTrue(solution.areSimilar(matrix, 2));
+    }
 }
