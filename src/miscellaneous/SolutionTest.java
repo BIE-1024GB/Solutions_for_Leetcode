@@ -1281,4 +1281,12 @@ public class SolutionTest {
         };
         assertTrue(solution.areSimilar(matrix, 2));
     }
+
+    @Test
+    public void testStringEqualOps() {
+        Solution solution = new Solution();
+        String s1 = "abcd";
+        String s2 = "cdab";
+        assertTrue(solution.canBeEqual(s1, s2));
+    }
 }

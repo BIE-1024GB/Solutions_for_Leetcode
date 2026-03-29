@@ -5635,4 +5635,22 @@ public class Solution {
         }
         return true;
     }
+
+    public boolean canBeEqual(String s1, String s2) {
+        if (s1.equals(s2)) {
+            return true;
+        }
+        char s10 = s1.charAt(0);
+        char s12 = s1.charAt(2);
+        char s20 = s2.charAt(0);
+        char s22 = s2.charAt(2);
+        if (!((s10==s20 && s12==s22) || (s10==s22 && s12==s20))) {
+            return false;
+        }
+        char s11 = s1.charAt(1);
+        char s13 = s1.charAt(3);
+        char s21 = s2.charAt(1);
+        char s23 = s2.charAt(3);
+        return (s11 == s21 && s13 == s23) || (s11 == s23 && s13 == s21);
+    }
 }
