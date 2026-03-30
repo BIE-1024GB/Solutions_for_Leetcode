@@ -5653,4 +5653,27 @@ public class Solution {
         char s23 = s2.charAt(3);
         return (s11 == s21 && s13 == s23) || (s11 == s23 && s13 == s21);
     }
+
+    public boolean checkStrings(String s1, String s2) {
+        int len = s1.length();
+        int[] s1e = new int[26];
+        int[] s2e = new int[26];
+        int[] s1o = new int[26];
+        int[] s2o = new int[26];
+        for (int i = 0; i <= len-1; i++) {
+            if (i%2 == 0) {
+                s1e[s1.charAt(i)-'a'] += 1;
+                s2e[s2.charAt(i)-'a'] += 1;
+            } else {
+                s1o[s1.charAt(i)-'a'] += 1;
+                s2o[s2.charAt(i)-'a'] += 1;
+            }
+        }
+        for (int i = 0; i <= 25; i++) {
+            if (s1e[i]!=s2e[i] || s1o[i]!=s2o[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

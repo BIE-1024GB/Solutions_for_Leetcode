@@ -1289,4 +1289,12 @@ public class SolutionTest {
         String s2 = "cdab";
         assertTrue(solution.canBeEqual(s1, s2));
     }
+
+    @Test
+    public void testStringEqualOps2() {
+        Solution solution = new Solution();
+        String s1 = "abcdba";
+        String s2 = "cabdab";
+        assertTrue(solution.checkStrings(s1, s2));
+    }
 }
