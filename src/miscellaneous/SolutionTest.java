@@ -1297,4 +1297,14 @@ public class SolutionTest {
         String s2 = "cabdab";
         assertTrue(solution.checkStrings(s1, s2));
     }
+
+    @Test
+    public void testCoinRobot() {
+        Solution solution = new Solution();
+        int[][] coins = new int[][] {
+                {10, 10, 10},
+                {10, 10, 10}
+        };
+        assertEquals(40, solution.maximumAmount(coins));
+    }
 }
