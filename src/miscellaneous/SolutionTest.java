@@ -1307,4 +1307,11 @@ public class SolutionTest {
         };
         assertEquals(40, solution.maximumAmount(coins));
     }
+
+    @Test
+    public void testStringDecode() {
+        Solution solution = new Solution();
+        String encode = "iveo    eed   l te   olc";
+        assertEquals("i love leetcode", solution.decodeCiphertext(encode, 4));
+    }
 }

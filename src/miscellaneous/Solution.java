@@ -5729,4 +5729,31 @@ public class Solution {
         }
         return Math.max(dp[m-1][n-1][0], Math.max(dp[m-1][n-1][1], dp[m-1][n-1][2]));
     }
+
+    public String decodeCiphertext(String encodedText, int rows) {
+        int n = encodedText.length();
+        if (n == 0) {
+            return "";
+        }
+        if (rows == 1) {
+            return encodedText;
+        }
+        int cols = n/rows;
+        char[][] grid = new char[rows][cols];
+        for (int i = 0; i <= rows-1; i++) {
+            for (int j = 0; j <= cols-1; j++) {
+                grid[i][j] = encodedText.charAt(i*cols+j);
+            }
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i <= cols-1; i++) {
+            for (int r = 0; r <= rows-1; r++) {
+                int cc = i+r;
+                if (cc <= cols-1) {
+                    stringBuilder.append(grid[r][cc]);
+                }
+            }
+        }
+        return stringBuilder.toString().stripTrailing();
+    }
 }
