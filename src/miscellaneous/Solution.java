@@ -5756,4 +5756,93 @@ public class Solution {
         }
         return stringBuilder.toString().stripTrailing();
     }
+
+    public boolean judgeCircle(String moves) {
+        int up = 0;
+        int down = 0;
+        int left = 0;
+        int right = 0;
+        for (int i = 0; i <= moves.length()-1; i++) {
+            char c = moves.charAt(i);
+            switch (c) {
+                case 'U':
+                    up += 1;
+                    break;
+                case 'D':
+                    down += 1;
+                    break;
+                case 'L':
+                    left += 1;
+                    break;
+                default:
+                    right += 1;
+                    break;
+            }
+        }
+        return (up==down)&&(left==right);
+    }
+
+    public int robotSim(int[] commands, int[][] obstacles) {
+        Set<String> set = new HashSet<>();
+        for (int[] o : obstacles) {
+            set.add(Arrays.toString(o));
+        }
+        int[] loc = new int[2];
+        int res = 0;
+        char dir = 'N';
+        for (int c : commands) {
+            if (c == -2) {
+                dir = switch (dir) {
+                    case 'N' -> 'W';
+                    case 'W' -> 'S';
+                    case 'S' -> 'E';
+                    default -> 'N';
+                };
+            } else if (c == -1) {
+                dir = switch (dir) {
+                    case 'N' -> 'E';
+                    case 'W' -> 'N';
+                    case 'S' -> 'W';
+                    default -> 'S';
+                };
+            } else {
+                int k = c;
+                while (k > 0) {
+                    switch (dir) {
+                        case 'N':
+                            loc[1] += 1;
+                            if (set.contains(Arrays.toString(loc))) {
+                                loc[1] -= 1;
+                                k = 0;
+                            }
+                            break;
+                        case 'W':
+                            loc[0] -= 1;
+                            if (set.contains(Arrays.toString(loc))) {
+                                loc[0] += 1;
+                                k = 0;
+                            }
+                            break;
+                        case 'S':
+                            loc[1] -= 1;
+                            if (set.contains(Arrays.toString(loc))) {
+                                loc[1] += 1;
+                                k = 0;
+                            }
+                            break;
+                        default:
+                            loc[0] += 1;
+                            if (set.contains(Arrays.toString(loc))) {
+                                loc[0] -= 1;
+                                k = 0;
+                            }
+                            break;
+                    }
+                    res = Math.max(res, loc[0]*loc[0]+loc[1]*loc[1]);
+                    k--;
+                }
+            }
+        }
+        return res;
+    }
 }

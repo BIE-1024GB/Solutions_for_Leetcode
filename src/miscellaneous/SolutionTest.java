@@ -1314,4 +1314,21 @@ public class SolutionTest {
         String encode = "iveo    eed   l te   olc";
         assertEquals("i love leetcode", solution.decodeCiphertext(encode, 4));
     }
+
+    @Test
+    public void testRobotReturn() {
+        Solution  solution = new Solution();
+        String moves = "UD";
+        assertTrue(solution.judgeCircle(moves));
+    }
+
+    @Test
+    public void testRobotSim() {
+        Solution solution = new Solution();
+        int[] commands = new int[] {4,-1,4,-2,4};
+        int[][] obstacles = new int[][] {
+                {2,4}
+        };
+        assertEquals(65, solution.robotSim(commands, obstacles));
+    }
 }
