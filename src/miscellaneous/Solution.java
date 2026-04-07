@@ -5845,4 +5845,70 @@ public class Solution {
         }
         return res;
     }
+
+    static class Robot {
+        final int width;
+        final int height;
+        int x;
+        int y;
+        int loc;
+        char dir;
+
+        public Robot(int width, int height) {
+            this.width = width;
+            this.height = height;
+            x = 0;
+            y = 0;
+            loc = 0;
+            dir = 'E';
+        }
+
+        public void step(int num) {
+            int circle = (width+height)*2-4;
+            int as = num%circle;
+            if (as == 0) {
+                if (loc==0) {
+                    if (dir == 'E') {
+                        dir = 'S';
+                    }
+                }
+            } else {
+                loc = (loc+as)%circle;
+                if (loc==0) {
+                    x = 0;
+                    y = 0;
+                    dir = 'S';
+                } else if (loc>=1 && loc<=width-1) {
+                    x = loc;
+                    y = 0;
+                    dir = 'E';
+                } else if (loc>=width && loc<=width+height-2) {
+                    x = width-1;
+                    y = loc-width+1;
+                    dir = 'N';
+                } else if (loc>=width+height-1 && loc<=width*2+height-3) {
+                    x = width*2+height-3-loc;
+                    y = height-1;
+                    dir = 'W';
+                } else {
+                    x = 0;
+                    y = (width+height)*2-loc-4;
+                    dir = 'S';
+                }
+            }
+        }
+
+        public int[] getPos() {
+            return new int[] {x, y};
+        }
+
+        public String getDir() {
+            return switch (dir) {
+                case 'N' -> "North";
+                case 'E' -> "East";
+                case 'S' -> "South";
+                default -> "West";
+            };
+        }
+    }
 }
