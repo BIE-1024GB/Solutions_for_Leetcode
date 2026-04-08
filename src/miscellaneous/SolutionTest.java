@@ -1331,4 +1331,14 @@ public class SolutionTest {
         };
         assertEquals(65, solution.robotSim(commands, obstacles));
     }
+
+    @Test
+    public void testXORMult() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {1, 1, 1};
+        int[][] queries = new int[][] {
+                {0, 2, 1, 4}
+        };
+        assertEquals(4, solution.xorAfterQueries(nums, queries));
+    }
 }
