@@ -1341,4 +1341,11 @@ public class SolutionTest {
         };
         assertEquals(4, solution.xorAfterQueries(nums, queries));
     }
+
+    @Test
+    public void test3Equal() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {1,2,1,1,3};
+        assertEquals(6, solution.minimumDistance(nums));
+    }
 }

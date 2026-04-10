@@ -5929,4 +5929,26 @@ public class Solution {
         }
         return ans;
     }
+
+    public int minimumDistance(int[] nums) {
+        int n = nums.length;
+        if (n <= 2) {
+            return -1;
+        }
+        int mind = Integer.MAX_VALUE;
+        for (int i = 0; i <= n-3; i++) {
+            boolean second = false;
+            for (int j = i+1; j <= n-1; j++) {
+                if (nums[j] == nums[i]) {
+                    if (!second) {
+                        second = true;
+                    } else {
+                        mind = Math.min(mind, (j-i)*2);
+                        break;
+                    }
+                }
+            }
+        }
+        return (mind==Integer.MAX_VALUE) ? -1 : mind;
+    }
 }
