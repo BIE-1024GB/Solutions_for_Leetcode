@@ -1348,4 +1348,11 @@ public class SolutionTest {
         int[] nums = new int[] {1,2,1,1,3};
         assertEquals(6, solution.minimumDistance(nums));
     }
+
+    @Test
+    public void test3Equal2() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {1,1,2,3,2,1,2};
+        assertEquals(8, solution.minimumDistanceII(nums));
+    }
 }

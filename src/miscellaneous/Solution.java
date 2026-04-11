@@ -5951,4 +5951,26 @@ public class Solution {
         }
         return (mind==Integer.MAX_VALUE) ? -1 : mind;
     }
+
+    public int minimumDistanceII(int[] nums) {
+        int n = nums.length;
+        if (n <= 2) {
+            return -1;
+        }
+        int mind = Integer.MAX_VALUE;
+        Map<Integer, int[]> map = new HashMap<>();
+        for (int i = 0; i <= n-1; i++) {
+            if (!map.containsKey(nums[i])) {
+                int[] seen = new int[] {i, -1};
+                map.put(nums[i], seen);
+            } else {
+                if (map.get(nums[i])[1] != -1) {
+                    mind = Math.min(mind, (i-map.get(nums[i])[1])*2);
+                }
+                map.get(nums[i])[1] = map.get(nums[i])[0];
+                map.get(nums[i])[0] = i;
+            }
+        }
+        return (mind==Integer.MAX_VALUE) ? -1 : mind;
+    }
 }
