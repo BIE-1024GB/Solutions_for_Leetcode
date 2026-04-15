@@ -5984,4 +5984,16 @@ public class Solution {
         }
         return mind;
     }
+
+    public int closestTarget(String[] words, String target, int startIndex) {
+        int n = words.length;
+        int mind = Integer.MAX_VALUE;
+        for (int step = 0; step <= n-1; step++) {
+            String cw = words[(startIndex+step)%n];
+            if (cw.equals(target)) {
+                mind = Math.min(mind, Math.min(step, n-step));
+            }
+        }
+        return (mind==Integer.MAX_VALUE) ? -1 : mind;
+    }
 }

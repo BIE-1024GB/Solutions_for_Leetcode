@@ -1362,4 +1362,11 @@ public class SolutionTest {
         int[] nums = new int[] {1,1,1,1,1,1,1,1,1,1};
         assertEquals(0, solution.getMinDistance(nums, 1, 0));
     }
+
+    @Test
+    public void testClosestWord() {
+        Solution solution = new Solution();
+        String[] words = new String[] {"hello","i","am","leetcode","hello"};
+        assertEquals(1, solution.closestTarget(words, "hello", 1));
+    }
 }
