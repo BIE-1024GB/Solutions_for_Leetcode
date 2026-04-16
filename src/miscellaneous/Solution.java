@@ -5996,4 +5996,33 @@ public class Solution {
         }
         return (mind==Integer.MAX_VALUE) ? -1 : mind;
     }
+
+    public List<Integer> solveQueries(int[] nums, int[] queries) {
+        Map<Integer, List<Integer>> map = new HashMap<>();
+        for (int i = 0; i <= nums.length-1; i++) {
+            map.computeIfAbsent(nums[i], k -> new ArrayList<>()).add(i);
+        }
+        int[] ans = new int[nums.length];
+        for (List<Integer> list : map.values()) {
+            int k = list.size();
+            if (k == 1) {
+                ans[list.getFirst()] = -1;
+            } else {
+                for (int ci = 0; ci <= k-1; ci++) {
+                    if (ci == 0) {
+                        ans[list.get(ci)] = Math.min(nums.length-list.getLast()+list.get(ci), list.get(1)-list.get(ci));
+                    } else if (ci == list.size()-1) {
+                        ans[list.get(ci)] = Math.min(list.get(ci)-list.get(list.size()-2), nums.length-list.get(ci)+list.getFirst());
+                    } else {
+                        ans[list.get(ci)] = Math.min(list.get(ci)-list.get(ci-1), list.get(ci+1)-list.get(ci));
+                    }
+                }
+            }
+        }
+        List<Integer> res = new ArrayList<>();
+        for (int q : queries) {
+            res.add(ans[q]);
+        }
+        return res;
+    }
 }

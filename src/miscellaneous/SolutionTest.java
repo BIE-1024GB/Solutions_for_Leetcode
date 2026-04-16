@@ -1369,4 +1369,20 @@ public class SolutionTest {
         String[] words = new String[] {"hello","i","am","leetcode","hello"};
         assertEquals(1, solution.closestTarget(words, "hello", 1));
     }
+
+    @Test
+    public void testQueryClosest() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {1,3,1,4,1,3,2};
+        int[] queries = new int[] {0,3,5};
+        List<Integer> exp = new ArrayList<>();
+        exp.add(2);
+        exp.add(-1);
+        exp.add(3);
+        List<Integer> act = solution.solveQueries(nums, queries);
+        assertEquals(exp.size(), act.size());
+        for (int i = 0; i < exp.size(); i++) {
+            assertEquals(exp.get(i), act.get(i));
+        }
+    }
 }
