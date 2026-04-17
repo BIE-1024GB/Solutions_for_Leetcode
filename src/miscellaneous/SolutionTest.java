@@ -1385,4 +1385,11 @@ public class SolutionTest {
             assertEquals(exp.get(i), act.get(i));
         }
     }
+
+    @Test
+    public void testMirrorPair() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {12,21,45,33,54};
+        assertEquals(1, solution.minMirrorPairDistance(nums));
+    }
 }

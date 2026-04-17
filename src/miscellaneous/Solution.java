@@ -6025,4 +6025,25 @@ public class Solution {
         }
         return res;
     }
+
+    private int reverse2(int x) {
+        int rev = 0;
+        while (x > 0) {
+            int digit = x%10;
+            rev = rev*10+digit;
+            x /= 10;
+        }
+        return rev;
+    }
+    public int minMirrorPairDistance(int[] nums) {
+        int mind = Integer.MAX_VALUE;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i <= nums.length-1; i++) {
+            if (map.containsKey(nums[i])) {
+                mind = Math.min(mind, i-map.get(nums[i]));
+            }
+            map.put(reverse2(nums[i]), i);
+        }
+        return (mind==Integer.MAX_VALUE) ? -1 : mind;
+    }
 }
