@@ -6046,4 +6046,8 @@ public class Solution {
         }
         return (mind==Integer.MAX_VALUE) ? -1 : mind;
     }
+
+    public int mirrorDistance(int n) {
+        return Math.abs(n-reverse2(n));
+    }
 }
