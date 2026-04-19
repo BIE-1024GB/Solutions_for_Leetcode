@@ -6050,4 +6050,19 @@ public class Solution {
     public int mirrorDistance(int n) {
         return Math.abs(n-reverse2(n));
     }
+
+    public int maxDistance(int[] nums1, int[] nums2) {
+        int maxd = 0;
+        int p1 = 0;
+        int p2 = 0;
+        while (p1<=nums1.length-1 && p2<=nums2.length-1) {
+            if (nums2[p2] >= nums1[p1]) {
+                maxd = Math.max(maxd, p2-p1);
+                p2++;
+            } else {
+                p1++;
+            }
+        }
+        return maxd;
+    }
 }

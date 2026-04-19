@@ -1398,4 +1398,12 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertEquals(9, solution.mirrorDistance(10));
     }
+
+    @Test
+    public void testMaxDist() {
+        Solution solution = new Solution();
+        int[] nums1 = new int[] {55,30,5,4,2};
+        int[] nums2 = new int[] {100,20,10,10,5};
+        assertEquals(2, solution.maxDistance(nums1, nums2));
+    }
 }
