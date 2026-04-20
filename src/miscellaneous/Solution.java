@@ -6065,4 +6065,24 @@ public class Solution {
         }
         return maxd;
     }
+
+    public int maxDistance(int[] colors) {
+        int n = colors.length;
+        int leftColor = colors[0];
+        int rightColor = colors[n - 1];
+        int ans = 0;
+        for (int i = n - 1; i >= 0; i--) {
+            if (colors[i] != leftColor) {
+                ans = Math.max(ans, i);
+                break;
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            if (colors[i] != rightColor) {
+                ans = Math.max(ans, n - 1 - i);
+                break;
+            }
+        }
+        return ans;
+    }
 }

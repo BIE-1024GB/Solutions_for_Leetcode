@@ -1406,4 +1406,11 @@ public class SolutionTest {
         int[] nums2 = new int[] {100,20,10,10,5};
         assertEquals(2, solution.maxDistance(nums1, nums2));
     }
+
+    @Test
+    public void testDiffColor() {
+        Solution solution = new Solution();
+        int[] colors = new int[] {1,1,1,6,1,1,1};
+        assertEquals(3, solution.maxDistance(colors));
+    }
 }
