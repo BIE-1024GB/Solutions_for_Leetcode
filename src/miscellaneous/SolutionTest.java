@@ -1413,4 +1413,12 @@ public class SolutionTest {
         int[] colors = new int[] {1,1,1,6,1,1,1};
         assertEquals(3, solution.maxDistance(colors));
     }
+
+    @Test
+    public void testDiffSum() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {1,3,1,1,2};
+        long[] exp = new long[] {5,0,3,4,0};
+        assertArrayEquals(exp, solution.distance(nums));
+    }
 }

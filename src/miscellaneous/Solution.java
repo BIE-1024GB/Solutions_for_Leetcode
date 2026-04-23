@@ -6085,4 +6085,53 @@ public class Solution {
         }
         return ans;
     }
+
+    public List<String> twoEditWords(String[] queries, String[] dictionary) {
+        List<String> res = new ArrayList<>();
+        int n = queries[0].length();
+        for (String q : queries) {
+            boolean match = false;
+            for (String d : dictionary) {
+                int diff = 0;
+                for (int i = 0; i <= n-1; i++) {
+                    if (q.charAt(i) != d.charAt(i)) {
+                        diff++;
+                    }
+                }
+                if (diff <= 2) {
+                    match = true;
+                    break;
+                }
+            }
+            if (match) {
+                res.add(q);
+            }
+        }
+        return res;
+    }
+
+    public long[] distance(int[] nums) {
+        int n = nums.length;
+        long[] ans = new long[n];
+
+        Map<Integer, List<Integer>> map = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            map.computeIfAbsent(nums[i], k -> new ArrayList<>()).add(i);
+        }
+
+        for (List<Integer> pos : map.values()) {
+            int m = pos.size();
+            long[] prefix = new long[m + 1];
+            for (int i = 0; i < m; i++) {
+                prefix[i + 1] = prefix[i] + pos.get(i);
+            }
+            for (int i = 0; i < m; i++) {
+                long idx = pos.get(i);
+                long leftSum = idx * i - prefix[i];
+                long rightSum = (prefix[m] - prefix[i + 1]) - idx * (m - i - 1);
+                ans[(int) idx] = leftSum + rightSum;
+            }
+        }
+        return ans;
+    }
 }
