@@ -6073,7 +6073,7 @@ public class Solution {
         int ans = 0;
         for (int i = n - 1; i >= 0; i--) {
             if (colors[i] != leftColor) {
-                ans = Math.max(ans, i);
+                ans = i;
                 break;
             }
         }
@@ -6133,5 +6133,24 @@ public class Solution {
             }
         }
         return ans;
+    }
+
+    public int furthestDistanceFromOrigin(String moves) {
+        int ls = 0;
+        int rs = 0;
+        for (int i = 0; i <= moves.length()-1; i++) {
+            char c = moves.charAt(i);
+            if (c == 'L') {
+                ls -= 1;
+                rs -= 1;
+            } else if (c == 'R') {
+                ls += 1;
+                rs += 1;
+            } else {
+                ls -= 1;
+                rs += 1;
+            }
+        }
+        return Math.max(Math.abs(ls), Math.abs(rs));
     }
 }

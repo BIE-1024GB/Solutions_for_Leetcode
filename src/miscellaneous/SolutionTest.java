@@ -1421,4 +1421,11 @@ public class SolutionTest {
         long[] exp = new long[] {5,0,3,4,0};
         assertArrayEquals(exp, solution.distance(nums));
     }
+
+    @Test
+    public void testDist() {
+        Solution solution = new Solution();
+        String moves = "L_RL__R";
+        assertEquals(3, solution.furthestDistanceFromOrigin(moves));
+    }
 }
