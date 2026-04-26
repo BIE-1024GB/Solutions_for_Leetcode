@@ -1428,4 +1428,16 @@ public class SolutionTest {
         String moves = "L_RL__R";
         assertEquals(3, solution.furthestDistanceFromOrigin(moves));
     }
+
+    @Test
+    public void testCycle() {
+        Solution solution = new Solution();
+        char[][] grid = new char[][] {
+                {'a', 'a', 'a', 'a'},
+                {'a', 'b', 'b', 'a'},
+                {'a', 'b', 'b', 'a'},
+                {'a', 'a', 'a', 'a'}
+        };
+        assertTrue(solution.containsCycle(grid));
+    }
 }
