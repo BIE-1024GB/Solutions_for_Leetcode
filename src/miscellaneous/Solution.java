@@ -6196,4 +6196,155 @@ public class Solution {
         }
         return false;
     }
+
+    private boolean streetDFS(int[][] grid, int x, int y, char dir, boolean[][] visited) {
+        if (x==grid.length-1 && y==grid[0].length-1) {
+            return true;
+        }
+        if (visited[x][y]) {
+            return false;
+        } else {
+            visited[x][y] = true;
+        }
+        switch (grid[x][y]) {
+            case 1:
+                if (dir == 'R') {
+                    if (y == grid[0].length-1) {
+                        return false;
+                    }
+                    if (grid[x][y+1]==2 || grid[x][y+1]==4 || grid[x][y+1]==6) {
+                        return false;
+                    } else {
+                        return streetDFS(grid, x, y+1, dir, visited);
+                    }
+                } else {
+                    if (y == 0) {
+                        return false;
+                    }
+                    if (grid[x][y-1]==2 || grid[x][y-1]==3 || grid[x][y-1]==5) {
+                        return false;
+                    } else {
+                        return streetDFS(grid, x, y-1, dir, visited);
+                    }
+                }
+            case 2:
+                if (dir == 'D') {
+                    if (x == grid.length-1) {
+                        return false;
+                    }
+                    if (grid[x+1][y]==1 || grid[x+1][y]==3 || grid[x+1][y]==4) {
+                        return false;
+                    } else {
+                        return streetDFS(grid, x+1, y, dir, visited);
+                    }
+                } else {
+                    if (x == 0) {
+                        return false;
+                    }
+                    if (grid[x-1][y]==1 || grid[x-1][y]==5 || grid[x-1][y]==6) {
+                        return false;
+                    } else {
+                        return streetDFS(grid, x-1, y, dir, visited);
+                    }
+                }
+            case 3:
+                if (dir == 'R') {
+                    if (x == grid.length-1) {
+                        return false;
+                    }
+                    if (grid[x+1][y]==1 || grid[x+1][y]==3 || grid[x+1][y]==4) {
+                        return false;
+                    } else {
+                        return streetDFS(grid, x+1, y, 'D', visited);
+                    }
+                } else {
+                    if (y == 0) {
+                        return false;
+                    }
+                    if (grid[x][y-1]==2 || grid[x][y-1]==3 || grid[x][y-1]==5) {
+                        return false;
+                    } else {
+                        return streetDFS(grid, x, y-1, 'L', visited);
+                    }
+                }
+            case 4:
+                if (dir == 'L') {
+                    if (x == grid.length-1) {
+                        return false;
+                    }
+                    if (grid[x+1][y]==1 || grid[x+1][y]==3 || grid[x+1][y]==4) {
+                        return false;
+                    } else {
+                        return streetDFS(grid, x+1, y, 'D', visited);
+                    }
+                } else {
+                    if (y == grid[0].length-1) {
+                        return false;
+                    }
+                    if (grid[x][y+1]==2 || grid[x][y+1]==4 || grid[x][y+1]==6) {
+                        return false;
+                    } else {
+                        return streetDFS(grid, x, y+1, 'R', visited);
+                    }
+                }
+            case 5:
+                if (dir == 'R') {
+                    if (x == 0) {
+                        return false;
+                    }
+                    if (grid[x-1][y]==1 || grid[x-1][y]==5 || grid[x-1][y]==6) {
+                        return false;
+                    } else {
+                        return streetDFS(grid, x-1, y, 'U', visited);
+                    }
+                } else {
+                    if (y == 0) {
+                        return false;
+                    }
+                    if (grid[x][y-1]==2 || grid[x][y-1]==3 || grid[x][y-1]==5) {
+                        return false;
+                    } else {
+                        return streetDFS(grid, x, y-1, 'L', visited);
+                    }
+                }
+            default:
+                if (dir == 'L') {
+                    if (x == 0) {
+                        return false;
+                    }
+                    if (grid[x-1][y]==1 || grid[x-1][y]==5 || grid[x-1][y]==6) {
+                        return false;
+                    } else  {
+                        return streetDFS(grid, x-1, y, 'U', visited);
+                    }
+                } else {
+                    if (y == grid[0].length-1) {
+                        return false;
+                    }
+                    if (grid[x][y+1]==2 || grid[x][y+1]==4 || grid[x][y+1]==6) {
+                        return false;
+                    } else {
+                        return streetDFS(grid, x, y+1, 'R', visited);
+                    }
+                }
+        }
+    }
+    public boolean hasValidPath(int[][] grid) {
+        boolean[][] visited = new boolean[grid.length][grid[0].length];
+        switch (grid[0][0]) {
+            case 1, 3:
+                return streetDFS(grid, 0, 0, 'R', visited);
+            case 4:
+                if (streetDFS(grid, 0, 0, 'L', visited)) {
+                    return true;
+                } else {
+                    visited = new boolean[grid.length][grid[0].length];
+                    return streetDFS(grid, 0, 0, 'U', visited);
+                }
+            case 5:
+                return false;
+            default:
+                return streetDFS(grid, 0, 0, 'D', visited);
+        }
+    }
 }

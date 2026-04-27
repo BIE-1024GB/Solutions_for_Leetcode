@@ -1440,4 +1440,14 @@ public class SolutionTest {
         };
         assertTrue(solution.containsCycle(grid));
     }
+
+    @Test
+    public void testStreet() {
+        Solution solution = new Solution();
+        int[][] grid = new int[][] {
+                {4, 3, 3},
+                {6, 5, 2}
+        };
+        assertFalse(solution.hasValidPath(grid));
+    }
 }
