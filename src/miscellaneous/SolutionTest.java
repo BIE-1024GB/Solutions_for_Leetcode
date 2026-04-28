@@ -1450,4 +1450,14 @@ public class SolutionTest {
         };
         assertFalse(solution.hasValidPath(grid));
     }
+
+    @Test
+    public void testUniGrid() {
+        Solution solution = new Solution();
+        int[][] grid = new int[][] {
+                {1, 5},
+                {2, 3}
+        };
+        assertEquals(5, solution.minOperations(grid, 1));
+    }
 }

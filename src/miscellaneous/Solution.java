@@ -6347,4 +6347,26 @@ public class Solution {
                 return streetDFS(grid, 0, 0, 'D', visited);
         }
     }
+
+    public int minOperations(int[][] grid, int x) {
+        int[] flat = new int[grid.length*grid[0].length];
+        for (int i = 0; i <= flat.length-1; i++) {
+            int r = i/grid[0].length;
+            int c = i%grid[0].length;
+            flat[i] = grid[r][c];
+        }
+        int remainder = flat[0]%x;
+        for (int i = 1; i <= flat.length-1; i++) {
+            if (flat[i]%x != remainder) {
+                return -1;
+            }
+        }
+        Arrays.sort(flat);
+        int target = flat[flat.length/2];
+        int ops = 0;
+        for (int f : flat) {
+            ops += Math.abs(f-target)/x;
+        }
+        return ops;
+    }
 }
