@@ -6369,4 +6369,56 @@ public class Solution {
         }
         return ops;
     }
+
+    public int maxPathScore(int[][] grid, int k) {
+        int[][][] dp = new int[grid.length][grid[0].length][k+1];
+        for (int i = 1; i <= dp[0].length-1; i++) {
+            int score = grid[0][i];
+            int cost = (grid[0][i]==0) ? 0 : 1;
+            for (int c = 0; c <= k; c++) {
+                if (c < cost) {
+                    dp[0][i][c] = -1;
+                } else {
+                    dp[0][i][c] = (dp[0][i-1][c-cost]==-1) ? -1 : dp[0][i-1][c-cost]+score;
+                }
+            }
+        }
+        for (int i = 1; i <= dp.length-1; i++) {
+            int score = grid[i][0];
+            int cost = (grid[i][0]==0) ? 0 : 1;
+            for (int c = 0; c <= k; c++) {
+                if (c < cost) {
+                    dp[i][0][c] = -1;
+                } else {
+                    dp[i][0][c] = (dp[i-1][0][c-cost]==-1) ? -1 : dp[i-1][0][c-cost]+score;
+                }
+            }
+        }
+        for (int i = 1; i <= dp.length-1; i++) {
+            for (int j = 1; j <= dp[0].length-1; j++) {
+                int score = grid[i][j];
+                int cost = (grid[i][j]==0) ? 0 : 1;
+                for (int c = 0; c <= k; c++) {
+                    if (c < cost) {
+                        dp[i][j][c] = -1;
+                    } else {
+                        if (dp[i-1][j][c-cost]==-1 && dp[i][j-1][c-cost]==-1) {
+                            dp[i][j][c] = -1;
+                        } else if (dp[i-1][j][c-cost] == -1) {
+                            dp[i][j][c] = dp[i][j-1][c-cost]+score;
+                        } else if (dp[i][j-1][c-cost] == -1) {
+                            dp[i][j][c] = dp[i-1][j][c-cost]+score;
+                        } else {
+                            dp[i][j][c] = Math.max(dp[i-1][j][c-cost], dp[i][j-1][c-cost])+score;
+                        }
+                    }
+                }
+            }
+        }
+        int ms = -1;
+        for (int s : dp[dp.length-1][dp[0].length-1]) {
+            ms = Math.max(ms, s);
+        }
+        return ms;
+    }
 }

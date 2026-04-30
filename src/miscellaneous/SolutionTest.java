@@ -1460,4 +1460,14 @@ public class SolutionTest {
         };
         assertEquals(5, solution.minOperations(grid, 1));
     }
+
+    @Test
+    public void testScoreCost() {
+        Solution solution = new Solution();
+        int[][] grid = new int[][] {
+                {0, 1},
+                {1, 2}
+        };
+        assertEquals(-1, solution.maxPathScore(grid, 1));
+    }
 }
