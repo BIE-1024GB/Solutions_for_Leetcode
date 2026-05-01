@@ -6421,4 +6421,22 @@ public class Solution {
         }
         return ms;
     }
+
+    public int maxRotateFunction(int[] nums) {
+        int sum = 0;
+        for (int n : nums) {
+            sum += n;
+        }
+        int fc = 0;
+        for (int i = 0; i <= nums.length-1; i++) {
+            fc += i*nums[i];
+        }
+        int res = fc;
+        for (int k = 1; k <= nums.length-1; k++) {
+            int fn = fc+sum-nums.length*nums[nums.length-k];
+            res = Math.max(res, fn);
+            fc = fn;
+        }
+        return res;
+    }
 }

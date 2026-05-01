@@ -1470,4 +1470,11 @@ public class SolutionTest {
         };
         assertEquals(-1, solution.maxPathScore(grid, 1));
     }
+
+    @Test
+    public void testRotateFunc() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {4, 3, 2, 6};
+        assertEquals(26, solution.maxRotateFunction(nums));
+    }
 }
