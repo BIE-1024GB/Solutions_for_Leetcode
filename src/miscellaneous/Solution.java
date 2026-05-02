@@ -6439,4 +6439,29 @@ public class Solution {
         }
         return res;
     }
+
+    public int rotatedDigits(int n) {
+        int res = 0;
+        for (int i = 1; i <= n; i++) {
+            String s = String.valueOf(i);
+            boolean valid = true;
+            for (int k = 0; k <= s.length()-1; k++) {
+                int digit = s.charAt(k)-'0';
+                if (digit==3 || digit==4 || digit==7) {
+                    valid = false;
+                    break;
+                }
+            }
+            if (valid) {
+                for (int k = 0; k <= s.length()-1; k++) {
+                    int digit = s.charAt(k)-'0';
+                    if (digit==2 || digit==5 || digit==6 || digit==9) {
+                        res += 1;
+                        break;
+                    }
+                }
+            }
+        }
+        return res;
+    }
 }

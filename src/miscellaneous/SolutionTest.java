@@ -1477,4 +1477,10 @@ public class SolutionTest {
         int[] nums = new int[] {4, 3, 2, 6};
         assertEquals(26, solution.maxRotateFunction(nums));
     }
+
+    @Test
+    public void testRotateDigit() {
+        Solution solution = new Solution();
+        assertEquals(247, solution.rotatedDigits(857));
+    }
 }
