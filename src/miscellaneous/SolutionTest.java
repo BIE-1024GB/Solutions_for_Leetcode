@@ -1483,4 +1483,10 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertEquals(247, solution.rotatedDigits(857));
     }
+
+    @Test
+    public void testRotateString() {
+        Solution solution = new Solution();
+        assertTrue(solution.rotateString("abcde", "cdeab"));
+    }
 }
