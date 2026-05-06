@@ -1489,4 +1489,20 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertTrue(solution.rotateString("abcde", "cdeab"));
     }
+
+    @Test
+    public void testRotateBox() {
+        Solution solution = new Solution();
+        char[][] box = new char[][] {
+                {'#', '.', '*', '.'},
+                {'#', '#', '*', '.'}
+        };
+        char[][] exp =  new char[][] {
+                {'#', '.'},
+                {'#', '#'},
+                {'*', '*'},
+                {'.', '.'}
+        };
+        assertArrayEquals(exp, solution.rotateTheBox(box));
+    }
 }

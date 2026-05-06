@@ -6489,4 +6489,52 @@ public class Solution {
             }
         }
     }
+
+    public char[][] rotateTheBox(char[][] boxGrid) {
+        int m = boxGrid.length;
+        int n = boxGrid[0].length;
+        char[][] turn = new char[n][m];
+        for (int r = m - 1; r >= 0; r--) {
+            int pt = n - 1;
+            int bd = n - 1;
+            int stone = 0;
+            while (pt >= 0) {
+                if (boxGrid[r][pt] == '#') {
+                    stone += 1;
+                } else if (boxGrid[r][pt] == '*') {
+                    if (stone > 0) {
+                        for (int i = 1; i <= stone; i++) {
+                            boxGrid[r][bd + 1 - i] = '#';
+                        }
+                        if (bd - pt > stone) {
+                            int space = bd - pt - stone;
+                            for (int i = 1; i <= space; i++) {
+                                boxGrid[r][bd - stone + 1 - i] = '.';
+                            }
+                        }
+                        stone = 0;
+                    }
+                    bd = pt - 1;
+                }
+                pt--;
+            }
+            if (stone > 0) {
+                for (int i = 1; i <= stone; i++) {
+                    boxGrid[r][bd + 1 - i] = '#';
+                }
+                if (bd - pt > stone) {
+                    int space = bd - pt - stone;
+                    for (int i = 1; i <= space; i++) {
+                        boxGrid[r][bd - stone + 1 - i] = '.';
+                    }
+                }
+            }
+        }
+        for (int r = 0; r <= m - 1; r++) {
+            for (int c = 0; c <= n - 1; c++) {
+                turn[c][m - 1 - r] = boxGrid[r][c];
+            }
+        }
+        return turn;
+    }
 }
