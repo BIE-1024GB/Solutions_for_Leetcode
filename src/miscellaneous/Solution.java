@@ -6537,4 +6537,27 @@ public class Solution {
         }
         return turn;
     }
+
+    public int[] maxValue(int[] nums) {
+        int n = nums.length;
+        int[] ans = new int[n];
+        int[] suf = new int[n + 1];
+        suf[n] = Integer.MAX_VALUE;
+        for (int i = n - 1; i >= 0; i--) {
+            suf[i] = Math.min(nums[i], suf[i + 1]);
+        }
+        int start = 0;
+        int curMax = 0;
+        for (int i = 0; i < n; i++) {
+            curMax = Math.max(curMax, nums[i]);
+            if (i == n - 1 || curMax <= suf[i + 1]) {
+                for (int j = start; j <= i; j++) {
+                    ans[j] = curMax;
+                }
+                start = i + 1;
+                curMax = 0;
+            }
+        }
+        return ans;
+    }
 }

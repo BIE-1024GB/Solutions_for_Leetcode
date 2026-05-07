@@ -1505,4 +1505,12 @@ public class SolutionTest {
         };
         assertArrayEquals(exp, solution.rotateTheBox(box));
     }
+
+    @Test
+    public void testIXJump() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {2, 1, 3};
+        int[] exp = new int[] {2, 2, 3};
+        assertArrayEquals(exp, solution.maxValue(nums));
+    }
 }
