@@ -1513,4 +1513,22 @@ public class SolutionTest {
         int[] exp = new int[] {2, 2, 3};
         assertArrayEquals(exp, solution.maxValue(nums));
     }
+
+    @Test
+    public void testLayerRotate() {
+        Solution solution = new Solution();
+        int[][] grid = new int[][] {
+                {1, 2, 3, 4},
+                {5, 6, 7, 8},
+                {9, 10, 11, 12},
+                {13, 14, 15, 16}
+        };
+        int[][] exp = new int[][] {
+                {3, 4, 8, 12},
+                {2, 11, 10, 16},
+                {1, 7, 6, 15},
+                {5, 9, 13, 14}
+        };
+        assertArrayEquals(exp, solution.rotateGrid(grid, 2));
+    }
 }

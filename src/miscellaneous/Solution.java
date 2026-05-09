@@ -6560,4 +6560,43 @@ public class Solution {
         }
         return ans;
     }
+
+    private void rotateLayer(int[][] grid, int k, int tlr, int tlc, int h, int w) {
+        int[] flat = new int[2 * h + 2 * w - 4];
+        for (int i = 0; i <= flat.length - 1; i++) {
+            if (i <= h - 1) {
+                flat[i] = grid[tlr + i][tlc];
+            } else if (i <= h + w - 3) {
+                flat[i] = grid[tlr + h - 1][tlc + i - h + 1];
+            } else if (i <= 2 * h + w - 3) {
+                flat[i] = grid[tlr + 2 * h - 3 - i + w][tlc + w - 1];
+            } else {
+                flat[i] = grid[tlr][tlc + 2 * w + 2 * h - 4 - i];
+            }
+        }
+        k %= flat.length;
+        if (k > 0) {
+            for (int i = 0; i <= flat.length - 1; i++) {
+                int loc = (i + k) % flat.length;
+                if (loc <= h - 1) {
+                    grid[tlr + loc][tlc] = flat[i];
+                } else if (loc <= h + w - 3) {
+                    grid[tlr + h - 1][tlc + loc - h + 1] = flat[i];
+                } else if (loc <= 2 * h + w - 3) {
+                    grid[tlr + 2 * h - 3 - loc + w][tlc + w - 1] = flat[i];
+                } else {
+                    grid[tlr][tlc + 2 * w + 2 * h - 4 - loc] = flat[i];
+                }
+            }
+        }
+    }
+    public int[][] rotateGrid(int[][] grid, int k) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+        int layers = Math.min(rows, cols)/2;
+        for (int l = 0; l <= layers-1; l++) {
+            rotateLayer(grid, k, l, l, rows-2*l, cols-2*l);
+        }
+        return grid;
+    }
 }
