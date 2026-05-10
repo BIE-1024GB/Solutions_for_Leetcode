@@ -1531,4 +1531,11 @@ public class SolutionTest {
         };
         assertArrayEquals(exp, solution.rotateGrid(grid, 2));
     }
+
+    @Test
+    public void testMaxJump() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {1,3,6,4,1,2};
+        assertEquals(3, solution.maximumJumps(nums, 2));
+    }
 }
