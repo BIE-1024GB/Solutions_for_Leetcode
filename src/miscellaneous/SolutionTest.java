@@ -1538,4 +1538,12 @@ public class SolutionTest {
         int[] nums = new int[] {1,3,6,4,1,2};
         assertEquals(3, solution.maximumJumps(nums, 2));
     }
+
+    @Test
+    public void testDigitsArray() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {13, 25, 83, 77};
+        int[] exp = new int[] {1, 3, 2, 5, 8, 3, 7, 7};
+        assertArrayEquals(exp, solution.separateDigits(nums));
+    }
 }

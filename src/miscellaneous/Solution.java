@@ -6619,4 +6619,21 @@ public class Solution {
         }
         return dp[n - 1];
     }
+
+    public int[] separateDigits(int[] nums) {
+        List<Integer> list = new ArrayList<>();
+        for (int i = nums.length-1; i >= 0; i--) {
+            int n = nums[i];
+            while (n > 0) {
+                int digit = n%10;
+                list.addFirst(digit);
+                n /= 10;
+            }
+        }
+        int[] answer = new int[list.size()];
+        for (int i = 0; i <= answer.length-1; i++) {
+            answer[i] = list.get(i);
+        }
+        return answer;
+    }
 }
