@@ -6626,14 +6626,29 @@ public class Solution {
             int n = nums[i];
             while (n > 0) {
                 int digit = n%10;
-                list.addFirst(digit);
+                list.add(digit);
                 n /= 10;
             }
         }
         int[] answer = new int[list.size()];
         for (int i = 0; i <= answer.length-1; i++) {
-            answer[i] = list.get(i);
+            answer[i] = list.get(list.size()-1-i);
         }
         return answer;
+    }
+
+    public int minimumEffort(int[][] tasks) {
+        Arrays.sort(tasks, (a, b) -> {
+            int diffA = a[1] - a[0];
+            int diffB = b[1] - b[0];
+            return diffB - diffA;
+        });
+        int need = 0;
+        for (int i = tasks.length - 1; i >= 0; i--) {
+            int actual = tasks[i][0];
+            int minimum = tasks[i][1];
+            need = Math.max(need + actual, minimum);
+        }
+        return need;
     }
 }

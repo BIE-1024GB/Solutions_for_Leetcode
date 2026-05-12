@@ -1546,4 +1546,13 @@ public class SolutionTest {
         int[] exp = new int[] {1, 3, 2, 5, 8, 3, 7, 7};
         assertArrayEquals(exp, solution.separateDigits(nums));
     }
+
+    @Test
+    public void testTaskEnergy() {
+        Solution solution = new Solution();
+        int[][] tasks = new int[][] {
+                {1, 3}, {2, 4}, {10, 11}, {10, 12}, {8, 9}
+        };
+        assertEquals(32, solution.minimumEffort(tasks));
+    }
 }
