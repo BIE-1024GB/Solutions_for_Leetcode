@@ -6651,4 +6651,45 @@ public class Solution {
         }
         return need;
     }
+
+    public int minMoves(int[] nums, int limit) {
+        int n = nums.length;
+        int pairs = n / 2;
+
+        // We will track how many moves are needed for each possible sum.
+        // Sums range from 2 to 2 * limit.
+        int[] diff = new int[2 * limit + 2];
+
+        for (int i = 0; i < pairs; i++) {
+            int a = nums[i];
+            int b = nums[n - 1 - i];
+
+            int low = Math.min(a, b);
+            int high = Math.max(a, b);
+
+            // Start with the assumption that this pair needs 2 moves for every sum.
+            // Then reduce the cost in the ranges where 1 move or 0 moves is enough.
+            //
+            // 1 move is enough for sums in [low + 1, high + limit]
+            diff[low + 1] -= 1;
+            diff[high + limit + 1] += 1;
+
+            // 0 moves is enough for the exact sum a + b
+            diff[a + b] -= 1;
+            diff[a + b + 1] += 1;
+        }
+
+        int answer = Integer.MAX_VALUE;
+        int current = 0;
+
+        // Scan all possible target sums.
+        // Baseline is 2 moves per pair, so start from 2 * pairs.
+        for (int sum = 2; sum <= 2 * limit; sum++) {
+            current += diff[sum];
+            int moves = 2 * pairs + current;
+            answer = Math.min(answer, moves);
+        }
+
+        return answer;
+    }
 }

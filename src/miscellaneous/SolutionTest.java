@@ -1555,4 +1555,11 @@ public class SolutionTest {
         };
         assertEquals(32, solution.minimumEffort(tasks));
     }
+
+    @Test
+    public void testMinEdit() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {1, 2, 4, 3};
+        assertEquals(1, solution.minMoves(nums, 4));
+    }
 }
