@@ -6692,4 +6692,102 @@ public class Solution {
 
         return answer;
     }
+
+    public int numberOfSpecialChars(String word) {
+        Set<Character> set = new HashSet<>();
+        int res = 0;
+        for (char c : word.toCharArray()) {
+            set.add(c);
+        }
+        for (char c : set) {
+            if (Character.isLowerCase(c)) {
+                char uc = Character.toUpperCase(c);
+                if (set.contains(uc)) {
+                    res += 1;
+                }
+            }
+        }
+        return res;
+    }
+
+    public int numberOfSpecialCharsII(String word) {
+        Set<Character> set = new HashSet<>();
+        for (char c : word.toCharArray()) {
+            set.add(c);
+        }
+        Map<Character, Integer> lcMap = new HashMap<>();
+        Map<Character, Integer> ucMap = new HashMap<>();
+        for (int i = 0; i <= word.length()-1; i++) {
+            char c = word.charAt(i);
+            if (Character.isLowerCase(c)) {
+                lcMap.put(c, i);
+            } else {
+                if (!ucMap.containsKey(c)) {
+                    ucMap.put(c, i);
+                }
+            }
+        }
+        int res = 0;
+        for (char c : set) {
+            if (Character.isLowerCase(c)) {
+                char uc = Character.toUpperCase(c);
+                if (ucMap.containsKey(uc)) {
+                    if (lcMap.get(c) < ucMap.get(uc)) {
+                        res += 1;
+                    }
+                }
+            }
+        }
+        return res;
+    }
+
+    private int digitSum(int i) {
+        int sum = 0;
+        while (i > 0) {
+            int digit = i%10;
+            sum += digit;
+            i /= 10;
+        }
+        return sum;
+    }
+    public int minElement(int[] nums) {
+        int minSum = Integer.MAX_VALUE;
+        for (int n : nums) {
+            int sum = digitSum(n);
+            minSum = Math.min(minSum, sum);
+        }
+        return minSum;
+    }
+
+    public boolean asteroidsDestroyed(int mass, int[] asteroids) {
+        Arrays.sort(asteroids);
+        long cm = mass;
+        for (int a : asteroids) {
+            if (a > cm) {
+                return false;
+            } else {
+                cm += a;
+            }
+        }
+        return true;
+    }
+
+    public int minimumCostII(int[] cost) {
+        int n = cost.length;
+        int sum = 0;
+        if (n <= 2) {
+            for (int c : cost) {
+                sum += c;
+            }
+        } else {
+            Arrays.sort(cost);
+            for (int i = 1; i <= n; i++) {
+                int idx = n-i;
+                if (i%3 != 0) {
+                    sum += cost[idx];
+                }
+            }
+        }
+        return sum;
+    }
 }

@@ -1562,4 +1562,39 @@ public class SolutionTest {
         int[] nums = new int[] {1, 2, 4, 3};
         assertEquals(1, solution.minMoves(nums, 4));
     }
+
+    @Test
+    public void testSpecChar() {
+        Solution solution = new Solution();
+        String word = "abBCab";
+        assertEquals(1, solution.numberOfSpecialChars(word));
+    }
+
+    @Test
+    public void testSpecCharII() {
+        Solution solution = new Solution();
+        String word = "aaAbcBC";
+        assertEquals(3, solution.numberOfSpecialCharsII(word));
+    }
+
+    @Test
+    public void testMinDigSum() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {10, 12, 13, 14};
+        assertEquals(1, solution.minElement(nums));
+    }
+
+    @Test
+    public void testAsteroids() {
+        Solution solution = new Solution();
+        int[] asteroids = new int[] {3, 9, 19, 5, 21};
+        assertTrue(solution.asteroidsDestroyed(10, asteroids));
+    }
+
+    @Test
+    public void testMinCostII() {
+        Solution solution = new Solution();
+        int[] cost = new int[] {6, 5, 7, 9, 2, 2};
+        assertEquals(23, solution.minimumCostII(cost));
+    }
 }
