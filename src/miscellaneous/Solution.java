@@ -6790,4 +6790,222 @@ public class Solution {
         }
         return sum;
     }
+
+    public int earliestFinishTime(int[] landStartTime, int[] landDuration, int[] waterStartTime, int[] waterDuration) {
+        int n = landStartTime.length;
+        int m = waterStartTime.length;
+        int best = Integer.MAX_VALUE;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                // Order: Land first, then Water
+                int landFinish = landStartTime[i] + landDuration[i];
+                int waterStart = Math.max(waterStartTime[j], landFinish);
+                int finishTime = waterStart + waterDuration[j];
+                best = Math.min(best, finishTime);
+                // Order: Water first, then Land
+                int waterFinish = waterStartTime[j] + waterDuration[j];
+                int landStart = Math.max(landStartTime[i], waterFinish);
+                finishTime = landStart + landDuration[i];
+                best = Math.min(best, finishTime);
+            }
+        }
+        return best;
+    }
+
+    private int binarySearch(int[][] rides, int target) {
+        // Find the first index where rides[index][0] >= target
+        int left = 0, right = rides.length;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (rides[mid][0] < target) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        return left;
+    }
+    @SuppressWarnings("all")
+    private int solve(int[] firstStart, int[] firstDuration, int[] secondStart, int[] secondDuration) {
+        int n = firstStart.length;
+        int m = secondStart.length;
+        // Create pairs of (startTime, duration) for second category rides
+        int[][] second = new int[m][2];
+        for (int i = 0; i < m; i++) {
+            second[i][0] = secondStart[i];
+            second[i][1] = secondDuration[i];
+        }
+        // Sort by start time
+        Arrays.sort(second, Comparator.comparingInt(a -> a[0]));
+        // Precompute suffix minimum of (startTime + duration) for second rides
+        // suffixMin[i] = minimum completion time among rides from index i to m-1
+        int[] suffixMin = new int[m];
+        suffixMin[m - 1] = second[m - 1][0] + second[m - 1][1];
+        for (int i = m - 2; i >= 0; i--) {
+            suffixMin[i] = Math.min(suffixMin[i + 1], second[i][0] + second[i][1]);
+        }
+        // Precompute prefix minimum of duration for second rides
+        // prefixMinDur[i] = minimum duration among rides from index 0 to i
+        int[] prefixMinDur = new int[m];
+        prefixMinDur[0] = second[0][1];
+        for (int i = 1; i < m; i++) {
+            prefixMinDur[i] = Math.min(prefixMinDur[i - 1], second[i][1]);
+        }
+        int answer = Integer.MAX_VALUE;
+        // For each first ride
+        for (int i = 0; i < n; i++) {
+            int finishFirst = firstStart[i] + firstDuration[i];
+            // Find the first second ride that starts at or after finishFirst
+            int idx = binarySearch(second, finishFirst);
+            // Case 1: Take a second ride that starts at or after finishFirst
+            if (idx < m) {
+                // The minimum completion time from idx onwards gives us the best option
+                // We need to wait until at least finishFirst, so the completion time is:
+                // max(finishFirst, second[j].start) + second[j].duration for some j >= idx
+                // The suffixMin already gives us start + duration
+                // We need max(finishFirst, start) + duration = max(finishFirst + duration, start + duration)
+                answer = Math.min(answer, Math.max(finishFirst + suffixMin[idx] - second[idx][0], suffixMin[idx]));
+                // A simpler way: if we take the ride at idx, we finish at max(finishFirst, second[idx][0]) + second[idx][1]
+                answer = Math.min(answer, Math.max(finishFirst, second[idx][0]) + second[idx][1]);
+            }
+            // Case 2: Take a second ride that starts before finishFirst
+            if (idx > 0) {
+                // Any ride starting before finishFirst: we wait until finishFirst to start it
+                // Completion = finishFirst + duration
+                // Best is the one with minimum duration
+                answer = Math.min(answer, finishFirst + prefixMinDur[idx - 1]);
+            }
+        }
+        return answer;
+    }
+    public int earliestFinishTimeII(int[] landStartTime, int[] landDuration, int[] waterStartTime, int[] waterDuration) {
+        return Math.min(
+                solve(landStartTime, landDuration, waterStartTime, waterDuration),
+                solve(waterStartTime, waterDuration, landStartTime, landDuration));
+    }
+
+    private int waviness(int num) {
+        List<Integer> list = new ArrayList<>();
+        while (num > 0) {
+            int digit = num%10;
+            list.add(digit);
+            num /= 10;
+        }
+        if (list.size() <= 2) {
+            return 0;
+        }
+        int res = 0;
+        for (int i = 1; i <= list.size()-2; i++) {
+            if ((list.get(i)>list.get(i-1) && list.get(i)>list.get(i+1)) || (list.get(i)<list.get(i-1) && list.get(i)<list.get(i+1))) {
+                res += 1;
+            }
+        }
+        return res;
+    }
+    public int totalWaviness(int num1, int num2) {
+        int tw = 0;
+        for (int n = num1; n <= num2; n++) {
+            tw += waviness(n);
+        }
+        return tw;
+    }
+
+    public int[] leftRightDifference(int[] nums) {
+        int n = nums.length;
+        int[] ls = new int[n];
+        for (int i = 1; i <= n-1; i++) {
+            ls[i] = ls[i-1]+nums[i-1];
+        }
+        int[] rs = new int[n];
+        for (int i = n-2; i >= 0; i--) {
+            rs[i] = rs[i+1]+nums[i+1];
+        }
+        int[] ans = new int[n];
+        for (int i = 0; i <= n-1; i++) {
+            ans[i] = Math.abs(ls[i]-rs[i]);
+        }
+        return ans;
+    }
+
+    public TreeNode createBinaryTree(int[][] descriptions) {
+        Map<Integer, TreeNode> nodes = new HashMap<>();
+        Map<Integer, Integer> parents = new HashMap<>();
+        for (int[] des : descriptions) {
+            TreeNode parent;
+            if (nodes.containsKey(des[0])) {
+                parent = nodes.get(des[0]);
+            } else {
+                parent = new TreeNode(des[0]);
+            }
+            TreeNode child;
+            if (nodes.containsKey(des[1])) {
+                child = nodes.get(des[1]);
+            } else {
+                child = new TreeNode(des[1]);
+            }
+            if (des[2] == 1) {
+                parent.left = child;
+            } else {
+                parent.right = child;
+            }
+            nodes.put(des[0], parent);
+            nodes.put(des[1], child);
+            if (!parents.containsKey(des[0])) {
+                parents.put(des[0], 0);
+            }
+            parents.put(des[1], 1);
+        }
+        int r = 0;
+        for (Integer k : parents.keySet()) {
+            if (parents.get(k) == 0) {
+                r = k;
+                break;
+            }
+        }
+        return nodes.get(r);
+    }
+
+    public int[] pivotArray(int[] nums, int pivot) {
+        List<Integer> less = new ArrayList<>();
+        List<Integer> equal = new ArrayList<>();
+        List<Integer> greater = new ArrayList<>();
+        for (int n : nums) {
+            if (n < pivot) {
+                less.add(n);
+            } else if (n == pivot) {
+                equal.add(n);
+            } else {
+                greater.add(n);
+            }
+        }
+        int[] res = new int[nums.length];
+        int pt = 0;
+        if (!less.isEmpty()) {
+            for (Integer i : less) {
+                res[pt++] = i;
+            }
+        }
+        if (!equal.isEmpty()) {
+            for (Integer i : equal) {
+                res[pt++] = i;
+            }
+        }
+        if (!greater.isEmpty()) {
+            for (Integer i : greater) {
+                res[pt++] = i;
+            }
+        }
+        return res;
+    }
+
+    public long maxTotalValue(int[] nums, int k) {
+        int minv = Integer.MAX_VALUE;
+        int maxv = Integer.MIN_VALUE;
+        for (int n : nums) {
+            minv = Math.min(minv, n);
+            maxv = Math.max(maxv, n);
+        }
+        long diff = maxv-minv;
+        return diff*k;
+    }
 }

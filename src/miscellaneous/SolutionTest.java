@@ -1597,4 +1597,53 @@ public class SolutionTest {
         int[] cost = new int[] {6, 5, 7, 9, 2, 2};
         assertEquals(23, solution.minimumCostII(cost));
     }
+
+    @Test
+    public void testLandWater() {
+        Solution  solution = new Solution();
+        int[] ls = new int[] {2, 8};
+        int[] ld = new int[] {4, 1};
+        int[] ws = new int[] {6};
+        int[] wd = new int[] {3};
+        assertEquals(9, solution.earliestFinishTime(ls, ld, ws, wd));
+    }
+
+    @Test
+    public void testLandWaterII() {
+        Solution solution = new Solution();
+        int[] ls = new int[] {5};
+        int[] ld = new int[] {3};
+        int[] ws = new int[] {1};
+        int[] wd = new int[] {10};
+        assertEquals(14, solution.earliestFinishTimeII(ls, ld, ws, wd));
+    }
+
+    @Test
+    public void testWaviness() {
+        Solution solution = new Solution();
+        assertEquals(3, solution.totalWaviness(120, 130));
+    }
+
+    @Test
+    public void testLSRSDiff() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {10, 4, 8, 3};
+        int[] exp = new int[] {15, 1, 11, 22};
+        assertArrayEquals(exp, solution.leftRightDifference(nums));
+    }
+
+    @Test
+    public void testArrayPivotArrange() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {9,12,5,10,14,3,10};
+        int[] exp = new int[] {9,5,3,10,10,12,14};
+        assertArrayEquals(exp, solution.pivotArray(nums, 10));
+    }
+
+    @Test
+    public void testMaxTotalSub() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {4, 2, 5, 1};
+        assertEquals(12, solution.maxTotalValue(nums, 3));
+    }
 }
