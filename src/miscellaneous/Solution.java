@@ -3433,6 +3433,7 @@ public class Solution {
         }
     }
 
+    @SuppressWarnings("all")
     public long largestSquareArea(int[][] bottomLeft, int[][] topRight) {
         long bl = 0;
         int n = bottomLeft.length;
@@ -7007,5 +7008,308 @@ public class Solution {
         }
         long diff = maxv-minv;
         return diff*k;
+    }
+
+    public long maxTotalValueII(int[] nums, int k) {
+        int n = nums.length;
+        int logn = 32 - Integer.numberOfLeadingZeros(n);
+        int[][] stMax = new int[n][logn];
+        int[][] stMin = new int[n][logn];
+        for (int i = 0; i < n; i++) {
+            stMax[i][0] = stMin[i][0] = nums[i];
+        }
+        for (int j = 1; j < logn; j++) {
+            for (int i = 0; i + (1 << j) <= n; i++) {
+                stMax[i][j] = Math.max(
+                        stMax[i][j - 1],
+                        stMax[i + (1 << (j - 1))][j - 1]
+                );
+                stMin[i][j] = Math.min(
+                        stMin[i][j - 1],
+                        stMin[i + (1 << (j - 1))][j - 1]
+                );
+            }
+        }
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> b[0] - a[0]);
+        for (int l = 0; l < n; l++) {
+            int j = 31 - Integer.numberOfLeadingZeros(n - 1 - l + 1);
+            int mx = Math.max(stMax[l][j], stMax[n - 1 - (1 << j) + 1][j]);
+            int mn = Math.min(stMin[l][j], stMin[n - 1 - (1 << j) + 1][j]);
+            pq.offer(new int[] { mx - mn, l, n - 1 });
+        }
+        long ans = 0;
+        while (k-- > 0) {
+            int[] top = pq.poll();
+            assert top != null;
+            ans += top[0];
+            int l = top[1];
+            int r = top[2];
+            if (r > l) {
+                int j = 31 - Integer.numberOfLeadingZeros(r - 1 - l + 1);
+                int mx = Math.max(stMax[l][j], stMax[r - 1 - (1 << j) + 1][j]);
+                int mn = Math.min(stMin[l][j], stMin[r - 1 - (1 << j) + 1][j]);
+                pq.offer(new int[] { mx - mn, l, r - 1 });
+            }
+        }
+        return ans;
+    }
+
+    public int assignEdgeWeights(int[][] edges) {
+        int n = edges.length+1;
+        Map<Integer, Set<Integer>> connect = new HashMap<>();
+        for (int[] e : edges) {
+            int u = e[0];
+            int v = e[1];
+            if (connect.containsKey(u)) {
+                connect.get(u).add(v);
+            } else {
+                Set<Integer> set = new HashSet<>();
+                set.add(v);
+                connect.put(u, set);
+            }
+            if (connect.containsKey(v)) {
+                connect.get(v).add(u);
+            } else {
+                Set<Integer> set = new HashSet<>();
+                set.add(u);
+                connect.put(v, set);
+            }
+        }
+        int depth = 0;
+        Queue<Integer> queue = new LinkedList<>();
+        queue.offer(1);
+        Set<Integer> visit = new HashSet<>();
+        while (!queue.isEmpty()) {
+            int cs = queue.size();
+            for (int i = 1; i <= cs; i++) {
+                assert !queue.isEmpty();
+                int cn = queue.poll();
+                visit.add(cn);
+                Set<Integer> children = connect.get(cn);
+                for (Integer c : children) {
+                    if (!visit.contains(c)) {
+                        queue.offer(c);
+                    }
+                }
+            }
+            depth += 1;
+        }
+        int[][] dp = new int[depth-1][2];
+        dp[0][0] = 1;
+        dp[0][1] = 1;
+        for (int i = 1; i <= depth-2; i++) {
+            dp[i][0] = (dp[i-1][0]+dp[i-1][1])%1000000007;
+            dp[i][1] = (dp[i-1][0]+dp[i-1][1])%1000000007;
+        }
+        return dp[depth-2][0];
+    }
+
+    private List<Integer>[] graph;
+    private int[][] up; // up[node][j]: node 的 2^j 祖先
+    private int[] depth; // depth[node]: 节点的深度
+    private int LOG; // log2(n) + 1
+    private int[] pow2; // 预计算 2 的幂次
+    public int[] assignEdgeWeights(int[][] edges, int[][] queries) {
+        int n = edges.length + 1;
+        int m = queries.length;
+        int[] answer = new int[m];
+        // 1. 建图
+        buildGraph(n, edges);
+        // 2. 预处理 LCA
+        LOG = (int) (Math.log(n) / Math.log(2)) + 1;
+        up = new int[n + 1][LOG];
+        depth = new int[n + 1];
+        preprocess(1, 0);
+        // 3. 预计算 2 的幂次
+        precomputePowers(n);
+        // 4. 处理查询
+        for (int i = 0; i < m; i++) {
+            int u = queries[i][0];
+            int v = queries[i][1];
+            int lcaNode = lca(u, v);
+            int edgeCount = depth[u] + depth[v] - 2 * depth[lcaNode];
+            if (edgeCount == 0) {
+                answer[i] = 0; // 路径长度为 0，代价为 0（偶数），无法变为奇数
+            } else {
+                answer[i] = pow2[edgeCount - 1]; // 2^(edgeCount-1)
+            }
+        }
+        return answer;
+    }
+    @SuppressWarnings("unchecked")
+    private void buildGraph(int n, int[][] edges) {
+        graph = new ArrayList[n + 1];
+        for (int i = 1; i <= n; i++) {
+            graph[i] = new ArrayList<>();
+        }
+        for (int[] edge : edges) {
+            int u = edge[0], v = edge[1];
+            graph[u].add(v);
+            graph[v].add(u);
+        }
+    }
+    private void preprocess(int node, int parent) {
+        up[node][0] = parent;
+        for (int j = 1; j < LOG; j++) {
+            up[node][j] = up[up[node][j - 1]][j - 1];
+        }
+
+        for (int child : graph[node]) {
+            if (child != parent) {
+                depth[child] = depth[node] + 1;
+                preprocess(child, node);
+            }
+        }
+    }
+    private int lca(int u, int v) {
+        if (depth[u] < depth[v]) {
+            int temp = u;
+            u = v;
+            v = temp;
+        }
+        // 将 u 提升到与 v 同一深度
+        int diff = depth[u] - depth[v];
+        for (int j = 0; j < LOG; j++) {
+            if ((diff & (1 << j)) != 0) {
+                u = up[u][j];
+            }
+        }
+        if (u == v)
+            return u;
+        // 同时向上跳
+        for (int j = LOG - 1; j >= 0; j--) {
+            if (up[u][j] != up[v][j]) {
+                u = up[u][j];
+                v = up[v][j];
+            }
+        }
+        return up[u][0];
+    }
+    private void precomputePowers(int n) {
+        pow2 = new int[n + 1];
+        pow2[0] = 1;
+        for (int i = 1; i <= n; i++) {
+            pow2[i] = (pow2[i - 1] * 2) % MOD;
+        }
+    }
+
+    public String mapWordWeights(String[] words, int[] weights) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String w : words) {
+            int sum = 0;
+            for (int i = 0; i <= w.length()-1; i++) {
+                char c = w.charAt(i);
+                sum += weights[c-'a'];
+            }
+            int mod = sum%26;
+            char map = (char) ('z'-mod);
+            stringBuilder.append(map);
+        }
+        return stringBuilder.toString();
+    }
+
+    public int shareCandies(int[] candies, int k) {
+        int n = candies.length;
+        if (k == n) {
+            return 0;
+        }
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = k; i <= n-1; i++) {
+            int f = candies[i];
+            map.put(f, map.getOrDefault(f, 0)+1);
+        }
+        if (k == 0) {
+            return map.size();
+        }
+        int mu = map.size();
+        for (int i = 1; i <= n-k; i++) {
+            int an = candies[i-1];
+            map.put(an, map.getOrDefault(an, 0)+1);
+            int dn = candies[k-1+i];
+            map.put(dn, map.get(dn)-1);
+            if (map.get(dn) == 0) {
+                map.remove(dn);
+            }
+            mu = Math.max(mu, map.size());
+        }
+        return mu;
+    }
+
+    static class ListNode {
+        int val;
+        ListNode next;
+        ListNode(int val) {
+            this.val = val;
+        }
+
+        public int pairSum(ListNode head) {
+            List<ListNode> list = new ArrayList<>();
+            ListNode curr = head;
+            while (curr != null) {
+                list.add(curr);
+                curr = curr.next;
+            }
+            int mps = Integer.MIN_VALUE;
+            for (int i = 0; i <= list.size()/2-1; i++) {
+                int cps = list.get(i).val+list.get(list.size()-1-i).val;
+                mps = Math.max(mps, cps);
+            }
+            return mps;
+        }
+    }
+
+    public int[][] candyCrush(int[][] board) {
+        int m = board.length;
+        int n = board[0].length;
+        boolean stable = false;
+        while (!stable) {
+            int[][] curr = Arrays.stream(board).map(int[]::clone).toArray(int[][]::new);
+            boolean change = false;
+            for (int i = 0; i <= m - 1; i++) {
+                for (int j = 0; j <= n - 1; j++) {
+                    if (board[i][j] != 0) {
+                        int rc = 1;
+                        while (j + rc <= n - 1 && board[i][j + rc] == board[i][j]) {
+                            rc += 1;
+                        }
+                        if (rc >= 3) {
+                            change = true;
+                            for (int k = 0; k <= rc - 1; k++) {
+                                curr[i][j + k] = 0;
+                            }
+                        }
+                        int dc = 1;
+                        while (i + dc <= m - 1 && board[i + dc][j] == board[i][j]) {
+                            dc += 1;
+                        }
+                        if (dc >= 3) {
+                            change = true;
+                            for (int k = 0; k <= dc - 1; k++) {
+                                curr[i + k][j] = 0;
+                            }
+                        }
+                    }
+                }
+            }
+            if (!change) {
+                stable = true;
+                continue;
+            }
+            for (int c = 0; c <= n - 1; c++) {
+                List<Integer> list = new ArrayList<>();
+                for (int r = 0; r <= m - 1; r++) {
+                    if (curr[r][c] != 0) {
+                        list.add(curr[r][c]);
+                    }
+                }
+                while (list.size() < m) {
+                    list.addFirst(0);
+                }
+                for (int r = 0; r <= m - 1; r++) {
+                    board[r][c] = list.get(r);
+                }
+            }
+        }
+        return board;
     }
 }

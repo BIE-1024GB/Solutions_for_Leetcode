@@ -1646,4 +1646,98 @@ public class SolutionTest {
         int[] nums = new int[] {4, 2, 5, 1};
         assertEquals(12, solution.maxTotalValue(nums, 3));
     }
+
+    @Test
+    public void testMaxTotalSubII() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {1, 3, 2};
+        assertEquals(4, solution.maxTotalValueII(nums, 2));
+    }
+
+    @Test
+    public void testOddPath() {
+        Solution solution = new Solution();
+        int[][] edges = new int[][] {
+                {1, 2},
+                {1, 3},
+                {3, 4},
+                {3, 5}
+        };
+        assertEquals(2, solution.assignEdgeWeights(edges));
+    }
+
+    @Test
+    public void testOddPathII() {
+        Solution solution = new Solution();
+        int[][] edges = new int[][] {
+                {1, 2},
+                {1, 3},
+                {3, 4},
+                {3, 5}
+        };
+        int[][] queries = new int[][] {
+                {1, 4},
+                {3, 4},
+                {2, 5}
+        };
+        int[] exp = new int[] {2, 1, 4};
+        assertArrayEquals(exp, solution.assignEdgeWeights(edges, queries));
+    }
+
+    @Test
+    public void testWordWeightMap() {
+        Solution solution = new Solution();
+        String[] words = new String[] {"abcd", "def", "xyz"};
+        int[] weights = new int[] {5,3,12,14,1,2,3,2,10,6,6,9,7,8,7,10,8,9,6,9,9,8,3,7,7,2};
+        assertEquals("rij", solution.mapWordWeights(words, weights));
+    }
+
+    @Test
+    public void testCandyFlavor() {
+        Solution solution = new Solution();
+        int[] candies = new int[] {1,2,2,3,4,3};
+        assertEquals(3, solution.shareCandies(candies, 3));
+    }
+
+    @Test
+    public void testLinkedPairSum() {
+        Solution.ListNode n1 = new Solution.ListNode(5);
+        Solution.ListNode n2 = new Solution.ListNode(4);
+        Solution.ListNode n3 = new Solution.ListNode(2);
+        Solution.ListNode n4 = new Solution.ListNode(1);
+        n1.next = n2;
+        n2.next = n3;
+        n3.next = n4;
+        assertEquals(6, n1.pairSum(n1));
+    }
+
+    @Test
+    public void testCandyCrush() {
+        Solution solution = new Solution();
+        int[][] board = new int[][] {
+                {110,5,112,113,114},
+                {210,211,5,213,214},
+                {310,311,3,313,314},
+                {410,411,412,5,414},
+                {5,1,512,3,3},
+                {610,4,1,613,614},
+                {710,1,2,713,714},
+                {810,1,2,1,1},
+                {1,1,2,2,2},
+                {4,1,4,4,1014}
+        };
+        int[][] exp = new int[][] {
+                {0,0,0,0,0},
+                {0,0,0,0,0},
+                {0,0,0,0,0},
+                {110,0,0,0,114},
+                {210,0,0,0,214},
+                {310,0,0,113,314},
+                {410,0,0,213,414},
+                {610,211,112,313,614},
+                {710,311,412,613,714},
+                {810,411,512,713,1014}
+        };
+        assertArrayEquals(exp, solution.candyCrush(board));
+    }
 }
