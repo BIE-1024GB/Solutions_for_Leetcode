@@ -7256,6 +7256,28 @@ public class Solution {
             }
             return mps;
         }
+
+        public ListNode deleteMiddle(ListNode head) {
+            if (head.next == null) {
+                return null;
+            }
+            if (head.next.next == null) {
+                head.next = null;
+                return head;
+            }
+            int len = 1;
+            ListNode node = head;
+            while (node.next != null) {
+                node = node.next;
+                len++;
+            }
+            ListNode prev = head;
+            for (int i = 1; i <= len/2-1; i++) {
+                prev = prev.next;
+            }
+            prev.next = prev.next.next;
+            return head;
+        }
     }
 
     public int[][] candyCrush(int[][] board) {
@@ -7297,19 +7319,82 @@ public class Solution {
             }
             for (int c = 0; c <= n - 1; c++) {
                 List<Integer> list = new ArrayList<>();
-                for (int r = 0; r <= m - 1; r++) {
+                for (int r = m - 1; r >= 0; r--) {
                     if (curr[r][c] != 0) {
                         list.add(curr[r][c]);
                     }
                 }
                 while (list.size() < m) {
-                    list.addFirst(0);
+                    list.add(0);
                 }
-                for (int r = 0; r <= m - 1; r++) {
-                    board[r][c] = list.get(r);
+                for (int r = m - 1; r >= 0; r--) {
+                    board[r][c] = list.get(m - 1 - r);
                 }
             }
         }
         return board;
+    }
+
+    public int numberOfWays(int numPeople) {
+        // Catalan numbers
+        int MOD = 1000000007;
+        int n = numPeople / 2;
+        // dp[i] = number of non-crossing handshake arrangements for 2*i people
+        long[] dp = new long[n + 1];
+        dp[0] = 1;
+        for (int i = 1; i <= n; i++) {
+            dp[i] = 0;
+            for (int j = 0; j < i; j++) {
+                dp[i] = (dp[i] + (dp[j] * dp[i - 1 - j]) % MOD) % MOD;
+            }
+        }
+        return (int) dp[n];
+    }
+
+    public String processStr(String s) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (char c : s.toCharArray()) {
+            if (c == '*') {
+                if (!stringBuilder.isEmpty()) {
+                    stringBuilder.deleteCharAt(stringBuilder.length()-1);
+                }
+            } else if (c == '#') {
+                stringBuilder.append(stringBuilder);
+            } else if (c == '%') {
+                stringBuilder.reverse();
+            } else {
+                stringBuilder.append(c);
+            }
+        }
+        return stringBuilder.toString();
+    }
+
+    public int maxIceCream(int[] costs, int coins) {
+        int maxPrice = 0;
+        for (int cost : costs) {
+            maxPrice = Math.max(maxPrice, cost);
+        }
+        int[] count = new int[maxPrice + 1];
+        for (int cost : costs) {
+            count[cost]++;
+        }
+        int index = 0;
+        for (int price = 0; price <= maxPrice; price++) {
+            while (count[price] > 0) {
+                costs[index++] = price;
+                count[price]--;
+            }
+        }
+
+        int iceCreamCount = 0;
+        for (int cost : costs) {
+            if (coins >= cost) {
+                coins -= cost;
+                iceCreamCount++;
+            } else {
+                break;
+            }
+        }
+        return iceCreamCount;
     }
 }

@@ -1740,4 +1740,24 @@ public class SolutionTest {
         };
         assertArrayEquals(exp, solution.candyCrush(board));
     }
+
+    @Test
+    public void testNCHandshake() {
+        Solution solution = new Solution();
+        assertEquals(429, solution.numberOfWays(14));
+    }
+
+    @Test
+    public void testStringSpecOps() {
+        Solution solution = new Solution();
+        String s = "a#b%*";
+        assertEquals("ba", solution.processStr(s));
+    }
+
+    @Test
+    public void testCSIceBar() {
+        Solution solution = new Solution();
+        int[] costs = new int[] {1, 3, 2, 4, 1};
+        assertEquals(4, solution.maxIceCream(costs, 7));
+    }
 }
