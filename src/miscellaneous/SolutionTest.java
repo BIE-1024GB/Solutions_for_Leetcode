@@ -1760,4 +1760,32 @@ public class SolutionTest {
         int[] costs = new int[] {1, 3, 2, 4, 1};
         assertEquals(4, solution.maxIceCream(costs, 7));
     }
+
+    @Test
+    public void testBalloonWord() {
+        Solution solution = new Solution();
+        String text = "loonbalxballpoon";
+        assertEquals(2, solution.maxNumberOfBalloons(text));
+    }
+
+    @Test
+    public void testSubArrayMajority() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {1, 2, 2, 3};
+        assertEquals(5, solution.countMajoritySubarrays(nums, 2));
+    }
+
+    @Test
+    public void testGPLength() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {1,1,1,1,1,1,1,1,1,1,2,4,8,16,32,64,128,256,512,1024};
+        assertEquals(9, solution.maximumLength(nums));
+    }
+
+    @Test
+    public void testDRMaximum() {
+        Solution solution = new Solution();
+        int[] arr = new int[] {100, 1, 1000};
+        assertEquals(3, solution.maximumElementAfterDecrementingAndRearranging(arr));
+    }
 }

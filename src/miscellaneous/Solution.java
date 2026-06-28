@@ -7397,4 +7397,83 @@ public class Solution {
         }
         return iceCreamCount;
     }
+
+    public int maxNumberOfBalloons(String text) {
+        int[] cc = new int[26];
+        for (int i = 0; i <= text.length()-1; i++) {
+            cc[text.charAt(i)-'a'] += 1;
+        }
+        int cnt = Integer.MAX_VALUE;
+        char[] comp = new char[] {'b', 'a', 'l', 'o', 'n'};
+        for (char c : comp) {
+            if (c=='l' || c=='o') {
+                cnt = Math.min(cnt, cc[c-'a']/2);
+            } else {
+                cnt = Math.min(cnt, cc[c-'a']);
+            }
+        }
+        return cnt;
+    }
+
+    public int countMajoritySubarrays(int[] nums, int target) {
+        int n = nums.length;
+        int[] prefix = new int[n+1];
+        for (int i = 0; i <= n-1; i++) {
+            if (nums[i] == target) {
+                prefix[i+1] = prefix[i]+1;
+            } else {
+                prefix[i+1] = prefix[i];
+            }
+        }
+        int res = 0;
+        for (int i = 0; i <= n-1; i++) {
+            for (int j = i; j <= n-1; j++) {
+                int len = j-i+1;
+                if (prefix[j+1]-prefix[i] >= len/2+1) {
+                    res += 1;
+                }
+            }
+        }
+        return res;
+    }
+
+    public int maximumLength(int[] nums) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int n : nums) {
+            map.put(n, map.getOrDefault(n, 0)+1);
+        }
+        int ml = 1;
+        for (int n : map.keySet()) {
+            if (n == 1) {
+                int ones = (map.get(n)%2==0) ? map.get(n)-1 : map.get(n);
+                ml = Math.max(ml, ones);
+                continue;
+            }
+            int cl = 1;
+            int cr = n;
+            while (map.get(cr) >= 2) {
+                cr = cr*cr;
+                if (map.containsKey(cr)) {
+                    cl += 1;
+                } else {
+                    break;
+                }
+            }
+            ml = Math.max(ml, cl*2-1);
+        }
+        return ml;
+    }
+
+    public int maximumElementAfterDecrementingAndRearranging(int[] arr) {
+        int n = arr.length;
+        if (n == 1) {
+            return 1;
+        }
+        int prev = 1;
+        Arrays.sort(arr);
+        for (int i = 1; i <= n-1; i++) {
+            prev = Math.min(arr[i], prev+1);
+        }
+        return prev;
+    }
 }
