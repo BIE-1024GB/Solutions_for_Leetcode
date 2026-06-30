@@ -7476,4 +7476,42 @@ public class Solution {
         }
         return prev;
     }
+
+    public int numOfStrings(String[] patterns, String word) {
+        int res = 0;
+        for (String s : patterns) {
+            if (word.contains(s)) {
+                res += 1;
+            }
+        }
+        return res;
+    }
+
+    private boolean hasAllChars(int[] freq) {
+        return freq[0] > 0 && freq[1] > 0 && freq[2] > 0;
+    }
+    public int numberOfSubstringsABC(String s) {
+        int len = s.length();
+        int left = 0, right = 0;
+        // Track frequency of a, b, c
+        int[] freq = new int[3];
+        int total = 0;
+        while (right < len) {
+            // Add character at right pointer to frequency array
+            char curr = s.charAt(right);
+            freq[curr - 'a']++;
+            // While we have all required characters
+            while (hasAllChars(freq)) {
+                // All substrings from current window to end are valid
+                // Add count of these substrings to result
+                total += len - right;
+                // Remove leftmost character and move left pointer
+                char leftChar = s.charAt(left);
+                freq[leftChar - 'a']--;
+                left++;
+            }
+            right++;
+        }
+        return total;
+    }
 }

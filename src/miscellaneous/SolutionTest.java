@@ -1788,4 +1788,18 @@ public class SolutionTest {
         int[] arr = new int[] {100, 1, 1000};
         assertEquals(3, solution.maximumElementAfterDecrementingAndRearranging(arr));
     }
+
+    @Test
+    public void testNumOfSubstring() {
+        Solution solution = new Solution();
+        String[] patterns = new String[] {"a","abc","bc","d"};
+        assertEquals(3, solution.numOfStrings(patterns, "abc"));
+    }
+
+    @Test
+    public void testNumOfSubstringABC() {
+        Solution solution = new Solution();
+        String s = "aaacb";
+        assertEquals(3, solution.numberOfSubstringsABC(s));
+    }
 }
