@@ -7514,4 +7514,124 @@ public class Solution {
         }
         return total;
     }
+
+    public int bfs(int n, Map<Integer, List<List<Integer>>> adj) {
+        boolean[] visit = new boolean[n + 1];
+        Queue<Integer> q = new LinkedList<>();
+        int answer = Integer.MAX_VALUE;
+        q.offer(1);
+        visit[1] = true;
+        while (!q.isEmpty()) {
+            int node = q.poll();
+            for (List<Integer> edge : adj.get(node)) {
+                answer = Math.min(answer, edge.get(1));
+                if (!visit[edge.get(0)]) {
+                    visit[edge.getFirst()] = true;
+                    q.offer(edge.getFirst());
+                }
+            }
+        }
+        return answer;
+    }
+    public int minScore(int n, int[][] roads) {
+        Map<Integer, List<List<Integer>>> adj = new HashMap<>();
+        for (int[] road : roads) {
+            adj.computeIfAbsent(road[0], k -> new ArrayList<List<Integer>>()).add(
+                    Arrays.asList(road[1], road[2]));
+            adj.computeIfAbsent(road[1], k -> new ArrayList<List<Integer>>()).add(
+                    Arrays.asList(road[0], road[2]));
+        }
+        return bfs(n, adj);
+    }
+
+    public long sumAndMultiply(int n) {
+        if (n == 0) {
+            return 0;
+        }
+        String og = String.valueOf(n);
+        StringBuilder sb = new StringBuilder();
+        int sum = 0;
+        for (char c : og.toCharArray()) {
+            if (c != '0') {
+                sb.append(c);
+                sum += (c-'0');
+            }
+        }
+        long cat = Long.parseLong(sb.toString());
+        return cat*sum;
+    }
+
+    private void dfs(int node, List<List<Integer>> graph, boolean[] visited, List<Integer> component) {
+        visited[node] = true;
+        component.add(node);
+        for (int neighbor : graph.get(node)) {
+            if (!visited[neighbor]) {
+                dfs(neighbor, graph, visited, component);
+            }
+        }
+    }
+    private boolean isComplete(List<Integer> component, List<List<Integer>> graph) {
+        int size = component.size();
+        // A component of size 1 is trivially complete
+        if (size <= 1) return true;
+
+        // For a complete graph, each vertex should have degree = size - 1
+        // within the component
+        for (int node : component) {
+            int neighborCount = 0;
+            for (int neighbor : graph.get(node)) {
+                if (component.contains(neighbor)) {
+                    neighborCount++;
+                }
+            }
+            if (neighborCount != size - 1) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public int countCompleteComponents(int n, int[][] edges) {
+        List<List<Integer>> graph = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            graph.add(new ArrayList<>());
+        }
+        for (int[] edge : edges) {
+            graph.get(edge[0]).add(edge[1]);
+            graph.get(edge[1]).add(edge[0]);
+        }
+        boolean[] visited = new boolean[n];
+        int completeComponents = 0;
+        for (int i = 0; i < n; i++) {
+            if (!visited[i]) {
+                List<Integer> component = new ArrayList<>();
+                dfs(i, graph, visited, component);
+                if (isComplete(component, graph)) {
+                    completeComponents++;
+                }
+            }
+        }
+        return completeComponents;
+    }
+
+    public int[] arrayRankTransform(int[] arr) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for (int a : arr) {
+            pq.offer(a);
+        }
+        Map<Integer, Integer> map = new HashMap<>();
+        int rank = 1;
+        int prev = Integer.MIN_VALUE;
+        while (!pq.isEmpty()) {
+            int curr = pq.poll();
+            if (curr != prev) {
+                map.put(curr, rank);
+                prev = curr;
+                rank += 1;
+            }
+        }
+        for (int i = 0; i <= arr.length-1; i++) {
+            arr[i] = map.get(arr[i]);
+        }
+        return arr;
+    }
 }

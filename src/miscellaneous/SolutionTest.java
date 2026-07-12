@@ -1802,4 +1802,39 @@ public class SolutionTest {
         String s = "aaacb";
         assertEquals(3, solution.numberOfSubstringsABC(s));
     }
+
+    @Test
+    public void testCityMinScore() {
+        Solution solution = new Solution();
+        int[][] roads = new int[][] {
+                {1, 2, 9},
+                {2, 3, 6},
+                {2, 4, 5},
+                {1, 4, 7}
+        };
+        assertEquals(5, solution.minScore(4, roads));
+    }
+
+    @Test
+    public void testMultiplyDigits() {
+        Solution solution = new Solution();
+        assertEquals(12340, solution.sumAndMultiply(10203004));
+    }
+
+    @Test
+    public void testCompleteConnection() {
+        Solution solution = new Solution();
+        int[][] edges = new int[][] {
+                {0, 1}, {0, 2}, {1, 2}, {3, 4}
+        };
+        assertEquals(3, solution.countCompleteComponents(6, edges));
+    }
+
+    @Test
+    public void testArrRank() {
+        Solution solution = new Solution();
+        int[] arr = new int[] {40, 10, 20, 30};
+        int[] exp = new int[] {4, 1, 2, 3};
+        assertArrayEquals(exp, solution.arrayRankTransform(arr));
+    }
 }
