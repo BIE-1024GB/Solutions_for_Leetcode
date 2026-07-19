@@ -1837,4 +1837,40 @@ public class SolutionTest {
         int[] exp = new int[] {4, 1, 2, 3};
         assertArrayEquals(exp, solution.arrayRankTransform(arr));
     }
+
+    @Test
+    public void testSeqDig() {
+        Solution solution = new Solution();
+        List<Integer> exp = new ArrayList<>();
+        exp.add(789);
+        exp.add(1234);
+        List<Integer> act = solution.sequentialDigits(744, 1928);
+        assertEquals(exp, act);
+    }
+
+    @Test
+    public void testPatternWord() {
+        Solution solution = new Solution();
+        assertFalse(solution.wordPatternMatch("aabb", "xyzabcxzyabc"));
+    }
+
+    @Test
+    public void testSumGCD() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {3, 6, 2, 8};
+        assertEquals(5, solution.gcdSum(nums));
+    }
+
+    @Test
+    public void testMinMaxGCD() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {2, 5, 6, 9, 10};
+        assertEquals(2, solution.findGCD(nums));
+    }
+
+    @Test
+    public void testMinSeq() {
+        Solution solution = new Solution();
+        assertEquals("abc", solution.smallestSubsequence("bcabc"));
+    }
 }

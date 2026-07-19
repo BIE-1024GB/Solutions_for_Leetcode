@@ -1,6 +1,7 @@
 package miscellaneous;
 
 import java.util.*;
+import java.math.BigInteger;
 
 public class Solution {
     public int minimumTeachings(int n, int[][] languages, int[][] friendships) {
@@ -7633,5 +7634,122 @@ public class Solution {
             arr[i] = map.get(arr[i]);
         }
         return arr;
+    }
+
+    public List<Integer> sequentialDigits(int low, int high) {
+        int aggr = 11;
+        int base = 12;
+        int curr = 12;
+        int ceil = 100;
+        int thres = 8;
+        int addition = 0;
+        List<Integer> list = new ArrayList<>();
+        while (curr <= high) {
+            if (curr >= low && thres > addition) {
+                list.add(curr);
+            }
+            addition++;
+            curr += aggr;
+            if (curr >= ceil) {
+                int ld = base%10;
+                base = base*10+ld+1;
+                aggr = aggr*10+1;
+                ceil *= 10;
+                curr = base;
+                thres--;
+                addition = 0;
+            }
+        }
+        return list;
+    }
+
+    private boolean backtrack(String pattern, String s, int patternIdx, int sIdx, Map<Character, String> charToWord, Map<String, Character> wordToChar) {
+        if (patternIdx == pattern.length() && sIdx == s.length()) {
+            return true;
+        }
+        if (patternIdx == pattern.length() || sIdx == s.length()) {
+            return false;
+        }
+        char c = pattern.charAt(patternIdx);
+        if (charToWord.containsKey(c)) {
+            String word = charToWord.get(c);
+            if (!s.startsWith(word, sIdx)) {
+                return false;
+            }
+            return backtrack(pattern, s, patternIdx + 1, sIdx + word.length(),
+                    charToWord, wordToChar);
+        }
+        int maxLen = s.length() - sIdx - (pattern.length() - patternIdx - 1);
+        for (int len = 1; len <= maxLen; len++) {
+            String word = s.substring(sIdx, sIdx + len);
+            if (wordToChar.containsKey(word)) {
+                continue;
+            }
+            charToWord.put(c, word);
+            wordToChar.put(word, c);
+            if (backtrack(pattern, s, patternIdx + 1, sIdx + len,
+                    charToWord, wordToChar)) {
+                return true;
+            }
+            charToWord.remove(c);
+            wordToChar.remove(word);
+        }
+        return false;
+    }
+    public boolean wordPatternMatch(String pattern, String s) {
+        Map<Character, String> charToWord = new HashMap<>();
+        Map<String, Character> wordToChar = new HashMap<>();
+        return backtrack(pattern, s, 0, 0, charToWord, wordToChar);
+    }
+
+    public long gcdSum(int[] nums) {
+        int n = nums.length;
+        int[] prefixGcd = new int[n];
+        int mx = Integer.MIN_VALUE;
+        for (int i = 0; i <= n-1; i++) {
+            mx = Math.max(mx, nums[i]);
+            prefixGcd[i] = BigInteger.valueOf(nums[i]).gcd(BigInteger.valueOf(mx)).intValue();
+        }
+        Arrays.sort(prefixGcd);
+        long res = 0;
+        for (int i = 0; i <= n/2-1; i++) {
+            res += BigInteger.valueOf(prefixGcd[i]).gcd(BigInteger.valueOf(prefixGcd[n-1-i])).longValue();
+        }
+        return res;
+    }
+
+    public int findGCD(int[] nums) {
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        for (int n : nums) {
+            min = Math.min(min, n);
+            max = Math.max(max, n);
+        }
+        return BigInteger.valueOf(min).gcd(BigInteger.valueOf(max)).intValue();
+    }
+
+    public String smallestSubsequence(String s) {
+        int[] lastIndex = new int[26];
+        for (int i = 0; i < s.length(); i++) {
+            lastIndex[s.charAt(i) - 'a'] = i;
+        }
+        StringBuilder stack = new StringBuilder();
+        boolean[] inStack = new boolean[26];
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            int idx = c - 'a';
+            if (inStack[idx]) {
+                continue;
+            }
+            while (stack.length() > 0 &&
+                    c < stack.charAt(stack.length() - 1) &&
+                    lastIndex[stack.charAt(stack.length() - 1) - 'a'] > i) {
+                inStack[stack.charAt(stack.length() - 1) - 'a'] = false;
+                stack.deleteCharAt(stack.length() - 1);
+            }
+            stack.append(c);
+            inStack[idx] = true;
+        }
+        return stack.toString();
     }
 }
