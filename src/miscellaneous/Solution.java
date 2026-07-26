@@ -7752,4 +7752,67 @@ public class Solution {
         }
         return stack.toString();
     }
+
+    public List<List<Integer>> shiftGrid(int[][] grid, int k) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int[] flat = new int[m*n];
+        for (int i = 0; i <= m-1; i++) {
+            for (int j = 0; j <= n-1; j++) {
+                flat[i*n+j] = grid[i][j];
+            }
+        }
+        int actual = k%(m*n);
+        int[] shift = new int[m*n];
+        for (int i = 0; i <= m*n-1; i++) {
+            int ni = (i+actual)%(m*n);
+            shift[ni] = flat[i];
+        }
+        List<List<Integer>> res = new ArrayList<>();
+        for (int i = 0; i <= m-1; i++) {
+            List<Integer> list = new ArrayList<>();
+            for (int j = 0; j <= n-1; j++) {
+                list.add(shift[i*n+j]);
+            }
+            res.add(list);
+        }
+        return res;
+    }
+
+    public int uniqueXorTriplets(int[] nums) {
+        int n = nums.length;
+        if (n <= 2) {
+            return n;
+        }
+        int res = 2;
+        while (res <= n) {
+            res <<= 1;
+        }
+        return res;
+    }
+
+    public int maximumProduct(int[] nums) {
+        int n = nums.length;
+        if (n == 3) {
+            return nums[0]*nums[1]*nums[2];
+        }
+        Arrays.sort(nums);
+        if (nums[0]>=0 || nums[n-1]<=0) {
+            return nums[n-1]*nums[n-2]*nums[n-3];
+        } else {
+            int nc = 0;
+            for (int num : nums) {
+                if (num < 0) {
+                    nc++;
+                } else {
+                    break;
+                }
+            }
+            if (nc == 1) {
+                return nums[n-1]*nums[n-2]*nums[n-3];
+            } else {
+                return Math.max(nums[0]*nums[1]*nums[n-1], nums[n-1]*nums[n-2]*nums[n-3]);
+            }
+        }
+    }
 }

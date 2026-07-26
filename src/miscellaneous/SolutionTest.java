@@ -1873,4 +1873,11 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertEquals("abc", solution.smallestSubsequence("bcabc"));
     }
+
+    @Test
+    public void testMaxTriProduct() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {-1, -2, -3};
+        assertEquals(-6, solution.maximumProduct(nums));
+    }
 }
