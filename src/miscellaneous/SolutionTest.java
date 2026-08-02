@@ -1880,4 +1880,43 @@ public class SolutionTest {
         int[] nums = new int[] {-1, -2, -3};
         assertEquals(-6, solution.maximumProduct(nums));
     }
+
+    @Test
+    public void testMaxTwoProduct() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {3, 4, 5, 2};
+        assertEquals(12, solution.maxProduct(nums));
+    }
+
+    @Test
+    public void testPermPalin() {
+        Solution solution = new Solution();
+        assertEquals("abbba", solution.smallestPalindrome("babab"));
+    }
+
+    @Test
+    public void testPhoneLetterMap() {
+        Solution solution = new Solution();
+        assertEquals(12, solution.minimumPushes("xycdefghij"));
+    }
+
+    @Test
+    public void testPhoneLetterMapII() {
+        Solution solution = new Solution();
+        assertEquals(12, solution.minimumPushesII("xyzxyzxyzxyz"));
+    }
+
+    @Test
+    public void testPredWin() {
+        Solution solution = new Solution();
+        int[] arr = new int[] {1, 5, 233, 7};
+        assertTrue(solution.predictTheWinner(arr));
+    }
+
+    @Test
+    public void testStoneGame() {
+        Solution solution = new Solution();
+        int[] piles = new int[] {5, 3, 4, 5};
+        assertTrue(solution.stoneGame(piles));
+    }
 }

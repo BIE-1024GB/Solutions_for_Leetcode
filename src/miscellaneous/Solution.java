@@ -7815,4 +7815,104 @@ public class Solution {
             }
         }
     }
+
+    public int maxProduct(int[] nums) {
+        int n = nums.length;
+        if (n == 2) {
+            return (nums[0]-1)*(nums[1]-1);
+        }
+        int m1 = Integer.MIN_VALUE;
+        int m2 = Integer.MIN_VALUE;
+        for (int num : nums) {
+            if (num > m1) {
+                m2 = m1;
+                m1 = num;
+            } else if (num > m2) {
+                m2 = num;
+            }
+        }
+        return (m1-1)*(m2-1);
+    }
+
+    public String smallestPalindrome(String s) {
+        int n = s.length();
+        if (n <= 3) {
+            return s;
+        }
+        int[] ccnt = new int[26];
+        for (int i = 0; i <= n/2-1; i++) {
+            ccnt[s.charAt(i)-'a'] += 1;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i <= 25; i++) {
+            if (ccnt[i] > 0) {
+                char ch = (char)('a'+i);
+                sb.repeat(String.valueOf(ch), Math.max(0, ccnt[i]));
+            }
+        }
+        String fp = sb.toString();
+        StringBuilder rsb = sb.reverse();
+        if (n%2 == 1) {
+            fp = fp+s.charAt(n/2);
+        }
+        return fp.concat(rsb.toString());
+    }
+
+    public int minimumPushes(String word) {
+        int res = 0;
+        int ao = 1;
+        for (int i = 0; i <= word.length()-1; i++) {
+            if (i>0 && i%8==0) {
+                ao += 1;
+            }
+            res += ao;
+        }
+        return res;
+    }
+
+    public int minimumPushesII(String word) {
+        int[] freq = new int[26];
+        for (int i = 0; i <= word.length()-1; i++) {
+            freq[word.charAt(i)-'a'] += 1;
+        }
+        Arrays.sort(freq);
+        int pushes = 0;
+        int ao = 1;
+        for (int i = 0; i <= 25; i++) {
+            if (freq[25-i] > 0) {
+                if (i>0 && i%8==0) {
+                    ao += 1;
+                }
+                pushes += ao*freq[25-i];
+            } else {
+                break;
+            }
+        }
+        return pushes;
+    }
+
+    public boolean predictTheWinner(int[] nums) {
+        int n = nums.length;
+        // dp[i][j] represents the maximum score difference the current player can achieve
+        // from subarray nums[i..j] (inclusive)
+        int[][] dp = new int[n][n];
+        // Base case: for a single element, the current player takes it
+        for (int i = 0; i < n; i++) {
+            dp[i][i] = nums[i];
+        }
+        // Fill the dp table for subarrays of increasing length
+        for (int len = 2; len <= n; len++) {
+            for (int left = 0; left <= n - len; left++) {
+                int right = left + len - 1;
+                int takeLeft = nums[left] - dp[left + 1][right];
+                int takeRight = nums[right] - dp[left][right - 1];
+                dp[left][right] = Math.max(takeLeft, takeRight);
+            }
+        }
+        return dp[0][n - 1] >= 0;
+    }
+
+    public boolean stoneGame(int[] piles) {
+        return true;
+    }
 }
