@@ -1919,4 +1919,24 @@ public class SolutionTest {
         int[] piles = new int[] {5, 3, 4, 5};
         assertTrue(solution.stoneGame(piles));
     }
+
+    @Test
+    public void testSmallNum() {
+        Solution solution = new Solution();
+        assertEquals(16, solution.smallestNumber(15, 3));
+    }
+
+    @Test
+    public void testValSeq() {
+        Solution solution = new Solution();
+        int[] exp = new int[] {0, 1, 2};
+        assertArrayEquals(exp, solution.validSequence("vbcca", "abc"));
+    }
+
+    @Test
+    public void testStoneII() {
+        Solution solution = new Solution();
+        int[] piles = new int[] {2, 7, 9, 4, 4};
+        assertEquals(10, solution.stoneGameII(piles));
+    }
 }

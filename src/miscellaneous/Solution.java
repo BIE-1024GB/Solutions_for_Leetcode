@@ -7915,4 +7915,147 @@ public class Solution {
     public boolean stoneGame(int[] piles) {
         return true;
     }
+
+    public List<Integer> findMissingElements(int[] nums) {
+        List<Integer> list = new ArrayList<>();
+        Set<Integer> set = new HashSet<>();
+        int minn = Integer.MAX_VALUE;
+        int maxn = Integer.MIN_VALUE;
+        for (int n : nums) {
+            minn = Math.min(minn, n);
+            maxn = Math.max(maxn, n);
+            set.add(n);
+        }
+        for (int i = minn; i <= maxn; i++) {
+            if (!set.contains(i)) {
+                list.add(i);
+            }
+        }
+        return list;
+    }
+
+    public List<Integer> remainingMethods(int n, int k, int[][] invocations) {
+        List<Integer>[] edges = new ArrayList[n];
+        for (int i = 0; i < n; i++) {
+            edges[i] = new ArrayList<>();
+        }
+        int[] inDegree = new int[n];
+        for (int[] inv : invocations) {
+            edges[inv[0]].add(inv[1]);
+            inDegree[inv[1]]++;
+        }
+        Queue<Integer> queue = new ArrayDeque<>();
+        queue.offer(k);
+        boolean[] suspicious = new boolean[n];
+        suspicious[k] = true;
+        while (!queue.isEmpty()) {
+            int u = queue.poll();
+            for (int v : edges[u]) {
+                inDegree[v]--;
+                if (!suspicious[v]) {
+                    queue.offer(v);
+                    suspicious[v] = true;
+                }
+            }
+        }
+        boolean canRemoveAll = true;
+        List<Integer> remaining = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            if (suspicious[i] && inDegree[i] > 0) {
+                canRemoveAll = false;
+                break;
+            } else if (!suspicious[i]) {
+                remaining.add(i);
+            }
+        }
+        if (!canRemoveAll) {
+            List<Integer> allNodes = new ArrayList<>(n);
+            for (int i = 0; i < n; i++) {
+                allNodes.add(i);
+            }
+            return allNodes;
+        }
+        return remaining;
+    }
+
+    public int smallestNumber(int n, int t) {
+        int res = n-1;
+        int prod = 1;
+        do {
+            res++;
+            prod = 1;
+            int curr = res;
+            while (curr > 0) {
+                int digit = curr%10;
+                prod *= digit;
+                curr /= 10;
+            }
+        } while (prod%t != 0);
+        return res;
+    }
+
+    public int[] validSequence(String word1, String word2) {
+        int n = word1.length(),
+                m = word2.length();
+        int[] last = new int[m];
+        Arrays.fill(last, -1);
+        int j = m - 1;
+        for (int i = n - 1; i >= 0; --i) {
+            if (j >= 0 && word1.charAt(i) == word2.charAt(j)) {
+                last[j] = i;
+                j -= 1;
+            }
+        }
+        int[] res = new int[m];
+        int skip = 0;
+        j = 0;
+        for (int i = 0; i < n; ++i) {
+            if (j == m)
+                break;
+            if (word1.charAt(i) == word2.charAt(j) ||
+                    (skip == 0 && (j == m - 1 || i < last[j + 1]))) {
+                skip += word1.charAt(i) != word2.charAt(j) ? 1 : 0;
+                res[j] = i;
+                j += 1;
+            }
+        }
+        return j == m ? res : new int[0];
+    }
+
+    private int maxStones(
+            int[] suffixSum,
+            int maxTillNow,
+            int currIndex,
+            int[][] memo) {
+        // If currIndex + 2*maxTillNow lies outside the array, pick all remaining stones.
+        if (currIndex + 2 * maxTillNow >= suffixSum.length) {
+            return suffixSum[currIndex];
+        }
+        if (memo[currIndex][maxTillNow] > 0)
+            return memo[currIndex][maxTillNow];
+        int res = Integer.MAX_VALUE;
+        // Find the minimum value res for the next move possible.
+        for (int i = 1; i <= 2 * maxTillNow; i++) {
+            res = Math.min(
+                    res,
+                    maxStones(
+                            suffixSum,
+                            Math.max(i, maxTillNow),
+                            currIndex + i,
+                            memo));
+        }
+        // Memoize the difference of suffixSum[p] and res. This denotes the maximum
+        // stones that can be picked.
+        memo[currIndex][maxTillNow] = suffixSum[currIndex] - res;
+        return memo[currIndex][maxTillNow];
+    }
+    public int stoneGameII(int[] piles) {
+        // Store the suffix sum of all array elements.
+        int[] suffixSum = Arrays.copyOf(piles, piles.length);
+
+        for (int i = suffixSum.length - 2; i >= 0; i--) {
+            suffixSum[i] += suffixSum[i + 1];
+        }
+        return maxStones(suffixSum, 1, 0, new int[piles.length][piles.length]);
+    }
 }
