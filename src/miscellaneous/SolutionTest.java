@@ -1939,4 +1939,38 @@ public class SolutionTest {
         int[] piles = new int[] {2, 7, 9, 4, 4};
         assertEquals(10, solution.stoneGameII(piles));
     }
+
+    @Test
+    public void testPrefMiss() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {3,4,5,1,12,14,13};
+        assertEquals(15, solution.missingInteger(nums));
+    }
+
+    @Test
+    public void testkSubLen() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {1,2,3,1,2,3,1,2};
+        assertEquals(6, solution.maxSubarrayLength(nums, 2));
+    }
+
+    @Test
+    public void test2SubLen() {
+        Solution solution = new Solution();
+        assertEquals(4, solution.maximumLengthSubstring("bcbbbcba"));
+    }
+
+    @Test
+    public void testSubXOR() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {2, 3, 4};
+        assertEquals(3, solution.longestSubsequence(nums));
+    }
+
+    @Test
+    public void testStoneIX() {
+        Solution solution = new Solution();
+        int[] stones = new int[] {5, 1, 2, 4, 3};
+        assertFalse(solution.stoneGameIX(stones));
+    }
 }

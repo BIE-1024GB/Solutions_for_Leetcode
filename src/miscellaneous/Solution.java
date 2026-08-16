@@ -7741,7 +7741,7 @@ public class Solution {
             if (inStack[idx]) {
                 continue;
             }
-            while (stack.length() > 0 &&
+            while (!stack.isEmpty() &&
                     c < stack.charAt(stack.length() - 1) &&
                     lastIndex[stack.charAt(stack.length() - 1) - 'a'] > i) {
                 inStack[stack.charAt(stack.length() - 1) - 'a'] = false;
@@ -7758,9 +7758,7 @@ public class Solution {
         int n = grid[0].length;
         int[] flat = new int[m*n];
         for (int i = 0; i <= m-1; i++) {
-            for (int j = 0; j <= n-1; j++) {
-                flat[i*n+j] = grid[i][j];
-            }
+            System.arraycopy(grid[i], 0, flat, i * n, n - 1 + 1);
         }
         int actual = k%(m*n);
         int[] shift = new int[m*n];
@@ -8022,11 +8020,7 @@ public class Solution {
         return j == m ? res : new int[0];
     }
 
-    private int maxStones(
-            int[] suffixSum,
-            int maxTillNow,
-            int currIndex,
-            int[][] memo) {
+    private int maxStones(int[] suffixSum, int maxTillNow, int currIndex, int[][] memo) {
         // If currIndex + 2*maxTillNow lies outside the array, pick all remaining stones.
         if (currIndex + 2 * maxTillNow >= suffixSum.length) {
             return suffixSum[currIndex];
@@ -8057,5 +8051,105 @@ public class Solution {
             suffixSum[i] += suffixSum[i + 1];
         }
         return maxStones(suffixSum, 1, 0, new int[piles.length][piles.length]);
+    }
+
+    public int missingInteger(int[] nums) {
+        int n = nums.length;
+        if (n == 1) {
+            return nums[0]+1;
+        }
+        int sum = nums[0];
+        int prev = nums[0];
+        for (int i = 1; i <= n-1; i++) {
+            if (nums[i] == prev+1) {
+                sum += nums[i];
+                prev = nums[i];
+            } else {
+                break;
+            }
+        }
+        Set<Integer> set = new HashSet<>();
+        for (int num: nums) {
+            set.add(num);
+        }
+        while (set.contains(sum)) {
+            sum += 1;
+        }
+        return sum;
+    }
+
+    public int maxSubarrayLength(int[] nums, int k) {
+        int n = nums.length;
+        Map<Integer, Integer> map = new HashMap<>();
+        int lp = 0;
+        int rp = 0;
+        int ml = Integer.MIN_VALUE;
+        while (lp<=n-1 && rp<=n-1) {
+            int cnt = map.getOrDefault(nums[rp], 0)+1;
+            if (cnt <= k) {
+                map.put(nums[rp], map.getOrDefault(nums[rp], 0)+1);
+                ml = Math.max(rp-lp+1, ml);
+                rp++;
+            } else {
+                map.put(nums[lp], map.get(nums[lp])-1);
+                lp++;
+            }
+        }
+        return ml;
+    }
+
+    public int maximumLengthSubstring(String s) {
+        int n = s.length();
+        int ml = Integer.MIN_VALUE;
+        int lp = 0;
+        int rp = 0;
+        Map<Character, Integer> map = new HashMap<>();
+        while (lp<=n-1 && rp<=n-1) {
+            if (map.getOrDefault(s.charAt(rp), 0)+1 <= 2) {
+                map.put(s.charAt(rp), map.getOrDefault(s.charAt(rp), 0)+1);
+                rp++;
+                ml = Math.max(ml, rp-lp);
+            } else {
+                map.put(s.charAt(lp), map.get(s.charAt(lp))-1);
+                lp++;
+            }
+        }
+        return ml;
+    }
+
+    public int longestSubsequence(int[] nums) {
+        int n = nums.length;
+        int totalXor = 0;
+        boolean allZero = true;
+        for (int x : nums) {
+            totalXor ^= x;
+            if (x > 0) {
+                allZero = false;
+            }
+        }
+        if (totalXor > 0) {
+            return n;
+        }
+        return allZero ? 0 : n - 1;
+    }
+
+    public boolean stoneGameIX(int[] stones) {
+        int cnt0 = 0,
+                cnt1 = 0,
+                cnt2 = 0;
+        for (int val : stones) {
+            int type = val % 3;
+            if (type == 0) {
+                ++cnt0;
+            } else if (type == 1) {
+                ++cnt1;
+            } else {
+                ++cnt2;
+            }
+        }
+        if (cnt0 % 2 == 0) {
+            return cnt1 >= 1 && cnt2 >= 1;
+        }
+        return cnt1 - cnt2 > 2 || cnt2 - cnt1 > 2;
     }
 }
