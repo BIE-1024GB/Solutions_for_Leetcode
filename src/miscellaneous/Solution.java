@@ -8152,4 +8152,100 @@ public class Solution {
         }
         return cnt1 - cnt2 > 2 || cnt2 - cnt1 > 2;
     }
+
+    public int largestInteger(int[] nums, int k) {
+        int n = nums.length;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int num : nums) {
+            map.put(num, map.getOrDefault(num, 0)+1);
+        }
+        int res = -1;
+        if (k == 1) {
+            for (int key : map.keySet()) {
+                if (map.get(key) == 1) {
+                    res = Math.max(res, key);
+                }
+            }
+        } else if (k == n) {
+            for (int key : map.keySet()) {
+                res = Math.max(res, key);
+            }
+        } else {
+            if (map.get(nums[0])==1 && map.get(nums[n-1])==1) {
+                res = Math.max(nums[0], nums[n-1]);
+            } else if (map.get(nums[0])==1 || map.get(nums[n-1])==1) {
+                res = (map.get(nums[0])==1 ? nums[0] : nums[n-1]);
+            }
+        }
+        return res;
+    }
+
+    public int maxNumberOfFamilies(int n, int[][] reservedSeats) {
+        int left = 0b11110000;
+        int middle = 0b11000011;
+        int right = 0b00001111;
+        Map<Integer, Integer> occupied = new HashMap<>();
+        for (int[] seat : reservedSeats) {
+            if (seat[1] >= 2 && seat[1] <= 9) {
+                int origin = occupied.getOrDefault(seat[0], 0);
+                int value = origin | (1 << (seat[1] - 2));
+                occupied.put(seat[0], value);
+            }
+        }
+        int ans = (n - occupied.size()) * 2;
+        for (Map.Entry<Integer, Integer> entry : occupied.entrySet()) {
+            int bitmask = entry.getValue();
+            if ((bitmask | left) == left || (bitmask | middle) == middle || (bitmask | right) == right) {
+                ++ans;
+            }
+        }
+        return ans;
+    }
+
+    public int[] resultArray(int[] nums) {
+        List<Integer> a1 = new ArrayList<>();
+        List<Integer> a2 = new ArrayList<>();
+        a1.add(nums[0]);
+        a2.add(nums[1]);
+        for (int i = 2; i <= nums.length-1; i++) {
+            if (a1.getLast() > a2.getLast()) {
+                a1.add(nums[i]);
+            } else {
+                a2.add(nums[i]);
+            }
+        }
+        int[] res = new int[nums.length];
+        for (int i = 0; i <= a1.size()-1; i++) {
+            res[i] = a1.get(i);
+        }
+        for (int i = a1.size(); i <= res.length-1; i++) {
+            res[i] = a2.get(i-a1.size());
+        }
+        return res;
+    }
+
+    private int[] get(String s) {
+        int nn = 0,
+                qq = 0;
+        for (char ch : s.toCharArray()) {
+            if (ch == '?') {
+                qq++;
+            } else {
+                nn += ch - '0';
+            }
+        }
+        return new int[] { nn, qq };
+    }
+    public boolean sumGame(String num) {
+        int n = num.length();
+        int[] left = get(num.substring(0, n / 2));
+        int[] right = get(num.substring(n / 2, n));
+
+        int n0 = left[0],
+                q0 = left[1];
+        int n1 = right[0],
+                q1 = right[1];
+
+        return (q0 + q1) % 2 == 1 || n0 - n1 != ((q1 - q0) * 9) / 2;
+    }
 }

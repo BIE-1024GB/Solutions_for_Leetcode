@@ -1973,4 +1973,32 @@ public class SolutionTest {
         int[] stones = new int[] {5, 1, 2, 4, 3};
         assertFalse(solution.stoneGameIX(stones));
     }
+
+    @Test
+    public void testNMLI() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {3,9,2,1,7};
+        assertEquals(7, solution.largestInteger(nums, 3));
+    }
+
+    @Test
+    public void testMovieSeat() {
+        Solution solution = new Solution();
+        int[][] rs = new int[][] {{2, 10}, {3, 1}, {1, 2}, {2, 2}, {3, 5}, {4, 1}, {4, 9}, {2, 7}};
+        assertEquals(3, solution.maxNumberOfFamilies(4, rs));
+    }
+
+    @Test
+    public void testDist2Arr() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {5, 4, 3, 8};
+        int[] exp = new int[] {5, 3, 4, 8};
+        assertArrayEquals(exp, solution.resultArray(nums));
+    }
+
+    @Test
+    public void testSumGame() {
+        Solution solution = new Solution();
+        assertFalse(solution.sumGame("?3295???"));
+    }
 }
