@@ -8248,4 +8248,74 @@ public class Solution {
 
         return (q0 + q1) % 2 == 1 || n0 - n1 != ((q1 - q0) * 9) / 2;
     }
+
+    public int missingMultiple(int[] nums, int k) {
+        Set<Integer> set = new HashSet<>();
+        for (int n : nums) {
+            set.add(n);
+        }
+        int res = k;
+        for (;; res+=k) {
+            if (!set.contains(res)) {
+                break;
+            }
+        }
+        return res;
+    }
+
+    public int minimumDeletions(int[] nums) {
+        int n = nums.length;
+        if (n == 1) {
+            return 1;
+        }
+        int sv = Integer.MAX_VALUE;
+        int sp = -1;
+        int bv = Integer.MIN_VALUE;
+        int bp = -1;
+        for (int i = 0; i <= n-1; i++) {
+            if (nums[i] < sv) {
+                sv = nums[i];
+                sp = i;
+            }
+            if (nums[i] > bv) {
+                bv = nums[i];
+                bp = i;
+            }
+        }
+        int lp = (sp < bp) ? sp : bp;
+        int rp = (sp < bp) ? bp : sp;
+        return Math.min(lp+1+n-rp, Math.min(rp+1, n-lp));
+    }
+
+    public int[] nodesBetweenCriticalPoints(ListNode head) {
+        if (head.next.next == null) {
+            return new int[] {-1, -1};
+        }
+        ListNode prevN = head;
+        ListNode currN = prevN.next;
+        ListNode nextN = currN.next;
+        int fp = -1;
+        int prevP = -1;
+        int pt = 1;
+        int minL = Integer.MAX_VALUE;
+        while (nextN != null) {
+            if (currN.val>prevN.val&&currN.val>nextN.val || currN.val<prevN.val&&currN.val<nextN.val) {
+                if (fp == -1) {
+                    fp = pt;
+                } else {
+                    minL = Math.min(minL, pt-prevP);
+                }
+                prevP = pt;
+            }
+            pt++;
+            prevN = prevN.next;
+            currN = currN.next;
+            nextN = nextN.next;
+        }
+        if (fp == prevP) {
+            return new int[] {-1, -1};
+        } else {
+            return new int[] {minL, prevP-fp};
+        }
+    }
 }

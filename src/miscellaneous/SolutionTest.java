@@ -2001,4 +2001,18 @@ public class SolutionTest {
         Solution solution = new Solution();
         assertFalse(solution.sumGame("?3295???"));
     }
+
+    @Test
+    public void testMissMulti() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {8, 2, 3, 4, 6};
+        assertEquals(10, solution.missingMultiple(nums, 2));
+    }
+
+    @Test
+    public void testDeleteMinMax() {
+        Solution solution = new Solution();
+        int[] nums = new int[] {2,10,7,5,4,1,8,6};
+        assertEquals(5, solution.minimumDeletions(nums));
+    }
 }
